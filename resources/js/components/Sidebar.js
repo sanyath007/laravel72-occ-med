@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import {
     Sidebar as ProSidebar,
     Menu,
@@ -83,13 +84,37 @@ const Sidebar = ({ menuCollapsed, handleMenuCollapsed }) => {
                     </ul>
                 </li>
                 <li className="nav-heading">Pages</li>
-                <li className="nav-item"> <a className="nav-link collapsed" href="users-profile.html"> <i className="bi bi-person"></i> <span>Profile</span> </a></li>
-                <li className="nav-item"> <a className="nav-link collapsed" href="pages-faq.html"> <i className="bi bi-question-circle"></i> <span>F.A.Q</span> </a></li>
-                <li className="nav-item"> <a className="nav-link collapsed" href="pages-contact.html"> <i className="bi bi-envelope"></i> <span>Contact</span> </a></li>
-                <li className="nav-item"> <a className="nav-link collapsed" href="pages-register.html"> <i className="bi bi-card-list"></i> <span>Register</span> </a></li>
-                <li className="nav-item"> <a className="nav-link collapsed" href="pages-login.html"> <i className="bi bi-box-arrow-in-right"></i> <span>Login</span> </a></li>
-                <li className="nav-item"> <a className="nav-link collapsed" href="pages-error-404.html"> <i className="bi bi-dash-circle"></i> <span>Error 404</span> </a></li>
-                <li className="nav-item"> <a className="nav-link collapsed" href="pages-blank.html"> <i className="bi bi-file-earmark"></i> <span>Blank</span> </a></li>
+                <li className="nav-item">
+                    <a className="nav-link collapsed" href="users-profile.html">
+                        <i className="bi bi-person"></i> <span>Profile</span>
+                    </a>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link collapsed" href="pages-faq.html"> <i className="bi bi-question-circle"></i> <span>F.A.Q</span>
+                    </a>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link collapsed" href="pages-contact.html"> <i className="bi bi-envelope"></i> <span>Contact</span>
+                    </a>
+                </li>
+                <li className="nav-item">
+                    <Link className="nav-link collapsed" to="register">
+                        <i className="bi bi-card-list"></i>
+                        <span>Register</span>
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link collapsed" href="pages-login.html"> <i className="bi bi-box-arrow-in-right"></i> <span>Login</span>
+                    </a>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link collapsed" href="pages-error-404.html"> <i className="bi bi-dash-circle"></i> <span>Error 404</span>
+                    </a>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link collapsed" href="pages-blank.html"> <i className="bi bi-file-earmark"></i> <span>Blank</span>
+                    </a>
+                </li>
             </ul>
         </aside>
     )

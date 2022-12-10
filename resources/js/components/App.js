@@ -6,6 +6,7 @@ import Dashboard from "../pages/Dashboard";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
 import Login from "../pages/Login";
+import Register from "../pages/Register/Register";
 
 export default function App() {
     return (
@@ -14,6 +15,7 @@ export default function App() {
                 <Route path="" element={<Dashboard />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/register" element={<Register />} />
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="*" element={<p>There's nothing here: 404!</p>} />
