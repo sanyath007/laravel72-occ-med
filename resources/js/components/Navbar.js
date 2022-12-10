@@ -9,7 +9,7 @@ const Navbar = ({ menuCollapsed, handleMenuCollapsed }) => {
     const handleLogout = (e) => {
         e.preventDefault()
 
-        return navigate('/login')
+        return navigate('/signin')
     }
 
     const handleToggleSidebarBtn = (e) => {

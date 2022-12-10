@@ -3,11 +3,12 @@ import ReactDOM from "react-dom";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import DefaultLayout from "./DefaultLayout";
 import Dashboard from "../pages/Dashboard";
+import Register from "../pages/Register/Register";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
-import Login from "../pages/Login";
-import Register from "../pages/Register/Register";
+import Signin from "../pages/Signin";
 import Signup from "../pages/Signup";
+import NotFound from "../pages/NotFound";
 
 export default function App() {
     return (
@@ -18,9 +19,9 @@ export default function App() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/register" element={<Register />} />
             </Route>
-            <Route path="/login" element={<Login />} />
+            <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="*" element={<p>There's nothing here: 404!</p>} />
+            <Route path="*" element={<NotFound />} />
         </Routes>
     )
 }
