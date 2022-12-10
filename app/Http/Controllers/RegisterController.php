@@ -15,16 +15,17 @@ class RegisterController extends Controller
         $student    = $request->get('student');
 
         $registers = Register::with('student','subject')
+                                ->where('RegisterYear', '1/2563')
                                 ->when(!empty($class), function($query) use ($class) {
                                     $query->where('RegisterClass', $class);
                                 })
                                 ->when(!empty($student), function($query) use ($student) {
                                     $query->where('StudentID', $student);
                                 })
-                                ->get();
+                                ->paginate(20);
 
         return [
             "registers" => $registers
-        ]
+        ];
     }
 }
