@@ -22,10 +22,16 @@ use App\User;
 | Public routes
 |--------------------------------------------------------------------------
 */
+
+/** Products */
 Route::get('/products', 'ProductController@index');
 Route::get('/products/{id}', 'ProductController@show');
 Route::post('/products', 'ProductController@store');
 
+/** Register */
+Route::get('/registers', 'RegisterController@getRegisters');
+
+/** Auth Token */
 Route::post('/sanctum/token', function (Request $request) {
     $request->validate([
         'email' => 'required|email',
