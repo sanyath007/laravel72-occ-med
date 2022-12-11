@@ -15,10 +15,10 @@ const Sidebar = ({ menuCollapsed, handleMenuCollapsed }) => {
         <aside id="sidebar" className="sidebar">
             <ul className="sidebar-nav" id="sidebar-nav">
                 <li className="nav-item">
-                    <a className="nav-link " href="index.html">
+                    <Link className="nav-link " to="/">
                         <i className="bi bi-grid"></i>
                         <span>Dashboard</span>
-                    </a>
+                    </Link>
                 </li>
                 {/* ตรวจสุขภาพ */}
                 <li className="nav-item">
