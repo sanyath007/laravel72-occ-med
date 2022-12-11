@@ -117,9 +117,15 @@ const Sidebar = ({ menuCollapsed, handleMenuCollapsed }) => {
                     </Link>
                 </li>
                 <li className="nav-item">
+                    <Link className="nav-link collapsed" to="/about">
+                        <i className="bi bi-question-circle"></i>
+                        <span>About Us</span>
+                    </Link>
+                </li>
+                <li className="nav-item">
                     <Link className="nav-link collapsed" to="/contact">
                         <i className="bi bi-envelope"></i>
-                        <span>Contact</span>
+                        <span>Contact Us</span>
                     </Link>
                 </li>
                 {/* <li className="nav-item">
