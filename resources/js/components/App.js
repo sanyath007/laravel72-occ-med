@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import DefaultLayout from "./DefaultLayout";
@@ -9,20 +9,27 @@ import Contact from "../pages/Contact";
 import Signin from "../pages/Signin";
 import Signup from "../pages/Signup";
 import NotFound from "../pages/NotFound";
+import { useAuth } from "../hooks/useAuth"
+import AuthContext from "../context/authContext";
 
 export default function App() {
+    const { userData } = useAuth()
+    const [authData, setAuthData] = useState({ signedIn: userData.signedIn, user: userData.user })
+
     return (
-        <Routes>
-            <Route path="/" element={<DefaultLayout/>}>
-                <Route path="" element={<Dashboard />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/register" element={<Register />} />
-            </Route>
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AuthContext.Provider value={{ authData, setAuthData }}>
+            <Routes>
+                <Route path="/" element={<DefaultLayout/>}>
+                    <Route path="" element={<Dashboard />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/register" element={<Register />} />
+                </Route>
+                <Route path="/signin" element={<Signin />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="*" element={<NotFound />} />
+            </Routes>
+        </AuthContext.Provider>
     )
 }
 
