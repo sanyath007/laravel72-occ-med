@@ -22,32 +22,20 @@ use App\User;
 | Public routes
 |--------------------------------------------------------------------------
 */
-
-/** Patients */
-Route::get('/patients', 'PatientController@getPatients');
-Route::get('/patients/{id}', 'PatientController@getPatient');
-Route::post('/patients', 'PatientController@store');
-
-/** Register */
-Route::get('/registers', 'RegisterController@getRegisters');
-
 /** Auth Token */
-Route::post('/sanctum/token', function (Request $request) {
+Route::post('/login', function (Request $request) {
     $request->validate([
         'email' => 'required|email',
         'password' => 'required',
-        'device_name' => 'required',
     ]);
 
-    $user = User::where('email', $request->email)->first();
+    $credentials = $request->only('email', 'password');
 
-    if (!$user || !Hash::check($request->password, $user->password)) {
-        throw ValidationException::withMessages([
-            'email' => ['The provided credentials are incorrect.'],
-        ]);
+    if(auth()->attempt($credentials, $request->filled('remember'))) {
+        return response()->json(['status' => true, 'user' => auth()->user()]);
     }
 
-    return $user->createToken($request->device_name)->plainTextToken;
+    return response()->json(['status' => false, 'message' => 'invalid username or password'], 500);
 });
 
 /*
@@ -59,6 +47,24 @@ Route::post('/sanctum/token', function (Request $request) {
 //     return $request->user();
 // });
 
-Route::middleware('auth:sanctum')->get('/users', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => 'auth:sanctum'], function() {
+    /** Users */
+    Route::get('/users', 'UserController@getUsers');
+
+    /** Patients */
+    Route::get('/patients', 'PatientController@getPatients');
+    Route::get('/patients/{id}', 'PatientController@getPatient');
+    Route::post('/patients', 'PatientController@store');
+
+    /** Register */
+    Route::get('/registers', 'RegisterController@getRegisters');
+
+    /** Auth */
+    Route::post('/login', function (Request $request) {
+        auth('api')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return response()->json(['status' => true, 'message' => 'logged out']);
+    });
 });

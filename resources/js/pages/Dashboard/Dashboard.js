@@ -9,7 +9,7 @@ const Dashboard = () => {
     }, [])
 
     const getUsers = async () => {
-        const res = await api.get(`/users`)
+        const res = await api.get(`/api/users`)
         console.log(res);
     }
 

@@ -16,13 +16,17 @@ const Signin = () => {
     const handleLogin = async (e) => {
         e.preventDefault()
 
-        const res = await axios.post(`${process.env.MIX_APP_URL}/api/sanctum/token`, data)
-
-        if (res) {
-            localStorage.setItem('access_token', res.data)
-
-            return navigate("/")
-        }
+        axios.get(`${process.env.MIX_APP_URL}/sanctum/csrf-cookie`).then(() => {
+            axios.post(
+                `${process.env.MIX_APP_URL}/api/login`,
+                data, 
+                { headers: { 'Accept': 'application/json' } }
+            ).then(res => {
+                if (res.data.status) {
+                    return navigate("/")
+                }
+            }).catch(err => console.log(err))
+        })
     }
 
     const handleChange = (e) => {
