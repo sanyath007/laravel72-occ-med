@@ -23,10 +23,10 @@ use App\User;
 |--------------------------------------------------------------------------
 */
 
-/** Products */
-Route::get('/products', 'ProductController@index');
-Route::get('/products/{id}', 'ProductController@show');
-Route::post('/products', 'ProductController@store');
+/** Patients */
+Route::get('/patients', 'PatientController@getPatients');
+Route::get('/patients/{id}', 'PatientController@getPatient');
+Route::post('/patients', 'PatientController@store');
 
 /** Register */
 Route::get('/registers', 'RegisterController@getRegisters');
