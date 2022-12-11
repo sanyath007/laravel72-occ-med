@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import api from '../api'
+import axios from 'axios'
 
 const initialData = {
     email: 'sanyath007@gmail.com',
@@ -16,7 +16,7 @@ const Signin = () => {
     const handleLogin = async (e) => {
         e.preventDefault()
 
-        const res = await api.post(`/api/sanctum/token`, data)
+        const res = await axios.post(`${process.env.MIX_APP_URL}/api/sanctum/token`, data)
 
         if (res) {
             localStorage.setItem('access_token', res.data)
