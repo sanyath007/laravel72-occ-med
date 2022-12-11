@@ -1,11 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+
+const initialData = {
+    email: 'sanyath007@gmail.com',
+    password: '4621008811',
+    device_name: 'mobile',
+    remember: true
+}
 
 const Signin = () => {
     const navigate = useNavigate()
+    const [data, setData] = useState(initialData)
 
-    const handleLogin = (e) => {
-        return navigate("/")
+    const handleLogin = async (e) => {
+        e.preventDefault()
+
+        const res = await axios.post(`${process.env.MIX_APP_URL}/api/sanctum/token`, data)
+
+        if (res) {
+            return navigate("/")
+        }
+    }
+
+    const handleChange = (e) => {
+        const { name, value } = e.target
+
+        setData((prev) => ({ ...prev, [name]: value }))
     }
 
     return (
@@ -29,21 +50,46 @@ const Signin = () => {
                                     </div>
                                     <form className="row g-3 needs-validation" noValidate onSubmit={handleLogin}>
                                         <div className="col-12">
-                                            <label htmlFor="yourUsername" className="form-label">Username</label>
+                                            <label htmlFor="email" className="form-label">Username</label>
                                             <div className="input-group has-validation">
                                                 <span className="input-group-text" id="inputGroupPrepend">@</span>
-                                                <input type="text" name="username" className="form-control" id="yourUsername" required />
+                                                <input
+                                                    type="email"
+                                                    id="email"
+                                                    name="email"
+                                                    value={data.email}
+                                                    onChange={(e) => handleChange(e)}
+                                                    className="form-control"
+                                                    placeholder="Enter your password..."
+                                                    required
+                                                />
                                                 <div className="invalid-feedback">Please enter your username.</div>
                                             </div>
                                         </div>
                                         <div className="col-12">
                                             <label htmlFor="yourPassword" className="form-label">Password</label>
-                                            <input type="password" name="password" className="form-control" id="yourPassword" required />
+                                            <input
+                                                type="password"
+                                                id="password"
+                                                name="password"
+                                                value={data.password}
+                                                onChange={(e) => handleChange(e)}
+                                                className="form-control"
+                                                placeholder="Enter your password..."
+                                                required
+                                            />
                                             <div className="invalid-feedback">Please enter your password!</div>
                                         </div>
                                         <div className="col-12">
                                             <div className="form-check">
-                                                <input className="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe" />
+                                                <input
+                                                    type="checkbox"
+                                                    id="remember"
+                                                    name="remember"
+                                                    value={data.remember}
+                                                    onChange={(e) => handleChange(e)}
+                                                    className="form-check-input"
+                                                />
                                                 <label className="form-check-label" htmlFor="rememberMe">Remember me</label>
                                             </div>
                                         </div>
