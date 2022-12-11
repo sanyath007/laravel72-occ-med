@@ -60,7 +60,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/registers', 'RegisterController@getRegisters');
 
     /** Auth */
-    Route::post('/login', function (Request $request) {
+    Route::post('/logout', function (Request $request) {
         auth('api')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
