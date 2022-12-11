@@ -9,7 +9,11 @@ const Navbar = ({ menuCollapsed, handleMenuCollapsed }) => {
     const handleLogout = (e) => {
         e.preventDefault()
 
-        return navigate('/signin')
+        axios.post(`${process.env.MIX_APP_URL}/api/logout`).then(res => {
+            if (res.data.status) {
+                return navigate('/signin')
+            }
+        }).catch(err => console.log(err))
     }
 
     const handleToggleSidebarBtn = (e) => {

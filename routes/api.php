@@ -61,7 +61,8 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
 
     /** Auth */
     Route::post('/logout', function (Request $request) {
-        auth('api')->logout();
+        auth('web')->logout();
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
