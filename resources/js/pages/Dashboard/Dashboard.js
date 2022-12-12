@@ -1,8 +1,18 @@
-import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import api from '../../api'
+import AuthContext from '../../context/authContext'
 
 const Dashboard = () => {
+    const { authData } = useContext(AuthContext)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        console.log('To check auth is signed in or not');
+        if (!authData.signedIn) {
+            navigate('/signin')
+        }
+    }, [])
 
     useEffect(() => {
         getUsers()
