@@ -2,9 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
-use App\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,21 +19,8 @@ use App\User;
 | Public routes
 |--------------------------------------------------------------------------
 */
-/** Auth Token */
-Route::post('/login', function (Request $request) {
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-    ]);
-
-    $credentials = $request->only('email', 'password');
-
-    if(auth()->attempt($credentials, $request->filled('remember'))) {
-        return response()->json(['status' => true, 'user' => auth()->user()]);
-    }
-
-    return response()->json(['status' => false, 'message' => 'invalid username or password'], 500);
-});
+/** Auth/login */
+Route::post('/login', 'Auth\LoginController@login');
 
 /*
 |--------------------------------------------------------------------------
@@ -59,13 +43,6 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     /** Register */
     Route::get('/registers', 'RegisterController@getRegisters');
 
-    /** Auth */
-    Route::post('/logout', function (Request $request) {
-        auth('web')->logout();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return response()->json(['status' => true, 'message' => 'logged out']);
-    });
+    /** Auth/login */
+    Route::post('/logout', 'Auth\LoginController@logout');
 });
