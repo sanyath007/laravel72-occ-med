@@ -53,9 +53,9 @@ const Sidebar = ({ menuCollapsed, handleMenuCollapsed }) => {
                     </a>
                     <ul id="clinic-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <a href="forms-elements.html">
-                                <i className="bi bi-circle"></i><span>Form Elements</span>
-                            </a>
+                            <Link to="/patients">
+                                <i className="bi bi-circle"></i><span>ผู้ป่วย</span>
+                            </Link>
                         </li>
                         <li>
                             <a href="forms-layouts.html">

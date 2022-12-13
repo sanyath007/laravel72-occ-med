@@ -1,50 +1,50 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import api from '../../api'
 
-const Register = () => {
-    const [registers, setRegisters] = useState([])
-    const [registersPager, setRegistersPager] = useState(null)
+const Patients = () => {
+    const [patients, setPatients] = useState([])
+    const [patientsPager, setPatientsPager] = useState(null)
 
     useEffect(() => {
-        getRegisters()
+        getPatients()
     }, [])
 
-    const getRegisters = async () => {
-        const res = await axios.get(`${process.env.MIX_APP_URL}/api/registers?class=ม.1`)
+    const getPatients = async () => {
+        const res = await api.get(`/api/patients`)
         console.log(res);
 
-        const { data, ...pager } = res.data.registers
+        const { data, ...pager } = res.data.patients
 
-        setRegisters(data)
-        setRegistersPager(pager)
+        setPatients(data)
+        setPatientsPager(pager)
     }
 
     return (
         <div className="card">
             <div className="card-body">
-                <h5 className="card-title">Table with stripped rows</h5>
+                <h5 className="card-title">รายการผู้ป่วย</h5>
                 <table className="table table-striped">
                     <thead>
                         <tr>
                             <th scope="col" style={{ textAlign: 'center' }}>#</th>
-                            <th scope="col" style={{ textAlign: 'center' }}>รหัสประจำตัว</th>
+                            <th scope="col" style={{ textAlign: 'center' }}>HN</th>
                             <th scope="col">ชื่อ-สกุล</th>
-                            <th scope="col" style={{ textAlign: 'center' }}>ชั้น</th>
-                            <th scope="col" style={{ textAlign: 'center' }}>ปีการศึกษา</th>
-                            <th scope="col" style={{ textAlign: 'center' }}>วิชา</th>
-                            <th scope="col" style={{ textAlign: 'center' }}>เกรดเฉลี่</th>
+                            <th scope="col" style={{ textAlign: 'center' }}>CID</th>
+                            <th scope="col" style={{ textAlign: 'center' }}>วันเกิด</th>
+                            <th scope="col" style={{ textAlign: 'center' }}>อายุ</th>
+                            <th scope="col" style={{ textAlign: 'center' }}>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {registers && registers.map((reg, row) => (
-                            <tr key={reg.StudentID+reg.SubjectCode}>
+                        {patients && patients.map((patient, row) => (
+                            <tr key={patient.StudentID+patient.SubjectCode}>
                                 <th scope="row" style={{ textAlign: 'center' }}>{row+1}</th>
-                                <td style={{ textAlign: 'center' }}>{reg.StudentID}</td>
-                                <td>{reg.student?.StudentPrefix+reg.student?.StudentFirstName+ ' ' +reg.student?.StudentLastName}</td>
-                                <td style={{ textAlign: 'center' }}>{reg.RegisterClass}</td>
-                                <td style={{ textAlign: 'center' }}>{reg.RegisterYear}</td>
-                                <td style={{ textAlign: 'center' }}>{reg.SubjectCode}</td>
-                                <td style={{ textAlign: 'center' }}>{reg.Grade}</td>
+                                <td style={{ textAlign: 'center' }}>{patient.StudentID}</td>
+                                <td>{patient.student?.StudentPrefix+patient.student?.StudentFirstName+ ' ' +patient.student?.StudentLastName}</td>
+                                <td style={{ textAlign: 'center' }}>{patient.patientisterClass}</td>
+                                <td style={{ textAlign: 'center' }}>{patient.patientisterYear}</td>
+                                <td style={{ textAlign: 'center' }}>{patient.SubjectCode}</td>
+                                <td style={{ textAlign: 'center' }}>{patient.Grade}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -78,4 +78,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default Patients

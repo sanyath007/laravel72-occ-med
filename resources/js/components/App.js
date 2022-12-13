@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import DefaultLayout from "./DefaultLayout";
 import Dashboard from "../pages/Dashboard/Dashboard";
-import Register from "../pages/Register/Register";
+import Patients from "../pages/Patients/Patients";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
 import Signin from "../pages/Signin";
@@ -23,7 +23,7 @@ export default function App() {
                     <Route path="" element={<Dashboard />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/contact" element={<Contact />} />
-                    <Route path="/register" element={<Register />} />
+                    <Route path="/patients" element={<Patients />} />
                 </Route>
                 <Route path="/signin" element={<Signin />} />
                 <Route path="/signup" element={<Signup />} />
