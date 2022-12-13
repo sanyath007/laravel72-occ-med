@@ -7,12 +7,12 @@ const Dashboard = () => {
     const { authData } = useContext(AuthContext)
     const navigate = useNavigate()
 
-    useEffect(() => {
-        console.log('To check auth is signed in or not');
-        if (!authData.signedIn) {
-            navigate('/signin')
-        }
-    }, [])
+    // useEffect(() => {
+    //     console.log('To check user is signed in or not in Dashboard');
+    //     if (!authData.signedIn) {
+    //         navigate('/signin')
+    //     }
+    // }, [])
 
     useEffect(() => {
         getUsers()

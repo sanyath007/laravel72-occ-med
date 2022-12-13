@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from "react"
-import { Cookie } from 'react-cookie'
+import { Cookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
-import authContext from "../context/authContext"
+import AuthContext from "../context/authContext"
+import api from '../api'
 
 export const useAuth = () => {
     const navigate = useNavigate()
     const [userData, setUserData] = useState({ signedIn: false, user: null })
-    const { setAuthData } = useContext(authContext)
+    const { setAuthData } = useContext(AuthContext)
 
     useEffect(() => {
-        console.log('on useAuth ...');
         setAuthData(userData)
     }, [userData.signedIn])
 
@@ -22,7 +22,7 @@ export const useAuth = () => {
     }
 
     function setAsLogged(user) {
-        const cookie = new Cookie()
+        const cookie = new Cookies()
 
         cookie.set('is_auth', true, { path: '/', expires: getAuthCookieExpiration(), sameSite: 'lax', httpOnly: false })
 
@@ -32,7 +32,7 @@ export const useAuth = () => {
     }
 
     function setLogout() {
-        const cookie = new Cookie()
+        const cookie = new Cookies()
 
         cookie.remove('is_auth', { path: '/', expires: getAuthCookieExpiration(), sameSite: 'lax', httpOnly: false })
 
@@ -44,18 +44,17 @@ export const useAuth = () => {
     function loginUserOnStartup()
     {
         const cookie = new Cookies();
+
         if(cookie.get('is_auth')) {
-            axios.post('/api/me').then(response => {
-                setUserdata({signedIn: true, user: response.data.user});
+            api.post('/api/me').then(res => {
+                setUserData({signedIn: true, user: res.data.user});
+
                 navigate('/');
             }).catch(error => {
-                setUserdata({signedIn: false, user: null});
                 setLogout();
             });
         } else {
-            setUserdata({signedIn: false, user: null});
-
-            navigate('/signin');
+            setLogout();
         }
     }
 

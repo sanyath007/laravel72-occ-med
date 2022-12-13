@@ -36,4 +36,9 @@ class LoginController extends Controller
 
         return response()->json(['status' => true, 'message' => 'logged out']);
     }
+
+    public function me()
+    {
+        return response()->json(['status' => true, 'user' => auth()->user()]);
+    }
 }

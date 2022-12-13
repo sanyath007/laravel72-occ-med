@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { useAuth } from '../hooks/useAuth'
+import AuthContext from '../context/authContext'
 
 const initialData = {
     email: 'sanyath007@gmail.com',
@@ -11,7 +13,16 @@ const initialData = {
 
 const Signin = () => {
     const navigate = useNavigate()
+    const { authData } = useContext(AuthContext)
+    const { setAsLogged } = useAuth()
     const [data, setData] = useState(initialData)
+
+    // useEffect(() => {
+    //     console.log('To check user is signed in or not in Signin');
+    //     if (authData.signedIn) {
+    //         navigate('/')
+    //     }
+    // }, [])
 
     const handleLogin = async (e) => {
         e.preventDefault()
@@ -23,6 +34,8 @@ const Signin = () => {
                 { headers: { 'Accept': 'application/json' } }
             ).then(res => {
                 if (res.data.status) {
+                    setAsLogged(res.data.user)
+
                     return navigate("/")
                 }
             }).catch(err => console.log(err))
