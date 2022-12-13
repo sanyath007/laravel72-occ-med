@@ -34,7 +34,8 @@ const Signin = () => {
                 { headers: { 'Accept': 'application/json' } }
             ).then(res => {
                 if (res.data.status) {
-                    setAsLogged(res.data.user)
+                    // setAsLogged(res.data.user)
+                    localStorage.setItem('user', JSON.stringify(res.data.user))
 
                     return navigate("/")
                 }

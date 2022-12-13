@@ -37,14 +37,16 @@ const Patients = () => {
                     </thead>
                     <tbody>
                         {patients && patients.map((patient, row) => (
-                            <tr key={patient.StudentID+patient.SubjectCode}>
+                            <tr key={patient.hn}>
                                 <th scope="row" style={{ textAlign: 'center' }}>{row+1}</th>
-                                <td style={{ textAlign: 'center' }}>{patient.StudentID}</td>
-                                <td>{patient.student?.StudentPrefix+patient.student?.StudentFirstName+ ' ' +patient.student?.StudentLastName}</td>
-                                <td style={{ textAlign: 'center' }}>{patient.patientisterClass}</td>
-                                <td style={{ textAlign: 'center' }}>{patient.patientisterYear}</td>
-                                <td style={{ textAlign: 'center' }}>{patient.SubjectCode}</td>
-                                <td style={{ textAlign: 'center' }}>{patient.Grade}</td>
+                                <td style={{ textAlign: 'center' }}>{patient.hn}</td>
+                                <td>{patient.pname+patient.fname+ ' ' +patient.lname}</td>
+                                <td style={{ textAlign: 'center' }}>{patient.cid}</td>
+                                <td style={{ textAlign: 'center' }}>{patient.birthdate}</td>
+                                <td style={{ textAlign: 'center' }}>{patient.sex}</td>
+                                <td style={{ textAlign: 'center' }}>
+
+                                </td>
                             </tr>
                         ))}
                     </tbody>

@@ -9,7 +9,9 @@ class PatientController extends Controller
 {
     public function getPatients()
     {
-        return Patient::all();
+        return [
+            "patients" => Patient::paginate(10)
+        ];
     }
 
     public function getPatient($id)

@@ -22,7 +22,7 @@ api.interceptors.response.use(res => {
     if (err.response.status === 401) {
         console.log('Unauthorized!');
 
-        localStorage.setItem('user')
+        localStorage.removeItem('user')
     } else {
         return Promise.reject(err)
     }
