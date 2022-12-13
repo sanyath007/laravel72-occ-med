@@ -16,4 +16,16 @@ api.interceptors.request.use((config) => {
     return config
 }, (error) => Promise.reject(error))
 
+api.interceptors.response.use(res => {
+    return res
+}, err => {
+    if (err.response.status === 401) {
+        console.log('Unauthorized!');
+
+        localStorage.setItem('user')
+    } else {
+        return Promise.reject(err)
+    }
+})
+
 export default api
