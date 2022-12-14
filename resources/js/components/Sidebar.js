@@ -128,12 +128,12 @@ const Sidebar = ({ menuCollapsed, handleMenuCollapsed }) => {
                         <span>Contact Us</span>
                     </Link>
                 </li>
-                {/* <li className="nav-item">
-                    <a className="nav-link collapsed" href="pages-faq.html">
-                        <i className="bi bi-question-circle"></i>
-                        <span>F.A.Q</span>
-                    </a>
-                </li> */}
+                <li className="nav-item">
+                    <Link className="nav-link collapsed" to="/users">
+                        <i className="bi bi-people"></i>
+                        <span>ผู้ใช้งาน</span>
+                    </Link>
+                </li>
                 {/* <li className="nav-item">
                     <a className="nav-link collapsed" href="pages-login.html">
                         <i className="bi bi-box-arrow-in-right"></i>

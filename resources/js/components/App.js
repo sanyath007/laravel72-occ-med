@@ -6,6 +6,8 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import Patients from "../pages/Patients/Patients";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
+import Profile from "../pages/Users/Profile";
+import Users from "../pages/Users/Users";
 import Signin from "../pages/Signin";
 import Signup from "../pages/Signup";
 import NotFound from "../pages/NotFound";
@@ -22,6 +24,8 @@ export default function App() {
                 <Route path="/" element={<DefaultLayout/>}>
                     <Route path="" element={<Dashboard />} />
                     <Route path="/about" element={<About />} />
+                    <Route path="/users" element={<Users />} />
+                    <Route path="/users/profile" element={<Profile />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/patients" element={<Patients />} />
                 </Route>

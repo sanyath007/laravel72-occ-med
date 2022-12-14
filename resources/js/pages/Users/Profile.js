@@ -1,21 +1,25 @@
 import React, { useContext, useEffect, useState } from 'react'
-import authContext from '../../context/authContext'
+import AuthContext from '../../context/authContext'
+import api from '../../api'
 
 const Profile = () => {
-    const { authData } = useContext(authContext)
+    const { authData } = useContext(AuthContext)
     const [user, setUser] = useState(null)
 
     useEffect(() => {
-        if (authData) {
-            getUser(authData.user.id)
+        console.log('on Profile...', authData);
+
+        const user = JSON.parse(localStorage.getItem('user'))
+
+        if (user) {
+            getUser(user?.id)
         }
     }, [])
 
     const getUser = async (id) => {
         const res = await api.get(`/api/users/${id}`)
-        console.log(res);
 
-        // setUser(res.data.user)
+        setUser(res.data)
     }
 
     return (
@@ -24,10 +28,15 @@ const Profile = () => {
                 <div className="col-xl-4">
                     <div className="card">
                         <div className="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                            <img src="assets/img/profile-img.jpg" alt="Profile" className="rounded-circle" />
-                            <h2>Jassa</h2>
+                            <img src={`${process.env.MIX_APP_URL}/img/profile-img.jpg`} alt="Profile" className="rounded-circle" />
+                            <h2>{user?.name}</h2>
                             <h3>Web Designer</h3>
-                            <div className="social-links mt-2"> <a href="#" className="twitter"><i className="bi bi-twitter"></i></a> <a href="#" className="facebook"><i className="bi bi-facebook"></i></a> <a href="#" className="instagram"><i className="bi bi-instagram"></i></a> <a href="#" className="linkedin"><i className="bi bi-linkedin"></i></a></div>
+                            <div className="social-links mt-2">
+                                <a href="#" className="twitter"><i className="bi bi-twitter"></i></a>
+                                <a href="#" className="facebook"><i className="bi bi-facebook"></i></a>
+                                <a href="#" className="instagram"><i className="bi bi-instagram"></i></a>
+                                <a href="#" className="linkedin"><i className="bi bi-linkedin"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -35,155 +44,203 @@ const Profile = () => {
                     <div className="card">
                         <div className="card-body pt-3">
                             <ul className="nav nav-tabs nav-tabs-bordered">
-                            <li className="nav-item"> <button className="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button></li>
-                            <li className="nav-item"> <button className="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button></li>
-                            <li className="nav-item"> <button className="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button></li>
-                            <li className="nav-item"> <button className="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button></li>
+                                <li className="nav-item">
+                                    <button className="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                                </li>
+                                <li className="nav-item">
+                                    <button className="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+                                </li>
+                                <li className="nav-item">
+                                    <button className="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button>
+                                </li>
+                                <li className="nav-item">
+                                    <button className="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+                                </li>
                             </ul>
                             <div className="tab-content pt-2">
-                            <div className="tab-pane fade show active profile-overview" id="profile-overview">
-                                <h5 className="card-title">About</h5>
-                                <p className="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p>
-                                <h5 className="card-title">Profile Details</h5>
-                                <div className="row">
-                                    <div className="col-lg-3 col-md-4 label ">Full Name</div>
-                                    <div className="col-lg-9 col-md-8">Jassa</div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-lg-3 col-md-4 label">Company</div>
-                                    <div className="col-lg-9 col-md-8">Therichpost</div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-lg-3 col-md-4 label">Job</div>
-                                    <div className="col-lg-9 col-md-8">Web Designer</div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-lg-3 col-md-4 label">Country</div>
-                                    <div className="col-lg-9 col-md-8">USA</div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-lg-3 col-md-4 label">Address</div>
-                                    <div className="col-lg-9 col-md-8">Ludhiana, Punjab, India</div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-lg-3 col-md-4 label">Phone</div>
-                                    <div className="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
-                                </div>
-                                <div className="row">
-                                    <div className="col-lg-3 col-md-4 label">Email</div>
-                                    <div className="col-lg-9 col-md-8"><a href="/cdn-cgi/l/email-protection" className="__cf_email__" data-cfemail="e982c788878d8c9b9a8687a98c91888499858cc78a8684">[email&#160;protected]</a></div>
-                                </div>
-                            </div>
-                            <div className="tab-pane fade profile-edit pt-3" id="profile-edit">
-                                <form>
-                                    <div className="row mb-3">
-                                        <label for="profileImage" className="col-md-4 col-lg-3 col-form-label">Profile Image</label>
-                                        <div className="col-md-8 col-lg-9">
-                                        <img src="assets/img/profile-img.jpg" alt="Profile" />
-                                        <div className="pt-2"> <a href="#" className="btn btn-primary btn-sm" title="Upload new profile image"><i className="bi bi-upload"></i></a> <a href="#" className="btn btn-danger btn-sm" title="Remove my profile image"><i className="bi bi-trash"></i></a></div>
+                                <div className="tab-pane fade show active profile-overview" id="profile-overview">
+                                    <h5 className="card-title">About</h5>
+                                    <p className="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p>
+                                    <h5 className="card-title">Profile Details</h5>
+                                    <div className="row">
+                                        <div className="col-lg-3 col-md-4 label ">Full Name</div>
+                                        <div className="col-lg-9 col-md-8">Jassa</div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-lg-3 col-md-4 label">Company</div>
+                                        <div className="col-lg-9 col-md-8">Therichpost</div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-lg-3 col-md-4 label">Job</div>
+                                        <div className="col-lg-9 col-md-8">Web Designer</div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-lg-3 col-md-4 label">Country</div>
+                                        <div className="col-lg-9 col-md-8">USA</div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-lg-3 col-md-4 label">Address</div>
+                                        <div className="col-lg-9 col-md-8">Ludhiana, Punjab, India</div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-lg-3 col-md-4 label">Phone</div>
+                                        <div className="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="col-lg-3 col-md-4 label">Email</div>
+                                        <div className="col-lg-9 col-md-8">
+                                            <a href="/cdn-cgi/l/email-protection" className="__cf_email__" data-cfemail="e982c788878d8c9b9a8687a98c91888499858cc78a8684">
+                                                [email&#160;protected]
+                                            </a>
                                         </div>
                                     </div>
-                                    <div className="row mb-3">
-                                        <label for="fullName" className="col-md-4 col-lg-3 col-form-label">Full Name</label>
-                                        <div className="col-md-8 col-lg-9">
-                                            <input name="fullName" type="text" className="form-control" id="fullName" value="Jassa" />
+                                </div>
+                                <div className="tab-pane fade profile-edit pt-3" id="profile-edit">
+                                    <form>
+                                        <div className="row mb-3">
+                                            <label htmlFor="profileImage" className="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                                            <div className="col-md-8 col-lg-9">
+                                                <img src={`${process.env.MIX_APP_URL}/img/profile-img.jpg`} alt="Profile" />
+                                                <div className="pt-2">
+                                                    <a href="#" className="btn btn-primary btn-sm" title="Upload new profile image">
+                                                        <i className="bi bi-upload"></i>
+                                                    </a>
+                                                    <a href="#" className="btn btn-danger btn-sm" title="Remove my profile image">
+                                                        <i className="bi bi-trash"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="row mb-3">
-                                        <label for="about" className="col-md-4 col-lg-3 col-form-label">About</label>
-                                        <div className="col-md-8 col-lg-9"><textarea name="about" className="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea></div>
-                                    </div>
-                                    <div className="row mb-3">
-                                        <label for="company" className="col-md-4 col-lg-3 col-form-label">Company</label>
-                                        <div className="col-md-8 col-lg-9">
-                                            <input name="company" type="text" className="form-control" id="company" value="Therichpost" /></div>
-                                    </div>
-                                    <div className="row mb-3">
-                                        <label for="Job" className="col-md-4 col-lg-3 col-form-label">Job</label>
-                                        <div className="col-md-8 col-lg-9">
-                                            <input name="job" type="text" className="form-control" id="Job" value="Web Designer" /></div>
-                                    </div>
-                                    <div className="row mb-3">
-                                        <label for="Country" className="col-md-4 col-lg-3 col-form-label">Country</label>
-                                        <div className="col-md-8 col-lg-9">
-                                            <input name="country" type="text" className="form-control" id="Country" value="USA" /></div>
-                                    </div>
-                                    <div className="row mb-3">
-                                        <label for="Address" className="col-md-4 col-lg-3 col-form-label">Address</label>
-                                        <div className="col-md-8 col-lg-9">
-                                            <input name="address" type="text" className="form-control" id="Address" value="Ludhiana, Punjab, India" /></div>
-                                    </div>
-                                    <div className="row mb-3">
-                                        <label for="Phone" className="col-md-4 col-lg-3 col-form-label">Phone</label>
-                                        <div className="col-md-8 col-lg-9">
-                                            <input name="phone" type="text" className="form-control" id="Phone" value="(436) 486-3538 x29071" /></div>
-                                    </div>
-                                    <div className="row mb-3">
-                                        <label for="Email" className="col-md-4 col-lg-3 col-form-label">Email</label>
-                                        <div className="col-md-8 col-lg-9">
-                                            <input name="email" type="email" className="form-control" id="Email" value="k.anderson@example.com" /></div>
-                                    </div>
-                                    <div className="row mb-3">
-                                        <label for="Twitter" className="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
-                                        <div className="col-md-8 col-lg-9">
-                                            <input name="twitter" type="text" className="form-control" id="Twitter" value="https://twitter.com/#" /></div>
-                                    </div>
-                                    <div className="row mb-3">
-                                        <label for="Facebook" className="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
-                                        <div className="col-md-8 col-lg-9">
-                                            <input name="facebook" type="text" className="form-control" id="Facebook" value="https://facebook.com/#" /></div>
-                                    </div>
-                                    <div className="row mb-3">
-                                        <label for="Instagram" className="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
-                                        <div className="col-md-8 col-lg-9">
-                                            <input name="instagram" type="text" className="form-control" id="Instagram" value="https://instagram.com/#" /></div>
-                                    </div>
-                                    <div className="row mb-3">
-                                        <label for="Linkedin" className="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
-                                        <div className="col-md-8 col-lg-9">
-                                            <input name="linkedin" type="text" className="form-control" id="Linkedin" value="https://linkedin.com/#" /></div>
-                                    </div>
-                                    <div className="text-center"> <button type="submit" className="btn btn-primary">Save Changes</button></div>
-                                </form>
-                            </div>
-                            <div className="tab-pane fade pt-3" id="profile-settings">
-                                <form>
-                                    <div className="row mb-3">
-                                        <label for="fullName" className="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
-                                        <div className="col-md-8 col-lg-9">
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" id="changesMade" checked /> <label className="form-check-label" for="changesMade"> Changes made to your account </label></div>
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" id="newProducts" checked /> <label className="form-check-label" for="newProducts"> Information on new products and services </label></div>
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" id="proOffers" /> <label className="form-check-label" for="proOffers"> Marketing and promo offers </label></div>
-                                        <div className="form-check">
-                                            <input className="form-check-input" type="checkbox" id="securityNotify" checked disabled /> <label className="form-check-label" for="securityNotify"> Security alerts </label></div>
+                                        <div className="row mb-3">
+                                            <label htmlFor="fullName" className="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                                            <div className="col-md-8 col-lg-9">
+                                                <input name="fullName" type="text" className="form-control" id="fullName" value="Jassa" onChange={() => {}} />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="text-center"> <button type="submit" className="btn btn-primary">Save Changes</button></div>
-                                </form>
-                            </div>
-                            <div className="tab-pane fade pt-3" id="profile-change-password">
-                                <form>
-                                    <div className="row mb-3">
-                                        <label for="currentPassword" className="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                                        <div className="col-md-8 col-lg-9">
-                                            <input name="password" type="password" className="form-control" id="currentPassword" /></div>
-                                    </div>
-                                    <div className="row mb-3">
-                                        <label for="newPassword" className="col-md-4 col-lg-3 col-form-label">New Password</label>
-                                        <div className="col-md-8 col-lg-9">
-                                            <input name="newpassword" type="password" className="form-control" id="newPassword" /></div>
-                                    </div>
-                                    <div className="row mb-3">
-                                        <label for="renewPassword" className="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                                        <div className="col-md-8 col-lg-9">
-                                            <input name="renewpassword" type="password" className="form-control" id="renewPassword" /></div>
-                                    </div>
-                                    <div className="text-center"> <button type="submit" className="btn btn-primary">Change Password</button></div>
-                                </form>
-                            </div>
+                                        <div className="row mb-3">
+                                            <label htmlFor="about" className="col-md-4 col-lg-3 col-form-label">About</label>
+                                            <div className="col-md-8 col-lg-9">
+                                                {/* <textarea name="about" className="form-control" id="about" style="height: 100px">
+                                                    Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.
+                                                </textarea> */}
+                                            </div>
+                                        </div>
+                                        <div className="row mb-3">
+                                            <label htmlFor="company" className="col-md-4 col-lg-3 col-form-label">Company</label>
+                                            <div className="col-md-8 col-lg-9">
+                                                <input name="company" type="text" className="form-control" id="company" value="Therichpost" onChange={() => {}} />
+                                            </div>
+                                        </div>
+                                        <div className="row mb-3">
+                                            <label htmlFor="Job" className="col-md-4 col-lg-3 col-form-label">Job</label>
+                                            <div className="col-md-8 col-lg-9">
+                                                <input name="job" type="text" className="form-control" id="Job" value="Web Designer" onChange={() => {}} />
+                                            </div>
+                                        </div>
+                                        <div className="row mb-3">
+                                            <label htmlFor="Country" className="col-md-4 col-lg-3 col-form-label">Country</label>
+                                            <div className="col-md-8 col-lg-9">
+                                                <input name="country" type="text" className="form-control" id="Country" value="USA" onChange={() => {}} />
+                                            </div>
+                                        </div>
+                                        <div className="row mb-3">
+                                            <label htmlFor="Address" className="col-md-4 col-lg-3 col-form-label">Address</label>
+                                            <div className="col-md-8 col-lg-9">
+                                                <input name="address" type="text" className="form-control" id="Address" value="Ludhiana, Punjab, India" onChange={() => {}} />
+                                            </div>
+                                        </div>
+                                        <div className="row mb-3">
+                                            <label htmlFor="Phone" className="col-md-4 col-lg-3 col-form-label">Phone</label>
+                                            <div className="col-md-8 col-lg-9">
+                                                <input name="phone" type="text" className="form-control" id="Phone" value="(436) 486-3538 x29071" onChange={() => {}} />
+                                            </div>
+                                        </div>
+                                        <div className="row mb-3">
+                                            <label htmlFor="Email" className="col-md-4 col-lg-3 col-form-label">Email</label>
+                                            <div className="col-md-8 col-lg-9">
+                                                <input name="email" type="email" className="form-control" id="Email" value="k.anderson@example.com" onChange={() => {}} />
+                                            </div>
+                                        </div>
+                                        <div className="row mb-3">
+                                            <label htmlFor="Twitter" className="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
+                                            <div className="col-md-8 col-lg-9">
+                                                <input name="twitter" type="text" className="form-control" id="Twitter" value="https://twitter.com/#" onChange={() => {}} />
+                                            </div>
+                                        </div>
+                                        <div className="row mb-3">
+                                            <label htmlFor="Facebook" className="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
+                                            <div className="col-md-8 col-lg-9">
+                                                <input name="facebook" type="text" className="form-control" id="Facebook" value="https://facebook.com/#" onChange={() => {}} />
+                                            </div>
+                                        </div>
+                                        <div className="row mb-3">
+                                            <label htmlFor="Instagram" className="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
+                                            <div className="col-md-8 col-lg-9">
+                                                <input name="instagram" type="text" className="form-control" id="Instagram" value="https://instagram.com/#" onChange={() => {}} />
+                                            </div>
+                                        </div>
+                                        <div className="row mb-3">
+                                            <label htmlFor="Linkedin" className="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
+                                            <div className="col-md-8 col-lg-9">
+                                                <input name="linkedin" type="text" className="form-control" id="Linkedin" value="https://linkedin.com/#"  onChange={() => {}}/>
+                                            </div>
+                                        </div>
+                                        <div className="text-center">
+                                            <button type="submit" className="btn btn-primary">Save Changes</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div className="tab-pane fade pt-3" id="profile-settings">
+                                    <form>
+                                        <div className="row mb-3">
+                                            <label htmlFor="fullName" className="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
+                                            <div className="col-md-8 col-lg-9">
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" id="changesMade" checked onChange={() => {}} />
+                                                    <label className="form-check-label" htmlFor="changesMade"> Changes made to your account </label>
+                                                </div>
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" id="newProducts" checked onChange={() => {}} />
+                                                    <label className="form-check-label" htmlFor="newProducts"> Information on new products and services </label>
+                                                </div>
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" id="proOffers" onChange={() => {}} />
+                                                    <label className="form-check-label" htmlFor="proOffers"> Marketing and promo offers </label>
+                                                </div>
+                                                <div className="form-check">
+                                                    <input className="form-check-input" type="checkbox" id="securityNotify" checked disabled onChange={() => {}} />
+                                                    <label className="form-check-label" htmlFor="securityNotify"> Security alerts </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="text-center"> <button type="submit" className="btn btn-primary">Save Changes</button></div>
+                                    </form>
+                                </div>
+                                <div className="tab-pane fade pt-3" id="profile-change-password">
+                                    <form>
+                                        <div className="row mb-3">
+                                            <label htmlFor="currentPassword" className="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                                            <div className="col-md-8 col-lg-9">
+                                                <input name="password" type="password" className="form-control" id="currentPassword" />
+                                            </div>
+                                        </div>
+                                        <div className="row mb-3">
+                                            <label htmlFor="newPassword" className="col-md-4 col-lg-3 col-form-label">New Password</label>
+                                            <div className="col-md-8 col-lg-9">
+                                                <input name="newpassword" type="password" className="form-control" id="newPassword" />
+                                            </div>
+                                        </div>
+                                        <div className="row mb-3">
+                                            <label htmlFor="renewPassword" className="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                                            <div className="col-md-8 col-lg-9">
+                                                <input name="renewpassword" type="password" className="form-control" id="renewPassword" />
+                                            </div>
+                                        </div>
+                                        <div className="text-center">
+                                            <button type="submit" className="btn btn-primary">Change Password</button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
