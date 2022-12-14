@@ -9,7 +9,7 @@ const Dashboard = () => {
     // }, [])
 
     return (
-        <section class="section dashboard">
+        <section className="section dashboard">
             <div className="row">
                 {/* =================================== Left =================================== */}
                 <div className="col-lg-8">

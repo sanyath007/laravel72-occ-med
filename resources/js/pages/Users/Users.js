@@ -12,9 +12,9 @@ const Users = () => {
     }
 
     return (
-        <section class="section">
-            <div class="row">
-                <div class="col-lg-12">
+        <section className="section">
+            <div className="row">
+                <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
                             <h5 className="card-title">รายการผู้ใช้งาน</h5>
