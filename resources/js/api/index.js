@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getAuthCookieExpiration } from '../hooks/useAuth'
+import * as moment from 'moment'
 
 const api = axios.create({
     baseURL: process.env.MIX_APP_URL,
@@ -25,7 +25,10 @@ api.interceptors.response.use(res => {
 
         console.log('Unauthorized!');
 
-        cookie.remove('is_auth', { path: '/', expires: getAuthCookieExpiration(), sameSite: 'lax', httpOnly: false })
+        cookie.remove(
+            'is_auth',
+            { path: '/', expires: moment().add(7, "days").toDate(), sameSite: 'lax', httpOnly: false }
+        )
 
         localStorage.removeItem('user')
     } else {
