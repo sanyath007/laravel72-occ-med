@@ -35,9 +35,7 @@ function DefaultLayout() {
                     </nav>
                 </div>
 
-                <section className="section dashboard">
-                    <Outlet />
-                </section>
+                <Outlet />
             </main>
 
             <Footer />
