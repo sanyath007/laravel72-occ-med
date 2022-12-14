@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import DefaultLayout from "./DefaultLayout";
@@ -15,6 +15,11 @@ import AuthContext from "../context/authContext";
 export default function App() {
     const { userData } = useAuth()
     const [authData, setAuthData] = useState({ signedIn: userData.signedIn, user: userData.user })
+
+    useEffect(() => {
+        console.log('on App...');
+        console.log(authData);
+    }, [])
 
     return (
         <AuthContext.Provider value={{ authData, setAuthData }}>

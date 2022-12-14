@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Navigate, Outlet } from "react-router-dom";
-import { ProSidebarProvider } from 'react-pro-sidebar'
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Sidebar from './Sidebar';
@@ -8,7 +7,6 @@ import authContext from '../context/authContext';
 
 function DefaultLayout() {
     const { authData } = useContext(authContext)
-    const [menuCollapsed, setMenuCollapsed] = useState(false)
 
     // useEffect(() => {
     //     // 
@@ -20,22 +18,11 @@ function DefaultLayout() {
         return <Navigate to="/signin" replace />;
     }
 
-
-    const toggleMenuCollapsed = () => {
-        menuCollapsed ? setMenuCollapsed(false) : setMenuCollapsed(true);
-    }
-
     return (
         <div className="app">
-            <Navbar
-                menuCollapsed={menuCollapsed}
-                handleMenuCollapsed={toggleMenuCollapsed}
-            />
+            <Navbar />
 
-            <Sidebar
-                menuCollapsed={menuCollapsed}
-                handleMenuCollapsed={toggleMenuCollapsed}
-            />
+            <Sidebar />
 
             <main id="main" className="main">
                 <div className="pagetitle">
