@@ -1,17 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { FaSearch, FaBars } from 'react-icons/fa'
-import { RiNotification2Line, RiSettings2Line } from 'react-icons/ri'
+import { useAuth } from '../hooks/useAuth'
+import AuthContext from '../context/authContext'
+import api from '../api'
 
-const Navbar = ({ menuCollapsed, handleMenuCollapsed }) => {
+const Navbar = () => {
     const navigate = useNavigate()
+    const { setLogout } = useAuth()
+    const { authData } = useContext(AuthContext)
 
     const handleLogout = (e) => {
         e.preventDefault()
 
-        axios.post(`${process.env.MIX_APP_URL}/api/logout`).then(res => {
+        api.post(`/api/logout`).then(res => {
             if (res.data.status) {
-                return navigate('/signin')
+                setLogout()
             }
         }).catch(err => console.log(err))
     }
@@ -25,10 +28,10 @@ const Navbar = ({ menuCollapsed, handleMenuCollapsed }) => {
     return (
         <header id="header" className="header fixed-top d-flex align-items-center">
             <div className="d-flex align-items-center justify-content-between">
-                <a href="#" className="logo d-flex align-items-center">
+                <Link to="/" className="logo d-flex align-items-center">
                     <img src={`${process.env.MIX_APP_URL}/img/logo.png`} alt="" />
                     <span className="d-none d-lg-block">OccMed</span>
-                </a>
+                </Link>
                 <i className="bi bi-list toggle-sidebar-btn" onClick={handleToggleSidebarBtn}></i>
             </div>
             <div className="search-bar">
@@ -162,11 +165,13 @@ const Navbar = ({ menuCollapsed, handleMenuCollapsed }) => {
                     <li className="nav-item dropdown pe-3">
                         <a className="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                             <img src={`${process.env.MIX_APP_URL}/img/profile-img.jpg`} alt="Profile" className="rounded-circle" />
-                            <span className="d-none d-md-block dropdown-toggle ps-2">Jassa</span>
+                            <span className="d-none d-md-block dropdown-toggle ps-2">
+                                {authData && authData.user?.name}
+                            </span>
                         </a>
                         <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                             <li className="dropdown-header">
-                                <h6>Jassa</h6>
+                                <h6>{authData && authData.user?.name}</h6>
                                 <span>Web Designer</span>
                             </li>
                             <li>

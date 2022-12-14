@@ -1,20 +1,20 @@
 import React, { useContext, useEffect } from 'react';
 import { Navigate, Outlet } from "react-router-dom";
+import { Cookies } from 'react-cookie'
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Sidebar from './Sidebar';
-import authContext from '../context/authContext';
+import AuthContext from '../context/authContext';
 
 function DefaultLayout() {
-    const { authData } = useContext(authContext)
+    const cookie = new Cookies()
+    const { authData } = useContext(AuthContext)
 
-    // useEffect(() => {
-    //     // 
-    // }, [])
-    
-    console.log('on DefaultLayout...');
-    console.log(authData);
-    if (!authData.signedIn) {
+    useEffect(() => {
+        console.log('on DefaultLayout...', authData);
+    }, [])
+
+    if (!cookie.get('is_auth')) {
         return <Navigate to="/signin" replace />;
     }
 
@@ -34,6 +34,7 @@ function DefaultLayout() {
                         </ol>
                     </nav>
                 </div>
+
                 <section className="section dashboard">
                     <Outlet />
                 </section>

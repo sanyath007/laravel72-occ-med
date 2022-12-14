@@ -17,12 +17,9 @@ const Signin = () => {
     const { setAsLogged } = useAuth()
     const [data, setData] = useState(initialData)
 
-    // useEffect(() => {
-    //     console.log('To check user is signed in or not in Signin');
-    //     if (authData.signedIn) {
-    //         navigate('/')
-    //     }
-    // }, [])
+    useEffect(() => {
+        console.log('on Signin...', authData);
+    }, [])
 
     const handleLogin = async (e) => {
         e.preventDefault()
@@ -34,10 +31,7 @@ const Signin = () => {
                 { headers: { 'Accept': 'application/json' } }
             ).then(res => {
                 if (res.data.status) {
-                    // setAsLogged(res.data.user)
-                    localStorage.setItem('user', JSON.stringify(res.data.user))
-
-                    return navigate("/")
+                    setAsLogged(res.data.user)
                 }
             }).catch(err => console.log(err))
         })

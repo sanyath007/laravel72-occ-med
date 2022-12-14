@@ -1,9 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import AuthContext from '../../context/authContext';
 import api from '../../api'
 
 const Patients = () => {
+    const { authData } = useContext(AuthContext)
     const [patients, setPatients] = useState([])
     const [patientsPager, setPatientsPager] = useState(null)
+
+    useEffect(() => {
+        console.log('on Patients...', authData);
+    }, [])
 
     useEffect(() => {
         getPatients()
