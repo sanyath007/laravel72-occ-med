@@ -1,18 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { Outlet } from "react-router-dom";
+import React, { useContext, useEffect, useState } from 'react';
+import { Navigate, Outlet } from "react-router-dom";
 import { ProSidebarProvider } from 'react-pro-sidebar'
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import Sidebar from './Sidebar';
-import { useAuth } from '../hooks/useAuth'
+import authContext from '../context/authContext';
 
 function DefaultLayout() {
-    const { loginUserOnStartup } = useAuth()
+    const { authData } = useContext(authContext)
     const [menuCollapsed, setMenuCollapsed] = useState(false)
 
     // useEffect(() => {
-    //     loginUserOnStartup()
+    //     // 
     // }, [])
+    
+    console.log('on DefaultLayout...');
+    console.log(authData);
+    if (!authData.signedIn) {
+        return <Navigate to="/signin" replace />;
+    }
+
 
     const toggleMenuCollapsed = () => {
         menuCollapsed ? setMenuCollapsed(false) : setMenuCollapsed(true);

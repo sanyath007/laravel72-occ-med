@@ -10,7 +10,10 @@ export const useAuth = () => {
     const { setAuthData } = useContext(AuthContext)
 
     useEffect(() => {
-        setAuthData(userData)
+        console.log('on useAuth...');
+        const user = JSON.parse(localStorage.getItem('user'))
+
+        setAuthData({ signedIn: user ? true : false, user })
     }, [userData.signedIn])
 
     function getAuthCookieExpiration() {
