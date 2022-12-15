@@ -1,12 +1,21 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { GlobalContext } from '../../context/globalContext'
 import api from '../../api'
 
 const Dashboard = () => {
+    const { setGlobal } = useContext(GlobalContext)
 
-    // useEffect(() => {
-    //     // 
-    // }, [])
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'Dashboard',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'dashboard', name: 'Dashboard', path: null, active: true }
+            ]
+        }))
+    }, [])
 
     return (
         <section className="section dashboard">

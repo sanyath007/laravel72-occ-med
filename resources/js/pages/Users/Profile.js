@@ -14,6 +14,8 @@ const Profile = () => {
         if (user) {
             getUser(user?.id)
         }
+
+        return getUser
     }, [])
 
     const getUser = async (id) => {

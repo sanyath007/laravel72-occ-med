@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Cookies } from 'react-cookie'
 import * as moment from 'moment'
 
 const api = axios.create({

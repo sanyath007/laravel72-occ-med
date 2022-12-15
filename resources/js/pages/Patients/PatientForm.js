@@ -18,6 +18,8 @@ const PatientForm = () => {
 
     useEffect(() => {
         getPatient(id)
+
+        return getPatient
     }, [])
 
     const getPatient = async (id) => {
