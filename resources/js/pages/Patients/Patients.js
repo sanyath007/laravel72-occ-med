@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import AuthContext from '../../context/authContext';
 import api from '../../api'
 
@@ -29,16 +30,16 @@ const Patients = () => {
         <div className="card">
             <div className="card-body">
                 <h5 className="card-title">รายการผู้ป่วย</h5>
-                <table className="table table-striped">
+                <table className="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col" style={{ textAlign: 'center' }}>#</th>
-                            <th scope="col" style={{ textAlign: 'center' }}>HN</th>
+                            <th scope="col" style={{ width: '3%', textAlign: 'center' }}>#</th>
+                            <th scope="col" style={{ width: '8%', textAlign: 'center' }}>HN</th>
                             <th scope="col">ชื่อ-สกุล</th>
-                            <th scope="col" style={{ textAlign: 'center' }}>CID</th>
-                            <th scope="col" style={{ textAlign: 'center' }}>วันเกิด</th>
-                            <th scope="col" style={{ textAlign: 'center' }}>อายุ</th>
-                            <th scope="col" style={{ textAlign: 'center' }}>Actions</th>
+                            <th scope="col" style={{ width: '8%', textAlign: 'center' }}>CID</th>
+                            <th scope="col" style={{ width: '15%', textAlign: 'center' }}>วันเกิด</th>
+                            <th scope="col" style={{ width: '6%', textAlign: 'center' }}>อายุ</th>
+                            <th scope="col" style={{ width: '10%', textAlign: 'center' }}>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,7 +52,17 @@ const Patients = () => {
                                 <td style={{ textAlign: 'center' }}>{patient.birthdate}</td>
                                 <td style={{ textAlign: 'center' }}>{patient.sex}</td>
                                 <td style={{ textAlign: 'center' }}>
-
+                                    <div className="btn-group" role="group" aria-label="Basic mixed styles example">
+                                        <Link to={`/patients/${patient.id}/detail`} className="btn btn-primary btn-sm">
+                                            <i className="bi bi-search"></i>
+                                        </Link>
+                                        <Link to={`/patients/${patient.id}/edit`} className="btn btn-warning btn-sm">
+                                            <i className="bi bi-pencil-square"></i>
+                                        </Link>
+                                        <a href="#" className="btn btn-danger btn-sm" onClick={(e) => {}}>
+                                            <i className="bi bi-trash"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         ))}

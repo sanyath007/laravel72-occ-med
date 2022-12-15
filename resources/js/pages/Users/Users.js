@@ -23,16 +23,16 @@ const Users = () => {
                     <div className="card">
                         <div className="card-body">
                             <h5 className="card-title">รายการผู้ใช้งาน</h5>
-                            <table className="table table-striped">
+                            <table className="table table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th scope="col" style={{ textAlign: 'center' }}>#</th>
-                                        <th scope="col" style={{ textAlign: 'center' }}>รหัส</th>
+                                        <th scope="col" style={{ width: '3%', textAlign: 'center' }}>#</th>
+                                        <th scope="col" style={{ width: '8%', textAlign: 'center' }}>รหัส</th>
                                         <th scope="col">ชื่อ-สกุล</th>
-                                        <th scope="col" style={{ textAlign: 'center' }}>Email</th>
-                                        <th scope="col" style={{ textAlign: 'center' }}>วันเกิด</th>
-                                        <th scope="col" style={{ textAlign: 'center' }}>อายุ</th>
-                                        <th scope="col" style={{ textAlign: 'center' }}>Actions</th>
+                                        <th scope="col" style={{ width: '20%' }}>Email</th>
+                                        <th scope="col" style={{ width: '10%', textAlign: 'center' }}>วันเกิด</th>
+                                        <th scope="col" style={{ width: '6%', textAlign: 'center' }}>อายุ</th>
+                                        <th scope="col" style={{ width: '10%', textAlign: 'center' }}>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -41,12 +41,18 @@ const Users = () => {
                                             <th scope="row" style={{ textAlign: 'center' }}>{row+1}</th>
                                             <td style={{ textAlign: 'center' }}>{user.id}</td>
                                             <td>{user.name}</td>
-                                            <td style={{ textAlign: 'center' }}>{user.email}</td>
+                                            <td>{user.email}</td>
                                             <td style={{ textAlign: 'center' }}>{''}</td>
                                             <td style={{ textAlign: 'center' }}>{''}</td>
                                             <td style={{ textAlign: 'center' }}>
-                                                <Link to={`/users/${user.id}/edit`} className="btn btn-warning">Edit</Link>
-                                                <a href="#" className="btn btn-danger ms-2" onClick={(e) => {}}>Delete</a>
+                                                <div className="btn-group" role="group" aria-label="Basic mixed styles example">
+                                                    <Link to={`/users/${user.id}/edit`} className="btn btn-warning btn-sm">
+                                                        <i className="bi bi-pencil-square"></i>
+                                                    </Link>
+                                                    <a href="#" className="btn btn-danger btn-sm ms-2" onClick={(e) => {}}>
+                                                        <i className="bi bi-trash"></i>
+                                                    </a>
+                                                </div>
                                             </td>
                                         </tr>
                                     ))}
