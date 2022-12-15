@@ -1,16 +1,31 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import {
-    Sidebar as ProSidebar,
-    Menu,
-    MenuItem
-} from 'react-pro-sidebar'
-import { FaList, FaRegHeart } from 'react-icons/fa'
-import { FiArrowLeftCircle, FiArrowRightCircle, FiHome, FiLogOut } from 'react-icons/fi'
-import { RiPencilLine } from 'react-icons/ri'
-import { BiCog } from 'react-icons/bi'
+import { GlobalContext } from '../context/globalContext'
 
-const Sidebar = ({ menuCollapsed, handleMenuCollapsed }) => {
+const Sidebar = () => {
+    const { setGlobal } = useContext(GlobalContext)
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth)
+
+    useEffect(() => {
+        function handleResize() {
+            setScreenWidth(window.innerWidth)
+        }
+
+        window.addEventListener('resize', handleResize)
+
+        return (() => {
+            window.removeEventListener('resize', handleResize)
+        })
+    }, [screenWidth])
+
+    const handleMenuClicked = (e) => {
+        if (screenWidth < 1200) {
+            const body = document.querySelector('body')
+    
+            body.classList.toggle('toggle-sidebar')
+        }
+    }
+
     return (
         <aside id="sidebar" className="sidebar">
             <ul className="sidebar-nav" id="sidebar-nav">
@@ -149,7 +164,7 @@ const Sidebar = ({ menuCollapsed, handleMenuCollapsed }) => {
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <Link className="nav-link collapsed" to="/users">
+                    <Link className="nav-link collapsed" to="/users" onClick={handleMenuClicked}>
                         <i className="bi bi-people"></i>
                         <span>ผู้ใช้งาน</span>
                     </Link>
