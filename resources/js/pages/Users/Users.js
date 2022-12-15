@@ -1,6 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import api from '../../api'
 
 const Users = () => {
+    const [users, setUsers] = useState([])
 
     useEffect(() => {
         getUsers()
@@ -9,6 +12,8 @@ const Users = () => {
     const getUsers = async () => {
         const res = await api.get(`/api/users`)
         console.log(res);
+
+        setUsers(res.data)
     }
 
     return (
@@ -22,25 +27,26 @@ const Users = () => {
                                 <thead>
                                     <tr>
                                         <th scope="col" style={{ textAlign: 'center' }}>#</th>
-                                        <th scope="col" style={{ textAlign: 'center' }}>HN</th>
+                                        <th scope="col" style={{ textAlign: 'center' }}>รหัส</th>
                                         <th scope="col">ชื่อ-สกุล</th>
-                                        <th scope="col" style={{ textAlign: 'center' }}>CID</th>
+                                        <th scope="col" style={{ textAlign: 'center' }}>Email</th>
                                         <th scope="col" style={{ textAlign: 'center' }}>วันเกิด</th>
                                         <th scope="col" style={{ textAlign: 'center' }}>อายุ</th>
                                         <th scope="col" style={{ textAlign: 'center' }}>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {patients && patients.map((patient, row) => (
-                                        <tr key={patient.hn}>
+                                    {users && users.map((user, row) => (
+                                        <tr key={user.id}>
                                             <th scope="row" style={{ textAlign: 'center' }}>{row+1}</th>
-                                            <td style={{ textAlign: 'center' }}>{patient.hn}</td>
-                                            <td>{patient.pname+patient.fname+ ' ' +patient.lname}</td>
-                                            <td style={{ textAlign: 'center' }}>{patient.cid}</td>
-                                            <td style={{ textAlign: 'center' }}>{patient.birthdate}</td>
-                                            <td style={{ textAlign: 'center' }}>{patient.sex}</td>
+                                            <td style={{ textAlign: 'center' }}>{user.id}</td>
+                                            <td>{user.name}</td>
+                                            <td style={{ textAlign: 'center' }}>{user.email}</td>
+                                            <td style={{ textAlign: 'center' }}>{''}</td>
+                                            <td style={{ textAlign: 'center' }}>{''}</td>
                                             <td style={{ textAlign: 'center' }}>
-
+                                                <Link to={`/users/${user.id}/edit`} className="btn btn-warning">Edit</Link>
+                                                <a href="#" className="btn btn-danger ms-2" onClick={(e) => {}}>Delete</a>
                                             </td>
                                         </tr>
                                     ))}
