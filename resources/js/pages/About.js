@@ -1,11 +1,22 @@
 import React, { useContext, useEffect } from 'react'
 import AuthContext from '../context/authContext';
+import { GlobalContext } from '../context/globalContext';
 
 const About = () => {
     const { authData } = useContext(AuthContext)
+    const { setGlobal } = useContext(GlobalContext)
 
     useEffect(() => {
         console.log('on About...', authData);
+
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'About',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'about', name: 'About', path: null, active: true }
+            ]
+        }))
     }, [])
 
     return (
