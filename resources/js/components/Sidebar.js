@@ -53,14 +53,14 @@ const Sidebar = ({ menuCollapsed, handleMenuCollapsed }) => {
                     </a>
                     <ul id="clinic-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <Link to="/patients">
-                                <i className="bi bi-circle"></i><span>ผู้ป่วย</span>
+                            <Link to="/patients/new">
+                                <i className="bi bi-circle"></i><span>ลงทะเบียนผู้ป่วยใหม่</span>
                             </Link>
                         </li>
                         <li>
-                            <a href="forms-layouts.html">
-                                <i className="bi bi-circle"></i><span>Form Layouts</span>
-                            </a>
+                            <Link to="/patients">
+                                <i className="bi bi-circle"></i><span>รายการผู้ป่วย</span>
+                            </Link>
                         </li>
                         <li>
                             <a href="forms-editors.html">
@@ -108,6 +108,26 @@ const Sidebar = ({ menuCollapsed, handleMenuCollapsed }) => {
                         <li> <a href="icons-boxicons.html"> <i className="bi bi-circle"></i><span>Boxicons</span> </a></li>
                     </ul>
                 </li> */}
+                {/* ผู้ป่วย */}
+                <li className="nav-item">
+                    <a className="nav-link collapsed" data-bs-target="#patients-nav" data-bs-toggle="collapse" href="#">
+                        <i className="bi bi-journal-text"></i>
+                        <span>ผู้ป่วย</span>
+                        <i className="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="patients-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <Link to="/patients/new">
+                                <i className="bi bi-circle"></i><span>ลงทะเบียนผู้ป่วยใหม่</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/patients">
+                                <i className="bi bi-circle"></i><span>รายการผู้ป่วย</span>
+                            </Link>
+                        </li>
+                    </ul>
+                </li>
                 {/* Pages */}
                 <li className="nav-heading">Pages</li>
                 <li className="nav-item">
