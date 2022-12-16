@@ -11,7 +11,7 @@ const Checkups = () => {
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'checkups', name: 'งานตรวจสุขภาพ', path: '/checkups' },
-                { id: 'checkups/list', name: 'รายการตรวจสุขภาพ', path: null, active: true }
+                { id: 'list', name: 'รายการตรวจสุขภาพ', path: null, active: true }
             ]
         }))
     }, [])

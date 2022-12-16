@@ -64,13 +64,18 @@ const Sidebar = () => {
                     </a>
                     <ul id="clinic-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <Link to="/patients/new" onClick={handleMenuClicked}>
-                                <i className="bi bi-circle"></i><span>ลงทะเบียนผู้ป่วยใหม่</span>
+                            <Link to="/services/new" onClick={handleMenuClicked}>
+                                <i className="bi bi-circle"></i><span>ลงทะเบียนเข้ารับบริการ</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/patients" onClick={handleMenuClicked}>
-                                <i className="bi bi-circle"></i><span>รายการผู้ป่วย</span>
+                            <Link to="/services" onClick={handleMenuClicked}>
+                                <i className="bi bi-circle"></i><span>รายการให้บริการ</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/services" onClick={handleMenuClicked}>
+                                <i className="bi bi-circle"></i><span>สรุปผลงาน</span>
                             </Link>
                         </li>
                     </ul>
@@ -83,8 +88,16 @@ const Sidebar = () => {
                         <i className="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="prevention-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
-                        <li> <a href="tables-general.html"> <i className="bi bi-circle"></i><span>General Tables</span> </a></li>
-                        <li> <a href="tables-data.html"> <i className="bi bi-circle"></i><span>Data Tables</span> </a></li>
+                        <li>
+                            <a href="tables-general.html">
+                                <i className="bi bi-circle"></i><span>General Tables</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tables-data.html">
+                                <i className="bi bi-circle"></i><span>Data Tables</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 {/* Charts */}
@@ -93,9 +106,21 @@ const Sidebar = () => {
                         <i className="bi bi-bar-chart"></i><span>Charts</span><i className="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="charts-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
-                        <li> <a href="charts-chartjs.html"> <i className="bi bi-circle"></i><span>Chart.js</span> </a></li>
-                        <li> <a href="charts-apexcharts.html"> <i className="bi bi-circle"></i><span>ApexCharts</span> </a></li>
-                        <li> <a href="charts-echarts.html"> <i className="bi bi-circle"></i><span>ECharts</span> </a></li>
+                        <li>
+                            <a href="charts-chartjs.html">
+                                <i className="bi bi-circle"></i><span>Chart.js</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="charts-apexcharts.html">
+                                <i className="bi bi-circle"></i><span>ApexCharts</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="charts-echarts.html">
+                                <i className="bi bi-circle"></i><span>ECharts</span>
+                            </a>
+                        </li>
                     </ul>
                 </li> */}
                 {/* Icons */}
@@ -104,16 +129,28 @@ const Sidebar = () => {
                         <i className="bi bi-gem"></i><span>Icons</span><i className="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="icons-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
-                        <li> <a href="icons-bootstrap.html"> <i className="bi bi-circle"></i><span>Bootstrap Icons</span> </a></li>
-                        <li> <a href="icons-remix.html"> <i className="bi bi-circle"></i><span>Remix Icons</span> </a></li>
-                        <li> <a href="icons-boxicons.html"> <i className="bi bi-circle"></i><span>Boxicons</span> </a></li>
+                        <li>
+                            <a href="icons-bootstrap.html">
+                                <i className="bi bi-circle"></i><span>Bootstrap Icons</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="icons-remix.html">
+                                <i className="bi bi-circle"></i><span>Remix Icons</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="icons-boxicons.html">
+                                <i className="bi bi-circle"></i><span>Boxicons</span>
+                            </a>
+                        </li>
                     </ul>
                 </li> */}
                 {/* ผู้ป่วย */}
                 <li className="nav-item">
                     <a className="nav-link collapsed" data-bs-target="#patients-nav" data-bs-toggle="collapse" href="#">
                         <i className="bi bi-journal-text"></i>
-                        <span>ผู้ป่วย</span>
+                        <span>ทะเบียนผู้ป่วย</span>
                         <i className="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="patients-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -134,19 +171,19 @@ const Sidebar = () => {
                 <li className="nav-item">
                     <Link className="nav-link collapsed" to="/users/profile" onClick={handleMenuClicked}>
                         <i className="bi bi-person"></i>
-                        <span>Profile</span>
+                        <span>ข้อมูลส่วนตัว</span>
                     </Link>
                 </li>
                 <li className="nav-item">
                     <Link className="nav-link collapsed" to="/about" onClick={handleMenuClicked}>
                         <i className="bi bi-question-circle"></i>
-                        <span>About Us</span>
+                        <span>เกี่ยวกับเรา</span>
                     </Link>
                 </li>
                 <li className="nav-item">
                     <Link className="nav-link collapsed" to="/contact" onClick={handleMenuClicked}>
                         <i className="bi bi-envelope"></i>
-                        <span>Contact Us</span>
+                        <span>ติดต่อเรา</span>
                     </Link>
                 </li>
                 <li className="nav-item">

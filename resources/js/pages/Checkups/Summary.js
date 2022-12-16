@@ -10,8 +10,8 @@ const CheckupSummary = () => {
             title: 'สรุปผลงาน (งานตรวจสุขภาพ)',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'about', name: 'งานตรวจสุขภาพ', path: '/checkups' },
-                { id: 'about', name: 'สรุปผลงาน', path: null, active: true }
+                { id: 'checkups', name: 'งานตรวจสุขภาพ', path: '/checkups' },
+                { id: 'summary', name: 'สรุปผลงาน', path: null, active: true }
             ]
         }))
     }, [])
@@ -23,8 +23,8 @@ const CheckupSummary = () => {
                     <div className="card">
                         <div className="card-body">
                             <h5 className="card-title">สรุปผลงาน (งานตรวจสุขภาพ)</h5>
-                            <div class="row">
-                                <div class="col-md-12">
+                            <div className="row">
+                                <div className="col-md-12">
                                     <table className="table table-striped table-bordered">
                                         <thead>
                                             <tr>
