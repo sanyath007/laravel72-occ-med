@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Summary = () => {
+const CheckupSummary = () => {
     return (
         <section className="section">
             <div className="row">
@@ -45,4 +45,4 @@ const Summary = () => {
     )
 }
 
-export default Summary
+export default CheckupSummary

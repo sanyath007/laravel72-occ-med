@@ -16,6 +16,9 @@ import AuthContext from "../context/authContext";
 import { GlobalProvider } from '../context/globalContext'
 import PatientForm from "../pages/Patients/PatientForm";
 import PatientDetail from "../pages/Patients/PatientDetail";
+import Checkups from "../pages/Checkups/Checkups";
+import CheckupForm from "../pages/Checkups/CheckupForm";
+import CheckupSummary from "../pages/Checkups/Summary";
 
 export default function App() {
     const { userData } = useAuth()
@@ -35,6 +38,9 @@ export default function App() {
                         <Route path="/patients/new" element={<PatientForm />} />
                         <Route path="/patients/:id/edit" element={<PatientForm />} />
                         <Route path="/patients/:id/detail" element={<PatientDetail />} />
+                        <Route path="/checkups" element={<Checkups />} />
+                        <Route path="/checkups/new" element={<CheckupForm />} />
+                        <Route path="/checkups/summary" element={<CheckupSummary />} />
                     </Route>
                     <Route path="/signin" element={<Signin />} />
                     <Route path="/signup" element={<Signup />} />
