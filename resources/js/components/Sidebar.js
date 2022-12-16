@@ -30,7 +30,7 @@ const Sidebar = () => {
         <aside id="sidebar" className="sidebar">
             <ul className="sidebar-nav" id="sidebar-nav">
                 <li className="nav-item">
-                    <Link className="nav-link " to="/">
+                    <Link className="nav-link " to="/" onClick={handleMenuClicked}>
                         <i className="bi bi-grid"></i>
                         <span>Dashboard</span>
                     </Link>
@@ -44,17 +44,12 @@ const Sidebar = () => {
                     </a>
                     <ul id="checkup-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <a href="components-alerts.html">
+                            <a href="components-alerts.html" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>Alerts</span>
                             </a>
                         </li>
-                        <li> <a href="components-accordion.html">
+                        <li> <a href="components-accordion.html" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>Accordion</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="components-badges.html">
-                                <i className="bi bi-circle"></i><span>Badges</span>
                             </a>
                         </li>
                     </ul>
@@ -68,24 +63,14 @@ const Sidebar = () => {
                     </a>
                     <ul id="clinic-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <Link to="/patients/new">
+                            <Link to="/patients/new" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>ลงทะเบียนผู้ป่วยใหม่</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/patients">
+                            <Link to="/patients" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>รายการผู้ป่วย</span>
                             </Link>
-                        </li>
-                        <li>
-                            <a href="forms-editors.html">
-                                <i className="bi bi-circle"></i><span>Form Editors</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="forms-validation.html">
-                                <i className="bi bi-circle"></i><span>Form Validation</span>
-                            </a>
                         </li>
                     </ul>
                 </li>
@@ -132,12 +117,12 @@ const Sidebar = () => {
                     </a>
                     <ul id="patients-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <Link to="/patients/new">
+                            <Link to="/patients/new" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>ลงทะเบียนผู้ป่วยใหม่</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/patients">
+                            <Link to="/patients" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>รายการผู้ป่วย</span>
                             </Link>
                         </li>
@@ -146,19 +131,19 @@ const Sidebar = () => {
                 {/* Pages */}
                 <li className="nav-heading">Pages</li>
                 <li className="nav-item">
-                    <Link className="nav-link collapsed" to="/users/profile">
+                    <Link className="nav-link collapsed" to="/users/profile" onClick={handleMenuClicked}>
                         <i className="bi bi-person"></i>
                         <span>Profile</span>
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <Link className="nav-link collapsed" to="/about">
+                    <Link className="nav-link collapsed" to="/about" onClick={handleMenuClicked}>
                         <i className="bi bi-question-circle"></i>
                         <span>About Us</span>
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <Link className="nav-link collapsed" to="/contact">
+                    <Link className="nav-link collapsed" to="/contact" onClick={handleMenuClicked}>
                         <i className="bi bi-envelope"></i>
                         <span>Contact Us</span>
                     </Link>
