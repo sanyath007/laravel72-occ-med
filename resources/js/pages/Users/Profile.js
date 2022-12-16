@@ -15,7 +15,7 @@ const Profile = () => {
             getUser(user?.id)
         }
 
-        return getUser
+        return () => getUser(user?.id)
     }, [])
 
     const getUser = async (id) => {
