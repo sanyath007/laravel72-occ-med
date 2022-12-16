@@ -1,5 +1,7 @@
 import React, { useContext, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { GlobalContext } from '../../context/globalContext'
+import { FaPlus } from 'react-icons/fa'
 
 const Checkups = () => {
     const { setGlobal } = useContext(GlobalContext)
@@ -23,8 +25,16 @@ const Checkups = () => {
                     <div className="card">
                         <div className="card-body">
                             <h5 className="card-title">รายการตรวจสุขภาพ</h5>
+
                             <div className="row">
                                 <div className="col-md-12">
+                                    <div className="d-flex justify-content-end mb-3">
+                                        <Link to="/checkups/new" className="btn btn-primary">
+                                            <FaPlus className="me-1" />
+                                            สร้างรายการ
+                                        </Link>
+                                    </div>
+
                                     <table className="table table-striped table-bordered">
                                         <thead>
                                             <tr>
