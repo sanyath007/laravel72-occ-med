@@ -44,13 +44,14 @@ const Sidebar = () => {
                     </a>
                     <ul id="checkup-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <a href="components-alerts.html" onClick={handleMenuClicked}>
-                                <i className="bi bi-circle"></i><span>Alerts</span>
-                            </a>
+                            <Link to="/checkups" onClick={handleMenuClicked}>
+                                <i className="bi bi-circle"></i><span>การให้บริการ</span>
+                            </Link>
                         </li>
-                        <li> <a href="components-accordion.html" onClick={handleMenuClicked}>
-                                <i className="bi bi-circle"></i><span>Accordion</span>
-                            </a>
+                        <li>
+                            <Link to="/checkups/summary" onClick={handleMenuClicked}>
+                                <i className="bi bi-circle"></i><span>สรุปผลงาน</span>
+                            </Link>
                         </li>
                     </ul>
                 </li>
