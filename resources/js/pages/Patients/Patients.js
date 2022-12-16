@@ -1,15 +1,27 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import AuthContext from '../../context/authContext';
+import { GlobalContext } from '../../context/globalContext';
 import api from '../../api'
 
 const Patients = () => {
     const { authData } = useContext(AuthContext)
+    const { setGlobal } = useContext(GlobalContext)
     const [patients, setPatients] = useState([])
     const [patientsPager, setPatientsPager] = useState(null)
 
     useEffect(() => {
         console.log('on Patients...', authData);
+
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'รายการผู้ป่วย',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'patients', name: 'ทะเบียนผู้ป่วย', path: '/patients' },
+                { id: 'list', name: 'รายการผู้ป่วย', path: null, active: true }
+            ]
+        }))
     }, [])
 
     useEffect(() => {

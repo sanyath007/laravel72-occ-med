@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import api from '../../api'
+import { GlobalContext } from '../../context/globalContext'
 import { FaSave } from 'react-icons/fa'
 
 const patientSchema = Yup.object().shape({
@@ -13,8 +14,21 @@ const patientSchema = Yup.object().shape({
 })
 
 const PatientForm = () => {
+    const { setGlobal } = useContext(GlobalContext)
     const { id } = useParams()
     const [patient, setPatient] = useState(null)
+
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'ลงทะเบียนผู้ป่วยใหม่',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'patients', name: 'ทะเบียนผู้ป่วย', path: '/patients' },
+                { id: 'new', name: 'ลงทะเบียนผู้ป่วยใหม่', path: null, active: true }
+            ]
+        }))
+    }, [])
 
     useEffect(() => {
         getPatient(id)

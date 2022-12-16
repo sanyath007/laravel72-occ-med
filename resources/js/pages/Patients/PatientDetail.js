@@ -1,10 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import api from '../../api'
+import { GlobalContext } from '../../context/globalContext'
 
 const PatientDetail = () => {
+    const { setGlobal } = useContext(GlobalContext)
     const { id } = useParams();
     const [patient, setPatient] = useState(null)
+
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'รายละเอียดผู้ป่วย',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'patients', name: 'ทะเบียนผู้ป่วย', path: '/patients' },
+                { id: 'detail', name: 'รายละเอียดผู้ป่วย', path: null, active: true }
+            ]
+        }))
+    }, [])
 
     useEffect(() => {
         getPatient(id)
