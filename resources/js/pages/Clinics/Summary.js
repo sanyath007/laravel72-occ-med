@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { GlobalContext } from '../../context/globalContext'
 
 const ClinicSummary = () => {
-    const {} = useContext(GlobalContext)
+    const { setGlobal } = useContext(GlobalContext)
 
     useEffect(() => {
         setGlobal((prev) => ({

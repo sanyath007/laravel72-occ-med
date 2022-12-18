@@ -19,6 +19,7 @@ import PatientDetail from "../pages/Patients/PatientDetail";
 import Checkups from "../pages/Checkups/Checkups";
 import CheckupForm from "../pages/Checkups/CheckupForm";
 import CheckupSummary from "../pages/Checkups/Summary";
+import ClinicSummary from "../pages/Clinics/Summary";
 
 export default function App() {
     const { userData } = useAuth()
@@ -28,20 +29,28 @@ export default function App() {
         <AuthContext.Provider value={{ authData, setAuthData }}>
             <GlobalProvider>
                 <Routes>
+                    {/* ============================= Protected routes ============================= */}
                     <Route path="/" element={<DefaultLayout/>}>
+                        {/* Main routes */}
                         <Route path="" element={<Dashboard />} />
                         <Route path="/about" element={<About />} />
+                        <Route path="/contact" element={<Contact />} />
+                        {/* Users routes */}
                         <Route path="/users" element={<Users />} />
                         <Route path="/users/profile" element={<Profile />} />
-                        <Route path="/contact" element={<Contact />} />
+                        {/* Patients routes */}
                         <Route path="/patients" element={<Patients />} />
                         <Route path="/patients/new" element={<PatientForm />} />
                         <Route path="/patients/:id/edit" element={<PatientForm />} />
                         <Route path="/patients/:id/detail" element={<PatientDetail />} />
+                        {/* Checkups routes */}
                         <Route path="/checkups" element={<Checkups />} />
                         <Route path="/checkups/new" element={<CheckupForm />} />
                         <Route path="/checkups/summary" element={<CheckupSummary />} />
+                        {/* Clinics routes */}
+                        <Route path="/clinics/summary" element={<ClinicSummary />} />
                     </Route>
+                    {/* ============================= Public routes ============================= */}
                     <Route path="/signin" element={<Signin />} />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="*" element={<NotFound />} />
