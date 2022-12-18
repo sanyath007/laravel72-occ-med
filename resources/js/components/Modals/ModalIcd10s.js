@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Modal, Pagination } from 'react-bootstrap'
 import api from '../../api'
+import { currencyFormat } from '../../utils/formatter'
 
 const ModalIcd10s = ({ isOpen, hideModal, ...props }) => {
     const [icd10s, setIcd10s] = useState([])
@@ -39,12 +40,6 @@ const ModalIcd10s = ({ isOpen, hideModal, ...props }) => {
         const { name, value } = e.target
 
         setFilterings(prev => ({ ...prev, [name]: value }))
-    }
-
-    const currencyFormat = (number) => {
-        if (!number || number === undefined) return ''
-
-        return number.toLocaleString("en-US")
     }
 
     return (
