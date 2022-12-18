@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 
 const ModalWorkPlaces = ({ isOpen, hideModal, ...props }) => {
@@ -8,8 +8,9 @@ const ModalWorkPlaces = ({ isOpen, hideModal, ...props }) => {
         <Modal
             show={isOpen}
             onHide={hideModal}
+            size="xl"
         >
-            <Modal.Header></Modal.Header>
+            <Modal.Header closeButton>รายการสถานที่ทำงาน</Modal.Header>
             <Modal.Body>
                 <table className="table table-striped table-bordered">
                     <thead>

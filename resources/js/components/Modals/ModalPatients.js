@@ -8,8 +8,9 @@ const ModalPatients = ({ isOpen, hideModal, ...props }) => {
         <Modal
             show={isOpen}
             onHide={hideModal}
+            size="xl"
         >
-            <Modal.Header></Modal.Header>
+            <Modal.Header closeButton>รายการผู้ป่วย</Modal.Header>
             <Modal.Body>
                 <table className="table table-striped table-bordered">
                     <thead>

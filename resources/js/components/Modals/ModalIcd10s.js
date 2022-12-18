@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 
 const ModalIcd10s = ({ isOpen, hideModal, ...props }) => {
@@ -8,8 +8,9 @@ const ModalIcd10s = ({ isOpen, hideModal, ...props }) => {
         <Modal
             show={isOpen}
             onHide={hideModal}
+            size="xl"
         >
-            <Modal.Header></Modal.Header>
+            <Modal.Header closeButton>รายการ ICD-10</Modal.Header>
             <Modal.Body>
                 <table className="table table-striped table-bordered">
                     <thead>

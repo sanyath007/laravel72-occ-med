@@ -3,6 +3,9 @@ import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import api from '../../api'
 import { FaPlus, FaSave, FaSearch, FaTrashAlt } from 'react-icons/fa'
+import ModalPatients from '../../components/Modals/ModalPatients'
+import ModalWorkPlaces from '../../components/Modals/ModalWorkPlaces'
+import ModalIcd10s from '../../components/Modals/ModalIcd10s'
 
 const checkupSchema = Yup.object().shape({
 
@@ -10,6 +13,9 @@ const checkupSchema = Yup.object().shape({
 
 const CheckupForm = () => {
     const [labOrders, setLabOrders] = useState([])
+    const [showPatients, setShowPatients] = useState(false)
+    const [showIcd10s, setShowIcd10s] = useState(false)
+    const [showWorkPlaces, setShowWorkPlaces] = useState(false)
 
     return (
         <section className="section">
@@ -50,6 +56,21 @@ const CheckupForm = () => {
                             >
                                 {(formProps) => (
                                     <Form>
+                                        <ModalPatients
+                                            isOpen={showPatients}
+                                            hideModal={() => setShowPatients(false)}
+                                        />
+
+                                        <ModalWorkPlaces
+                                            isOpen={showWorkPlaces}
+                                            hideModal={() => setShowWorkPlaces(false)}
+                                        />
+
+                                        <ModalIcd10s
+                                            isOpen={showIcd10s}
+                                            hideModal={() => setShowIcd10s(false)}
+                                        />
+
                                         <div className="alert border-dark alert-dismissible fade show" role="alert">
                                             <div className="d-flex gap-3">
                                                 <div style={{ width: '20%' }}>
@@ -78,7 +99,7 @@ const CheckupForm = () => {
                                                                     value={formProps.values.patient_id}
                                                                     onChange={formProps.handleChange}
                                                                 />
-                                                                <button type="button" className="btn btn-outline-secondary">
+                                                                <button type="button" className="btn btn-outline-secondary" onClick={() => setShowPatients(true)}>
                                                                     <FaSearch />
                                                                 </button>
                                                             </div>
@@ -179,7 +200,7 @@ const CheckupForm = () => {
                                                         onChange={formProps.handleChange}
                                                         className="form-control"
                                                     />
-                                                    <button type="button" className="btn btn-outline-secondary">
+                                                    <button type="button" className="btn btn-outline-secondary" onClick={() => setShowWorkPlaces(true)}>
                                                         <FaSearch />
                                                     </button>
                                                     <button type="button" className="btn btn-outline-primary">
@@ -319,7 +340,7 @@ const CheckupForm = () => {
                                                         onChange={formProps.handleChange}
                                                         className="form-control"
                                                     />
-                                                    <button type="button" className="btn btn-outline-secondary">
+                                                    <button type="button" className="btn btn-outline-secondary" onClick={() => setShowIcd10s(true)}>
                                                         <FaSearch />
                                                     </button>
                                                 </div>
