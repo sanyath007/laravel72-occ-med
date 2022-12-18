@@ -42,7 +42,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::post('/patients', 'PatientController@store');
 
     /** Register */
-    Route::get('/registers', 'RegisterController@getRegisters');
+    Route::get('/icd10s', 'Icd10Controller@getIcd10s');
 
     /** Auth/login */
     Route::post('/logout', 'Auth\LoginController@logout');
