@@ -64,17 +64,17 @@ const Sidebar = () => {
                     </a>
                     <ul id="clinic-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <Link to="/services/new" onClick={handleMenuClicked}>
+                            <Link to="/clinics/new" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>ลงทะเบียนเข้ารับบริการ</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/services" onClick={handleMenuClicked}>
+                            <Link to="/clinics" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>รายการให้บริการ</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="/services" onClick={handleMenuClicked}>
+                            <Link to="/clinics/summary" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>สรุปผลงาน</span>
                             </Link>
                         </li>
