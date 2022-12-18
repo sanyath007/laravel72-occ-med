@@ -64,13 +64,8 @@ const Sidebar = () => {
                     </a>
                     <ul id="clinic-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <Link to="/clinics/new" onClick={handleMenuClicked}>
-                                <i className="bi bi-circle"></i><span>ลงทะเบียนเข้ารับบริการ</span>
-                            </Link>
-                        </li>
-                        <li>
                             <Link to="/clinics" onClick={handleMenuClicked}>
-                                <i className="bi bi-circle"></i><span>รายการให้บริการ</span>
+                                <i className="bi bi-circle"></i><span>การให้บริการ</span>
                             </Link>
                         </li>
                         <li>
