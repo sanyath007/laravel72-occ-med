@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Models\CompanyType;
+use App\Models\Changwat;
+use App\Models\Amphur;
+use App\Models\Tambon;
 
 class CompanyController extends Controller
 {
@@ -43,7 +46,10 @@ class CompanyController extends Controller
     public function getInitForms()
     {
         return [
-            "companyTypes" => CompanyType::all()
+            "companyTypes"  => CompanyType::all(),
+            "changwats"     => Changwat::all(),
+            "amphurs"       => Amphur::all(),
+            "tambons"       => Tambon::all(),
         ];
     }
 }
