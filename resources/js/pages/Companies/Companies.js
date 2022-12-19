@@ -12,10 +12,10 @@ const Companies = () => {
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'รายงานสถานประกอบการ',
+            title: 'รายการสถานประกอบการ',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'companies', name: 'รายงานสถานประกอบการ', path: null, active: true }
+                { id: 'companies', name: 'รายการสถานประกอบการ', path: null, active: true }
             ]
         }))
     }, [])
@@ -47,16 +47,15 @@ const Companies = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">รายการผู้ใช้งาน</h5>
+                            <h5 className="card-title">รายการสถานประกอบการ</h5>
                             <table className="table table-striped table-bordered">
                                 <thead>
                                     <tr>
                                         <th scope="col" style={{ width: '3%', textAlign: 'center' }}>#</th>
-                                        <th scope="col" style={{ width: '8%', textAlign: 'center' }}>รหัส</th>
-                                        <th scope="col">ชื่อ-สกุล</th>
-                                        <th scope="col" style={{ width: '20%' }}>Email</th>
-                                        <th scope="col" style={{ width: '10%', textAlign: 'center' }}>วันเกิด</th>
-                                        <th scope="col" style={{ width: '6%', textAlign: 'center' }}>อายุ</th>
+                                        <th scope="col" style={{ width: '25%' }}>ชื่อสถานประกอบการ</th>
+                                        <th scope="col">ที่อยู่</th>
+                                        <th scope="col" style={{ width: '15%', textAlign: 'center' }}>ประเภท</th>
+                                        <th scope="col" style={{ width: '20%', textAlign: 'center' }}>ผู้ติดต่อ</th>
                                         <th scope="col" style={{ width: '10%', textAlign: 'center' }}>Actions</th>
                                     </tr>
                                 </thead>

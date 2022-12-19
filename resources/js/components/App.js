@@ -21,6 +21,8 @@ import CheckupForm from "../pages/Checkups/CheckupForm";
 import CheckupSummary from "../pages/Checkups/Summary";
 import Clinics from "../pages/Clinics/Clinics";
 import ClinicSummary from "../pages/Clinics/Summary";
+import Companies from "../pages/Companies/Companies";
+import CompanyForm from "../pages/Companies/CompanyForm";
 
 export default function App() {
     const { userData } = useAuth()
