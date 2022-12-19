@@ -23,16 +23,24 @@ const CompanyForm = () => {
     const { setGlobal } = useContext(GlobalContext)
     const [company, setCompany] = useState([])
     const [companyTypes, setCompanyTypes] = useState([])
+    const [changwats, setChangwats] = useState([])
+    const [amphur, setAmphur] = useState({ amphurs: [], filteredAmphurs: [] })
+    const [tambon, setTambon] = useState({ tambons: [], filteredTambons: [] })
 
     /** Initial global states */
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'รายการผู้ป่วย',
+            title: id ? 'แก้ไขรายงานสถานประกอบการ' : 'เพิ่มรายงานสถานประกอบการ',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'companies', name: 'รายงานสถานประกอบการ', path: '/companies' },
-                { id: 'new', name: 'เพิ่มรายงานสถานประกอบการ', path: null, active: true }
+                {
+                    id: 'new',
+                    name: id ? 'แก้ไขรายงานสถานประกอบการ' : 'เพิ่มรายงานสถานประกอบการ',
+                    path: null,
+                    active: true
+                }
             ]
         }))
     }, [])
@@ -47,9 +55,25 @@ const CompanyForm = () => {
         const res = await api.get(`/api/companies/init/forms`)
 
         if (res.data) {
-            console.log(res.data);
             setCompanyTypes(res.data.companyTypes)
+            setChangwats(res.data.changwats)
+            setAmphur(prevAmphur => ({ ...prevAmphur, amphurs: res.data.amphurs }))
+            setTambon(prevTambon => ({ ...prevTambon, tambons: res.data.tambons }))
         }
+    }
+
+    const handleChangwatSelected = (chw_id) => {
+        const filteredAmphurs = amphur.amphurs.filter(amp => amp.chw_id === chw_id)
+        console.log(filteredAmphurs);
+
+        setAmphur(prevAmphur => ({ ...prevAmphur, filteredAmphurs }))
+    }
+
+    const handleAmphurSelected = (amp_id) => {
+        const filteredTambons = tambon.tambons.filter(tam => tam.amp_id === amp_id)
+        console.log(filteredTambons);
+
+        setTambon(prevTambon => ({ ...prevTambon, filteredTambons }))
     }
 
     const getCompany = async (id) => {
@@ -174,12 +198,22 @@ const CompanyForm = () => {
                                             <div className="col-md-4 form-group mb-2">
                                                 <label htmlFor="">จังหวัด</label>
                                                 <select
+                                                    id="changwat_id"
                                                     name="changwat_id"
                                                     value={formProps.values.changwat_id}
-                                                    onChange={formProps.handleChange}
+                                                    onChange={(e) => {
+                                                        const { value } = e.target
+                                                        formProps.setFieldValue('changwat_id', value)
+                                                        handleChangwatSelected(value)
+                                                    }}
                                                     className={`form-control ${formProps.errors.changwat_id && formProps.touched.changwat_id ? 'is-invalid' : ''}`}
                                                 >
-                                                    <option value=""></option>
+                                                    <option value="">-- กรุณาเลือก --</option>
+                                                    {changwats.length > 0 && changwats.map(changwat => (
+                                                        <option key={changwat.chw_id} value={changwat.chw_id}>
+                                                            {changwat.changwat}
+                                                        </option>
+                                                    ))}
                                                 </select>
                                                 {formProps.errors.changwat_id && formProps.touched.changwat_id ? (
                                                     <div className="invalid-feedback">
@@ -192,10 +226,19 @@ const CompanyForm = () => {
                                                 <select
                                                     name="amphur_id"
                                                     value={formProps.values.amphur_id}
-                                                    onChange={formProps.handleChange}
+                                                    onChange={(e) => {
+                                                        const { value } = e.target
+                                                        formProps.setFieldValue('amphur_id', value)
+                                                        handleAmphurSelected(value)
+                                                    }}
                                                     className={`form-control ${formProps.errors.amphur_id && formProps.touched.amphur_id ? 'is-invalid' : ''}`}
                                                 >
-                                                    <option value=""></option>
+                                                    <option value="">-- กรุณาเลือก --</option>
+                                                    {amphur.filteredAmphurs.length > 0 && amphur.filteredAmphurs.map(amp => (
+                                                        <option key={amp.id} value={amp.id}>
+                                                            {amp.amphur}
+                                                        </option>
+                                                    ))}
                                                 </select>
                                                 {formProps.errors.amphur_id && formProps.touched.amphur_id ? (
                                                     <div className="invalid-feedback">
@@ -211,7 +254,12 @@ const CompanyForm = () => {
                                                     onChange={formProps.handleChange}
                                                     className={`form-control ${formProps.errors.tambon_id && formProps.touched.tambon_id ? 'is-invalid' : ''}`}
                                                 >
-                                                    <option value=""></option>
+                                                    <option value="">-- กรุณาเลือก --</option>
+                                                    {tambon.filteredTambons.length > 0 && tambon.filteredTambons.map(tam => (
+                                                        <option key={tam.id} value={tam.id}>
+                                                            {tam.tambon}
+                                                        </option>
+                                                    ))}
                                                 </select>
                                                 {formProps.errors.tambon_id && formProps.touched.tambon_id ? (
                                                     <div className="invalid-feedback">
