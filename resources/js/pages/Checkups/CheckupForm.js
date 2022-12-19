@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import api from '../../api'
 import { FaPlus, FaSave, FaSearch, FaTrashAlt } from 'react-icons/fa'
 import ModalPatients from '../../components/Modals/ModalPatients'
-import ModalWorkPlaces from '../../components/Modals/ModalWorkPlaces'
+import ModalCompanies from '../../components/Modals/ModalCompanies'
 import ModalIcd10s from '../../components/Modals/ModalIcd10s'
 
 const checkupSchema = Yup.object().shape({
@@ -15,7 +15,7 @@ const CheckupForm = () => {
     const [labOrders, setLabOrders] = useState([])
     const [showPatients, setShowPatients] = useState(false)
     const [showIcd10s, setShowIcd10s] = useState(false)
-    const [showWorkPlaces, setShowWorkPlaces] = useState(false)
+    const [showCompanies, setShowCompanies] = useState(false)
 
     return (
         <section className="section">
@@ -32,7 +32,7 @@ const CheckupForm = () => {
                                     visit_date: '',
                                     visit_time: '',
                                     is_officer: '',
-                                    work_place: '',
+                                    company_id: '',
                                     age_y: 0,
                                     age_m: '',
                                     lab_result: '',
@@ -61,9 +61,9 @@ const CheckupForm = () => {
                                             hideModal={() => setShowPatients(false)}
                                         />
 
-                                        <ModalWorkPlaces
-                                            isOpen={showWorkPlaces}
-                                            hideModal={() => setShowWorkPlaces(false)}
+                                        <ModalCompanies
+                                            isOpen={showCompanies}
+                                            hideModal={() => setShowCompanies(false)}
                                         />
 
                                         <ModalIcd10s
