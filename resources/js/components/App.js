@@ -51,6 +51,9 @@ export default function App() {
                         {/* Clinics routes */}
                         <Route path="/clinics" element={<Clinics />} />
                         <Route path="/clinics/summary" element={<ClinicSummary />} />
+                        {/* Companies routes */}
+                        <Route path="/companies" element={<Companies />} />
+                        <Route path="/companies/new" element={<CompanyForm />} />
                     </Route>
                     {/* ============================= Public routes ============================= */}
                     <Route path="/signin" element={<Signin />} />
