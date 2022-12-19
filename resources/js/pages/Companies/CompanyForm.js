@@ -22,6 +22,7 @@ const CompanyForm = () => {
     const { id } = useParams()
     const { setGlobal } = useContext(GlobalContext)
     const [company, setCompany] = useState([])
+    const [companyTypes, setCompanyTypes] = useState([])
 
     /** Initial global states */
     useEffect(() => {
@@ -37,8 +38,19 @@ const CompanyForm = () => {
     }, [])
 
     useEffect(() => {
+        getInitForms()
 
+        return () => getInitForms()
     }, [])
+
+    const getInitForms = async () => {
+        const res = await api.get(`/api/companies/init/forms`)
+
+        if (res.data) {
+            console.log(res.data);
+            setCompanyTypes(res.data.companyTypes)
+        }
+    }
 
     const getCompany = async (id) => {
         const res = await api.get(`/api/companies/${id}`)
@@ -111,7 +123,12 @@ const CompanyForm = () => {
                                                     onChange={formProps.handleChange}
                                                     className={`form-control ${formProps.errors.company_type_id && formProps.touched.company_type_id ? 'is-invalid' : ''}`}
                                                 >
-                                                    <option value=""></option>
+                                                    <option value="">-- กรุณาเลือก --</option>
+                                                    {companyTypes && companyTypes.map(type => (
+                                                        <option key={type.id} value={type.id}>
+                                                            {type.name}
+                                                        </option>
+                                                    ))}
                                                 </select>
                                                 {formProps.errors.company_type_id && formProps.touched.company_type_id ? (
                                                     <div className="invalid-feedback">

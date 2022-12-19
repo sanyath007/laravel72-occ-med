@@ -47,6 +47,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     /** Companies */
     Route::get('/companies', 'CompanyController@getCompanies');
     Route::get('/companies/{id}', 'CompanyController@getCompany');
+    Route::get('/companies/init/forms', 'CompanyController@getInitForms');
 
     /** Auth/login */
     Route::post('/logout', 'Auth\LoginController@logout');

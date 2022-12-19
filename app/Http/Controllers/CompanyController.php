@@ -39,4 +39,11 @@ class CompanyController extends Controller
             "company" => $company
         ];
     }
+
+    public function getInitForms()
+    {
+        return [
+            "companyTypes" => CompanyType::all()
+        ];
+    }
 }
