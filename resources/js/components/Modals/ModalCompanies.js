@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 
-const ModalWorkPlaces = ({ isOpen, hideModal, ...props }) => {
+const ModalCompanies = ({ isOpen, hideModal, ...props }) => {
     const [patients, setPatients] = useState([])
 
     return (
@@ -45,4 +45,4 @@ const ModalWorkPlaces = ({ isOpen, hideModal, ...props }) => {
     )
 }
 
-export default ModalWorkPlaces
+export default ModalCompanies
