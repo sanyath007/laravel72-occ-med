@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Modal, Pagination } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 import api from '../../api'
-import { currencyFormat } from '../../utils/formatter'
+import Pagination from '../Pagination'
 
 const ModalIcd10s = ({ isOpen, hideModal, ...props }) => {
     const [icd10s, setIcd10s] = useState([])
@@ -88,7 +88,7 @@ const ModalIcd10s = ({ isOpen, hideModal, ...props }) => {
                     <tbody>
                         {icd10s && icd10s.map((icd, row) => (
                             <tr key={icd.code}>
-                                <th scope="row" style={{ textAlign: 'center' }}>{row+1}</th>
+                                <th scope="row" style={{ textAlign: 'center' }}>{pager?.from+row}</th>
                                 <td style={{ textAlign: 'center' }}>{icd.code}</td>
                                 <td>{icd.name}</td>
                                 <td>{icd.tname}</td>
@@ -105,28 +105,10 @@ const ModalIcd10s = ({ isOpen, hideModal, ...props }) => {
                 </table>
             </Modal.Body>
             <Modal.Footer>
-                <div className="d-flex justify-content-between align-items-center my-0 w-100">
-                    <span className="mb-0">รายการทั้งหมด {currencyFormat(pager?.total)} รายการ</span>
-                    <span className="mb-0">หน้า {currencyFormat(pager?.current_page)}/{currencyFormat(pager?.last_page)}</span>
-                    <Pagination className="mb-0">
-                        <Pagination.First
-                            disabled={pager?.current_page === 1}
-                            onClick={() => handlePageBtnClicked(pager?.first_page_url)}
-                        />
-                        <Pagination.Prev
-                            disabled={pager?.current_page === 1}
-                            onClick={() => handlePageBtnClicked(pager?.prev_page_url)}
-                        />
-                        <Pagination.Next
-                            disabled={pager?.current_page === pager?.last_page}
-                            onClick={() => handlePageBtnClicked(pager?.next_page_url)}
-                        />
-                        <Pagination.Last
-                            disabled={pager?.current_page === pager?.last_page}
-                            onClick={() => handlePageBtnClicked(pager?.last_page_url)}
-                        />
-                    </Pagination>
-                </div>
+                <Pagination
+                    pager={pager}
+                    handlePageBtnClicked={handlePageBtnClicked}
+                />
             </Modal.Footer>
         </Modal>
     )

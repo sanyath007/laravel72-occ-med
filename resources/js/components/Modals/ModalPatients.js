@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Modal, Pagination } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 import api from '../../api'
+import Pagination from '../Pagination'
 
 const ModalPatients = ({ isOpen, hideModal, ...props }) => {
     const [patients, setPatients] = useState([])
@@ -83,28 +84,10 @@ const ModalPatients = ({ isOpen, hideModal, ...props }) => {
                 </table>
             </Modal.Body>
             <Modal.Footer>
-                <div className="d-flex justify-content-between align-items-center my-0 w-100">
-                    <span className="mb-0">รายการทั้งหมด {pager?.total} รายการ</span>
-                    <span className="mb-0">หน้า {pager?.current_page}/{pager?.last_page}</span>
-                    <Pagination className="mb-0">
-                        <Pagination.First
-                            disabled={pager?.current_page === 1}
-                            onClick={() => handlePageBtnClicked(pager?.first_page_url)}
-                        />
-                        <Pagination.Prev
-                            disabled={pager?.current_page === 1}
-                            onClick={() => handlePageBtnClicked(pager?.prev_page_url)}
-                        />
-                        <Pagination.Next
-                            disabled={pager?.current_page === pager?.last_page}
-                            onClick={() => handlePageBtnClicked(pager?.next_page_url)}
-                        />
-                        <Pagination.Last
-                            disabled={pager?.current_page === pager?.last_page}
-                            onClick={() => handlePageBtnClicked(pager?.last_page_url)}
-                        />
-                    </Pagination>
-                </div>
+                <Pagination
+                    pager={pager}
+                    handlePageBtnClicked={handlePageBtnClicked}
+                />
             </Modal.Footer>
         </Modal>
     )
