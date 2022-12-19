@@ -1,4 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { FaEnvelope, FaMobileAlt, FaUserAlt } from 'react-icons/fa'
 import Pagination from '../../components/Pagination'
 import { GlobalContext } from '../../context/globalContext'
 import api from '../../api'
@@ -61,19 +63,28 @@ const Companies = () => {
                                 </thead>
                                 <tbody>
                                     {companies && companies.map((company, row) => (
-                                        <tr key={user.id}>
-                                            <th scope="row" style={{ textAlign: 'center' }}>{row+1}</th>
-                                            <td style={{ textAlign: 'center' }}>{company.id}</td>
+                                        <tr key={company.id}>
+                                            <th scope="row" style={{ textAlign: 'center' }}>{pager && pager?.from+row}</th>
                                             <td>{company.name}</td>
-                                            <td>{company.address}</td>
-                                            <td style={{ textAlign: 'center' }}>{''}</td>
-                                            <td style={{ textAlign: 'center' }}>{''}</td>
+                                            <td>
+                                                {`${company.address} หมู่${company.moo ? company.moo : '-'} 
+                                                    ถนน${company.road ? company.road : '-'} 
+                                                    ต.${company.tambon.tambon} 
+                                                    อ.${company.amphur.amphur} 
+                                                    จ.${company.changwat.changwat} ${company.zipcode}`}
+                                            </td>
+                                            <td style={{ textAlign: 'center' }}>{company.type?.name}</td>
+                                            <td style={{ fontSize: '12px' }}>
+                                                <p className="m-0"><FaUserAlt /> {company.contact_name}</p>
+                                                <p className="m-0"><FaMobileAlt /> {company.contact_tel}</p>
+                                                <p className="m-0"><FaEnvelope /> {company.contact_email}</p>
+                                            </td>
                                             <td style={{ textAlign: 'center' }}>
                                                 <div className="btn-group" role="group" aria-label="Basic mixed styles example">
                                                     <Link to={`/companies/${company.id}/edit`} className="btn btn-warning btn-sm">
                                                         <i className="bi bi-pencil-square"></i>
                                                     </Link>
-                                                    <a href="#" className="btn btn-danger btn-sm ms-2" onClick={(e) => {}}>
+                                                    <a href="#" className="btn btn-danger btn-sm" onClick={(e) => {}}>
                                                         <i className="bi bi-trash"></i>
                                                     </a>
                                                 </div>

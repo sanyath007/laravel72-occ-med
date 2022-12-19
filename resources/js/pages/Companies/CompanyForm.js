@@ -84,8 +84,9 @@ const CompanyForm = () => {
         }
     }
 
-    const handleSubmit = (values) => {
-        console.log(values)
+    const handleSubmit = async (values) => {
+        const res = await api.post('/api/companies', values)
+        console.log(res);
     }
 
     return (
