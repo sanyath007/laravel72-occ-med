@@ -118,29 +118,25 @@ const Sidebar = () => {
                         </li>
                     </ul>
                 </li> */}
-                {/* Icons */}
-                {/* <li className="nav-item">
+                {/* สถานประกอบการ */}
+                <li className="nav-item">
                     <a className="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-                        <i className="bi bi-gem"></i><span>Icons</span><i className="bi bi-chevron-down ms-auto"></i>
+                        <i className="bi bi-gem"></i><span>สถานประกอบการ</span>
+                        <i className="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="icons-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <a href="icons-bootstrap.html">
-                                <i className="bi bi-circle"></i><span>Bootstrap Icons</span>
-                            </a>
+                            <Link to="companies/new">
+                                <i className="bi bi-circle"></i><span>ลงทะเบียน</span>
+                            </Link>
                         </li>
                         <li>
-                            <a href="icons-remix.html">
-                                <i className="bi bi-circle"></i><span>Remix Icons</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="icons-boxicons.html">
-                                <i className="bi bi-circle"></i><span>Boxicons</span>
-                            </a>
+                            <Link to="companies">
+                                <i className="bi bi-circle"></i><span>รายการ</span>
+                            </Link>
                         </li>
                     </ul>
-                </li> */}
+                </li>
                 {/* ผู้ป่วย */}
                 <li className="nav-item">
                     <a className="nav-link collapsed" data-bs-target="#patients-nav" data-bs-toggle="collapse" href="#">
