@@ -200,7 +200,7 @@ const CheckupForm = () => {
                                                         onChange={formProps.handleChange}
                                                         className="form-control"
                                                     />
-                                                    <button type="button" className="btn btn-outline-secondary" onClick={() => setShowWorkPlaces(true)}>
+                                                    <button type="button" className="btn btn-outline-secondary" onClick={() => setShowCompanies(true)}>
                                                         <FaSearch />
                                                     </button>
                                                     <button type="button" className="btn btn-outline-primary">
