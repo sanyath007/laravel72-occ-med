@@ -23,6 +23,8 @@ import Clinics from "../pages/Clinics/Clinics";
 import ClinicSummary from "../pages/Clinics/Summary";
 import Companies from "../pages/Companies/Companies";
 import CompanyForm from "../pages/Companies/CompanyForm";
+import { Provider } from "react-redux";
+import store from "../store";
 
 export default function App() {
     const { userData } = useAuth()
@@ -69,9 +71,11 @@ export default function App() {
 
 if (document.getElementById('root')) {
     ReactDOM.render(
-        <HashRouter>
-            <App />
-        </HashRouter>,
+        <Provider store={store}>
+            <HashRouter>
+                <App />
+            </HashRouter>
+        </Provider>,
         document.getElementById('root')
     );
 }

@@ -30,6 +30,7 @@
         "vue-template-compiler": "^2.7.14"
     },
     "dependencies": {
+        "@reduxjs/toolkit": "^1.9.1",
         "bootstrap-icons": "^1.10.2",
         "formik": "^2.2.9",
         "moment": "^2.29.4",
@@ -38,6 +39,7 @@
         "react-datepicker": "^4.8.0",
         "react-icons": "^4.6.0",
         "react-pro-sidebar": "^1.0.0-alpha.7",
+        "react-redux": "^8.0.5",
         "react-router-dom": "^6.4.3",
         "yup": "^0.32.11"
     }
