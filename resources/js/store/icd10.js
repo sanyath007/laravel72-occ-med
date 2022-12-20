@@ -24,10 +24,11 @@ export const icd10Slice = createSlice({
     reducers: {},
     extraReducers: {
         [getIcd10s.pending]: (state) => {
+            state.icd10s = []
             state.loading = true
         },
         [getIcd10s.fulfilled]: (state, { payload }) => {
-            const { data, pager } = payload
+            const { data, ...pager } = payload
 
             state.icd10s = data
             state.pager = pager

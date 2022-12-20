@@ -1,39 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { Modal } from 'react-bootstrap'
-import api from '../../api'
+import { getIcd10s } from '../../store/icd10'
 import Pagination from '../Pagination'
 
 const ModalIcd10s = ({ isOpen, hideModal, ...props }) => {
-    const [icd10s, setIcd10s] = useState([])
-    const [pager, setPager] = useState(null)
+    const dispatch = useDispatch()
+    const { icd10s, pager, loading } = useSelector(state => state.icd10)
     const [filterings, setFilterings] = useState({ icd10: '', desc: '' })
 
     useEffect(() => {
-        getIcd10s()
-
-        return () => getIcd10s
+        fetchIcd10s()
     }, [filterings])
 
-    const getIcd10s = async (path='/api/icd10s?page=') => {
+    const fetchIcd10s = (path='/api/icd10s?page=') => {
         /** Filtering params */
-        console.log(path);
         const code = filterings.icd10 ? filterings.icd10 : ''
         const name = filterings.desc ? filterings.desc : ''
-        /** Filtering params */
 
-        const res = await api.get(`${path}&code=${code}&name=${name}`)
-
-        if (res.data) {
-            const { data, ...pager } = res.data.icd10s
-
-            setIcd10s(data)
-            setPager(pager)
-        }
+        dispatch(getIcd10s({ path: `${path}&code=${code}&name=${name}` }))
     }
 
     const handlePageBtnClicked = (path) => {
-        getIcd10s(path)
+        fetchIcd10s(path)
     }
 
     const handleChange = (e) => {
@@ -86,6 +76,16 @@ const ModalIcd10s = ({ isOpen, hideModal, ...props }) => {
                         </tr>
                     </thead>
                     <tbody>
+                        {loading && (
+                            <tr>
+                                <td colSpan="5" style={{ textAlign: 'center' }}>
+                                    <div className="spinner-border text-secondary" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
+
                         {icd10s && icd10s.map((icd, row) => (
                             <tr key={icd.code}>
                                 <th scope="row" style={{ textAlign: 'center' }}>{pager?.from+row}</th>
