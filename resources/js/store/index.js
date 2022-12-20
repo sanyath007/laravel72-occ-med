@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { counterReducer } from './counter'
+import { patientReducer } from './patient'
 import { companyReducer } from './company'
 import { icd10Reducer } from './icd10'
 
 export default configureStore({
     reducer: {
-        counter: counterReducer,
+        patient: patientReducer,
         company: companyReducer,
         icd10: icd10Reducer,
     }
