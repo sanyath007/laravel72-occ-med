@@ -121,7 +121,7 @@ const Sidebar = () => {
                 {/* สถานประกอบการ */}
                 <li className="nav-item">
                     <a className="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-                        <i className="bi bi-gem"></i><span>สถานประกอบการ</span>
+                        <i className="bi bi-house-door"></i><span>สถานประกอบการ</span>
                         <i className="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="icons-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -140,19 +140,19 @@ const Sidebar = () => {
                 {/* ผู้ป่วย */}
                 <li className="nav-item">
                     <a className="nav-link collapsed" data-bs-target="#patients-nav" data-bs-toggle="collapse" href="#">
-                        <i className="bi bi-journal-text"></i>
+                        <i className="bi bi-person-check"></i>
                         <span>ทะเบียนผู้ป่วย</span>
                         <i className="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="patients-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
                             <Link to="/patients/new" onClick={handleMenuClicked}>
-                                <i className="bi bi-circle"></i><span>ลงทะเบียนผู้ป่วยใหม่</span>
+                                <i className="bi bi-circle"></i><span>ลงทะเบียน</span>
                             </Link>
                         </li>
                         <li>
                             <Link to="/patients" onClick={handleMenuClicked}>
-                                <i className="bi bi-circle"></i><span>รายการผู้ป่วย</span>
+                                <i className="bi bi-circle"></i><span>รายการ</span>
                             </Link>
                         </li>
                     </ul>
@@ -161,7 +161,7 @@ const Sidebar = () => {
                 <li className="nav-heading">Pages</li>
                 <li className="nav-item">
                     <Link className="nav-link collapsed" to="/users/profile" onClick={handleMenuClicked}>
-                        <i className="bi bi-person"></i>
+                        <i className="bi bi-person-circle"></i>
                         <span>ข้อมูลส่วนตัว</span>
                     </Link>
                 </li>
