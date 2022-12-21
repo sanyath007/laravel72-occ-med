@@ -36,7 +36,15 @@ const ModalCompanies = ({ isOpen, hideModal, ...props }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {loading && <p>Loading...</p>}
+                        {loading && (
+                            <tr>
+                                <td colSpan="9" style={{ textAlign: 'center' }}>
+                                    <div className="spinner-border text-secondary" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
                         {companies && companies.map((company, row) => (
                             <tr key={company.id}>
                                 <th scope="row" style={{ textAlign: 'center' }}>{pager?.from+row}</th>
