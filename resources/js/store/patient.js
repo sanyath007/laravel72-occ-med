@@ -29,7 +29,7 @@ export const patientSlice = createSlice({
             state.loading = true
         },
         [getPatients.fulfilled]: (state, { payload }) => {
-            const { data, ...pager } = payload.patients
+            const { data, ...pager } = payload
 
             state.patients = data
             state.pager = pager

@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Modal } from 'react-bootstrap'
+import { AiOutlineMan, AiOutlineWoman } from 'react-icons/ai'
 import api from '../../api'
+import * as moment from 'moment'
 import { getPatients } from '../../store/patient'
 import Pagination from '../Pagination'
 
@@ -18,9 +20,9 @@ const ModalPatients = ({ isOpen, hideModal, ...props }) => {
     const fetchPatients = (path='/api/patients?page=') => {
         /** Add filtering logic */
         const hn = filterings.hn ? filterings.hn : ''
-        const name = filterings.name ? filterings.name : ''
+        const [fname, lname] = filterings.name ? filterings.name.split(' ') : ' '.split(' ')
 
-        dispatch(getPatients({ path: `${path}&hn=${hn}&name=${name}` }))
+        dispatch(getPatients({ path: `${path}&hn=${hn}&name=${fname}-${lname == undefined ? '' : lname}` }))
     }
 
     const handlePageBtnClicked = (path) => {
@@ -29,7 +31,6 @@ const ModalPatients = ({ isOpen, hideModal, ...props }) => {
 
     const handleChange = (e) => {
         const { name, value } = e.target
-        console.log(name, value);
 
         setFilterings(prevState => ({ ...prevState, [name]: value }))
     }
@@ -73,10 +74,11 @@ const ModalPatients = ({ isOpen, hideModal, ...props }) => {
                             <th scope="col" style={{ width: '3%', textAlign: 'center' }}>#</th>
                             <th scope="col" style={{ width: '8%', textAlign: 'center' }}>HN</th>
                             <th scope="col">ชื่อ-สกุล</th>
-                            <th scope="col" style={{ width: '8%', textAlign: 'center' }}>CID</th>
+                            <th scope="col" style={{ width: '10%', textAlign: 'center' }}>CID</th>
                             <th scope="col" style={{ width: '15%', textAlign: 'center' }}>วันเกิด</th>
                             <th scope="col" style={{ width: '6%', textAlign: 'center' }}>อายุ</th>
-                            <th scope="col" style={{ width: '5%', textAlign: 'center' }}>Actions</th>
+                            <th scope="col" style={{ width: '6%', textAlign: 'center' }}>เพศ</th>
+                            <th scope="col" style={{ width: '6%', textAlign: 'center' }}>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -86,8 +88,13 @@ const ModalPatients = ({ isOpen, hideModal, ...props }) => {
                                 <td style={{ textAlign: 'center' }}>{patient.hn}</td>
                                 <td>{patient.pname+patient.fname+ ' ' +patient.lname}</td>
                                 <td style={{ textAlign: 'center' }}>{patient.cid}</td>
-                                <td style={{ textAlign: 'center' }}>{patient.birthdate}</td>
-                                <td style={{ textAlign: 'center' }}>{patient.sex}</td>
+                                <td style={{ textAlign: 'center' }}>{moment(patient.birthdate).format('DD/MM/YYYY')}</td>
+                                <td style={{ textAlign: 'center' }}>{moment().diff(moment(patient.birthdate), "years")}ปี</td>
+                                <td style={{ textAlign: 'center', fontSize: '18px' }}>
+                                    {patient.sex == 1
+                                        ? <AiOutlineMan className="text-danger m-0 p-0" />
+                                        : <AiOutlineWoman className="text-success m-0 p-0" />}
+                                </td>
                                 <td style={{ textAlign: 'center' }}>
                                     <Link to={`/patients/${patient.id}/detail`} className="btn btn-primary btn-sm">
                                         <i className="bi bi-download"></i>

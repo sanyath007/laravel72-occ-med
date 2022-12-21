@@ -7,16 +7,37 @@ use App\Models\Patient;
 
 class PatientController extends Controller
 {
-    public function getPatients()
+    public function getPatients(Request $request)
     {
-        return [
-            "patients" => Patient::paginate(10)
-        ];
+        $hn = $request->get('hn');
+        $name = $request->get('name');
+
+        $patients = Patient::when(!empty($hn), function($query) use ($hn) {
+                                $query->where('hn', 'like', $hn.'%');
+                            })
+                            ->when(!empty($name), function($query) use ($name) {
+                                list($fname, $lname) = explode('-', $name);
+
+                                $query->where(function($sub) use ($fname, $lname) {
+                                    $sub->when(!empty($fname), function($q) use ($fname) {
+                                        $q->where('fname', 'like', $fname.'%');
+                                    });
+
+                                    $sub->when(!empty($lname), function($q) use ($lname) {
+                                        $q->Where('lname', 'like', $lname.'%');
+                                    });
+                                });
+                            })
+                            ->paginate(10);
+
+        return response()->json($patients);
     }
 
     public function getPatient($id)
     {
-        return Patient::find($id);
+        $patient = Patient::find($id);
+
+        return response()->json($patient);
     }
 
     public function store(Request $request) {
