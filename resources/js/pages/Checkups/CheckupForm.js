@@ -6,6 +6,7 @@ import { FaPlus, FaSave, FaSearch, FaTrashAlt } from 'react-icons/fa'
 import ModalPatients from '../../components/Modals/ModalPatients'
 import ModalCompanies from '../../components/Modals/ModalCompanies'
 import ModalIcd10s from '../../components/Modals/ModalIcd10s'
+import { calcAgeM, calcAgeY } from '../../utils/calculator'
 
 const checkupSchema = Yup.object().shape({
 
@@ -26,8 +27,8 @@ const CheckupForm = () => {
         formik.setFieldValue('hn', patient.hn)
         formik.setFieldValue('patient_id', patient.id)
         formik.setFieldValue('is_officer', patient.is_officer)
-        formik.setFieldValue('age_y', moment().diff(moment(patient.birthdate), "years"))
-        formik.setFieldValue('age_m', moment().diff(moment(patient.birthdate), "months"))
+        formik.setFieldValue('age_y', calcAgeY(moment(patient.birthdate)))
+        formik.setFieldValue('age_m', calcAgeM(moment(patient.birthdate)))
 
         setShowPatients(false)
     }
@@ -166,8 +167,9 @@ const CheckupForm = () => {
                                                             <label htmlFor="">อายุ :</label>
                                                             <div className="form-control" style={{ minHeight: '2.3rem' }}>
                                                                 {selectedPatient
-                                                                    ? moment().diff(moment(selectedPatient.birthdate), "years")
-                                                                    : '-'} ปี
+                                                                    ? calcAgeY(selectedPatient.birthdate)
+                                                                    : '-'
+                                                                } ปี
                                                             </div>
                                                         </div>
                                                         <div className="col-md-7 form-group">
