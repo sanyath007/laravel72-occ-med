@@ -73,15 +73,25 @@ const ModalPatients = ({ isOpen, hideModal, ...props }) => {
                         <tr>
                             <th scope="col" style={{ width: '3%', textAlign: 'center' }}>#</th>
                             <th scope="col" style={{ width: '8%', textAlign: 'center' }}>HN</th>
-                            <th scope="col">ชื่อ-สกุล</th>
+                            <th scope="col" style={{ width: '20%' }}>ชื่อ-สกุล</th>
                             <th scope="col" style={{ width: '10%', textAlign: 'center' }}>CID</th>
                             <th scope="col" style={{ width: '15%', textAlign: 'center' }}>วันเกิด</th>
                             <th scope="col" style={{ width: '6%', textAlign: 'center' }}>อายุ</th>
                             <th scope="col" style={{ width: '6%', textAlign: 'center' }}>เพศ</th>
+                            <th scope="col">ที่อยู่</th>
                             <th scope="col" style={{ width: '6%', textAlign: 'center' }}>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {loading && (
+                            <tr>
+                                <td colSpan="9" style={{ textAlign: 'center' }}>
+                                    <div className="spinner-border text-secondary" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        )}
                         {patients && patients.map((patient, row) => (
                             <tr key={patient.hn}>
                                 <th scope="row" style={{ textAlign: 'center' }}>{pager?.from+row}</th>
@@ -94,6 +104,15 @@ const ModalPatients = ({ isOpen, hideModal, ...props }) => {
                                     {patient.sex == 1
                                         ? <AiOutlineMan className="text-danger m-0 p-0" />
                                         : <AiOutlineWoman className="text-success m-0 p-0" />}
+                                </td>
+                                <td>
+                                    {`${patient.address ? patient.address : '-'} 
+                                        หมู่ ${patient.moo ? patient.moo : '-'} 
+                                        ถนน${patient.road ? patient.road : '-'} 
+                                        ต.${patient.tambon ? patient.tambon?.tambon : '-'} 
+                                        อ.${patient.amphur ? patient.amphur?.amphur : '-'} 
+                                        จ.${patient.changwat ? patient.changwat?.changwat : '-'} 
+                                        ${patient.zipcode ? patient.zipcode : '-'}`}
                                 </td>
                                 <td style={{ textAlign: 'center' }}>
                                     <Link to={`/patients/${patient.id}/detail`} className="btn btn-primary btn-sm">

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tambon extends Model
+class BloodGroup extends Model
 {
     protected $table = "blood_groups";
 }
