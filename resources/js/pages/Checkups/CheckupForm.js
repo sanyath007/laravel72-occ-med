@@ -26,10 +26,18 @@ const CheckupForm = () => {
 
         formik.setFieldValue('hn', patient.hn)
         formik.setFieldValue('patient_id', patient.id)
-        formik.setFieldValue('is_officer', patient.is_officer)
+        formik.setFieldValue('is_officer', patient.is_officer ? patient.is_officer : 0)
         formik.setFieldValue('age_y', calcAgeY(moment(patient.birthdate)))
         formik.setFieldValue('age_m', calcAgeM(moment(patient.birthdate)))
 
+        /** If patient has been specificed company, set company_id with patient's company */
+        if (patient.company) {
+            setSelectedCompany(patient.company)
+
+            formik.setFieldValue('company_id', patient.company.id)
+        }
+
+        /** Hide modal */
         setShowPatients(false)
     }
 
@@ -38,15 +46,16 @@ const CheckupForm = () => {
 
         formik.setFieldValue('company_id', company.id)
 
+        /** Hide modal */
         setShowCompanies(false)
     }
 
     const handleSelectedIcd10 = (icd10, formik) => {
-        console.log(icd10);
         setSelectedIcd10(icd10)
 
         formik.setFieldValue('pdx', icd10.code)
 
+        /** Hide modal */
         setShowIcd10s(false)
     }
 
@@ -235,7 +244,7 @@ const CheckupForm = () => {
                                                 <label htmlFor=""></label>
                                                 <div className="form-control d-flex justify-content-start">
                                                     <div className="d-flex">
-                                                        <input
+                                                        <Field
                                                             type="checkbox"
                                                             name="is_officer"
                                                             className="mx-2"
