@@ -1,36 +1,37 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Modal } from 'react-bootstrap'
 import api from '../../api'
+import { getPatients } from '../../store/patient'
 import Pagination from '../Pagination'
 
 const ModalPatients = ({ isOpen, hideModal, ...props }) => {
-    const [patients, setPatients] = useState([])
-    const [pager, setPager] = useState(null)
+    const dispatch = useDispatch()
+    const { patients, pager, loading } = useSelector(state => state.patient)
+    const [filterings, setFilterings] = useState({ hn: '', name: '' })
 
     useEffect(() => {
-        getPatients()
+        fetchPatients()
+    }, [filterings])
 
-        return () => getPatients
-    }, [])
-
-    const getPatients = async (path='/api/patients') => {
+    const fetchPatients = (path='/api/patients?page=') => {
         /** Add filtering logic */
-        console.log(path);
-        /** Add filtering logic */
+        const hn = filterings.hn ? filterings.hn : ''
+        const name = filterings.name ? filterings.name : ''
 
-        const res = await api.get(path)
-
-        if (res.data) {
-            const { data, ...pager } = res.data.patients
-
-            setPatients(data)
-            setPager(pager)
-        }
+        dispatch(getPatients({ path: `${path}&hn=${hn}&name=${name}` }))
     }
 
     const handlePageBtnClicked = (path) => {
-        getPatients(path)
+        fetchPatients(path)
+    }
+
+    const handleChange = (e) => {
+        const { name, value } = e.target
+        console.log(name, value);
+
+        setFilterings(prevState => ({ ...prevState, [name]: value }))
     }
 
     return (
@@ -44,10 +45,24 @@ const ModalPatients = ({ isOpen, hideModal, ...props }) => {
                 <div className="alert border-dark alert-dismissible fade show" role="alert">
                     <div className="row">
                         <div className="col-md-3">
-                            <input type="text" name="" className="form-control" placeholder="ค้นหาด้วย HN" />
+                            <input
+                                type="text"
+                                name="hn"
+                                value={filterings.hn}
+                                onChange={handleChange}
+                                className="form-control"
+                                placeholder="ค้นหาด้วย HN"
+                            />
                         </div>
                         <div className="col-md-9">
-                            <input type="text" name="" className="form-control" placeholder="ค้นหาด้วยชื่อ" />
+                            <input
+                                type="text"
+                                name="name"
+                                value={filterings.name}
+                                onChange={handleChange}
+                                className="form-control"
+                                placeholder="ค้นหาด้วยชื่อ สกุล"
+                            />
                         </div>
                     </div>
                 </div>
