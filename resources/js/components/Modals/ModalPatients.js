@@ -8,7 +8,7 @@ import * as moment from 'moment'
 import { getPatients } from '../../store/patient'
 import Pagination from '../Pagination'
 
-const ModalPatients = ({ isOpen, hideModal, ...props }) => {
+const ModalPatients = ({ isOpen, hideModal, onSelected, ...props }) => {
     const dispatch = useDispatch()
     const { patients, pager, loading } = useSelector(state => state.patient)
     const [filterings, setFilterings] = useState({ hn: '', name: '' })
@@ -115,9 +115,13 @@ const ModalPatients = ({ isOpen, hideModal, ...props }) => {
                                         ${patient.zipcode ? patient.zipcode : '-'}`}
                                 </td>
                                 <td style={{ textAlign: 'center' }}>
-                                    <Link to={`/patients/${patient.id}/detail`} className="btn btn-primary btn-sm">
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary btn-sm"
+                                        onClick={() => onSelected(patient)}
+                                    >
                                         <i className="bi bi-download"></i>
-                                    </Link>
+                                    </button>
                                 </td>
                             </tr>
                         ))}

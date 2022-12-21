@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
-import api from '../../api'
+import * as moment from 'moment'
 import { FaPlus, FaSave, FaSearch, FaTrashAlt } from 'react-icons/fa'
 import ModalPatients from '../../components/Modals/ModalPatients'
 import ModalCompanies from '../../components/Modals/ModalCompanies'
@@ -14,8 +14,39 @@ const checkupSchema = Yup.object().shape({
 const CheckupForm = () => {
     const [labOrders, setLabOrders] = useState([])
     const [showPatients, setShowPatients] = useState(false)
-    const [showIcd10s, setShowIcd10s] = useState(false)
     const [showCompanies, setShowCompanies] = useState(false)
+    const [showIcd10s, setShowIcd10s] = useState(false)
+    const [selectedPatient, setSelectedPatient] = useState(null)
+    const [selectedCompany, setSelectedCompany] = useState(null)
+    const [selectedIcd10, setSelectedIcd10] = useState(null)
+
+    const handleSelectedPatient = (patient, formik) => {
+        setSelectedPatient(patient)
+
+        formik.setFieldValue('hn', patient.hn)
+        formik.setFieldValue('patient_id', patient.id)
+        formik.setFieldValue('is_officer', patient.is_officer)
+        formik.setFieldValue('age_y', moment().diff(moment(patient.birthdate), "years"))
+        formik.setFieldValue('age_m', moment().diff(moment(patient.birthdate), "months"))
+
+        setShowPatients(false)
+    }
+
+    const handleSelectedCompany = (patient, formik) => {
+        setSelectedCompany(patient)
+
+        formik.setFieldValue('company_id', patient.id)
+
+        setShowCompanies(false)
+    }
+
+    const handleSelectedIcd10 = (icd10, formik) => {
+        setSelectedIcd10(patient)
+
+        formik.setFieldValue('pdx', icd10.code)
+
+        setShowIcd10s(false)
+    }
 
     return (
         <section className="section">
@@ -34,7 +65,7 @@ const CheckupForm = () => {
                                     is_officer: '',
                                     company_id: '',
                                     age_y: 0,
-                                    age_m: '',
+                                    age_m: 0,
                                     lab_result: '',
                                     equip_result: '',
                                     xray_result: '',
@@ -59,31 +90,39 @@ const CheckupForm = () => {
                                         <ModalPatients
                                             isOpen={showPatients}
                                             hideModal={() => setShowPatients(false)}
-                                        />
+                                            onSelected={(patient) => handleSelectedPatient(patient, formProps)}
+                                            />
 
                                         <ModalCompanies
                                             isOpen={showCompanies}
                                             hideModal={() => setShowCompanies(false)}
-                                        />
+                                            onSelected={(company) => handleSelectedCompany(company, formProps)}
+                                            />
 
                                         <ModalIcd10s
                                             isOpen={showIcd10s}
                                             hideModal={() => setShowIcd10s(false)}
+                                            onSelected={(icd10) => handleSelectedIcd10(icd10, formProps)}
                                         />
 
                                         <div className="alert border-dark alert-dismissible fade show" role="alert">
-                                            <div className="d-flex gap-3">
-                                                <div style={{ width: '20%' }}>
+                                            <div className="row">
+                                                <div className="col-md-2">
                                                     <div
                                                         className="d-flex justify-content-center align-items-center"
-                                                        style={{ border: '1px solid gray', borderRadius: '5px', height: '100%' }}
+                                                        style={{
+                                                            border: '1px solid gray',
+                                                            borderRadius: '5px',
+                                                            height: '100%',
+                                                            overflow: 'hidden'
+                                                        }}
                                                     >
-                                                        Patient Image
+                                                        <img src={`${process.env.MIX_APP_URL}/img/messages-1.jpg`} alt="patient image" />
                                                     </div>
                                                 </div>
-                                                <div>
+                                                <div className="col-md-10">
                                                     <div className="row">
-                                                        <div className="col-md-2 form-group mb-2">
+                                                        <div className="col-md-3 form-group mb-2">
                                                             <label htmlFor="">HN :</label>
                                                             <div className="input-group">
                                                                 <input
@@ -106,63 +145,41 @@ const CheckupForm = () => {
                                                         </div>
                                                         <div className="col-md-6 form-group mb-2">
                                                             <label htmlFor="">ชื่อ-สกุลผู้ป่วย :</label>
-                                                            <input
-                                                                type="text"
-                                                                name=""
-                                                                value={formProps.values.visit_date}
-                                                                onChange={formProps.handleChange}
-                                                                className="form-control"
-                                                                disabled
-                                                            />
+                                                            <div className="form-control" style={{ minHeight: '2.3rem' }}>
+                                                                {selectedPatient && `${selectedPatient.pname}${selectedPatient.fname} ${selectedPatient.lname}`}
+                                                            </div>
                                                         </div>
-                                                        <div className="col-md-4 form-group mb-2">
-                                                            <label htmlFor="">เพศ :</label>
-                                                            <div className="form-control d-flex justify-content-around">
-                                                                <div className="d-flex">
-                                                                    <input
-                                                                        type="radio"
-                                                                        name=""
-                                                                        className="mx-2"
-                                                                    /> ชาย
-                                                                </div>
-                                                                <div className="d-flex">
-                                                                    <input
-                                                                        type="radio"
-                                                                        name=""
-                                                                        className="mx-2"
-                                                                    /> หญิง
-                                                                </div>
+                                                        <div className="col-md-3 form-group mb-2">
+                                                            <label htmlFor="">CID :</label>
+                                                            <div className="form-control" style={{ minHeight: '2.3rem' }}>
+                                                                {selectedPatient && selectedPatient.cid}
                                                             </div>
                                                         </div>
                                                         <div className="col-md-3 form-group">
                                                             <label htmlFor="">วันเกิด :</label>
-                                                            <input
-                                                                type="text"
-                                                                name=""
-                                                                value={formProps.values.birthdate}
-                                                                onChange={formProps.handleChange}
-                                                                className="form-control"
-                                                            />
+                                                            <div className="form-control" style={{ minHeight: '2.3rem' }}>
+                                                                {selectedPatient && moment(selectedPatient.birthdate).format('DD/MM/YYYY')}
+                                                            </div>
                                                         </div>
-                                                        <div className="col-md-1 form-group">
+                                                        <div className="col-md-2 form-group">
                                                             <label htmlFor="">อายุ :</label>
-                                                            <input
-                                                                type="text"
-                                                                name=""
-                                                                value={formProps.values.age}
-                                                                onChange={formProps.handleChange}
-                                                                className="form-control"
-                                                            />
+                                                            <div className="form-control" style={{ minHeight: '2.3rem' }}>
+                                                                {selectedPatient
+                                                                    ? moment().diff(moment(selectedPatient.birthdate), "years")
+                                                                    : '-'} ปี
+                                                            </div>
                                                         </div>
-                                                        <div className="col-md-8 form-group">
+                                                        <div className="col-md-7 form-group">
                                                             <label htmlFor="">ที่อยู่ :</label>
-                                                            <input
-                                                                type="text"
-                                                                name=""
-                                                                value={formProps.values.age}
-                                                                onChange={formProps.handleChange}
-                                                                className="form-control"
-                                                            />
+                                                            <div className="form-control" style={{ minHeight: '2.3rem' }}>
+                                                                {selectedPatient && `${selectedPatient.address ? selectedPatient.address : '-'} 
+                                                                    หมู่ ${selectedPatient.moo ? selectedPatient.moo : '-'} 
+                                                                    ถนน${selectedPatient.road ? selectedPatient.road : '-'} 
+                                                                    ต.${selectedPatient.tambon ? selectedPatient.tambon?.tambon : '-'} 
+                                                                    อ.${selectedPatient.amphur ? selectedPatient.amphur?.amphur : '-'} 
+                                                                    จ.${selectedPatient.changwat ? selectedPatient.changwat?.changwat : '-'} 
+                                                                    ${selectedPatient.zipcode ? selectedPatient.zipcode : '-'}`}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -193,10 +210,13 @@ const CheckupForm = () => {
                                             <div className="col-md-5 form-group mb-2">
                                                 <label htmlFor="">สถานที่ทำงาน :</label>
                                                 <div className="input-group">
+                                                    <div className="form-control">
+                                                        { selectedCompany && selectedCompany.name }
+                                                    </div>
                                                     <input
-                                                        type="text"
-                                                        name="work_place"
-                                                        value={formProps.values.work_place}
+                                                        type="hidden"
+                                                        name="company_id"
+                                                        value={formProps.values.company_id}
                                                         onChange={formProps.handleChange}
                                                         className="form-control"
                                                     />
