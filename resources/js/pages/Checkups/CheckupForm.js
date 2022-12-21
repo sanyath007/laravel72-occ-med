@@ -29,6 +29,7 @@ const CheckupForm = () => {
         formik.setFieldValue('is_officer', patient.is_officer ? patient.is_officer : 0)
         formik.setFieldValue('age_y', calcAgeY(moment(patient.birthdate)))
         formik.setFieldValue('age_m', calcAgeM(moment(patient.birthdate)))
+        formik.setFieldValue('right_id', patient.right_id)
 
         /** If patient has been specificed company, set company_id with patient's company */
         if (patient.company) {
@@ -57,6 +58,10 @@ const CheckupForm = () => {
 
         /** Hide modal */
         setShowIcd10s(false)
+    }
+
+    const handleSubmit = (values) => {
+        console.log(values);
     }
 
     return (
@@ -88,13 +93,11 @@ const CheckupForm = () => {
                                     pdx: '',
                                     net_total: '',
                                     satisfaction: '',
-                                    main_right: '',
+                                    right_id: '',
                                     remark: ''
                                 }}
                                 validationSchema={checkupSchema}
-                                onSubmit={(values) => {
-                                    console.log(values);
-                                }}
+                                onSubmit={handleSubmit}
                             >
                                 {(formProps) => (
                                     <Form>
@@ -202,7 +205,7 @@ const CheckupForm = () => {
                                             <div className="col-md-3 form-group mb-2">
                                                 <label htmlFor="">วันที่รับบริการ :</label>
                                                 <input
-                                                    type="text"
+                                                    type="date"
                                                     name="visit_date"
                                                     value={formProps.values.visit_date}
                                                     onChange={formProps.handleChange}
@@ -212,7 +215,7 @@ const CheckupForm = () => {
                                             <div className="col-md-2 form-group mb-2">
                                                 <label htmlFor="">เวลา :</label>
                                                 <input
-                                                    type="text"
+                                                    type="time"
                                                     name="visit_time"
                                                     value={formProps.values.visit_time}
                                                     onChange={formProps.handleChange}
@@ -254,39 +257,48 @@ const CheckupForm = () => {
                                             </div>
                                             <div className="col-md-4 form-group mb-3">
                                                 <label htmlFor="">ผลตรวจทางห้องปฏิบัติการ :</label>
-                                                <input
-                                                    type="text"
+                                                <select
                                                     name="lab_result"
                                                     value={formProps.values.lab_result}
                                                     onChange={formProps.handleChange}
                                                     className="form-control"
-                                                />
+                                                >
+                                                    <option value="">-- กรุณาเลือก --</option>
+                                                    <option value="0">ปกติ</option>
+                                                    <option value="1">ผิดปกติ</option>
+                                                </select>
                                             </div>
                                             <div className="col-md-4 form-group mb-3">
                                                 <label htmlFor="">ผลตรวจด้วยเครื่องมือทางอาชีวเวชศาสตร์ :</label>
-                                                <input
-                                                    type="text"
+                                                <select
                                                     name="equip_result"
                                                     value={formProps.values.equip_result}
                                                     onChange={formProps.handleChange}
                                                     className="form-control"
-                                                />
+                                                >
+                                                    <option value="">-- กรุณาเลือก --</option>
+                                                    <option value="0">ปกติ</option>
+                                                    <option value="1">ผิดปกติ</option>
+                                                </select>
                                             </div>
                                             <div className="col-md-4 form-group mb-3">
                                                 <label htmlFor="">ผลตรวจภาพถ่ายรังสีทรวงอก :</label>
-                                                <input
-                                                    type="text"
+                                                <select
                                                     name="xray_result"
                                                     value={formProps.values.xray_result}
                                                     onChange={formProps.handleChange}
                                                     className="form-control"
-                                                />
+                                                >
+                                                    <option value="">-- กรุณาเลือก --</option>
+                                                    <option value="0">ปกติ</option>
+                                                    <option value="1">ผิดปกติ</option>
+                                                </select>
                                             </div>
                                             <div className="col-md-3 form-group mb-2">
                                                 {/* <label htmlFor=""></label> */}
                                                 <div className="form-control d-flex justify-content-start">
                                                     <div className="d-flex">
-                                                        <input
+                                                        <Field
                                                             type="checkbox"
                                                             name="screening"
                                                             className="mx-2"
@@ -298,7 +310,7 @@ const CheckupForm = () => {
                                                 {/* <label htmlFor=""></label> */}
                                                 <div className="form-control d-flex justify-content-start">
                                                     <div className="d-flex">
-                                                        <input
+                                                        <Field
                                                             type="checkbox"
                                                             name="health_edu"
                                                             className="mx-2"
@@ -310,9 +322,9 @@ const CheckupForm = () => {
                                                 {/* <label htmlFor=""></label> */}
                                                 <div className="form-control d-flex justify-content-start">
                                                     <div className="d-flex">
-                                                        <input
+                                                        <Field
                                                             type="checkbox"
-                                                            name="summary_result"
+                                                            name="reported"
                                                             className="mx-2"
                                                         /> รายงานผลการตรวจรายบุคคล
                                                     </div>
@@ -322,7 +334,7 @@ const CheckupForm = () => {
                                                 {/* <label htmlFor=""></label> */}
                                                 <div className="form-control d-flex justify-content-start">
                                                     <div className="d-flex">
-                                                        <input
+                                                        <Field
                                                             type="checkbox"
                                                             name="specialist"
                                                             className="mx-2"
@@ -333,19 +345,22 @@ const CheckupForm = () => {
                                             <div className="col-md-3 form-group mb-2">
                                                 <label htmlFor="">สรุปผลการตรวจ :</label>
                                                 <select
-                                                    name=""
+                                                    name="summary_result"
                                                     value={formProps.values.summary_result}
                                                     onChange={formProps.handleChange}
                                                     className="form-control"
                                                 >
-                                                    <option value=""></option>
+                                                    <option value="">-- กรุณาเลือก --</option>
+                                                    <option value="1">ปกติ</option>
+                                                    <option value="2">เสี่ยง</option>
+                                                    <option value="3">ส่งพบแพทย์เฉพาะทาง</option>
                                                 </select>
                                             </div>
                                             <div className="col-md-6 form-group mb-2">
                                                 <label htmlFor="">สิทธิการรักษา :</label>
                                                 <select
-                                                    name=""
-                                                    value={formProps.values.main_right}
+                                                    name="right_id"
+                                                    value={formProps.values.right_id}
                                                     onChange={formProps.handleChange}
                                                     className="form-control"
                                                 >
@@ -356,7 +371,7 @@ const CheckupForm = () => {
                                                 <label htmlFor="">ค่าใช้จ่าย :</label>
                                                 <input
                                                     type="text"
-                                                    name=""
+                                                    name="net_total"
                                                     value={formProps.values.net_total}
                                                     onChange={formProps.handleChange}
                                                     className="form-control"
@@ -367,7 +382,7 @@ const CheckupForm = () => {
                                                 <div className="input-group">
                                                     <input
                                                         type="text"
-                                                        name=""
+                                                        name="pdx"
                                                         value={formProps.values.pdx}
                                                         onChange={formProps.handleChange}
                                                         className="form-control"
