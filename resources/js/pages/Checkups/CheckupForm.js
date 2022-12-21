@@ -9,6 +9,7 @@ import ModalCompanies from '../../components/Modals/ModalCompanies'
 import ModalIcd10s from '../../components/Modals/ModalIcd10s'
 import { calcAgeM, calcAgeY } from '../../utils/calculator'
 import { getAll } from '../../store/right'
+import { store } from '../../store/checkup'
 
 const checkupSchema = Yup.object().shape({
 
@@ -68,7 +69,7 @@ const CheckupForm = () => {
     }
 
     const handleSubmit = (values) => {
-        console.log(values);
+        dispatch(store(values))
     }
 
     return (
