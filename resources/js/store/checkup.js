@@ -54,7 +54,6 @@ export const checkupSlice = createSlice({
             state.loading = true
         },
         [store.fulfilled]: (state, { payload }) => {
-            console.log(payload);
             // const { data, ...pager } = payload
 
             // state.checkups = data

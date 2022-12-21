@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 import { HashRouter, Routes, Route } from "react-router-dom";
+import { Provider } from "react-redux";
+import { ToastContainer } from 'react-toastify';
 import DefaultLayout from "./DefaultLayout";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import Patients from "../pages/Patients/Patients";
@@ -11,9 +13,6 @@ import Users from "../pages/Users/Users";
 import Signin from "../pages/Signin";
 import Signup from "../pages/Signup";
 import NotFound from "../pages/NotFound";
-import { useAuth } from "../hooks/useAuth"
-import AuthContext from "../context/authContext";
-import { GlobalProvider } from '../context/globalContext'
 import PatientForm from "../pages/Patients/PatientForm";
 import PatientDetail from "../pages/Patients/PatientDetail";
 import Checkups from "../pages/Checkups/Checkups";
@@ -23,8 +22,11 @@ import Clinics from "../pages/Clinics/Clinics";
 import ClinicSummary from "../pages/Clinics/Summary";
 import Companies from "../pages/Companies/Companies";
 import CompanyForm from "../pages/Companies/CompanyForm";
-import { Provider } from "react-redux";
+import { useAuth } from "../hooks/useAuth"
+import AuthContext from "../context/authContext";
+import { GlobalProvider } from '../context/globalContext'
 import store from "../store";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
     const { userData } = useAuth()
@@ -75,6 +77,7 @@ if (document.getElementById('root')) {
             <HashRouter>
                 <App />
             </HashRouter>
+            <ToastContainer />
         </Provider>,
         document.getElementById('root')
     );
