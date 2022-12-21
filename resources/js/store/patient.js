@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import api from '../api'
 
 const initialState = {
     patients: [],
@@ -7,11 +8,37 @@ const initialState = {
     loading: false
 }
 
+export const getPatients = createAsyncThunk('patient/getPatients', async ({ path }, { rejectWithValue }) => {
+    try {
+        const res = await api.get(path)
+        
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error)
+    }
+})
+
 export const patientSlice = createSlice({
     name: 'patient',
     initialState,
     reducers: {},
-    extraReducers: {}
+    extraReducers: {
+        [getPatients.pending]: (state) => {
+            state.patients = []
+            state.loading = true
+        },
+        [getPatients.fulfilled]: (state, { payload }) => {
+            const { data, ...pager } = payload.patients
+
+            state.patients = data
+            state.pager = pager
+            state.loading = false
+        },
+        [getPatients.rejected]: (state) => {
+            state.loading = false
+        }
+    }
 })
 
 export const { increment, decrement } = patientSlice.actions
