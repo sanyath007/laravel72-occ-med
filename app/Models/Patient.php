@@ -33,13 +33,18 @@ class Patient extends Model
         return $this->belongsTo(Right::class, 'right_id', 'id');
     }
 
+    public function hospMain()
+    {
+        return $this->belongsTo(Hospital::class, 'hosp_main_id', 'code');
+    }
+
     public function nationality()
     {
         return $this->belongsTo(Nationality::class, 'nationality_id', 'code');
     }
 
-    public function hospMain()
+    public function company()
     {
-        return $this->belongsTo(Hospital::class, 'hosp_main_id', 'code');
+        return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 }

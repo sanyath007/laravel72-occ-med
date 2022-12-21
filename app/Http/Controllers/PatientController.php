@@ -12,7 +12,9 @@ class PatientController extends Controller
         $hn = $request->get('hn');
         $name = $request->get('name');
 
-        $patients = Patient::when(!empty($hn), function($query) use ($hn) {
+        $patients = Patient::with('tambon','amphur','changwat','bloodGroup')
+                            ->with('right','hospMain','nationality','company')
+                            ->when(!empty($hn), function($query) use ($hn) {
                                 $query->where('hn', 'like', $hn.'%');
                             })
                             ->when(!empty($name), function($query) use ($name) {
