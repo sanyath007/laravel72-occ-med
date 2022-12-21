@@ -44,6 +44,10 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     /** ICD-10 */
     Route::get('/icd10s', 'Icd10Controller@getIcd10s');
 
+    /** Rights */
+    Route::get('/rights', 'RightController@getRights');
+    Route::get('/rights/{id}', 'RightController@getRight');
+
     /** Companies */
     Route::get('/companies', 'CompanyController@getCompanies');
     Route::get('/companies/{id}', 'CompanyController@getCompany');

@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import * as moment from 'moment'
@@ -7,12 +8,15 @@ import ModalPatients from '../../components/Modals/ModalPatients'
 import ModalCompanies from '../../components/Modals/ModalCompanies'
 import ModalIcd10s from '../../components/Modals/ModalIcd10s'
 import { calcAgeM, calcAgeY } from '../../utils/calculator'
+import { getAll } from '../../store/right'
 
 const checkupSchema = Yup.object().shape({
 
 })
 
 const CheckupForm = () => {
+    const dispatch = useDispatch()
+    const { rights } = useSelector(state => state.right)
     const [labOrders, setLabOrders] = useState([])
     const [showPatients, setShowPatients] = useState(false)
     const [showCompanies, setShowCompanies] = useState(false)
@@ -20,6 +24,10 @@ const CheckupForm = () => {
     const [selectedPatient, setSelectedPatient] = useState(null)
     const [selectedCompany, setSelectedCompany] = useState(null)
     const [selectedIcd10, setSelectedIcd10] = useState(null)
+
+    useEffect(() => {
+        dispatch(getAll({ path: '/api/rights?page=' }))
+    }, [])
 
     const handleSelectedPatient = (patient, formik) => {
         setSelectedPatient(patient)
@@ -364,7 +372,12 @@ const CheckupForm = () => {
                                                     onChange={formProps.handleChange}
                                                     className="form-control"
                                                 >
-                                                    <option value=""></option>
+                                                    <option value="">-- กรุณาเลือก --</option>
+                                                    {rights && rights.map(right => (
+                                                        <option key={right.id} value={right.id}>
+                                                            {right.name}
+                                                        </option>
+                                                    ))}
                                                 </select>
                                             </div>
                                             <div className="col-md-3 form-group mb-2">
