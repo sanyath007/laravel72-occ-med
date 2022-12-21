@@ -32,7 +32,6 @@ const CheckupForm = () => {
     const handleSelectedPatient = (patient, formik) => {
         setSelectedPatient(patient)
 
-        formik.setFieldValue('hn', patient.hn)
         formik.setFieldValue('patient_id', patient.id)
         formik.setFieldValue('is_officer', patient.is_officer ? patient.is_officer : 0)
         formik.setFieldValue('age_y', calcAgeY(moment(patient.birthdate)))
@@ -82,7 +81,6 @@ const CheckupForm = () => {
                             <Formik
                                 initialValues={{
                                     id: '',
-                                    hn: '',
                                     patient_id: '',
                                     visit_date: '',
                                     visit_time: '',
@@ -147,13 +145,9 @@ const CheckupForm = () => {
                                                         <div className="col-md-3 form-group mb-2">
                                                             <label htmlFor="">HN :</label>
                                                             <div className="input-group">
-                                                                <input
-                                                                    type="text"
-                                                                    name="hn"
-                                                                    value={formProps.values.hn}
-                                                                    onChange={formProps.handleChange}
-                                                                    className="form-control"
-                                                                />
+                                                                <div className="form-control">
+                                                                    { selectedPatient && selectedPatient.hn }
+                                                                </div>
                                                                 <input
                                                                     type="hidden"
                                                                     name="patient_id"

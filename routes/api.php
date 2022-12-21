@@ -41,6 +41,11 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/patients/{id}', 'PatientController@getPatient');
     Route::post('/patients', 'PatientController@store');
 
+    /** Checkups */
+    Route::get('/checkups', 'CheckupController@getCheckups');
+    Route::get('/checkups/{id}', 'CheckupController@getCheckup');
+    Route::post('/checkups', 'CheckupController@store');
+
     /** ICD-10 */
     Route::get('/icd10s', 'Icd10Controller@getIcd10s');
 

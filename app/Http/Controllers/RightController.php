@@ -11,7 +11,7 @@ class RightController extends Controller
     public function getRights(Request $request)
     {
         if (array_key_exists('all', $request->all()) && $request->get('all') == '1') {
-            $rights = Right::with('type')->all();
+            $rights = Right::with('type')->get();
         } else {
             $rights = Right::with('type')->paginate(10);
         }
