@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import * as moment from 'moment'
+import { toast } from 'react-toastify'
 import { FaPlus, FaSave, FaSearch, FaTrashAlt } from 'react-icons/fa'
 import ModalPatients from '../../components/Modals/ModalPatients'
 import ModalCompanies from '../../components/Modals/ModalCompanies'
 import ModalIcd10s from '../../components/Modals/ModalIcd10s'
 import { calcAgeM, calcAgeY } from '../../utils/calculator'
 import { getAll } from '../../store/right'
-import { store } from '../../store/checkup'
+import { store, resetSuccess } from '../../store/checkup'
 
 const checkupSchema = Yup.object().shape({
 
 })
 
 const CheckupForm = () => {
+    const navigate = useNavigate()
     const dispatch = useDispatch()
+    const { success, error } = useSelector(state => state.checkup)
     const { rights } = useSelector(state => state.right)
     const [labOrders, setLabOrders] = useState([])
     const [showPatients, setShowPatients] = useState(false)
@@ -29,6 +33,14 @@ const CheckupForm = () => {
     useEffect(() => {
         dispatch(getAll({ path: '/api/rights?page=' }))
     }, [])
+
+    useEffect(() => {
+        if (success) {
+            toast.success('บันทึกข้อมูลเรียบร้อย !!!', { autoClose: 1000, hideProgressBar: true });
+            dispatch(resetSuccess())
+            navigate('/checkups')
+        }
+    }, [success])
 
     const handleSelectedPatient = (patient, formik) => {
         setSelectedPatient(patient)

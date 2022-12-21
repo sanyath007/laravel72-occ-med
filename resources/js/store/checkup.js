@@ -5,7 +5,9 @@ const initialState = {
     checkups: [],
     checkup: null,
     pager: null,
-    loading: false
+    loading: false,
+    success: false,
+    error: null
 }
 
 export const getCheckups = createAsyncThunk('checkup/getCheckups', async ({ path }, { rejectWithValue }) => {
@@ -33,7 +35,11 @@ export const store = createAsyncThunk('checkup/store', async (data, { rejectWith
 export const checkupSlice = createSlice({
     name: 'checkup',
     initialState,
-    reducers: {},
+    reducers: {
+        resetSuccess(state) {
+            state.success = false
+        }
+    },
     extraReducers: {
         [getCheckups.pending]: (state) => {
             state.checkups = []
@@ -54,7 +60,13 @@ export const checkupSlice = createSlice({
             state.loading = true
         },
         [store.fulfilled]: (state, { payload }) => {
-            // const { data, ...pager } = payload
+            if (payload.status == 1) {
+                state.success = true
+            } else {
+                state.error = payload
+            }
+
+            // const { data, ...pager } = payload.checkup
 
             // state.checkups = data
             // state.pager = pager
@@ -65,5 +77,7 @@ export const checkupSlice = createSlice({
         }
     }
 })
+
+export const { resetSuccess } = checkupSlice.actions
 
 export const checkupReducer = checkupSlice.reducer
