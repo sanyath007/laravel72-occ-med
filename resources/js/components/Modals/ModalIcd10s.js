@@ -5,7 +5,7 @@ import { Modal } from 'react-bootstrap'
 import { getIcd10s } from '../../store/icd10'
 import Pagination from '../Pagination'
 
-const ModalIcd10s = ({ isOpen, hideModal, ...props }) => {
+const ModalIcd10s = ({ isOpen, hideModal, onSelected, ...props }) => {
     const dispatch = useDispatch()
     const { icd10s, pager, loading } = useSelector(state => state.icd10)
     const [filterings, setFilterings] = useState({ icd10: '', desc: '' })
@@ -94,9 +94,13 @@ const ModalIcd10s = ({ isOpen, hideModal, ...props }) => {
                                 <td>{icd.tname}</td>
                                 <td style={{ textAlign: 'center' }}>
                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                        <Link to={`/icd10s/${icd.code}/detail`} className="btn btn-primary btn-sm">
+                                        <button
+                                            type="button"
+                                            className="btn btn-primary btn-sm"
+                                            onClick={() => onSelected(icd)}
+                                        >
                                             <i className="bi bi-download"></i>
-                                        </Link>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>

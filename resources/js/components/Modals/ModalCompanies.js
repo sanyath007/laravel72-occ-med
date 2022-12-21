@@ -5,7 +5,7 @@ import { Modal } from 'react-bootstrap'
 import { getCompanies } from '../../store/company'
 import Pagination from '../Pagination'
 
-const ModalCompanies = ({ isOpen, hideModal, ...props }) => {
+const ModalCompanies = ({ isOpen, hideModal, onSelected, ...props }) => {
     const dispatch = useDispatch()
     const { companies, pager, loading } = useSelector(state => state.company)
 
@@ -59,9 +59,13 @@ const ModalCompanies = ({ isOpen, hideModal, ...props }) => {
                                 <td style={{ textAlign: 'center' }}>{company.type?.name}</td>
                                 <td style={{ textAlign: 'center' }}>
                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                        <Link to={`/companies/${company.id}/detail`} className="btn btn-primary btn-sm">
+                                        <button
+                                            type="button"
+                                            className="btn btn-primary btn-sm"
+                                            onClick={() => onSelected(company)}
+                                        >
                                             <i className="bi bi-download"></i>
-                                        </Link>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>

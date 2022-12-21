@@ -32,16 +32,17 @@ const CheckupForm = () => {
         setShowPatients(false)
     }
 
-    const handleSelectedCompany = (patient, formik) => {
-        setSelectedCompany(patient)
+    const handleSelectedCompany = (company, formik) => {
+        setSelectedCompany(company)
 
-        formik.setFieldValue('company_id', patient.id)
+        formik.setFieldValue('company_id', company.id)
 
         setShowCompanies(false)
     }
 
     const handleSelectedIcd10 = (icd10, formik) => {
-        setSelectedIcd10(patient)
+        console.log(icd10);
+        setSelectedIcd10(icd10)
 
         formik.setFieldValue('pdx', icd10.code)
 
@@ -367,13 +368,9 @@ const CheckupForm = () => {
                                             </div>
                                             <div className="col-md-10 form-group mb-2">
                                                 <label htmlFor=""></label>
-                                                <input
-                                                    type="text"
-                                                    name=""
-                                                    value={formProps.values.diag_desc}
-                                                    onChange={formProps.handleChange}
-                                                    className="form-control"
-                                                />
+                                                <div className="form-control" style={{ minHeight: '2.3rem' }}>
+                                                    { selectedIcd10 && selectedIcd10.name }
+                                                </div>
                                             </div>
                                             <div className="col-md-12 form-group">
                                                 <label htmlFor="">หมายเหตุ</label>
