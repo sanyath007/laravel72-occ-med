@@ -84,12 +84,12 @@ const Sidebar = () => {
                     </a>
                     <ul id="prevention-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <a href="tables-general.html">
+                            <a href="tables-general.html" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>General Tables</span>
                             </a>
                         </li>
                         <li>
-                            <a href="tables-data.html">
+                            <a href="tables-data.html" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>Data Tables</span>
                             </a>
                         </li>
@@ -102,17 +102,17 @@ const Sidebar = () => {
                     </a>
                     <ul id="charts-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <a href="charts-chartjs.html">
+                            <a href="charts-chartjs.html" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>Chart.js</span>
                             </a>
                         </li>
                         <li>
-                            <a href="charts-apexcharts.html">
+                            <a href="charts-apexcharts.html" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>ApexCharts</span>
                             </a>
                         </li>
                         <li>
-                            <a href="charts-echarts.html">
+                            <a href="charts-echarts.html" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>ECharts</span>
                             </a>
                         </li>
@@ -126,12 +126,12 @@ const Sidebar = () => {
                     </a>
                     <ul id="icons-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <Link to="companies/new">
+                            <Link to="companies/new" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>ลงทะเบียน</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="companies">
+                            <Link to="companies" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>รายการ</span>
                             </Link>
                         </li>
@@ -184,19 +184,19 @@ const Sidebar = () => {
                     </Link>
                 </li>
                 {/* <li className="nav-item">
-                    <a className="nav-link collapsed" href="pages-login.html">
+                    <a className="nav-link collapsed" href="pages-login.html" onClick={handleMenuClicked}>
                         <i className="bi bi-box-arrow-in-right"></i>
                         <span>Login</span>
                     </a>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link collapsed" href="pages-error-404.html">
+                    <a className="nav-link collapsed" href="pages-error-404.html" onClick={handleMenuClicked}>
                         <i className="bi bi-dash-circle"></i>
                         <span>Error 404</span>
                     </a>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link collapsed" href="pages-blank.html">
+                    <a className="nav-link collapsed" href="pages-blank.html" onClick={handleMenuClicked}>
                         <i className="bi bi-file-earmark"></i>
                         <span>Blank</span>
                     </a>
