@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { FaEnvelope, FaMobileAlt, FaUserAlt } from 'react-icons/fa'
 import Pagination from '../../components/Pagination'
 import { GlobalContext } from '../../context/globalContext'
-import api from '../../api'
+import { getCompanies } from '../../store/company'
 
 const Companies = () => {
+    const dispatch = useDispatch()
     const { setGlobal } = useContext(GlobalContext)
-    const [companies, setCompanies] = useState([])
-    const [pager, setPager] = useState(null)
+    const { companies, pager } = useSelector(state => state.company)
 
     /** Initial global states */
     useEffect(() => {
@@ -23,24 +24,17 @@ const Companies = () => {
     }, [])
 
     useEffect(() => {
-        getCompanies()
+        fetchCompanies()
 
-        return () => getCompanies
+        return () => fetchCompanies
     }, [])
 
-    const getCompanies = async (path='/api/companies') => {
+    const fetchCompanies = (path='/api/companies') => {
         /** Filtering logic */
 
         /** Filtering logic */
 
-        const res = await api.get(path)
-
-        if (res.data) {
-            const { data, ...pager } = res.data.companies
-
-            setCompanies(data)
-            setPager(pager)
-        }
+        dispatch(getCompanies({ path }))
     }
 
     return (
