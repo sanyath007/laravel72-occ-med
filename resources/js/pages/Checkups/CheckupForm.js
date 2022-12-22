@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 import { FaPlus, FaSave, FaSearch, FaTrashAlt } from 'react-icons/fa'
 import ModalPatients from '../../components/Modals/ModalPatients'
 import ModalCompanies from '../../components/Modals/ModalCompanies'
+import ModalCompanyForm from '../../components/Modals/ModalCompanyForm'
 import ModalIcd10s from '../../components/Modals/ModalIcd10s'
 import { calcAgeM, calcAgeY } from '../../utils/calculator'
 import { getAll } from '../../store/right'
@@ -25,6 +26,7 @@ const CheckupForm = () => {
     const [labOrders, setLabOrders] = useState([])
     const [showPatients, setShowPatients] = useState(false)
     const [showCompanies, setShowCompanies] = useState(false)
+    const [showCompanyForm, setShowCompanyForm] = useState(false)
     const [showIcd10s, setShowIcd10s] = useState(false)
     const [selectedPatient, setSelectedPatient] = useState(null)
     const [selectedCompany, setSelectedCompany] = useState(null)
@@ -124,13 +126,18 @@ const CheckupForm = () => {
                                             isOpen={showPatients}
                                             hideModal={() => setShowPatients(false)}
                                             onSelected={(patient) => handleSelectedPatient(patient, formProps)}
-                                            />
+                                        />
 
                                         <ModalCompanies
                                             isOpen={showCompanies}
                                             hideModal={() => setShowCompanies(false)}
                                             onSelected={(company) => handleSelectedCompany(company, formProps)}
-                                            />
+                                        />
+
+                                        <ModalCompanyForm
+                                            isOpen={showCompanyForm}
+                                            hideModal={() => setShowCompanyForm(false)}
+                                        />
 
                                         <ModalIcd10s
                                             isOpen={showIcd10s}
@@ -250,10 +257,18 @@ const CheckupForm = () => {
                                                         onChange={formProps.handleChange}
                                                         className="form-control"
                                                     />
-                                                    <button type="button" className="btn btn-outline-secondary" onClick={() => setShowCompanies(true)}>
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-outline-secondary"
+                                                        onClick={() => setShowCompanies(true)}
+                                                    >
                                                         <FaSearch />
                                                     </button>
-                                                    <button type="button" className="btn btn-outline-primary">
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-outline-primary"
+                                                        onClick={() => setShowCompanyForm(true)}
+                                                    >
                                                         <FaPlus />
                                                     </button>
                                                 </div>
