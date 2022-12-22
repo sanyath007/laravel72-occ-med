@@ -24,7 +24,7 @@ const CompanyForm = ({ onSubmit, ...props }) => {
     useEffect(() => {
         getInitForms()
 
-        return () => getInitForms()
+        return () => getInitForms
     }, [])
 
     const getInitForms = async () => {

@@ -1,11 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import CompanyForm from '../../components/Company/CompanyForm'
 import { GlobalContext } from '../../context/globalContext'
-import { store } from '../../store/company'
+import { store, resetSuccess } from '../../store/company'
 
 const CompanyNew = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const { success, error } = useSelector(state => state.company)
     const { setGlobal } = useContext(GlobalContext)
 
@@ -21,6 +24,14 @@ const CompanyNew = () => {
             ]
         }))
     }, [])
+
+    useEffect(() => {
+        if (success) {
+            toast.success('บันทึกข้อมูลเรียบร้อย !!!', { autoClose: 1000, hideProgressBar: true });
+            dispatch(resetSuccess())
+            navigate('/companies')
+        }
+    }, [success])
 
     const handleSubmit = async (data) => {
         dispatch(store(data));
