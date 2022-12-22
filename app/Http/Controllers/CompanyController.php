@@ -29,9 +29,7 @@ class CompanyController extends Controller
                         })
                         ->paginate(10);
 
-        return [
-            "companies" => $companies
-        ];
+        return response()->json($companies);
     }
 
     public function getCompany(Request $request, $id)

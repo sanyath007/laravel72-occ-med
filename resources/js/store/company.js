@@ -14,7 +14,7 @@ export const getCompanies = createAsyncThunk('company/getCompanies', async ({ da
     try {
         const res = await api.get('/api/companies')
     
-        return res.data.companies
+        return res.data
     } catch (error) {
         console.log(error);
         rejectWithValue(error.message)
