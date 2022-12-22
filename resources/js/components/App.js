@@ -13,7 +13,8 @@ import Signin from "../pages/Signin";
 import Signup from "../pages/Signup";
 import NotFound from "../pages/NotFound";
 import Patients from "../pages/Patients/Patients";
-import PatientForm from "../pages/Patients/PatientForm";
+import PatientNew from "../pages/Patients/PatientNew";
+import PatientEdit from "../pages/Patients/PatientEdit";
 import PatientDetail from "../pages/Patients/PatientDetail";
 import Checkups from "../pages/Checkups/Checkups";
 import CheckupForm from "../pages/Checkups/CheckupForm";
@@ -48,8 +49,8 @@ export default function App() {
                         <Route path="/users/profile" element={<Profile />} />
                         {/* Patients routes */}
                         <Route path="/patients" element={<Patients />} />
-                        <Route path="/patients/new" element={<PatientForm />} />
-                        <Route path="/patients/:id/edit" element={<PatientForm />} />
+                        <Route path="/patients/new" element={<PatientNew />} />
+                        <Route path="/patients/:id/edit" element={<PatientEdit />} />
                         <Route path="/patients/:id/detail" element={<PatientDetail />} />
                         {/* Checkups routes */}
                         <Route path="/checkups" element={<Checkups />} />
