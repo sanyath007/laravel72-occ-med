@@ -1,10 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
-import Pagination from '../Pagination'
 import { FaSave } from 'react-icons/fa'
-import { GlobalContext } from '../../context/globalContext'
 import api from '../../api'
 
 const companySchema = Yup.object().shape({
@@ -18,32 +15,11 @@ const companySchema = Yup.object().shape({
     tel: Yup.string().required(),
 })
 
-const CompanyForm = () => {
-    const { id } = useParams()
-    const { setGlobal } = useContext(GlobalContext)
-    const [company, setCompany] = useState([])
+const CompanyForm = ({ onSubmit, ...props }) => {
     const [companyTypes, setCompanyTypes] = useState([])
     const [changwats, setChangwats] = useState([])
     const [amphur, setAmphur] = useState({ amphurs: [], filteredAmphurs: [] })
     const [tambon, setTambon] = useState({ tambons: [], filteredTambons: [] })
-
-    /** Initial global states */
-    useEffect(() => {
-        setGlobal((prev) => ({
-            ...prev,
-            title: id ? 'แก้ไขรายงานสถานประกอบการ' : 'เพิ่มรายงานสถานประกอบการ',
-            breadcrumbs: [
-                { id: 'home', name: 'Home', path: '/' },
-                { id: 'companies', name: 'รายงานสถานประกอบการ', path: '/companies' },
-                {
-                    id: 'new',
-                    name: id ? 'แก้ไขรายงานสถานประกอบการ' : 'เพิ่มรายงานสถานประกอบการ',
-                    path: null,
-                    active: true
-                }
-            ]
-        }))
-    }, [])
 
     useEffect(() => {
         getInitForms()
@@ -76,17 +52,8 @@ const CompanyForm = () => {
         setTambon(prevTambon => ({ ...prevTambon, filteredTambons }))
     }
 
-    const getCompany = async (id) => {
-        const res = await api.get(`/api/companies/${id}`)
-
-        if (res.data) {
-            setCompany(res.data.company)
-        }
-    }
-
-    const handleSubmit = async (values) => {
-        const res = await api.post('/api/companies', values)
-        console.log(res);
+    const handleSubmit = async (values, props) => {
+        onSubmit(values)
     }
 
     return (

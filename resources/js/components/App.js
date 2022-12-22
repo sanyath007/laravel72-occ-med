@@ -5,7 +5,6 @@ import { Provider } from "react-redux";
 import { ToastContainer } from 'react-toastify';
 import DefaultLayout from "./DefaultLayout";
 import Dashboard from "../pages/Dashboard/Dashboard";
-import Patients from "../pages/Patients/Patients";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
 import Profile from "../pages/Users/Profile";
@@ -13,6 +12,7 @@ import Users from "../pages/Users/Users";
 import Signin from "../pages/Signin";
 import Signup from "../pages/Signup";
 import NotFound from "../pages/NotFound";
+import Patients from "../pages/Patients/Patients";
 import PatientForm from "../pages/Patients/PatientForm";
 import PatientDetail from "../pages/Patients/PatientDetail";
 import Checkups from "../pages/Checkups/Checkups";
@@ -21,7 +21,8 @@ import CheckupSummary from "../pages/Checkups/Summary";
 import Clinics from "../pages/Clinics/Clinics";
 import ClinicSummary from "../pages/Clinics/Summary";
 import Companies from "../pages/Companies/Companies";
-import CompanyForm from "../pages/Companies/CompanyForm";
+import CompanyNew from "../pages/Companies/CompanyNew";
+import CompanyEdit from "../pages/Companies/CompanyEdit";
 import { useAuth } from "../hooks/useAuth"
 import AuthContext from "../context/authContext";
 import { GlobalProvider } from '../context/globalContext'
@@ -59,7 +60,8 @@ export default function App() {
                         <Route path="/clinics/summary" element={<ClinicSummary />} />
                         {/* Companies routes */}
                         <Route path="/companies" element={<Companies />} />
-                        <Route path="/companies/new" element={<CompanyForm />} />
+                        <Route path="/companies/new" element={<CompanyNew />} />
+                        <Route path="/companies/edit" element={<CompanyEdit />} />
                     </Route>
                     {/* ============================= Public routes ============================= */}
                     <Route path="/signin" element={<Signin />} />

@@ -10,7 +10,6 @@ const initialState = {
 
 export const getCompanies = createAsyncThunk('company/getCompanies', async ({ data }) => {
     try {
-        console.log('data', data);
         const res = await api.get('/api/companies')
     
         return res.data.companies
