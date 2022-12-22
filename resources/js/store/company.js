@@ -5,7 +5,9 @@ const initialState = {
     companies: [],
     company: null,
     pager: null,
-    loading: false
+    loading: false,
+    success: false,
+    error: null
 }
 
 export const getCompanies = createAsyncThunk('company/getCompanies', async ({ data }, { rejectWithValue }) => {

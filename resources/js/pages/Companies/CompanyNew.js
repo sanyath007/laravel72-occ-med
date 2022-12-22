@@ -1,8 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import CompanyForm from '../../components/Company/CompanyForm'
 import { GlobalContext } from '../../context/globalContext'
+import { store } from '../../store/company'
 
 const CompanyNew = () => {
+    const dispatch = useDispatch()
+    const { success, error } = useSelector(state => state.company)
     const { setGlobal } = useContext(GlobalContext)
 
     /** Initial global states */
@@ -19,7 +23,7 @@ const CompanyNew = () => {
     }, [])
 
     const handleSubmit = async (data) => {
-        console.log(data);
+        dispatch(store(data));
     }
 
     return (
