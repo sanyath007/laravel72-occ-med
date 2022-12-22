@@ -5,7 +5,9 @@ const initialState = {
     patients: [],
     patient: null,
     pager: null,
-    loading: false
+    loading: false,
+    success: false,
+    error: null
 }
 
 export const getPatients = createAsyncThunk('patient/getPatients', async ({ path }, { rejectWithValue }) => {
@@ -19,10 +21,36 @@ export const getPatients = createAsyncThunk('patient/getPatients', async ({ path
     }
 })
 
+export const getPatient = createAsyncThunk('patient/getPatient', async ({ id }, { rejectWithValue }) => {
+    try {
+        const res = await api.get(`api/patients/${id}`)
+        
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error.message)
+    }
+})
+
+export const store = createAsyncThunk('patient/store', async ({ data }, { rejectWithValue }) => {
+    try {
+        const res = await api.post(`api/patients`, data)
+        
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error.message)
+    }
+})
+
 export const patientSlice = createSlice({
     name: 'patient',
     initialState,
-    reducers: {},
+    reducers: {
+        resetSuccess(state) {
+            state.success = false
+        }
+    },
     extraReducers: {
         [getPatients.pending]: (state) => {
             state.patients = []
@@ -37,9 +65,37 @@ export const patientSlice = createSlice({
         },
         [getPatients.rejected]: (state) => {
             state.loading = false
+        },
+        [getPatient.pending]: (state) => {
+            state.patient = null
+            state.loading = true
+        },
+        [getPatient.fulfilled]: (state, { payload }) => {
+            state.patient = payload
+            state.loading = false
+        },
+        [getPatient.rejected]: (state) => {
+            state.loading = false
+        },
+        [store.pending]: (state) => {
+            state.loading = true
+        },
+        [store.fulfilled]: (state, { payload }) => {
+            if (payload.status == 1) {
+                state.success = true
+            } else {
+                state.error = payload
+            }
+
+            // state.patients = payload
+            // state.loading = false
+        },
+        [store.rejected]: (state) => {
+            state.loading = false
         }
     }
 })
 
-export const { increment, decrement } = patientSlice.actions
+export const { resetSuccess } = patientSlice.actions
+
 export const patientReducer = patientSlice.reducer
