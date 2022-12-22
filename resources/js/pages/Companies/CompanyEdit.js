@@ -1,4 +1,5 @@
 import React from 'react'
+import CompanyForm from '../../components/Company/CompanyForm'
 
 const CompanyEdit = () => {
     return (
@@ -7,10 +8,9 @@ const CompanyEdit = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">
-                                {id ? 'แก้ไขรายงานสถานประกอบการ' : 'เพิ่มรายงานสถานประกอบการ'}
-                            </h5>
+                            <h5 className="card-title">แก้ไขรายงานสถานประกอบการ</h5>
 
+                            <CompanyForm />
                         </div>
                     </div>
                 </div>

@@ -1,33 +1,17 @@
 import React from 'react'
 import { Modal } from 'react-bootstrap'
-import { Formik, Form, Field } from 'formik'
-import * as Yup from 'yup'
-
-const companySchema = Yup.object().shape({
-
-})
+import CompanyForm from '../Company/CompanyForm'
 
 const ModalCompanyForm = ({ isOpen, hideModal }) => {
     return (
         <Modal
             show={isOpen}
             onHide={hideModal}
+            size="xl"
         >
-            <Modal.Header></Modal.Header>
+            <Modal.Header closeButton>เพิ่มสถานประกอบการ</Modal.Header>
             <Modal.Body>
-                <Formik
-                    initialValues={{
-
-                    }}
-                    validationSchema={companySchema}
-                    onSubmit={(values) => console.log(values)}
-                >
-                    {(formProps) => (
-                        <Form>
-
-                        </Form>
-                    )}
-                </Formik>
+                <CompanyForm />
             </Modal.Body>
         </Modal>
     )
