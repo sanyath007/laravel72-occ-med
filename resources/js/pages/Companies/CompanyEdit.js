@@ -1,12 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import CompanyForm from '../../components/Company/CompanyForm'
 import { GlobalContext } from '../../context/globalContext'
+import { getCompany, store } from '../../store/company'
 
 const CompanyEdit = () => {
     const { id } = useParams()
     const { setGlobal } = useContext(GlobalContext)
-    const [company, setCompany] = useState([])
+    const dispatch = useDispatch()
+    const { company } = useSelector(state => state.company)
 
     /** Initial global states */
     useEffect(() => {
@@ -21,13 +24,11 @@ const CompanyEdit = () => {
         }))
     }, [])
 
-    const getCompany = async (id) => {
-        const res = await api.get(`/api/companies/${id}`)
-
-        if (res.data) {
-            setCompany(res.data.company)
+    useEffect(() => {
+        if (id && id != '') {
+            dispatch(getCompany({ id }))
         }
-    }
+    }, [id])
 
     const handleSubmit = async (data) => {
         console.log(data);
@@ -39,9 +40,9 @@ const CompanyEdit = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">แก้ไขรายงานสถานประกอบการ</h5>
+                            <h5 className="card-title">แก้ไขรายงานสถานประกอบการ : ID {id}</h5>
 
-                            <CompanyForm onSubmit={handleSubmit} />
+                            <CompanyForm onSubmit={handleSubmit} company={company} />
                         </div>
                     </div>
                 </div>

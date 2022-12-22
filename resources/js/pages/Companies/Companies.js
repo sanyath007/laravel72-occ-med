@@ -25,7 +25,7 @@ const Companies = () => {
     useEffect(() => {
         getCompanies()
 
-        return () => getCompanies()
+        return () => getCompanies
     }, [])
 
     const getCompanies = async (path='/api/companies') => {

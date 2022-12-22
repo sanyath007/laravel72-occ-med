@@ -36,11 +36,9 @@ class CompanyController extends Controller
 
     public function getCompany(Request $request, $id)
     {
-        $company = Company::find($id)->with('type','tambon','amphur','changwat');
+        $company = Company::with('type','tambon','amphur','changwat')->find($id);
 
-        return [
-            "company" => $company
-        ];
+        return response()->json($company);
     }
 
     public function getInitForms()
