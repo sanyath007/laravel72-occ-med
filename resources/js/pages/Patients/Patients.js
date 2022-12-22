@@ -1,14 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
 import AuthContext from '../../context/authContext';
 import { GlobalContext } from '../../context/globalContext';
-import api from '../../api'
+import { getPatients } from '../../store/patient'
+import Pagination from '../../components/Pagination'
 
 const Patients = () => {
+    const dispatch = useDispatch()
+    const { patients, pager } = useSelector(state => state.patient)
     const { authData } = useContext(AuthContext)
     const { setGlobal } = useContext(GlobalContext)
-    const [patients, setPatients] = useState([])
-    const [patientsPager, setPatientsPager] = useState(null)
 
     useEffect(() => {
         console.log('on Patients...', authData);
@@ -25,17 +27,19 @@ const Patients = () => {
     }, [])
 
     useEffect(() => {
-        getPatients()
+        fetchPatients()
     }, [])
 
-    const getPatients = async () => {
-        const res = await api.get(`/api/patients`)
-        console.log(res);
+    const fetchPatients = async (path='/api/patients') => {
+        /** TODO: Filtering logic */
 
-        const { data, ...pager } = res.data.patients
+        /** TODO: Filtering logic */
 
-        setPatients(data)
-        setPatientsPager(pager)
+        dispatch(getPatients({ path }))
+    }
+
+    const handlePageBtnClicked = (path) => {
+        fetchPatients(path)
     }
 
     return (
@@ -60,7 +64,7 @@ const Patients = () => {
                                 <tbody>
                                     {patients && patients.map((patient, row) => (
                                         <tr key={patient.hn}>
-                                            <th scope="row" style={{ textAlign: 'center' }}>{row+1}</th>
+                                            <th scope="row" style={{ textAlign: 'center' }}>{pager && pager.from+row}</th>
                                             <td style={{ textAlign: 'center' }}>{patient.hn}</td>
                                             <td>{patient.pname+patient.fname+ ' ' +patient.lname}</td>
                                             <td style={{ textAlign: 'center' }}>{patient.cid}</td>
@@ -84,29 +88,10 @@ const Patients = () => {
                                 </tbody>
                             </table>
 
-                            <nav aria-label="Page navigation example" className="float-end">
-                                <ul className="pagination">
-                                    <li className="page-item">
-                                        <a className="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                        </a>
-                                    </li>
-                                    <li className="page-item">
-                                        <a className="page-link" href="#">1</a>
-                                    </li>
-                                    <li className="page-item">
-                                        <a className="page-link" href="#">2</a>
-                                    </li>
-                                    <li className="page-item">
-                                        <a className="page-link" href="#">3</a>
-                                    </li>
-                                    <li className="page-item">
-                                        <a className="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
+                            <Pagination
+                                pager={pager}
+                                handlePageBtnClicked={handlePageBtnClicked}
+                            />
                         </div>
                     </div>
                 </div>
