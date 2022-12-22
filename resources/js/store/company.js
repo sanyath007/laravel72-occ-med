@@ -19,6 +19,17 @@ export const getCompanies = createAsyncThunk('company/getCompanies', async ({ da
     }
 })
 
+export const getCompany = createAsyncThunk('company/getCompany', async ({ id }, { rejectWithValue }) => {
+    try {
+        const res = await api.get(`/api/companies/${id}`)
+    
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error.message)
+    }
+})
+
 export const store = createAsyncThunk('company/store', async (data, { rejectWithValue }) => {
     try {
         const res = api.post('/api/companies', data)
@@ -48,14 +59,23 @@ export const companySlice = createSlice({
         [getCompanies.rejected]: (state) => {
             state.loading = false
         },
+        [getCompany.pending]: (state) => {
+            state.company = null
+            state.loading = true
+        },
+        [getCompany.fulfilled]: (state, { payload }) => {
+            state.company = payload
+            state.loading = false
+        },
+        [getCompany.rejected]: (state) => {
+            state.loading = false
+        },
         [store.pending]: (state) => {
             state.loading = true
         },
         [store.fulfilled]: (state, { payload }) => {
-            const { data, ...pager } = payload
-
-            state.companies = data
-            state.pager = pager
+            // state.companies = payload
+            // state.pager = pager
             state.loading = false
         },
         [store.rejected]: (state) => {
