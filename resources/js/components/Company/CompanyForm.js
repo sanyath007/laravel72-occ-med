@@ -40,20 +40,21 @@ const CompanyForm = ({ onSubmit, ...props }) => {
 
     const handleChangwatSelected = (chw_id) => {
         const filteredAmphurs = amphur.amphurs.filter(amp => amp.chw_id === chw_id)
-        console.log(filteredAmphurs);
 
         setAmphur(prevAmphur => ({ ...prevAmphur, filteredAmphurs }))
     }
 
     const handleAmphurSelected = (amp_id) => {
         const filteredTambons = tambon.tambons.filter(tam => tam.amp_id === amp_id)
-        console.log(filteredTambons);
 
         setTambon(prevTambon => ({ ...prevTambon, filteredTambons }))
     }
 
     const handleSubmit = async (values, props) => {
         onSubmit(values)
+
+        /** Clear form values */
+        props.resetForm()
     }
 
     return (

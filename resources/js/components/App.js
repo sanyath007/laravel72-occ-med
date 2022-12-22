@@ -61,7 +61,7 @@ export default function App() {
                         {/* Companies routes */}
                         <Route path="/companies" element={<Companies />} />
                         <Route path="/companies/new" element={<CompanyNew />} />
-                        <Route path="/companies/edit" element={<CompanyEdit />} />
+                        <Route path="/companies/:id/edit" element={<CompanyEdit />} />
                     </Route>
                     {/* ============================= Public routes ============================= */}
                     <Route path="/signin" element={<Signin />} />
