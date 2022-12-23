@@ -13,6 +13,7 @@ class CompanyController extends Controller
 {
     public function getCompanies(Request $request)
     {
+        $type       = $request->get('type');
         $name       = $request->get('name');
         $amphur     = $request->get('amphur');
         $changwat   = $request->get('changwat');
@@ -20,6 +21,9 @@ class CompanyController extends Controller
         $companies = Company::with('type','tambon','amphur','changwat')
                         ->when(!empty($name), function($query) use ($name) {
                             $query->where('name', 'like', '%'.$name.'%');
+                        })
+                        ->when(!empty($type), function($query) use ($type) {
+                            $query->where('company_type_id', $type);
                         })
                         ->when(!empty($amphur), function($query) use ($amphur) {
                             $query->where('amphur_id', $amphur);

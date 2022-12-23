@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { Modal } from 'react-bootstrap'
 import { getCompanies } from '../../store/company'
 import Pagination from '../Pagination'
+import CompanyFilter from '../Company/CompanyFilter'
 
 const ModalCompanies = ({ isOpen, hideModal, onSelected, ...props }) => {
     const dispatch = useDispatch()
@@ -31,6 +32,10 @@ const ModalCompanies = ({ isOpen, hideModal, onSelected, ...props }) => {
         >
             <Modal.Header closeButton>รายการสถานที่ทำงาน</Modal.Header>
             <Modal.Body>
+                <div className="alert border-dark alert-dismissible fade show" role="alert">
+                    <CompanyFilter setQueryStrings={setQueryStrings} />
+                </div>
+
                 <table className="table table-striped table-bordered">
                     <thead>
                         <tr>
