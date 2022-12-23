@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Modal } from 'react-bootstrap'
@@ -8,13 +8,19 @@ import Pagination from '../Pagination'
 const ModalCompanies = ({ isOpen, hideModal, onSelected, ...props }) => {
     const dispatch = useDispatch()
     const { companies, pager, loading } = useSelector(state => state.company)
+    const [queryStrings, setQueryStrings] = useState('')
 
     useEffect(() => {
-        dispatch(getCompanies({ data: 'test' }))
-    }, [])
+        console.log('on queryStrings changed...');
+        fetchCompanies()
+    }, [queryStrings])
+
+    const fetchCompanies = (path='/api/companies?page=') => {
+        dispatch(getCompanies({ path: `${path}${queryStrings}` }))
+    }
 
     const handlePageBtnClicked = (path) => {
-        dispatch(getCompanies(path))
+        fetchCompanies(path)
     }
 
     return (
