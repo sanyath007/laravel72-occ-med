@@ -1,20 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import AuthContext from '../../context/authContext';
 import { GlobalContext } from '../../context/globalContext';
 import { getPatients } from '../../store/patient'
 import Pagination from '../../components/Pagination'
+import PatientFilter from '../../components/Patient/PatientFilter';
 
 const Patients = () => {
     const dispatch = useDispatch()
     const { patients, pager } = useSelector(state => state.patient)
-    const { authData } = useContext(AuthContext)
     const { setGlobal } = useContext(GlobalContext)
+    const [queryStrings, setQueryStrings] = useState('')
 
     useEffect(() => {
-        console.log('on Patients...', authData);
-
         setGlobal((prev) => ({
             ...prev,
             title: 'รายการผู้ป่วย',
@@ -28,14 +26,10 @@ const Patients = () => {
 
     useEffect(() => {
         fetchPatients()
-    }, [])
+    }, [queryStrings])
 
-    const fetchPatients = async (path='/api/patients') => {
-        /** TODO: Filtering logic */
-
-        /** TODO: Filtering logic */
-
-        dispatch(getPatients({ path }))
+    const fetchPatients = (path='/api/patients?page=') => {
+        dispatch(getPatients({ path: `${path}${queryStrings}` }))
     }
 
     const handlePageBtnClicked = (path) => {
@@ -46,6 +40,13 @@ const Patients = () => {
         <section className="section">
             <div className="row">
                 <div className="col-lg-12">
+                    <div className="card mb-3">
+                        <div className="card-body">
+                            <h5 className="card-title">ค้นหาผู้ป่วย</h5>
+                            <PatientFilter setQueryStrings={setQueryStrings} />
+                        </div>
+                    </div>
+
                     <div className="card">
                         <div className="card-body">
                             <h5 className="card-title">รายการผู้ป่วย</h5>
