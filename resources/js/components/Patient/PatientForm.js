@@ -5,6 +5,7 @@ import * as Yup from 'yup'
 import { FaSave } from 'react-icons/fa'
 import { getAddresses } from '../../store/address'
 import { getAll as getRights } from '../../store/right'
+import { calcAgeY } from '../../utils/calculator'
 
 const patientSchema = Yup.object().shape({
     hn: Yup.string().required('กรุณาระบุ HN'),
@@ -33,7 +34,7 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
 
     useEffect(() => {
         dispatch(getAddresses())
-        dispatch(getRights())
+        dispatch(getRights({ path: '/api/rights' }))
     }, [])
 
     return (
@@ -193,7 +194,7 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                         <div className="col-md-2 form-group mb-2">
                             <label htmlFor="">อายุ :</label>
                             <div className="form-control" style={{ minHeight: '2.3rem' }}>
-                                ปี
+                                {formProps.values.birthdate ? calcAgeY(formProps.values.birthdate) : '-'} ปี
                             </div>
                         </div>
                         <div className="col-md-3 form-group mb-2">
@@ -263,10 +264,10 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                                 value={formProps.values.changwat_id}
                                 onChange={(e) => {
                                     const { value } = e.target
-                                    console.log(value);
 
                                     formProps.setFieldValue('changwat_id', value)
                                     setFilteredAmphurs(amphurs.filter(amp => amp.chw_id == value))
+                                    setFilteredTambons(tambons.filter(tam => tam.chw_id == value))
                                 }}
                                 className={`form-control ${formProps.errors.changwat_id && formProps.touched.changwat_id ? 'is-invalid' : ''}`}
                             >
@@ -317,7 +318,12 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                                 onChange={formProps.handleChange}
                                 className={`form-control ${formProps.errors.tambon_id && formProps.touched.tambon_id ? 'is-invalid' : ''}`}
                             >
-                                <option value=""></option>
+                                <option value="">-- เลือกตำบล --</option>
+                                {filteredTambons && filteredTambons.map(tam => (
+                                    <option key={tam.id} value={tam.id}>
+                                        {tam.tambon}
+                                    </option>
+                                ))}
                             </select>
                             {formProps.errors.tambon_id && formProps.touched.tambon_id ? (
                                 <div className="invalid-feedback">
@@ -364,7 +370,7 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                                 onChange={formProps.handleChange}
                                 className={`form-control ${formProps.errors.right_id && formProps.touched.right_id ? 'is-invalid' : ''}`}
                             >
-                                <option value=""></option>
+                                <option value="">-- เลือกสิทธิการรักษา--</option>
                                 {rights && rights.map(right => (
                                     <option key={right.id} value={right.id}>
                                         {right.name}

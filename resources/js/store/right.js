@@ -21,7 +21,7 @@ export const getRights = createAsyncThunk('right/getRights', async ({ path }, { 
 
 export const getAll = createAsyncThunk('right/getAll', async ({ path }, { rejectWithValue }) => {
     try {
-        const res = await api.get(`${path}&all=1`)
+        const res = await api.get(`${path}?all=1`)
     
         return res.data
     } catch (error) {
