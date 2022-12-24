@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Icd10;
-use App\Models\Student;
-use App\Models\Subject;
 
 class Icd10Controller extends Controller
 {
