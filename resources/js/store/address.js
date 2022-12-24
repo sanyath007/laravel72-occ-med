@@ -2,9 +2,9 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import api from '../api'
 
 const initialState = {
-    changwats: '',
-    amphurs: '',
-    tambons: '',
+    changwats: [],
+    amphurs: [],
+    tambons: [],
 }
 
 export const getAddresses = createAsyncThunk('address/getAddresses', async (data, { rejectWithValue }) => {
