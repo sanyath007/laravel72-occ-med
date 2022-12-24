@@ -5,6 +5,7 @@ import * as Yup from 'yup'
 import { FaSave } from 'react-icons/fa'
 import { getAddresses } from '../../store/address'
 import { getAll as getRights } from '../../store/right'
+import { getAll as getNationalities } from '../../store/nationality'
 import { calcAgeY } from '../../utils/calculator'
 
 const patientSchema = Yup.object().shape({
@@ -35,6 +36,7 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
     useEffect(() => {
         dispatch(getAddresses())
         dispatch(getRights({ path: '/api/rights' }))
+        dispatch(getNationalities({ path: '/api/nationalities' }))
     }, [])
 
     return (
@@ -354,7 +356,7 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                                 onChange={formProps.handleChange}
                                 className={`form-control ${formProps.errors.nationality_id && formProps.touched.nationality_id ? 'is-invalid' : ''}`}
                             >
-                                <option value=""></option>
+                                <option value="">-- เลือกสัญชาติ --</option>
                             </select>
                             {formProps.errors.nationality_id && formProps.touched.nationality_id ? (
                                 <div className="invalid-feedback">
