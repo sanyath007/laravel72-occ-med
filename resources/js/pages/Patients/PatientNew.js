@@ -1,8 +1,11 @@
 import React, { useContext, useEffect } from 'react'
-import PatientForm from '../../components/Patient/PatientForm'
+import { useDispatch } from 'react-redux'
 import { GlobalContext } from '../../context/globalContext'
+import { store } from '../../store/patient'
+import PatientForm from '../../components/Patient/PatientForm'
 
 const PatientNew = () => {
+    const dispatch = useDispatch()
     const { setGlobal } = useContext(GlobalContext)
 
     useEffect(() => {
@@ -17,6 +20,10 @@ const PatientNew = () => {
         }))
     }, [])
 
+    const onSubmit = (data) => {
+        dispatch(store(data))
+    }
+
     return (
         <section className="section">
             <div className="row">
@@ -25,7 +32,7 @@ const PatientNew = () => {
                         <div className="card-body">
                             <h5 className="card-title">ลงทะเบียนผู้ป่วย</h5>
 
-                            <PatientForm />
+                            <PatientForm handleSubmit={onSubmit} />
                         </div>
                     </div>
                 </div>
