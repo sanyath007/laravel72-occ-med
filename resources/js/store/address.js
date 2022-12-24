@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import api from '../api'
 
 const initialState = {
     changwats: '',
@@ -9,9 +10,10 @@ const initialState = {
 export const getAddresses = createAsyncThunk('address/getAddresses', async (data, { rejectWithValue }) => {
     try {
         const res = await api.get(`/api/addresses`)
-        
+
         return res.data
     } catch (error) {
+        console.log(error);
         rejectWithValue(error)
     }
 })
@@ -30,7 +32,7 @@ export const addressSlice = createSlice({
             state.tambons = payload.tambons
         },
         [getAddresses.rejected]: (state, { payload }) => {
-
+            console.log(payload);
         }
     }
 })

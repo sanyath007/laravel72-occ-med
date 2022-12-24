@@ -11,10 +11,12 @@ class AddressController extends Controller
 {
     public function getAddresses(Request $request)
     {
-        return [
+        $addresses = [
             "changwats"     => Changwat::all(),
             "amphurs"       => Amphur::all(),
             "tambons"       => Tambon::all(),
         ];
+
+        return response()->json($addresses);
     }
 }

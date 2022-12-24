@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { FaSave } from 'react-icons/fa'
+import { getAddresses } from '../../store/address'
+import { getAll as getRights } from '../../store/right'
 
 const patientSchema = Yup.object().shape({
     hn: Yup.string().required('กรุณาระบุ HN'),
@@ -21,7 +24,18 @@ const patientSchema = Yup.object().shape({
     right_id: Yup.number().required(),
 })
 
-const PatientForm = ({ handleSubmit, ...props }) => {
+const PatientForm = ({ handleSubmit, patient, ...props }) => {
+    const dispatch = useDispatch()
+    const { changwats, amphurs, tambons } = useSelector(state => state.address)
+    const { rights } = useSelector(state => state.right)
+    const [filteredAmphurs, setFilteredAmphurs] = useState([])
+    const [filteredTambons, setFilteredTambons] = useState([])
+
+    useEffect(() => {
+        dispatch(getAddresses())
+        dispatch(getRights())
+    }, [])
+
     return (
         <Formik
             initialValues={{
@@ -226,7 +240,7 @@ const PatientForm = ({ handleSubmit, ...props }) => {
                             <label htmlFor="">หมู่ :</label>
                             <input
                                 type="text"
-                                name=""
+                                name="moo"
                                 value={formProps.values.moo}
                                 onChange={formProps.handleChange}
                                 className="form-control"
@@ -236,7 +250,7 @@ const PatientForm = ({ handleSubmit, ...props }) => {
                             <label htmlFor="">ถนน :</label>
                             <input
                                 type="text"
-                                name=""
+                                name="road"
                                 value={formProps.values.road}
                                 onChange={formProps.handleChange}
                                 className="form-control"
@@ -247,10 +261,21 @@ const PatientForm = ({ handleSubmit, ...props }) => {
                             <select
                                 name="changwat_id"
                                 value={formProps.values.changwat_id}
-                                onChange={formProps.handleChange}
+                                onChange={(e) => {
+                                    const { value } = e.target
+                                    console.log(value);
+
+                                    formProps.setFieldValue('changwat_id', value)
+                                    setFilteredAmphurs(amphurs.filter(amp => amp.chw_id == value))
+                                }}
                                 className={`form-control ${formProps.errors.changwat_id && formProps.touched.changwat_id ? 'is-invalid' : ''}`}
                             >
-                                <option value=""></option>
+                                <option value="">-- เลือกจังหวัด --</option>
+                                {changwats && changwats.map(chw => (
+                                    <option key={chw.chw_id} value={chw.chw_id}>
+                                        {chw.changwat}
+                                    </option>
+                                ))}
                             </select>
                             {formProps.errors.changwat_id && formProps.touched.changwat_id ? (
                                 <div className="invalid-feedback">
@@ -263,10 +288,20 @@ const PatientForm = ({ handleSubmit, ...props }) => {
                             <select
                                 name="amphur_id"
                                 value={formProps.values.amphur_id}
-                                onChange={formProps.handleChange}
+                                onChange={(e) => {
+                                    const { value } = e.target
+
+                                    formProps.setFieldValue('amphur_id', value)
+                                    setFilteredTambons(tambons.filter(tam => tam.amp_id == value))
+                                }}
                                 className={`form-control ${formProps.errors.amphur_id && formProps.touched.amphur_id ? 'is-invalid' : ''}`}
                             >
-                                <option value=""></option>
+                                <option value="">-- เลือกอำเภอ --</option>
+                                {filteredAmphurs && filteredAmphurs.map(amp => (
+                                    <option key={amp.id} value={amp.id}>
+                                        {amp.amphur}
+                                    </option>
+                                ))}
                             </select>
                             {formProps.errors.amphur_id && formProps.touched.amphur_id ? (
                                 <div className="invalid-feedback">
@@ -330,6 +365,11 @@ const PatientForm = ({ handleSubmit, ...props }) => {
                                 className={`form-control ${formProps.errors.right_id && formProps.touched.right_id ? 'is-invalid' : ''}`}
                             >
                                 <option value=""></option>
+                                {rights && rights.map(right => (
+                                    <option key={right.id} value={right.id}>
+                                        {right.name}
+                                    </option>
+                                ))}
                             </select>
                             {formProps.errors.right_id && formProps.touched.right_id ? (
                                 <div className="invalid-feedback">
