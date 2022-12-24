@@ -4,6 +4,7 @@ import { companyReducer } from './company'
 import { icd10Reducer } from './icd10'
 import { rightReducer } from './right'
 import { checkupReducer } from './checkup'
+import { addressReducer } from './address'
 
 export default configureStore({
     reducer: {
@@ -11,6 +12,7 @@ export default configureStore({
         company: companyReducer,
         icd10: icd10Reducer,
         right: rightReducer,
-        checkup: checkupReducer
+        checkup: checkupReducer,
+        address: addressReducer
     }
 })

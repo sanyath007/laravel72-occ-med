@@ -32,6 +32,9 @@ Route::post('/login', 'Auth\LoginController@login');
 // });
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
+    /** Addresses */
+    Route::get('/addresses', 'AddressController@getAddresses');
+
     /** Users */
     Route::get('/users', 'UserController@getUsers');
     Route::get('/users/{id}', 'UserController@getUser');
