@@ -43,6 +43,17 @@ export const store = createAsyncThunk('patient/store', async ({ data }, { reject
     }
 })
 
+export const update = createAsyncThunk('patient/update', async ({ id, data }, { rejectWithValue }) => {
+    try {
+        const res = await api.put(`api/patients/${id}`, data)
+        
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error.message)
+    }
+})
+
 export const patientSlice = createSlice({
     name: 'patient',
     initialState,
@@ -91,6 +102,22 @@ export const patientSlice = createSlice({
             // state.loading = false
         },
         [store.rejected]: (state) => {
+            state.loading = false
+        },
+        [update.pending]: (state) => {
+            state.loading = true
+        },
+        [update.fulfilled]: (state, { payload }) => {
+            if (payload.status == 1) {
+                state.success = true
+            } else {
+                state.error = payload
+            }
+
+            // state.patients = payload
+            // state.loading = false
+        },
+        [update.rejected]: (state) => {
             state.loading = false
         }
     }
