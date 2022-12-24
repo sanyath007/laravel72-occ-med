@@ -1,36 +1,36 @@
 import React, { useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import PatientForm from '../../components/Patient/PatientForm'
+import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../context/globalContext'
-import api from '../../api'
+import { getPatient, update } from '../../store/patient'
+import PatientForm from '../../components/Patient/PatientForm'
 
 const PatientEdit = () => {
+    const dispatch = useDispatch()
+    const { patient } = useSelector(state => state.patient)
     const { setGlobal } = useContext(GlobalContext)
     const { id } = useParams()
-    const [patient, setPatient] = useState(null)
 
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'ลงทะเบียนผู้ป่วยใหม่',
+            title: 'แก้ไขผู้ป่วย',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'patients', name: 'ทะเบียนผู้ป่วย', path: '/patients' },
-                { id: 'new', name: 'ลงทะเบียนผู้ป่วยใหม่', path: null, active: true }
+                { id: 'edit', name: 'แก้ไขผู้ป่วย', path: null, active: true }
             ]
         }))
     }, [])
 
     useEffect(() => {
-        getPatient(id)
+        if (id && id != '') {
+            dispatch(getPatient({ id }))
+        }
+    }, [id])
 
-        return () => getPatient(id)
-    }, [])
-
-    const getPatient = async (id) => {
-        const res = await api.get(`/api/patients/${id}`)
-
-        setPatient(res.data)
+    const onSubmit = (data) => {
+        dispatch(update({ id, data }))
     }
 
     return (
@@ -41,7 +41,7 @@ const PatientEdit = () => {
                         <div className="card-body">
                             <h5 className="card-title">ลงทะเบียนผู้ป่วย</h5>
 
-                            <PatientForm />
+                            <PatientForm handleSubmit={onSubmit} patient={patient} />
                         </div>
                     </div>
                 </div>
