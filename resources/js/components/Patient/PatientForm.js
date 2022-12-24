@@ -21,7 +21,7 @@ const patientSchema = Yup.object().shape({
     right_id: Yup.number().required(),
 })
 
-const PatientForm = () => {
+const PatientForm = ({ handleSubmit, ...props }) => {
     return (
         <Formik
             initialValues={{
@@ -50,8 +50,11 @@ const PatientForm = () => {
                 remark: ''
             }}
             validationSchema={patientSchema}
-            onSubmit={(values) => {
-                console.log(values);
+            onSubmit={(values, props) => {
+                handleSubmit(values)
+
+                /** Clear form's input value */
+                props.resetForm()
             }}
         >
             {(formProps) => (
