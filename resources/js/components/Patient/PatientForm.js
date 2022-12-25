@@ -30,6 +30,7 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
     const dispatch = useDispatch()
     const { changwats, amphurs, tambons } = useSelector(state => state.address)
     const { rights } = useSelector(state => state.right)
+    const { nationalities } = useSelector(state => state.nationality)
     const [filteredAmphurs, setFilteredAmphurs] = useState([])
     const [filteredTambons, setFilteredTambons] = useState([])
 
@@ -357,6 +358,11 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                                 className={`form-control ${formProps.errors.nationality_id && formProps.touched.nationality_id ? 'is-invalid' : ''}`}
                             >
                                 <option value="">-- เลือกสัญชาติ --</option>
+                                {nationalities && nationalities.map(nation => (
+                                    <option key={nation.code} value={nation.code}>
+                                        {nation.name}
+                                    </option>
+                                ))}
                             </select>
                             {formProps.errors.nationality_id && formProps.touched.nationality_id ? (
                                 <div className="invalid-feedback">
@@ -389,32 +395,44 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                             <label htmlFor="">หมู่เลือด :</label>
                             <div className="form-control d-flex justify-content-around">
                                 <div className="d-flex">
-                                    <input
+                                    <Field
                                         type="radio"
-                                        name=""
+                                        name="blood_group_id"
+                                        value="1"
                                         className="mx-2"
                                     /> A
                                 </div>
                                 <div className="d-flex">
-                                    <input
+                                    <Field
                                         type="radio"
-                                        name=""
+                                        name="blood_group_id"
+                                        value="2"
                                         className="mx-2"
                                     /> B
                                 </div>
                                 <div className="d-flex">
-                                    <input
+                                    <Field
                                         type="radio"
-                                        name=""
+                                        name="blood_group_id"
+                                        value="3"
                                         className="mx-2"
                                     /> AB
                                 </div>
                                 <div className="d-flex">
-                                    <input
+                                    <Field
                                         type="radio"
-                                        name=""
+                                        name="blood_group_id"
+                                        value="4"
                                         className="mx-2"
                                     /> O
+                                </div>
+                                <div className="d-flex">
+                                    <Field
+                                        type="radio"
+                                        name="blood_group_id"
+                                        value="99"
+                                        className="mx-2"
+                                    /> ไม่ทราบ
                                 </div>
                             </div>
                         </div>

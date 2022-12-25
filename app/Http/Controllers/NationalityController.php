@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Nationality;
 
-class Nationality extends Controller
+class NationalityController extends Controller
 {
     public function getNationalities(Request $request)
     {
