@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { FaSave } from 'react-icons/fa'
-import Select, { components } from 'react-select'
+import Select from 'react-select'
 import { getAddresses } from '../../store/address'
 import { getAll as getRights } from '../../store/right'
 import { getAll as getNationalities } from '../../store/nationality'
@@ -26,6 +26,10 @@ const patientSchema = Yup.object().shape({
     nationality_id: Yup.string().required(),
     right_id: Yup.string().required(),
 })
+
+const selectStyles = {
+    control: (styles) => ({ ...styles, border: 'none' }) 
+}
 
 const PatientForm = ({ handleSubmit, patient, ...props }) => {
     const dispatch = useDispatch()
@@ -355,28 +359,10 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                             <label htmlFor="">สัญชาติ :</label>
                             <Select
                                 options={nationalities.map(nation => ({ value: nation.code, label: nation.name}))}
-                                components={{
-                                    SelectContainer: ({ getValue, ...rest }) => {
-                                        console.log(rest);
-                                        return (
-                                            <components.SelectContainer { ...rest } />
-                                        )
-                                    }
-                                }}
+                                onChange={({ value }) => formProps.setFieldValue('nationality_id', value)}
+                                className={`form-control p-0 ${formProps.errors.nationality_id && formProps.touched.nationality_id ? 'is-invalid' : ''}`}
+                                styles={selectStyles}
                             />
-                            {/* <select
-                                name="nationality_id"
-                                value={formProps.values.nationality_id}
-                                onChange={formProps.handleChange}
-                                className={`form-control ${formProps.errors.nationality_id && formProps.touched.nationality_id ? 'is-invalid' : ''}`}
-                            >
-                                <option value="">-- เลือกสัญชาติ --</option>
-                                {nationalities && nationalities.map(nation => (
-                                    <option key={nation.code} value={nation.code}>
-                                        {nation.name}
-                                    </option>
-                                ))}
-                            </select> */}
                             {formProps.errors.nationality_id && formProps.touched.nationality_id ? (
                                 <div className="invalid-feedback">
                                     {formProps.errors.nationality_id}
