@@ -7,7 +7,7 @@ import PatientForm from '../../components/Patient/PatientForm'
 
 const PatientEdit = () => {
     const dispatch = useDispatch()
-    const { patient } = useSelector(state => state.patient)
+    const { patient, loading } = useSelector(state => state.patient)
     const { setGlobal } = useContext(GlobalContext)
     const { id } = useParams()
 
@@ -39,9 +39,14 @@ const PatientEdit = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">ลงทะเบียนผู้ป่วย</h5>
-
-                            <PatientForm handleSubmit={onSubmit} patient={patient} />
+                            <h5 className="card-title">แก้ไขผู้ป่วย</h5>
+                            {loading ? (
+                                <div className="d-flex justify-content-center p-5">
+                                    <div className="spinner-border text-secondary" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            ) : <PatientForm handleSubmit={onSubmit} patient={patient} />}
                         </div>
                     </div>
                 </div>
