@@ -42,30 +42,31 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
 
     return (
         <Formik
+            enableReinitialize
             initialValues={{
-                id: '',
-                hn: '',
-                pname: '',
-                fname: '',
-                lname: '',
-                birthdate: '',
-                sex: '',
-                cid: '',
-                tel1: '',
-                tel2: '',
-                address: '',
-                moo: '',
-                road: '',
-                tambon_id: '',
-                amphur_id: '',
-                changwat_id: '',
-                zipcode: '',
-                passport: '',
-                nationality_id: '',
-                race: '',
-                blood_group_id: '',
-                right_id: '',
-                remark: ''
+                id: patient && patient.id ? patient.id : '',
+                hn: patient && patient.hn ? patient.hn : '',
+                pname: patient && patient.pname ? patient.pname : '',
+                fname: patient && patient.fname ? patient.fname : '',
+                lname: patient && patient.lname ? patient.lname : '',
+                birthdate: patient && patient.birthdate ? patient.birthdate : '',
+                sex: patient && patient.sex ? patient.sex : '',
+                cid: patient && patient.cid ? patient.cid : '',
+                tel1: patient && patient.tel1 ? patient.tel1 : '',
+                tel2: patient && patient.tel2 ? patient.tel2 : '',
+                address: patient && patient.address ? patient.address : '',
+                moo: patient && patient.moo ? patient.moo : '',
+                road: patient && patient.road ? patient.road : '',
+                tambon_id: patient && patient.tambon_id ? patient.tambon_id : '',
+                amphur_id: patient && patient.amphur_id ? patient.amphur_id : '',
+                changwat_id: patient && patient.changwat_id ? patient.changwat_id : '',
+                zipcode: patient && patient.zipcode ? patient.zipcode : '',
+                passport: patient && patient.passport ? patient.passport : '',
+                nationality_id: patient && patient.nationality_id ? patient.nationality_id : '',
+                race: patient && patient.race ? patient.race : '',
+                blood_group_id: patient && patient.blood_group_id ? patient.blood_group_id : '',
+                right_id: patient && patient.right_id ? patient.right_id : '',
+                remark: patient && patient.remark ? patient.remark : ''
             }}
             validationSchema={patientSchema}
             onSubmit={(values, props) => {

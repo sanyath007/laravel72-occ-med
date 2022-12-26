@@ -107,7 +107,8 @@ const PatientDetail = () => {
                                                     ถนน${patient.road ? patient.road : '-'} 
                                                     ต.${patient.tambon ? patient.tambon.tambon : '-'} 
                                                     อ.${patient.amphur ? patient.amphur.amphur : '-'} 
-                                                    จ.${patient.changwat.changwat} ${patient.zipcode}`}
+                                                    จ.${patient.changwat ? patient.changwat.changwat : '-'} 
+                                                    ${patient.zipcode}`}
                                             </div>
                                         </div>
                                     </div>
