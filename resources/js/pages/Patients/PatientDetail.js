@@ -1,12 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import api from '../../api'
+import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../context/globalContext'
+import { getPatient } from '../../store/patient'
+import { calcAgeY } from '../../utils/calculator'
 
 const PatientDetail = () => {
     const { setGlobal } = useContext(GlobalContext)
     const { id } = useParams();
-    const [patient, setPatient] = useState(null)
+    const dispatch = useDispatch()
+    const { patient } = useSelector(state => state.patient)
 
     useEffect(() => {
         setGlobal((prev) => ({
@@ -21,14 +24,8 @@ const PatientDetail = () => {
     }, [])
 
     useEffect(() => {
-        getPatient(id)
-    }, [])
-
-    const getPatient = async (id) => {
-        const res = await api.get(`/api/patients/${id}`)
-
-        setPatient(res.data)
-    }
+        dispatch(getPatient({ id }))
+    }, [id])
 
     return (
         <section className="section">
@@ -39,7 +36,7 @@ const PatientDetail = () => {
                             <h5 className="card-title">รายละเอียดผู้ป่วย (ID: {id})</h5>
                             <form>
                                 <div className="row mb-3">
-                                    <label htmlFor="profileImage" className="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                                    <label htmlFor="profileImage" className="col-md-4 col-lg-3 col-form-label">รูปผู้ป่วย</label>
                                     <div className="col-md-8 col-lg-9">
                                         <img src={`${process.env.MIX_APP_URL}/img/profile-img.jpg`} alt="Profile" />
                                         <div className="pt-2">
@@ -53,81 +50,66 @@ const PatientDetail = () => {
                                     </div>
                                 </div>
                                 <div className="row mb-3">
-                                    <label htmlFor="fullName" className="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                                    <label htmlFor="fullName" className="col-md-4 col-lg-3 col-form-label">
+                                        ชื่อ-สกุล
+                                    </label>
                                     <div className="col-md-8 col-lg-9">
-                                        <input name="fullName" type="text" className="form-control" id="fullName" value="Jassa" onChange={() => {}} />
+                                        <div className="form-control">
+                                            {patient && `${patient.pname}${patient.fname} ${patient.lname} `}
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="row mb-3">
-                                    <label htmlFor="about" className="col-md-4 col-lg-3 col-form-label">About</label>
+                                    <label htmlFor="about" className="col-md-4 col-lg-3 col-form-label">HN</label>
                                     <div className="col-md-8 col-lg-9">
-                                        {/* <textarea name="about" className="form-control" id="about" style="height: 100px">
-                                            Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.
-                                        </textarea> */}
+                                        <div className="form-control">
+                                            {patient && patient.hn}
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="row mb-3">
-                                    <label htmlFor="company" className="col-md-4 col-lg-3 col-form-label">Company</label>
+                                    <label htmlFor="company" className="col-md-4 col-lg-3 col-form-label">CID</label>
                                     <div className="col-md-8 col-lg-9">
-                                        <input name="company" type="text" className="form-control" id="company" value="Therichpost" onChange={() => {}} />
+                                        <div className="form-control">
+                                            {patient && patient.cid}
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="row mb-3">
-                                    <label htmlFor="Job" className="col-md-4 col-lg-3 col-form-label">Job</label>
+                                    <label htmlFor="Job" className="col-md-4 col-lg-3 col-form-label">วันเกิด</label>
                                     <div className="col-md-8 col-lg-9">
-                                        <input name="job" type="text" className="form-control" id="Job" value="Web Designer" onChange={() => {}} />
+                                        <div className="form-control">
+                                            {patient && patient.birthdate}
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="row mb-3">
-                                    <label htmlFor="Country" className="col-md-4 col-lg-3 col-form-label">Country</label>
+                                    <label htmlFor="Country" className="col-md-4 col-lg-3 col-form-label">อายุ</label>
                                     <div className="col-md-8 col-lg-9">
-                                        <input name="country" type="text" className="form-control" id="Country" value="USA" onChange={() => {}} />
+                                        <div className="form-control">
+                                            {patient && calcAgeY(patient.birthdate)} ปี
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="row mb-3">
-                                    <label htmlFor="Address" className="col-md-4 col-lg-3 col-form-label">Address</label>
+                                    <label htmlFor="Address" className="col-md-4 col-lg-3 col-form-label">ที่อยู่</label>
                                     <div className="col-md-8 col-lg-9">
-                                        <input name="address" type="text" className="form-control" id="Address" value="Ludhiana, Punjab, India" onChange={() => {}} />
+                                    <div className="form-control">
+                                            {patient && `${patient.address} หมู่ ${patient.moo ? patient.moo : '-'} 
+                                                ถนน${patient.road ? patient.road : '-'} 
+                                                ต.${patient.tambon ? patient.tambon.tambon : '-'} 
+                                                อ.${patient.amphur ? patient.amphur.amphur : '-'} 
+                                                จ.${patient.changwat.changwat} ${patient.zipcode}`}
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="row mb-3">
-                                    <label htmlFor="Phone" className="col-md-4 col-lg-3 col-form-label">Phone</label>
+                                    <label htmlFor="Phone" className="col-md-4 col-lg-3 col-form-label">โทรศัพท์ติดต่อ</label>
                                     <div className="col-md-8 col-lg-9">
-                                        <input name="phone" type="text" className="form-control" id="Phone" value="(436) 486-3538 x29071" onChange={() => {}} />
+                                        <div className="form-control">
+                                            {patient && `${patient.tel1}${patient.tel2 ? ', '+patient.tel2 : ''}`}
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="row mb-3">
-                                    <label htmlFor="Email" className="col-md-4 col-lg-3 col-form-label">Email</label>
-                                    <div className="col-md-8 col-lg-9">
-                                        <input name="email" type="email" className="form-control" id="Email" value="k.anderson@example.com" onChange={() => {}} />
-                                    </div>
-                                </div>
-                                <div className="row mb-3">
-                                    <label htmlFor="Twitter" className="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
-                                    <div className="col-md-8 col-lg-9">
-                                        <input name="twitter" type="text" className="form-control" id="Twitter" value="https://twitter.com/#" onChange={() => {}} />
-                                    </div>
-                                </div>
-                                <div className="row mb-3">
-                                    <label htmlFor="Facebook" className="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
-                                    <div className="col-md-8 col-lg-9">
-                                        <input name="facebook" type="text" className="form-control" id="Facebook" value="https://facebook.com/#" onChange={() => {}} />
-                                    </div>
-                                </div>
-                                <div className="row mb-3">
-                                    <label htmlFor="Instagram" className="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
-                                    <div className="col-md-8 col-lg-9">
-                                        <input name="instagram" type="text" className="form-control" id="Instagram" value="https://instagram.com/#" onChange={() => {}} />
-                                    </div>
-                                </div>
-                                <div className="row mb-3">
-                                    <label htmlFor="Linkedin" className="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
-                                    <div className="col-md-8 col-lg-9">
-                                        <input name="linkedin" type="text" className="form-control" id="Linkedin" value="https://linkedin.com/#"  onChange={() => {}}/>
-                                    </div>
-                                </div>
-                                <div className="text-center">
-                                    <button type="submit" className="btn btn-primary">Save Changes</button>
                                 </div>
                             </form>
                         </div>
