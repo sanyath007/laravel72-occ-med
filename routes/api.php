@@ -60,6 +60,9 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/nationalities', 'NationalityController@getNationalities');
     Route::get('/nationalities/{id}', 'NationalityController@getNationality');
 
+    /** Pnames */
+    Route::get('/pnames', 'PnameController@getPnames');
+
     /** Companies */
     Route::get('/companies', 'CompanyController@getCompanies');
     Route::get('/companies/{id}', 'CompanyController@getCompany');
