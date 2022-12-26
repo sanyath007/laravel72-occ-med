@@ -41,6 +41,7 @@
         "react-pro-sidebar": "^1.0.0-alpha.7",
         "react-redux": "^8.0.5",
         "react-router-dom": "^6.4.3",
+        "react-select": "^5.7.0",
         "react-toastify": "^7.0.4",
         "yup": "^0.32.11"
     }
