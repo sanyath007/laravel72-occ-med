@@ -8,7 +8,7 @@ import PatientFilter from '../../components/Patient/PatientFilter';
 
 const Patients = () => {
     const dispatch = useDispatch()
-    const { patients, pager } = useSelector(state => state.patient)
+    const { patients, pager, loading } = useSelector(state => state.patient)
     const { setGlobal } = useContext(GlobalContext)
     const [queryStrings, setQueryStrings] = useState('')
 
@@ -63,6 +63,15 @@ const Patients = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {loading && (
+                                        <tr>
+                                            <td colSpan="9" style={{ textAlign: 'center' }}>
+                                                <div className="spinner-border text-secondary" role="status">
+                                                    <span className="visually-hidden">Loading...</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )}
                                     {patients && patients.map((patient, row) => (
                                         <tr key={patient.hn}>
                                             <th scope="row" style={{ textAlign: 'center' }}>{pager && pager.from+row}</th>
