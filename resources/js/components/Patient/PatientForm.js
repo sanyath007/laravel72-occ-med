@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { FaSave } from 'react-icons/fa'
+import Select, { components } from 'react-select'
 import { getAddresses } from '../../store/address'
 import { getAll as getRights } from '../../store/right'
 import { getAll as getNationalities } from '../../store/nationality'
@@ -352,7 +353,18 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                         </div>
                         <div className="col-md-3 form-group mb-2">
                             <label htmlFor="">สัญชาติ :</label>
-                            <select
+                            <Select
+                                options={nationalities.map(nation => ({ value: nation.code, label: nation.name}))}
+                                components={{
+                                    SelectContainer: ({ getValue, ...rest }) => {
+                                        console.log(rest);
+                                        return (
+                                            <components.SelectContainer { ...rest } />
+                                        )
+                                    }
+                                }}
+                            />
+                            {/* <select
                                 name="nationality_id"
                                 value={formProps.values.nationality_id}
                                 onChange={formProps.handleChange}
@@ -364,7 +376,7 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                                         {nation.name}
                                     </option>
                                 ))}
-                            </select>
+                            </select> */}
                             {formProps.errors.nationality_id && formProps.touched.nationality_id ? (
                                 <div className="invalid-feedback">
                                     {formProps.errors.nationality_id}
