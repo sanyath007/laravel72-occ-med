@@ -32,7 +32,7 @@ export const getPatient = createAsyncThunk('patient/getPatient', async ({ id }, 
     }
 })
 
-export const store = createAsyncThunk('patient/store', async ({ data }, { rejectWithValue }) => {
+export const store = createAsyncThunk('patient/store', async (data, { rejectWithValue }) => {
     try {
         const res = await api.post(`api/patients`, data)
         

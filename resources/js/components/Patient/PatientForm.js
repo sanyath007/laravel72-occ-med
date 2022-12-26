@@ -15,15 +15,15 @@ const patientSchema = Yup.object().shape({
     lname: Yup.string().required('กรุณาระบุสกุล'),
     birthdate: Yup.date().required(),
     cid: Yup.string().required(),
-    sex: Yup.number().required(),
-    tel1: Yup.number().required(),
-    address: Yup.number().required(),
-    tambon_id: Yup.number().required(),
-    amphur_id: Yup.number().required(),
-    changwat_id: Yup.number().required(),
+    sex: Yup.string().required(),
+    tel1: Yup.string().required(),
+    address: Yup.string().required(),
+    tambon_id: Yup.string().required(),
+    amphur_id: Yup.string().required(),
+    changwat_id: Yup.string().required(),
     zipcode: Yup.number().required(),
-    nationality_id: Yup.number().required(),
-    right_id: Yup.number().required(),
+    nationality_id: Yup.string().required(),
+    right_id: Yup.string().required(),
 })
 
 const PatientForm = ({ handleSubmit, patient, ...props }) => {

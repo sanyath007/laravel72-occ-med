@@ -43,6 +43,88 @@ class PatientController extends Controller
     }
 
     public function store(Request $request) {
-        return Patient::create($request->all());
+        try {
+            $patient = new Patient;
+            $patient->hn        = $request['hn'];
+            $patient->cid       = $request['cid'];
+            $patient->pname     = $request['pname'];
+            $patient->fname     = $request['fname'];
+            $patient->lname     = $request['lname'];
+            $patient->sex       = $request['sex'];
+            $patient->birthdate = $request['birthdate'];
+            $patient->tel1      = $request['tel1'];
+            $patient->tel2      = $request['tel2'];
+            $patient->address   = $request['address'];
+            $patient->moo       = $request['moo'];
+            $patient->road      = $request['road'];
+            $patient->tambon_id = $request['tambon_id'];
+            $patient->amphur_id = $request['amphur_id'];
+            $patient->changwat_id    = $request['changwat_id'];
+            $patient->zipcode        = $request['zipcode'];
+            $patient->nationality_id = $request['nationality_id'];
+            $patient->right_id       = $request['right_id'];
+            $patient->blood_group_id = $request['blood_group_id'];
+
+            if ($patient->save()) {
+                return response()->json([
+                    'status'    => 1,
+                    'message'   => 'Insertion successfully!!',
+                    "patient"   => $patient
+                ]);
+            } else {
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Something went wrong!!'
+                ]);
+            }
+        } catch (\Exception $ex) {
+            return response()->json([
+                'status'    => 0,
+                'message'   => $ex->getMessage()
+            ]);
+        }
+    }
+
+    public function update(Request $request, $id) {
+        try {
+            $patient = Patient::find($id);
+            $patient->hn        = $request['hn'];
+            $patient->cid       = $request['cid'];
+            $patient->pname     = $request['pname'];
+            $patient->fname     = $request['fname'];
+            $patient->lname     = $request['lname'];
+            $patient->sex       = $request['sex'];
+            $patient->birthdate = $request['birthdate'];
+            $patient->tel1      = $request['tel1'];
+            $patient->tel2      = $request['tel2'];
+            $patient->address   = $request['address'];
+            $patient->moo       = $request['moo'];
+            $patient->road      = $request['road'];
+            $patient->tambon_id = $request['tambon_id'];
+            $patient->amphur_id = $request['amphur_id'];
+            $patient->changwat_id    = $request['changwat_id'];
+            $patient->zipcode        = $request['zipcode'];
+            $patient->nationality_id = $request['nationality_id'];
+            $patient->right_id       = $request['right_id'];
+            $patient->blood_group_id = $request['blood_group_id'];
+
+            if ($patient->save()) {
+                return response()->json([
+                    'status'    => 1,
+                    'message'   => 'Updating successfully!!',
+                    "patient"   => $patient
+                ]);
+            } else {
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Something went wrong!!'
+                ]);
+            }
+        } catch (\Exception $ex) {
+            return response()->json([
+                'status'    => 0,
+                'message'   => $ex->getMessage()
+            ]);
+        }
     }
 }
