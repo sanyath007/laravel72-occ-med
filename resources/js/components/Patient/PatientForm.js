@@ -148,7 +148,7 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                             <label htmlFor="">คำนำหน้า :</label>
                             <Select
                                 name='pname'
-                                defaultInputValue={formProps.values.pname}
+                                defaultValue={{ value: formProps.values.pname, label: formProps.values.pname }}
                                 options={pnames.map(pname => ({ value: pname.name, label: pname.name }))}
                                 onChange={({ value }) => formProps.setFieldValue('pname', value)}
                                 className={`form-control p-0 ${formProps.errors.pname && formProps.touched.pname ? 'is-invalid' : ''}`}
@@ -364,7 +364,10 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                             <label htmlFor="">สัญชาติ :</label>
                             <Select
                                 name='nationality_id'
-                                defaultInputValue={formProps.values.nationality_id}
+                                defaultValue={{
+                                    value: formProps.values.nationality_id,
+                                    label: nationalities.find(nation => nation.code == formProps.values.nationality_id)?.name
+                                }}
                                 options={nationalities.map(nation => ({ value: nation.code, label: nation.name }))}
                                 onChange={({ value }) => formProps.setFieldValue('nationality_id', value)}
                                 className={`form-control p-0 ${formProps.errors.nationality_id && formProps.touched.nationality_id ? 'is-invalid' : ''}`}

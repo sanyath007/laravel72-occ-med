@@ -9,7 +9,7 @@ class PnameController extends Controller
 {
     public function getPnames(Request $request)
     {
-        $pnames = Pname::all();
+        $pnames = Pname::orderBy('provis_code')->get();
 
         return response()->json($pnames);
     }
