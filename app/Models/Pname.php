@@ -9,4 +9,8 @@ class Pname extends Model
     protected $table = "pnames";
 
     protected $primaryKey = "name";
+
+    public $incrementing = false;
+
+    public $timestamps = false;
 }

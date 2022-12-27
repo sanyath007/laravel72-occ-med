@@ -7,6 +7,7 @@ import Select from 'react-select'
 import { getAddresses } from '../../store/address'
 import { getAll as getRights } from '../../store/right'
 import { getAll as getNationalities } from '../../store/nationality'
+import { getPnames } from '../../store/pname'
 import { calcAgeY } from '../../utils/calculator'
 
 const patientSchema = Yup.object().shape({
@@ -36,10 +37,12 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
     const { changwats, amphurs, tambons } = useSelector(state => state.address)
     const { rights } = useSelector(state => state.right)
     const { nationalities } = useSelector(state => state.nationality)
+    const { pnames } = useSelector(state => state.pname)
     const [filteredAmphurs, setFilteredAmphurs] = useState([])
     const [filteredTambons, setFilteredTambons] = useState([])
 
     useEffect(() => {
+        dispatch(getPnames())
         dispatch(getAddresses())
         dispatch(getRights({ path: '/api/rights' }))
         dispatch(getNationalities({ path: '/api/nationalities' }))
@@ -75,10 +78,11 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
             }}
             validationSchema={patientSchema}
             onSubmit={(values, props) => {
-                handleSubmit(values)
+                console.log(values);
+                // handleSubmit(values)
 
                 /** Clear form's input value */
-                props.resetForm()
+                // props.resetForm()
             }}
         >
             {(formProps) => (
@@ -142,12 +146,13 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                         </div>
                         <div className="col-md-2 form-group mb-2">
                             <label htmlFor="">คำนำหน้า :</label>
-                            <input
-                                type="text"
-                                name="pname"
-                                value={formProps.values.pname}
-                                onChange={formProps.handleChange}
-                                className={`form-control ${formProps.errors.pname && formProps.touched.pname ? 'is-invalid' : ''}`}
+                            <Select
+                                name='pname'
+                                defaultInputValue={formProps.values.pname}
+                                options={pnames.map(pname => ({ value: pname.name, label: pname.name }))}
+                                onChange={({ value }) => formProps.setFieldValue('pname', value)}
+                                className={`form-control p-0 ${formProps.errors.pname && formProps.touched.pname ? 'is-invalid' : ''}`}
+                                styles={selectStyles}
                             />
                             {formProps.errors.pname && formProps.touched.pname ? (
                                 <div className="invalid-feedback">
@@ -358,7 +363,9 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                         <div className="col-md-3 form-group mb-2">
                             <label htmlFor="">สัญชาติ :</label>
                             <Select
-                                options={nationalities.map(nation => ({ value: nation.code, label: nation.name}))}
+                                name='nationality_id'
+                                defaultInputValue={formProps.values.nationality_id}
+                                options={nationalities.map(nation => ({ value: nation.code, label: nation.name }))}
                                 onChange={({ value }) => formProps.setFieldValue('nationality_id', value)}
                                 className={`form-control p-0 ${formProps.errors.nationality_id && formProps.touched.nationality_id ? 'is-invalid' : ''}`}
                                 styles={selectStyles}
