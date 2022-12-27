@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import * as moment from 'moment'
 import { GlobalContext } from '../../context/globalContext'
 import { getPatient } from '../../store/patient'
 import { calcAgeY } from '../../utils/calculator'
@@ -87,7 +88,7 @@ const PatientDetail = () => {
                                         <label htmlFor="Job" className="col-md-4 col-lg-3 col-form-label">วันเกิด</label>
                                         <div className="col-md-8 col-lg-9">
                                             <div className="form-control">
-                                                {patient && patient.birthdate}
+                                                {patient && moment(patient.birthdate).format('DD/MM/YYYY')}
                                             </div>
                                         </div>
                                     </div>

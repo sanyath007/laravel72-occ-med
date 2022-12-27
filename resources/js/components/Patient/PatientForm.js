@@ -87,9 +87,6 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
             validationSchema={patientSchema}
             onSubmit={(values, props) => {
                 handleSubmit(values)
-
-                /** Clear form's input value */
-                props.resetForm()
             }}
         >
             {(formProps) => (

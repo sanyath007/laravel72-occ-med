@@ -1,13 +1,15 @@
 import React, { useContext, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 import { GlobalContext } from '../../context/globalContext'
-import { getPatient, update } from '../../store/patient'
+import { getPatient, update, resetSuccess } from '../../store/patient'
 import PatientForm from '../../components/Patient/PatientForm'
 
 const PatientEdit = () => {
+    const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { patient, loading } = useSelector(state => state.patient)
+    const { patient, loading, success } = useSelector(state => state.patient)
     const { setGlobal } = useContext(GlobalContext)
     const { id } = useParams()
 
@@ -28,6 +30,14 @@ const PatientEdit = () => {
             dispatch(getPatient({ id }))
         }
     }, [id])
+
+    useEffect(() => {
+        if (success) {
+            toast.success('บันทึกข้อมูลเรียบร้อย !!!', { autoClose: 1000, hideProgressBar: true })
+            dispatch(resetSuccess)
+            navigate('/patients')
+        }
+    }, [success])
 
     const onSubmit = (data) => {
         dispatch(update({ id, data }))
