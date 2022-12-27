@@ -134,6 +134,8 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                                         name="sex"
                                         value="1"
                                         className="mx-2"
+                                        checked={formProps.values.sex == 1}
+                                        onChange={formProps.handleChange}
                                     /> ชาย
                                 </div>
                                 <div className="d-flex">
@@ -142,6 +144,8 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                                         name="sex"
                                         value="2"
                                         className="mx-2"
+                                        checked={formProps.values.sex == 2}
+                                        onChange={formProps.handleChange}
                                     /> หญิง
                                 </div>
                             </div>
@@ -416,6 +420,7 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                                         name="blood_group_id"
                                         value="1"
                                         className="mx-2"
+                                        checked={formProps.values.blood_group_id == 1}
                                     /> A
                                 </div>
                                 <div className="d-flex">
@@ -424,6 +429,7 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                                         name="blood_group_id"
                                         value="2"
                                         className="mx-2"
+                                        checked={formProps.values.blood_group_id == 2}
                                     /> B
                                 </div>
                                 <div className="d-flex">
@@ -432,6 +438,7 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                                         name="blood_group_id"
                                         value="3"
                                         className="mx-2"
+                                        checked={formProps.values.blood_group_id == 3}
                                     /> AB
                                 </div>
                                 <div className="d-flex">
@@ -440,6 +447,7 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                                         name="blood_group_id"
                                         value="4"
                                         className="mx-2"
+                                        checked={formProps.values.blood_group_id == 4}
                                     /> O
                                 </div>
                                 <div className="d-flex">
@@ -448,6 +456,7 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                                         name="blood_group_id"
                                         value="99"
                                         className="mx-2"
+                                        checked={formProps.values.blood_group_id == 99}
                                     /> ไม่ทราบ
                                 </div>
                             </div>
