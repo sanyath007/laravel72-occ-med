@@ -34,7 +34,7 @@ const PatientEdit = () => {
     useEffect(() => {
         if (success) {
             toast.success('บันทึกข้อมูลเรียบร้อย !!!', { autoClose: 1000, hideProgressBar: true })
-            dispatch(resetSuccess)
+            dispatch(resetSuccess())
             navigate('/patients')
         }
     }, [success])

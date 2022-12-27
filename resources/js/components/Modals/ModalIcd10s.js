@@ -86,7 +86,7 @@ const ModalIcd10s = ({ isOpen, hideModal, onSelected, ...props }) => {
                             </tr>
                         )}
 
-                        {icd10s && icd10s.map((icd, row) => (
+                        {(!loading && icd10s) && icd10s.map((icd, row) => (
                             <tr key={icd.code}>
                                 <th scope="row" style={{ textAlign: 'center' }}>{pager?.from+row}</th>
                                 <td style={{ textAlign: 'center' }}>{icd.code}</td>

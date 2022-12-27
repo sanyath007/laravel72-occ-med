@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
-import { FaSave } from 'react-icons/fa'
 import Select from 'react-select'
+import { FaPlus, FaSave, FaSearch } from 'react-icons/fa'
 import { getAddresses } from '../../store/address'
 import { getAll as getRights } from '../../store/right'
 import { getAll as getNationalities } from '../../store/nationality'
 import { getPnames } from '../../store/pname'
 import { calcAgeY } from '../../utils/calculator'
+import ModalCompanies from '../../components/Modals/ModalCompanies'
+import ModalCompanyForm from '../../components/Modals/ModalCompanyForm'
 
 const patientSchema = Yup.object().shape({
     hn: Yup.string().required('กรุณาระบุ HN'),
@@ -40,6 +42,9 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
     const { pnames } = useSelector(state => state.pname)
     const [filteredAmphurs, setFilteredAmphurs] = useState([])
     const [filteredTambons, setFilteredTambons] = useState([])
+    const [showCompanies, setShowCompanies] = useState(false)
+    const [showCompanyForm, setShowCompanyForm] = useState(false)
+    const [selectedCompany, setSelectedCompany] = useState(null)
 
     useEffect(() => {
         dispatch(getPnames())
@@ -55,6 +60,15 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
             setFilteredTambons(tambons.filter(tam => tam.amp_id == patient.amphur_id))
         }
     }, [patient, amphurs])
+
+    const handleSelectedCompany = (company, formik) => {
+        setSelectedCompany(company)
+
+        formik.setFieldValue('company_id', company.id)
+
+        /** Hide modal */
+        setShowCompanies(false)
+    }
 
     return (
         <Formik
@@ -77,11 +91,13 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                 amphur_id: patient && patient.amphur_id ? patient.amphur_id : '',
                 changwat_id: patient && patient.changwat_id ? patient.changwat_id : '',
                 zipcode: patient && patient.zipcode ? patient.zipcode : '',
+                right_id: patient && patient.right_id ? patient.right_id : '',
                 passport: patient && patient.passport ? patient.passport : '',
                 nationality_id: patient && patient.nationality_id ? patient.nationality_id : '',
                 race: patient && patient.race ? patient.race : '',
                 blood_group_id: patient && patient.blood_group_id ? patient.blood_group_id : '',
-                right_id: patient && patient.right_id ? patient.right_id : '',
+                company_id: patient && patient.company_id ? patient.company_id : '',
+                is_officer: patient && patient.is_officer ? patient.is_officer : false,
                 remark: patient && patient.remark ? patient.remark : ''
             }}
             validationSchema={patientSchema}
@@ -91,6 +107,17 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
         >
             {(formProps) => (
                 <Form>
+                    <ModalCompanies
+                        isOpen={showCompanies}
+                        hideModal={() => setShowCompanies(false)}
+                        onSelected={(company) => handleSelectedCompany(company, formProps)}
+                    />
+
+                    <ModalCompanyForm
+                        isOpen={showCompanyForm}
+                        hideModal={() => setShowCompanyForm(false)}
+                    />
+
                     <div className="row mb-3">
                         <div className="col-md-4 form-group mb-2">
                             <label htmlFor="">HN :</label>
@@ -455,6 +482,47 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
                                         className="mx-2"
                                         checked={formProps.values.blood_group_id == 99}
                                     /> ไม่ทราบ
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-md-8 form-group mb-2">
+                            <label htmlFor="">สถานที่ทำงาน :</label>
+                            <div className="input-group">
+                                <div className="form-control">
+                                    { selectedCompany && selectedCompany.name }
+                                </div>
+                                <input
+                                    type="hidden"
+                                    name="company_id"
+                                    value={formProps.values.company_id}
+                                    onChange={formProps.handleChange}
+                                    className="form-control"
+                                />
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-secondary"
+                                    onClick={() => setShowCompanies(true)}
+                                >
+                                    <FaSearch />
+                                </button>
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-primary"
+                                    onClick={() => setShowCompanyForm(true)}
+                                >
+                                    <FaPlus />
+                                </button>
+                            </div>
+                        </div>
+                        <div className="col-md-4 form-group mb-2">
+                            <label htmlFor=""></label>
+                            <div className="form-control d-flex justify-content-start">
+                                <div className="d-flex">
+                                    <Field
+                                        type="checkbox"
+                                        name="is_officer"
+                                        className="mx-2"
+                                    /> เป็นเจ้าหน้าที่ รพ.
                                 </div>
                             </div>
                         </div>

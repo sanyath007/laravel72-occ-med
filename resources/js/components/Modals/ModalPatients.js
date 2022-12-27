@@ -62,7 +62,7 @@ const ModalPatients = ({ isOpen, hideModal, onSelected, ...props }) => {
                                 </td>
                             </tr>
                         )}
-                        {patients && patients.map((patient, row) => (
+                        {(!loading && patients) && patients.map((patient, row) => (
                             <tr key={patient.hn}>
                                 <th scope="row" style={{ textAlign: 'center' }}>{pager?.from+row}</th>
                                 <td style={{ textAlign: 'center' }}>{patient.hn}</td>

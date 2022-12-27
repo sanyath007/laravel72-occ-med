@@ -56,7 +56,7 @@ const ModalCompanies = ({ isOpen, hideModal, onSelected, ...props }) => {
                                 </td>
                             </tr>
                         )}
-                        {companies && companies.map((company, row) => (
+                        {(!loading && companies) && companies.map((company, row) => (
                             <tr key={company.id}>
                                 <th scope="row" style={{ textAlign: 'center' }}>{pager?.from+row}</th>
                                 <td>{company.name}</td>
