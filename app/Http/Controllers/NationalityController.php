@@ -13,7 +13,7 @@ class NationalityController extends Controller
         $name   = $request->get('name');
 
         if (array_key_exists('all', $request->all()) && $request->get('all') == '1') {
-            $nationalities = Nationality::all();
+            $nationalities = Nationality::orderBy('nhso_code')->get();
         } else {
             $nationalities = Nationality::when(!empty($code), function($query) use ($code) {
                                     $query->where('code', $code);
