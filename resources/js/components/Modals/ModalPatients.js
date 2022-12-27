@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Modal } from 'react-bootstrap'
 import { AiOutlineMan, AiOutlineWoman } from 'react-icons/ai'
-import api from '../../api'
 import * as moment from 'moment'
 import { getPatients } from '../../store/patient'
+import { calcAgeY } from '../../utils/calculator'
 import Pagination from '../Pagination'
 import PatientFilter from '../Patient/PatientFilter'
 
@@ -42,10 +42,10 @@ const ModalPatients = ({ isOpen, hideModal, onSelected, ...props }) => {
                     <thead>
                         <tr>
                             <th scope="col" style={{ width: '3%', textAlign: 'center' }}>#</th>
-                            <th scope="col" style={{ width: '8%', textAlign: 'center' }}>HN</th>
+                            <th scope="col" style={{ width: '6%', textAlign: 'center' }}>HN</th>
                             <th scope="col" style={{ width: '20%' }}>ชื่อ-สกุล</th>
                             <th scope="col" style={{ width: '10%', textAlign: 'center' }}>CID</th>
-                            <th scope="col" style={{ width: '15%', textAlign: 'center' }}>วันเกิด</th>
+                            <th scope="col" style={{ width: '8%', textAlign: 'center' }}>วันเกิด</th>
                             <th scope="col" style={{ width: '6%', textAlign: 'center' }}>อายุ</th>
                             <th scope="col" style={{ width: '6%', textAlign: 'center' }}>เพศ</th>
                             <th scope="col">ที่อยู่</th>
@@ -69,7 +69,7 @@ const ModalPatients = ({ isOpen, hideModal, onSelected, ...props }) => {
                                 <td>{patient.pname+patient.fname+ ' ' +patient.lname}</td>
                                 <td style={{ textAlign: 'center' }}>{patient.cid}</td>
                                 <td style={{ textAlign: 'center' }}>{moment(patient.birthdate).format('DD/MM/YYYY')}</td>
-                                <td style={{ textAlign: 'center' }}>{moment().diff(moment(patient.birthdate), "years")}ปี</td>
+                                <td style={{ textAlign: 'center' }}>{calcAgeY(patient.birthdate)}ปี</td>
                                 <td style={{ textAlign: 'center', fontSize: '18px' }}>
                                     {patient.sex == 1
                                         ? <AiOutlineMan className="text-danger m-0 p-0" />

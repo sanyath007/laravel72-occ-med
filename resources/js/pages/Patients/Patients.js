@@ -2,8 +2,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import * as moment from 'moment'
+import { AiOutlineMan, AiOutlineWoman } from 'react-icons/ai'
 import { GlobalContext } from '../../context/globalContext';
 import { getPatients } from '../../store/patient'
+import { calcAgeY } from '../../utils/calculator'
 import Pagination from '../../components/Pagination'
 import PatientFilter from '../../components/Patient/PatientFilter';
 
@@ -56,11 +58,13 @@ const Patients = () => {
                                     <tr>
                                         <th scope="col" style={{ width: '3%', textAlign: 'center' }}>#</th>
                                         <th scope="col" style={{ width: '8%', textAlign: 'center' }}>HN</th>
-                                        <th scope="col">ชื่อ-สกุล</th>
-                                        <th scope="col" style={{ width: '8%', textAlign: 'center' }}>CID</th>
-                                        <th scope="col" style={{ width: '15%', textAlign: 'center' }}>วันเกิด</th>
+                                        <th scope="col" style={{ width: '20%' }}>ชื่อ-สกุล</th>
+                                        <th scope="col" style={{ width: '10%', textAlign: 'center' }}>CID</th>
+                                        <th scope="col" style={{ width: '8%', textAlign: 'center' }}>วันเกิด</th>
                                         <th scope="col" style={{ width: '6%', textAlign: 'center' }}>อายุ</th>
-                                        <th scope="col" style={{ width: '10%', textAlign: 'center' }}>Actions</th>
+                                        <th scope="col" style={{ width: '6%', textAlign: 'center' }}>เพศ</th>
+                                        <th scope="col">ที่อยู่</th>
+                                        <th scope="col" style={{ width: '8%', textAlign: 'center' }}>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -73,7 +77,7 @@ const Patients = () => {
                                             </td>
                                         </tr>
                                     )}
-                                    {patients && patients.map((patient, row) => (
+                                    {!loading && patients && patients.map((patient, row) => (
                                         <tr key={patient.hn}>
                                             <th scope="row" style={{ textAlign: 'center' }}>{pager && pager.from+row}</th>
                                             <td style={{ textAlign: 'center' }}>{patient.hn}</td>
@@ -82,7 +86,21 @@ const Patients = () => {
                                             <td style={{ textAlign: 'center' }}>
                                                 {moment(patient.birthdate).format('DD/MM/YYYY')}
                                             </td>
-                                            <td style={{ textAlign: 'center' }}>{patient.sex}</td>
+                                            <td style={{ textAlign: 'center' }}>{calcAgeY(patient.birthdate)}ปี</td>
+                                            <td style={{ textAlign: 'center', fontSize: '18px' }}>
+                                                {patient.sex == 1
+                                                    ? <AiOutlineMan className="text-danger m-0 p-0" />
+                                                    : <AiOutlineWoman className="text-success m-0 p-0" />}
+                                            </td>
+                                            <td>
+                                                {`${patient.address ? patient.address : '-'} 
+                                                    หมู่ ${patient.moo ? patient.moo : '-'} 
+                                                    ถนน${patient.road ? patient.road : '-'} 
+                                                    ต.${patient.tambon ? patient.tambon?.tambon : '-'} 
+                                                    อ.${patient.amphur ? patient.amphur?.amphur : '-'} 
+                                                    จ.${patient.changwat ? patient.changwat?.changwat : '-'} 
+                                                    ${patient.zipcode ? patient.zipcode : '-'}`}
+                                            </td>
                                             <td style={{ textAlign: 'center' }}>
                                                 <div className="btn-group" role="group" aria-label="Basic mixed styles example">
                                                     <Link to={`/patients/${patient.id}/detail`} className="btn btn-primary btn-sm">
