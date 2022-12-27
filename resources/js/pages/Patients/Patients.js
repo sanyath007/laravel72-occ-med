@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
+import * as moment from 'moment'
 import { GlobalContext } from '../../context/globalContext';
 import { getPatients } from '../../store/patient'
 import Pagination from '../../components/Pagination'
@@ -78,7 +79,9 @@ const Patients = () => {
                                             <td style={{ textAlign: 'center' }}>{patient.hn}</td>
                                             <td>{patient.pname+patient.fname+ ' ' +patient.lname}</td>
                                             <td style={{ textAlign: 'center' }}>{patient.cid}</td>
-                                            <td style={{ textAlign: 'center' }}>{patient.birthdate}</td>
+                                            <td style={{ textAlign: 'center' }}>
+                                                {moment(patient.birthdate).format('DD/MM/YYYY')}
+                                            </td>
                                             <td style={{ textAlign: 'center' }}>{patient.sex}</td>
                                             <td style={{ textAlign: 'center' }}>
                                                 <div className="btn-group" role="group" aria-label="Basic mixed styles example">
