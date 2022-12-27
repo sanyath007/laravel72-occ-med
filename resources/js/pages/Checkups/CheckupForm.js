@@ -11,7 +11,7 @@ import ModalCompanies from '../../components/Modals/ModalCompanies'
 import ModalCompanyForm from '../../components/Modals/ModalCompanyForm'
 import ModalIcd10s from '../../components/Modals/ModalIcd10s'
 import { calcAgeM, calcAgeY } from '../../utils/calculator'
-import { getAll } from '../../store/right'
+import { getAll as getRights } from '../../store/right'
 import { store, resetSuccess } from '../../store/checkup'
 
 const checkupSchema = Yup.object().shape({
@@ -33,7 +33,7 @@ const CheckupForm = () => {
     const [selectedIcd10, setSelectedIcd10] = useState(null)
 
     useEffect(() => {
-        dispatch(getAll({ path: '/api/rights?page=' }))
+        dispatch(getRights({ path: '/api/rights' }))
     }, [])
 
     useEffect(() => {
