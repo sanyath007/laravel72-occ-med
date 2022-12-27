@@ -48,6 +48,14 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
         dispatch(getNationalities({ path: '/api/nationalities' }))
     }, [])
 
+    /** On edit mode */
+    useEffect(() => {
+        if (patient) {
+            setFilteredAmphurs(amphurs.filter(amp => amp.chw_id == patient.changwat_id))
+            setFilteredTambons(tambons.filter(tam => tam.amp_id == patient.amphur_id))
+        }
+    }, [patient, amphurs])
+
     return (
         <Formik
             enableReinitialize
@@ -78,11 +86,10 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
             }}
             validationSchema={patientSchema}
             onSubmit={(values, props) => {
-                console.log(values);
-                // handleSubmit(values)
+                handleSubmit(values)
 
                 /** Clear form's input value */
-                // props.resetForm()
+                props.resetForm()
             }}
         >
             {(formProps) => (
