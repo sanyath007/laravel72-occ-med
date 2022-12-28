@@ -37,8 +37,8 @@ class PatientController extends Controller
 
     public function getPatient($id)
     {
-        $patient = Patient::with('tambon','amphur','changwat')
-                        ->with('right','nationality')
+        $patient = Patient::with('tambon','amphur','changwat','bloodGroup')
+                        ->with('right','hospMain','nationality','company')
                         ->find($id);
 
         return response()->json($patient);

@@ -56,6 +56,7 @@ const PatientForm = ({ handleSubmit, patient, ...props }) => {
     /** On edit mode */
     useEffect(() => {
         if (patient) {
+            setSelectedCompany(patient.company)
             setFilteredAmphurs(amphurs.filter(amp => amp.chw_id == patient.changwat_id))
             setFilteredTambons(tambons.filter(tam => tam.amp_id == patient.amphur_id))
         }
