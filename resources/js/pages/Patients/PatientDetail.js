@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { FaCheckSquare, FaTimesCircle } from 'react-icons/fa'
 import * as moment from 'moment'
 import { GlobalContext } from '../../context/globalContext'
 import { getPatient } from '../../store/patient'
@@ -28,6 +29,10 @@ const PatientDetail = () => {
         dispatch(getPatient({ id }))
     }, [id])
 
+    const handleDelete = (id) => {
+        console.log(id);
+    }
+
     return (
         <section className="section">
             <div className="row">
@@ -52,7 +57,7 @@ const PatientDetail = () => {
                                                 <a href="#" className="btn btn-primary btn-sm" title="Upload new profile image">
                                                     <i className="bi bi-upload"></i>
                                                 </a>
-                                                <a href="#" className="btn btn-danger btn-sm" title="Remove my profile image">
+                                                <a href="#" className="btn btn-danger btn-sm ms-2" title="Remove my profile image">
                                                     <i className="bi bi-trash"></i>
                                                 </a>
                                             </div>
@@ -119,6 +124,37 @@ const PatientDetail = () => {
                                             <div className="form-control">
                                                 {patient && `${patient.tel1}${patient.tel2 ? ', '+patient.tel2 : ''}`}
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div className="row mb-3">
+                                        <label htmlFor="Phone" className="col-md-4 col-lg-3 col-form-label">สถานที่ทำงาน</label>
+                                        <div className="col-md-8 col-lg-9">
+                                            <div className="form-control" style={{ minHeight: '2.3rem' }}>
+                                                {patient && patient.company?.name}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="row mb-3">
+                                        <label htmlFor="Phone" className="col-md-4 col-lg-3 col-form-label">เป็นเจ้าหน้าที่ รพ.</label>
+                                        <div className="col-md-8 col-lg-9">
+                                            {patient && patient.is_officer == 1
+                                                ? <FaCheckSquare className="text-success h5" />
+                                                : <FaTimesCircle className="text-danger h5" />
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className="row mb-3">
+                                        <label htmlFor="btn" className="col-md-4 col-lg-3 col-form-label"></label>
+                                        <div className="col-md-8 col-lg-9">
+                                            <Link to={`/patients/${patient.id}/edit`} className="btn btn-warning">
+                                                <i className="bi bi-pencil-square"></i> แก้ไข
+                                            </Link>
+                                            <button
+                                                className="btn btn-danger ms-2"
+                                                onClick={() => handleDelete(patient.id)}
+                                            >
+                                                <i className="bi bi-trash"></i> ลบ
+                                            </button>
                                         </div>
                                     </div>
                                 </form>
