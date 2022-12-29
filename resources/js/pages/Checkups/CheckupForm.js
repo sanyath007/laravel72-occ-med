@@ -13,6 +13,7 @@ import ModalIcd10s from '../../components/Modals/ModalIcd10s'
 import { calcAgeM, calcAgeY } from '../../utils/calculator'
 import { getAll as getRights } from '../../store/right'
 import { store, resetSuccess } from '../../store/checkup'
+import PatientCard from './Form/PatientCard'
 
 const checkupSchema = Yup.object().shape({
 
@@ -52,6 +53,8 @@ const CheckupForm = () => {
         formik.setFieldValue('age_y', calcAgeY(moment(patient.birthdate)))
         formik.setFieldValue('age_m', calcAgeM(moment(patient.birthdate)))
         formik.setFieldValue('right_id', patient.right_id)
+        formik.setFieldValue('visit_date', moment().format('YYYY-MM-DD'))
+        formik.setFieldValue('visit_time', moment().format('HH:mm'))
 
         /** If patient has been specificed company, set company_id with patient's company */
         if (patient.company) {
@@ -145,83 +148,17 @@ const CheckupForm = () => {
                                             onSelected={(icd10) => handleSelectedIcd10(icd10, formProps)}
                                         />
 
-                                        <div className="alert border-dark alert-dismissible fade show" role="alert">
-                                            <div className="row">
-                                                <div className="col-md-2">
-                                                    <div
-                                                        className="d-flex justify-content-center align-items-center"
-                                                        style={{
-                                                            border: '1px solid gray',
-                                                            borderRadius: '5px',
-                                                            height: '100%',
-                                                            overflow: 'hidden'
-                                                        }}
-                                                    >
-                                                        <img src={`${process.env.MIX_APP_URL}/img/messages-1.jpg`} alt="patient image" />
-                                                    </div>
-                                                </div>
-                                                <div className="col-md-10">
-                                                    <div className="row">
-                                                        <div className="col-md-3 form-group mb-2">
-                                                            <label htmlFor="">HN :</label>
-                                                            <div className="input-group">
-                                                                <div className="form-control">
-                                                                    { selectedPatient && selectedPatient.hn }
-                                                                </div>
-                                                                <input
-                                                                    type="hidden"
-                                                                    name="patient_id"
-                                                                    value={formProps.values.patient_id}
-                                                                    onChange={formProps.handleChange}
-                                                                />
-                                                                <button type="button" className="btn btn-outline-secondary" onClick={() => setShowPatients(true)}>
-                                                                    <FaSearch />
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-md-6 form-group mb-2">
-                                                            <label htmlFor="">ชื่อ-สกุลผู้ป่วย :</label>
-                                                            <div className="form-control" style={{ minHeight: '2.3rem' }}>
-                                                                {selectedPatient && `${selectedPatient.pname}${selectedPatient.fname} ${selectedPatient.lname}`}
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-md-3 form-group mb-2">
-                                                            <label htmlFor="">CID :</label>
-                                                            <div className="form-control" style={{ minHeight: '2.3rem' }}>
-                                                                {selectedPatient && selectedPatient.cid}
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-md-3 form-group">
-                                                            <label htmlFor="">วันเกิด :</label>
-                                                            <div className="form-control" style={{ minHeight: '2.3rem' }}>
-                                                                {selectedPatient && moment(selectedPatient.birthdate).format('DD/MM/YYYY')}
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-md-2 form-group">
-                                                            <label htmlFor="">อายุ :</label>
-                                                            <div className="form-control" style={{ minHeight: '2.3rem' }}>
-                                                                {selectedPatient
-                                                                    ? calcAgeY(selectedPatient.birthdate)
-                                                                    : '-'
-                                                                } ปี
-                                                            </div>
-                                                        </div>
-                                                        <div className="col-md-7 form-group">
-                                                            <label htmlFor="">ที่อยู่ :</label>
-                                                            <div className="form-control" style={{ minHeight: '2.3rem' }}>
-                                                                {selectedPatient && `${selectedPatient.address ? selectedPatient.address : '-'} 
-                                                                    หมู่ ${selectedPatient.moo ? selectedPatient.moo : '-'} 
-                                                                    ถนน${selectedPatient.road ? selectedPatient.road : '-'} 
-                                                                    ต.${selectedPatient.tambon ? selectedPatient.tambon?.tambon : '-'} 
-                                                                    อ.${selectedPatient.amphur ? selectedPatient.amphur?.amphur : '-'} 
-                                                                    จ.${selectedPatient.changwat ? selectedPatient.changwat?.changwat : '-'} 
-                                                                    ${selectedPatient.zipcode ? selectedPatient.zipcode : '-'}`}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <PatientCard
+                                            patient={selectedPatient}
+                                            toggleModal={(e) => setShowPatients(!showPatients)}
+                                        />
+
+                                        <input
+                                            type="hidden"
+                                            name="patient_id"
+                                            value={formProps.values.patient_id}
+                                            onChange={formProps.handleChange}
+                                        />
 
                                         <div className="row mb-3">
                                             <div className="col-md-3 form-group mb-2">

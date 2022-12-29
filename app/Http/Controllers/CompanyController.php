@@ -138,7 +138,7 @@ class CompanyController extends Controller
     public function delete($id)
     {
         try {
-            $company = Company::find($id)
+            $company = Company::find($id);
 
             if ($company->delete()) {
                 return [
