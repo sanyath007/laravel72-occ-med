@@ -96,11 +96,67 @@ class CompanyController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $company = Company::find($id);
+            $company->name = $request['name'];
+            $company->company_type_id = $request['company_type_id'];
+            $company->address = $request['address'];
+            $company->moo = $request['moo'];
+            $company->road = $request['road'];
+            $company->tambon_id = $request['tambon_id'];
+            $company->amphur_id = $request['amphur_id'];
+            $company->changwat_id = $request['changwat_id'];
+            $company->zipcode = $request['zipcode'];
+            $company->tel = $request['tel'];
+            $company->email = $request['email'];
+            $company->coordinates = $request['coordinates'];
+            $company->contact_name = $request['contact_name'];
+            $company->contact_tel = $request['contact_tel'];
+            $company->contact_email = $request['contact_email'];
+            $company->remark = $request['remark'];
+
+            if ($company->save()) {
+                return [
+                    'status'    => 1,
+                    'message'   => 'Insertion successfully!!',
+                    "company"   => $company
+                ];
+            } else {
+                return [
+                    'status'    => 0,
+                    'message'   => 'Something went wrong!!'
+                ];
+            }
+        } catch (\Exception $ex) {
+            return [
+                'status'    => 0,
+                'message'   => $ex->getMessage()
+            ];
+        }
     }
 
     public function delete($id)
     {
-        //
+        try {
+            $company = Company::find($id)
+
+            if ($company->delete()) {
+                return [
+                    'status'    => 1,
+                    'message'   => 'Insertion successfully!!',
+                    "company"   => $company
+                ];
+            } else {
+                return [
+                    'status'    => 0,
+                    'message'   => 'Something went wrong!!'
+                ];
+            }
+        } catch (\Exception $ex) {
+            return [
+                'status'    => 0,
+                'message'   => $ex->getMessage()
+            ];
+        }
     }
 }

@@ -129,4 +129,29 @@ class PatientController extends Controller
             ]);
         }
     }
+
+    public function delete($id)
+    {
+        try {
+            $patient = Patient::find($id);
+
+            if ($patient->delete()) {
+                return response()->json([
+                    'status'    => 1,
+                    'message'   => 'Deleting successfully!!',
+                    "patient"   => $patient
+                ]);
+            } else {
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Something went wrong!!'
+                ]);
+            }
+        } catch (\Exception $ex) {
+            return response()->json([
+                'status'    => 0,
+                'message'   => $ex->getMessage()
+            ]);
+        }
+    }
 }
