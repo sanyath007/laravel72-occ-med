@@ -118,7 +118,7 @@ class CompanyController extends Controller
             if ($company->save()) {
                 return [
                     'status'    => 1,
-                    'message'   => 'Insertion successfully!!',
+                    'message'   => 'Updation successfully!!',
                     "company"   => $company
                 ];
             } else {
@@ -143,8 +143,7 @@ class CompanyController extends Controller
             if ($company->delete()) {
                 return [
                     'status'    => 1,
-                    'message'   => 'Insertion successfully!!',
-                    "company"   => $company
+                    'message'   => 'Deletion successfully!!'
                 ];
             } else {
                 return [

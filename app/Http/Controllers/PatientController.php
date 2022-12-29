@@ -113,7 +113,7 @@ class PatientController extends Controller
             if ($patient->save()) {
                 return response()->json([
                     'status'    => 1,
-                    'message'   => 'Updating successfully!!',
+                    'message'   => 'Updation successfully!!',
                     "patient"   => $patient
                 ]);
             } else {
@@ -138,7 +138,7 @@ class PatientController extends Controller
             if ($patient->delete()) {
                 return response()->json([
                     'status'    => 1,
-                    'message'   => 'Deleting successfully!!',
+                    'message'   => 'Deletion successfully!!',
                     "patient"   => $patient
                 ]);
             } else {
