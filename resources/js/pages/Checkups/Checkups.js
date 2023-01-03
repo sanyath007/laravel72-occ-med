@@ -5,7 +5,7 @@ import { GlobalContext } from '../../context/globalContext'
 import { FaPlus } from 'react-icons/fa'
 import { getCheckups } from '../../store/checkup'
 import { calcAgeY } from '../../utils/calculator'
-import { currencyFormat } from '../../utils/formatter'
+import { currencyFormat, thdateBEFormat } from '../../utils/formatter'
 import Pagination from '../../components/Pagination'
 
 const Checkups = () => {
@@ -83,9 +83,9 @@ const Checkups = () => {
                                                     </th>
                                                     <td style={{ textAlign: 'center' }}>{checkup.patient.hn}</td>
                                                     <td>{`${checkup.patient.pname}${checkup.patient.fname} ${checkup.patient.lname}`}</td>
-                                                    <td style={{ textAlign: 'center' }}>{checkup.visit_date}</td>
+                                                    <td style={{ textAlign: 'center' }}>{thdateBEFormat(checkup.visit_date)}</td>
                                                     <td style={{ textAlign: 'center' }}>{checkup.visit_time}</td>
-                                                    <td style={{ textAlign: 'center' }}>{checkup.patient.birthdate}</td>
+                                                    <td style={{ textAlign: 'center' }}>{thdateBEFormat(checkup.patient.birthdate)}</td>
                                                     <td style={{ textAlign: 'center' }}>{calcAgeY(checkup.patient.birthdate)}ปี</td>
                                                     <td style={{ textAlign: 'center' }}>{checkup.patient.cid}</td>
                                                     <td style={{ textAlign: 'center' }}>{currencyFormat(parseFloat(checkup.net_total))}</td>
