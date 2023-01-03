@@ -1,9 +1,16 @@
 import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../context/globalContext'
 import { FaPlus } from 'react-icons/fa'
+import { getCheckups } from '../../store/checkup'
+import { calcAgeY } from '../../utils/calculator'
+import { currencyFormat } from '../../utils/formatter'
+import Pagination from '../../components/Pagination'
 
 const Checkups = () => {
+    const dispatch = useDispatch()
+    const { checkups, pager, loading } = useSelector(state => state.checkup)
     const { setGlobal } = useContext(GlobalContext)
 
     useEffect(() => {
@@ -17,6 +24,14 @@ const Checkups = () => {
             ]
         }))
     }, [])
+
+    useEffect(() => {
+        dispatch(getCheckups({ path: '/api/checkups' }))
+    }, [])
+    
+    const handlePageBtnClicked = (path) => {
+        dispatch(getCheckups({ path }))
+    }
 
     return (
         <section className="section">
@@ -47,57 +62,54 @@ const Checkups = () => {
                                                 <th scope="col" style={{ width: '6%', textAlign: 'center' }}>อายุ</th>
                                                 <th scope="col" style={{ width: '8%', textAlign: 'center' }}>CID</th>
                                                 <th scope="col" style={{ width: '10%', textAlign: 'center' }}>ค่าบริการ</th>
-                                                <th scope="col" style={{ width: '8%', textAlign: 'center' }}>สถานะ</th>
-                                                <th scope="col" style={{ width: '10%', textAlign: 'center' }}>Actions</th>
+                                                <th scope="col" style={{ width: '8%', textAlign: 'center' }}>Diag</th>
+                                                <th scope="col" style={{ width: '8%', textAlign: 'center' }}>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {/* {users && users.map((user, row) => (
-                                                <tr key={user.id}>
-                                                    <th scope="row" style={{ textAlign: 'center' }}>{row+1}</th>
-                                                    <td style={{ textAlign: 'center' }}>{user.id}</td>
-                                                    <td>{user.name}</td>
-                                                    <td>{user.email}</td>
-                                                    <td style={{ textAlign: 'center' }}>{''}</td>
-                                                    <td style={{ textAlign: 'center' }}>{''}</td>
+                                            {loading && (
+                                                <tr>
+                                                    <td colSpan="11" style={{ textAlign: 'center' }}>
+                                                        <div className="spinner-border text-secondary" role="status">
+                                                            <span className="visually-hidden">Loading...</span>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            )}
+                                            {!loading && checkups && checkups.map((checkup, row) => (
+                                                <tr key={checkup.id}>
+                                                    <th scope="row" style={{ textAlign: 'center' }}>
+                                                        {pager.from+row}
+                                                    </th>
+                                                    <td style={{ textAlign: 'center' }}>{checkup.patient.hn}</td>
+                                                    <td>{`${checkup.patient.pname}${checkup.patient.fname} ${checkup.patient.lname}`}</td>
+                                                    <td style={{ textAlign: 'center' }}>{checkup.visit_date}</td>
+                                                    <td style={{ textAlign: 'center' }}>{checkup.visit_time}</td>
+                                                    <td style={{ textAlign: 'center' }}>{checkup.patient.birthdate}</td>
+                                                    <td style={{ textAlign: 'center' }}>{calcAgeY(checkup.patient.birthdate)}ปี</td>
+                                                    <td style={{ textAlign: 'center' }}>{checkup.patient.cid}</td>
+                                                    <td style={{ textAlign: 'center' }}>{currencyFormat(parseFloat(checkup.net_total))}</td>
+                                                    <td style={{ textAlign: 'center' }}>{checkup.pdx}</td>
                                                     <td style={{ textAlign: 'center' }}>
                                                         <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                            <Link to={`/users/${user.id}/edit`} className="btn btn-warning btn-sm">
+                                                            <Link to={`/checkups/${checkup.id}/edit`} className="btn btn-warning btn-sm">
                                                                 <i className="bi bi-pencil-square"></i>
                                                             </Link>
-                                                            <a href="#" className="btn btn-danger btn-sm ms-2" onClick={(e) => {}}>
+                                                            <a href="#" className="btn btn-danger btn-sm" onClick={(e) => {}}>
                                                                 <i className="bi bi-trash"></i>
                                                             </a>
                                                         </div>
                                                     </td>
                                                 </tr>
-                                            ))} */}
+                                            ))}
                                         </tbody>
                                     </table>
 
-                                    <nav aria-label="Page navigation example" className="float-end">
-                                        <ul className="pagination">
-                                            <li className="page-item">
-                                                <a className="page-link" href="#" aria-label="Previous">
-                                                    <span aria-hidden="true">&laquo;</span>
-                                                </a>
-                                            </li>
-                                            <li className="page-item">
-                                                <a className="page-link" href="#">1</a>
-                                            </li>
-                                            <li className="page-item">
-                                                <a className="page-link" href="#">2</a>
-                                            </li>
-                                            <li className="page-item">
-                                                <a className="page-link" href="#">3</a>
-                                            </li>
-                                            <li className="page-item">
-                                                <a className="page-link" href="#" aria-label="Next">
-                                                    <span aria-hidden="true">&raquo;</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </nav>
+                                    <Pagination
+                                        pager={pager}
+                                        handlePageBtnClicked={handlePageBtnClicked}
+                                    />
+
                                 </div>
                             </div>
                         </div>
