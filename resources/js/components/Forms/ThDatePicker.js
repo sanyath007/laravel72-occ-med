@@ -10,6 +10,8 @@ const ThDatePicker = ({ onChange, defaultValue, error, ...props}) => {
     }, [defaultValue])
 
     const handleChange = (christDate, buddhistDate) => {
+        onChange(christDate, buddhistDate)
+
         setSelectedDate(christDate)
     }
 

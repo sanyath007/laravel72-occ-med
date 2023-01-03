@@ -3,7 +3,7 @@ import { FaSearch } from 'react-icons/fa'
 import * as moment from 'moment'
 import { calcAgeY } from '../../../utils/calculator'
 
-const PatientCard = ({ patient, toggleModal }) => {
+const PatientCard = ({ patient, toggleModal, error, ...props }) => {
     return (
         <div className="alert border-dark alert-dismissible fade show" role="alert">
             <div className="row">
@@ -25,7 +25,7 @@ const PatientCard = ({ patient, toggleModal }) => {
                         <div className="col-md-3 form-group mb-2">
                             <label htmlFor="">HN :</label>
                             <div className="input-group">
-                                <div className="form-control">
+                                <div className={`form-control ${error ? 'is-invalid' : ''}`}>
                                     { patient && patient.hn }
                                 </div>
                                 <button
@@ -35,6 +35,11 @@ const PatientCard = ({ patient, toggleModal }) => {
                                 >
                                     <FaSearch />
                                 </button>
+                                {error ? (
+                                    <div className="invalid-feedback">
+                                        {props.errorMessage}
+                                    </div>
+                                ) : null}
                             </div>
                         </div>
                         <div className="col-md-6 form-group mb-2">
