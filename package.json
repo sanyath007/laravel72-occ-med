@@ -43,6 +43,7 @@
         "react-router-dom": "^6.4.3",
         "react-select": "^5.7.0",
         "react-toastify": "^7.0.4",
+        "thaidatepicker-react": "^0.2.2",
         "yup": "^0.32.11"
     }
 }

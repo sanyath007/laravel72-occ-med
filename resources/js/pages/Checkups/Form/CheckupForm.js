@@ -14,6 +14,7 @@ import { calcAgeM, calcAgeY } from '../../../utils/calculator'
 import { getAll as getRights } from '../../../store/right'
 import { store, resetSuccess } from '../../../store/checkup'
 import PatientCard from './PatientCard'
+import ThDatePicker from '../../../components/Forms/ThDatePicker'
 
 const checkupSchema = Yup.object().shape({
 
@@ -163,13 +164,18 @@ const CheckupForm = () => {
                                         <div className="row mb-3">
                                             <div className="col-md-3 form-group mb-2">
                                                 <label htmlFor="">วันที่รับบริการ :</label>
-                                                <input
-                                                    type="date"
-                                                    name="visit_date"
-                                                    value={formProps.values.visit_date}
-                                                    onChange={formProps.handleChange}
-                                                    className="form-control"
+                                                <ThDatePicker
+                                                    onChange={(christDate, buddhistDate) => {
+                                                        formProps.setFieldValue('visit_date', christDate)
+                                                    }}
+                                                    defaultValue={formProps.values.visit_date}
+                                                    error={formProps.errors.visit_date && formProps.touched.visit_date}
                                                 />
+                                                {formProps.errors.visit_date && formProps.touched.visit_date ? (
+                                                    <div className="invalid-feedback">
+                                                        {formProps.errors.visit_date}
+                                                    </div>
+                                                ) : null}
                                             </div>
                                             <div className="col-md-2 form-group mb-2">
                                                 <label htmlFor="">เวลา :</label>
