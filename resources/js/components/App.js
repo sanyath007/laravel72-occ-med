@@ -17,7 +17,7 @@ import PatientNew from "../pages/Patients/PatientNew";
 import PatientEdit from "../pages/Patients/PatientEdit";
 import PatientDetail from "../pages/Patients/PatientDetail";
 import Checkups from "../pages/Checkups/Checkups";
-import CheckupForm from "../pages/Checkups/CheckupForm";
+import CheckupForm from "../pages/Checkups/Form/CheckupForm";
 import CheckupSummary from "../pages/Checkups/Summary";
 import Clinics from "../pages/Clinics/Clinics";
 import ClinicSummary from "../pages/Clinics/Summary";
