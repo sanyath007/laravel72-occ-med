@@ -19,6 +19,7 @@ import PatientDetail from "../pages/Patients/PatientDetail";
 import Checkups from "../pages/Checkups/Checkups";
 import CheckupForm from "../pages/Checkups/Form/CheckupForm";
 import CheckupSummary from "../pages/Checkups/Summary";
+import CheckupSummaryForm from "../pages/Checkups/SummaryForm";
 import Clinics from "../pages/Clinics/Clinics";
 import ClinicSummary from "../pages/Clinics/Summary";
 import Companies from "../pages/Companies/Companies";
@@ -56,6 +57,7 @@ export default function App() {
                         <Route path="/checkups" element={<Checkups />} />
                         <Route path="/checkups/new" element={<CheckupForm />} />
                         <Route path="/checkups/summary" element={<CheckupSummary />} />
+                        <Route path="/checkups/summary/new" element={<CheckupSummaryForm />} />
                         {/* Clinics routes */}
                         <Route path="/clinics" element={<Clinics />} />
                         <Route path="/clinics/summary" element={<ClinicSummary />} />
