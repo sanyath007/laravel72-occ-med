@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { FaSave } from 'react-icons/fa'
-import { GlobalContext } from '../../context/globalContext';
+import { GlobalContext } from '../../../context/globalContext';
 
 const summarySchema = Yup.object().shape({
 
