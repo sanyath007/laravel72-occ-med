@@ -34,7 +34,14 @@ const CheckupSummaryForm = () => {
                             <div className="row">
                                 <Formik
                                     initialValues={{
-                                        
+                                        id: '',
+                                        year: '',
+                                        patient_amt: '',
+                                        lab_normal: '',
+                                        lab_abnormal: '',
+                                        equip: '',
+                                        xray_normal: '',
+                                        xray_abnormal: ''
                                     }}
                                     validationSchema={summarySchema}
                                     onSubmit={(values) => {
