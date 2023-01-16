@@ -5,7 +5,13 @@ import { FaSave } from 'react-icons/fa'
 import { GlobalContext } from '../../../context/globalContext';
 
 const summarySchema = Yup.object().shape({
-
+    year: Yup.string().required(),
+    patient_amt: Yup.string().required(),
+    lab_normal: Yup.string().required(),
+    lab_abnormal: Yup.string().required(),
+    equip: Yup.string().required(),
+    xray_normal: Yup.string().required(),
+    xray_abnormal: Yup.string().required(),
 })
 
 const CheckupSummaryForm = () => {
