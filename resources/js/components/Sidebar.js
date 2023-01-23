@@ -97,14 +97,34 @@ const Sidebar = () => {
                 </li>
                 {/* งานสร้างเสริมสุขภาพและฟื้นฟูสภาพการทำงาน */}
                 <li className="nav-item">
-                    <a className="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+                    <a className="nav-link collapsed" data-bs-target="#promotions-nav" data-bs-toggle="collapse" href="#">
                         <i className="bi bi-bar-chart"></i>
                         <span>สร้างเสริมสุขภาพฯ</span>
                         <i className="bi bi-chevron-down ms-auto"></i>
                     </a>
-                    <ul id="charts-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <ul id="promotions-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
                             <Link to="/promotions/summary" onClick={handleMenuClicked}>
+                                <i className="bi bi-circle"></i><span>สรุปผลงาน</span>
+                            </Link>
+                        </li>
+                        {/* <li>
+                            <a href="charts-apexcharts.html" onClick={handleMenuClicked}>
+                                <i className="bi bi-circle"></i><span>ApexCharts</span>
+                            </a>
+                        </li> */}
+                    </ul>
+                </li>
+                {/* งานพิษวิทยาและเวชศาสตร์สิ่งแวดล้อม */}
+                <li className="nav-item">
+                    <a className="nav-link collapsed" data-bs-target="#toxicologies-nav" data-bs-toggle="collapse" href="#">
+                        <i className="bi bi-patch-exclamation"></i>
+                        <span>พิษวิทยาฯ</span>
+                        <i className="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="toxicologies-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <Link to="/toxicologies/summary" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>สรุปผลงาน</span>
                             </Link>
                         </li>
