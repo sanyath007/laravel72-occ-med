@@ -43,11 +43,34 @@ const CheckupSummaryForm = () => {
                                         id: '',
                                         year: '',
                                         patient_amt: '',
+                                        lab_all: '',
                                         lab_normal: '',
                                         lab_abnormal: '',
                                         equip: '',
+                                        xray_all: '',
                                         xray_normal: '',
-                                        xray_abnormal: ''
+                                        xray_abnormal: '',
+                                        screening: '',
+                                        health_edu: '',
+                                        reported: '',
+                                        specialist: '',
+                                        summary_normal: '',
+                                        summary_abnormal: '',
+                                        summary_specialist: '',
+                                        diag_gen: '',
+                                        diag_oth: '',
+                                        service_days: '',
+                                        service_inhosp_days: '',
+                                        service_mueang_days: '',
+                                        service_amphur_days: '',
+                                        company_government: '',
+                                        company_special: '',
+                                        company_private: '',
+                                        age_under35: '',
+                                        age_over35: '',
+                                        sex_male: '',
+                                        sex_female: '',
+                                        satisfaction: ''
                                     }}
                                     validationSchema={summarySchema}
                                     onSubmit={(values) => {
@@ -80,7 +103,7 @@ const CheckupSummaryForm = () => {
                                                             <td>ผู้รับบริการตรวจสุขภาพ</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -88,7 +111,7 @@ const CheckupSummaryForm = () => {
                                                             <td>ตรวจทางห้องปฏิบัติการ</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -96,15 +119,15 @@ const CheckupSummaryForm = () => {
                                                             <td>- ปกติ</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td></td>
-                                                            <td>- ปกติ</td>
+                                                            <td>- ผิดปกติ</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -112,7 +135,7 @@ const CheckupSummaryForm = () => {
                                                             <td>ตรวจด้วยเครื่องมือทางอาชีวเวชศาสตร์</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -120,14 +143,14 @@ const CheckupSummaryForm = () => {
                                                             <td>ตรวจภาพถ่ายรังสีทรวงอก</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr><tr>
                                                             <td></td>
                                                             <td>- ปกติ</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -135,7 +158,7 @@ const CheckupSummaryForm = () => {
                                                             <td>- ปกติ</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -143,7 +166,7 @@ const CheckupSummaryForm = () => {
                                                             <td>ซักประวัติ/คัดกรองสุขภาพ</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -151,7 +174,7 @@ const CheckupSummaryForm = () => {
                                                             <td>ให้สุขศึกษา</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -159,7 +182,7 @@ const CheckupSummaryForm = () => {
                                                             <td>รายงานผลการตรวจรายบุคคล</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -167,7 +190,7 @@ const CheckupSummaryForm = () => {
                                                             <td>ส่งพบแพทย์เฉพาะทาง</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -175,7 +198,7 @@ const CheckupSummaryForm = () => {
                                                             <td>สรุปผลการตรวจ</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -183,7 +206,7 @@ const CheckupSummaryForm = () => {
                                                             <td>- ปกติ</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -191,7 +214,7 @@ const CheckupSummaryForm = () => {
                                                             <td>- เสี่ยง</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -199,7 +222,7 @@ const CheckupSummaryForm = () => {
                                                             <td>- ส่งพบแพทย์เฉพาะทาง</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -207,7 +230,7 @@ const CheckupSummaryForm = () => {
                                                             <td>การวินิจฉัยโรค</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -215,7 +238,7 @@ const CheckupSummaryForm = () => {
                                                             <td>- โรคทั่วไป</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -223,7 +246,7 @@ const CheckupSummaryForm = () => {
                                                             <td>- โรคอื่นๆ</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -231,7 +254,7 @@ const CheckupSummaryForm = () => {
                                                             <td>จำนวนวันที่ให้บริการ (วัน)</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -239,7 +262,7 @@ const CheckupSummaryForm = () => {
                                                             <td>- ตรวจภายในโรงพยาบาล</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -247,7 +270,7 @@ const CheckupSummaryForm = () => {
                                                             <td>- ตรวจภายนอกโรงพยาบาล (อ.เมือง)</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -255,7 +278,7 @@ const CheckupSummaryForm = () => {
                                                             <td>- ตรวจภายนอกโรงพยาบาล (อ.อื่นๆ)</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -263,7 +286,7 @@ const CheckupSummaryForm = () => {
                                                             <td>จำนวนหน่วยงาน</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -271,7 +294,7 @@ const CheckupSummaryForm = () => {
                                                             <td>- ราชการ</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -279,7 +302,7 @@ const CheckupSummaryForm = () => {
                                                             <td>- รัฐวิสาหกิจ</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -287,7 +310,7 @@ const CheckupSummaryForm = () => {
                                                             <td>- กลุ่มพิเศษ เช่น นักเรียน/ผู้สอบเข้ารับราชการ</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -295,7 +318,7 @@ const CheckupSummaryForm = () => {
                                                             <td>- เอกชน/บริษัท/อื่นๆ</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -303,7 +326,7 @@ const CheckupSummaryForm = () => {
                                                             <td>กลุ่มอายุ</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -311,7 +334,7 @@ const CheckupSummaryForm = () => {
                                                             <td>- ต่ำกว่า 35 ปี</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -319,7 +342,7 @@ const CheckupSummaryForm = () => {
                                                             <td>- 35 ปีขึ้นไป</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -327,7 +350,7 @@ const CheckupSummaryForm = () => {
                                                             <td>เพศ</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -335,7 +358,7 @@ const CheckupSummaryForm = () => {
                                                             <td>- ชาย</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -343,7 +366,7 @@ const CheckupSummaryForm = () => {
                                                             <td>- หญิง</td>
                                                             <td></td>
                                                             <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                                <input type="text" id="" name="" className="form-control" />
                                                             </td>
                                                         </tr>
                                                     </tbody>
