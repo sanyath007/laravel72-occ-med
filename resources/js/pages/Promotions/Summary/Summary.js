@@ -47,15 +47,15 @@ const PromotionSummary = () => {
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>1</td>
                                                 <td>สำรวจสภาพปัญหาที่ทำงาน (Walk through survey)</td>
-                                                <td></td>
+                                                <td>แผนก/แห่ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>2</td>
-                                                <td>จำทำรายงานสรุปผลการสำรวจปัญหา</td>
-                                                <td></td>
+                                                <td>จัดทำรายงานสรุปผลการสำรวจปัญหา</td>
+                                                <td>รายงาน</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -63,7 +63,7 @@ const PromotionSummary = () => {
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>3</td>
                                                 <td>ประเมินความเสี่ยงของสุขภาพคนทำงาน</td>
-                                                <td></td>
+                                                <td>ราย</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -71,7 +71,7 @@ const PromotionSummary = () => {
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>4</td>
                                                 <td>จัดทำรายงานสรุปวิเคราะห์ความเสี่ยงจาการทำงาน</td>
-                                                <td></td>
+                                                <td>รายงาน</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -87,7 +87,7 @@ const PromotionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- สอนสาธิต</td>
-                                                <td></td>
+                                                <td>คน/ครั้ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -95,7 +95,7 @@ const PromotionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- ให้คำปรึกษา</td>
-                                                <td></td>
+                                                <td>คน/ครั้ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -103,7 +103,7 @@ const PromotionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- จัดนิทรรศการ</td>
-                                                <td></td>
+                                                <td>ครั้ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -111,7 +111,7 @@ const PromotionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- บรรยายความรู้</td>
-                                                <td></td>
+                                                <td>คน/ครั้ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -119,7 +119,7 @@ const PromotionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- แจกเอกสาร/แผ่นพับ</td>
-                                                <td></td>
+                                                <td>คน/ครั้ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -127,7 +127,7 @@ const PromotionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- ใหอาชีวสุขศึกษา</td>
-                                                <td></td>
+                                                <td>คน/ครั้ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -135,7 +135,7 @@ const PromotionSummary = () => {
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>6</td>
                                                 <td>ซักประวัติ/คัดกรองสุขภาพ</td>
-                                                <td></td>
+                                                <td>ราย</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -143,7 +143,7 @@ const PromotionSummary = () => {
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>7</td>
                                                 <td>ประชุมเครือข่าย/ผู้เกี่ยวข้อง</td>
-                                                <td></td>
+                                                <td>ราย/ครั้ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -151,7 +151,7 @@ const PromotionSummary = () => {
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>8</td>
                                                 <td>นิเทศ/ติดตาม</td>
-                                                <td></td>
+                                                <td>ครั้ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -191,7 +191,7 @@ const PromotionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- ติดตามเยี่ยมผู้ป่วย Return To Work ที่บ้าน/ที่ทำงาน</td>
-                                                <td></td>
+                                                <td>คน/ครั้ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -199,7 +199,7 @@ const PromotionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- สรุปรายงานการติดตามเยี่ยมผู้ป่วย</td>
-                                                <td></td>
+                                                <td>คน/ครั้ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -207,7 +207,7 @@ const PromotionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- ประสานการฟื้นฟูสมรรถภาพกลุ่มบาดเจ็บ/เจ็บป่วยจากการทำงานกับหน่วยงานที่เกี่ยวข้อง</td>
-                                                <td></td>
+                                                <td>คน</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -215,7 +215,7 @@ const PromotionSummary = () => {
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>10</td>
                                                 <td>ตรวจประเมินยกระดับมาตรฐานสถานประกอบการ</td>
-                                                <td></td>
+                                                <td>ครั้ง/แห่ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>

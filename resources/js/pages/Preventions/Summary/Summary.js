@@ -47,7 +47,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>1</td>
                                                 <td>สำรวจสภาพปัญหาที่ทำงาน (Walk through survey)</td>
-                                                <td></td>
+                                                <td>แผนก/แห่ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -55,7 +55,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- ประกอบการวินิจฉัยโรคจาการทำงาน</td>
-                                                <td></td>
+                                                <td>แผนก/แห่ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -63,15 +63,15 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- เฝ้าระวังผลกรทบต่อสุขภาพ</td>
-                                                <td></td>
+                                                <td>คน/ครั้ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>2</td>
-                                                <td>จำทำรายงานผลการสำรวจปัญหา</td>
-                                                <td></td>
+                                                <td>จัดทำรายงานผลการสำรวจปัญหา</td>
+                                                <td>แห่ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -79,7 +79,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>3</td>
                                                 <td>ประเมินปัญหา/ความเสี่ยงของสุขภาพคนทำงาน</td>
-                                                <td></td>
+                                                <td>ราย</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -87,7 +87,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- กำหนดโปรแกรมการตรวจสุขภาพ</td>
-                                                <td></td>
+                                                <td>รายการ/คน</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -95,7 +95,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- กำหนดกิจกรรมการป้องกันควบคุมโรค</td>
-                                                <td></td>
+                                                <td>เรื่อง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -119,7 +119,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- ตรวจทั่วไป</td>
-                                                <td></td>
+                                                <td>ราย</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -127,7 +127,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- ตรวจด้วยเครื่องมืออาชีวเวชศาสตร์</td>
-                                                <td></td>
+                                                <td>ราย</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -135,7 +135,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>6</td>
                                                 <td>จำแนกผลการตรวจสุขภาพ</td>
-                                                <td></td>
+                                                <td>แห่ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -167,7 +167,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>7</td>
                                                 <td>จัดทำทะเบียนผู้ป่วย</td>
-                                                <td></td>
+                                                <td>ราย</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -175,31 +175,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>8</td>
                                                 <td>ติดตามเยี่ยมผู้ป่วย</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td>- ปกติ</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td>- เสี่ยง</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td>- ส่งพบแพทย์เฉพาะทาง</td>
-                                                <td></td>
+                                                <td>ราย/ครั้ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -215,7 +191,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- อบรมความรู้</td>
-                                                <td></td>
+                                                <td>ราย/ครั้ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -223,7 +199,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- จัดนิทรรศการ</td>
-                                                <td></td>
+                                                <td>ราย/ครั้ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -231,7 +207,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- สอนสาธิต</td>
-                                                <td></td>
+                                                <td>ราย/ครั้ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -239,7 +215,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- ให้คำปรึกษา</td>
-                                                <td></td>
+                                                <td>ราย</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -247,7 +223,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- ใหอาชีวสุขศึกษา</td>
-                                                <td></td>
+                                                <td>ราย</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -255,7 +231,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- แจกเอกสาร/แผ่นพับ</td>
-                                                <td></td>
+                                                <td>ราย/ครั้ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -263,7 +239,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>10</td>
                                                 <td>สร้างเสริมภูมิคุ้มกันโรค</td>
-                                                <td></td>
+                                                <td>ราย/ครั้ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -271,7 +247,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>11</td>
                                                 <td>สอบสวนโรค</td>
-                                                <td></td>
+                                                <td>คน</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -279,7 +255,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>12</td>
                                                 <td>จัดทำรายงานการสอบสวนโรค</td>
-                                                <td></td>
+                                                <td>คน</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -295,7 +271,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- บุคลากรทางการแพทย์ในจังหวัด</td>
-                                                <td></td>
+                                                <td>คน/ครั้ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -303,7 +279,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td></td>
                                                 <td>- บุคลากรในสถานประกอบการ</td>
-                                                <td></td>
+                                                <td>คน/ครั้ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -311,7 +287,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>14</td>
                                                 <td>ตรวจประเมินยกระดับมาตรฐานสถานประกอบการ</td>
-                                                <td></td>
+                                                <td>ครั้ง/แห่ง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -327,7 +303,7 @@ const PreventionSummary = () => {
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>16</td>
                                                 <td>จัดทำหลักสูตรการเรียนรู้</td>
-                                                <td></td>
+                                                <td>เรื่อง</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
