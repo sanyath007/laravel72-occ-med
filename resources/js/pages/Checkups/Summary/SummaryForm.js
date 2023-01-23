@@ -36,7 +36,7 @@ const CheckupSummaryForm = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">สรุปผลงาน (งานตรวจสุขภาพ)</h5>
+                            <h5 className="card-title">บันทึกสรุปผลงาน (งานตรวจสุขภาพ)</h5>
                             <div className="row">
                                 <Formik
                                     initialValues={{
@@ -91,7 +91,7 @@ const CheckupSummaryForm = () => {
                                                     </thead>
                                                     <tbody>
                                                         <tr>
-                                                            <td style={{ textAlign: 'center' }}>1</td>
+                                                            <td style={{ textAlign: 'center' }}></td>
                                                             <td>ปีงบประมาณ</td>
                                                             <td></td>
                                                             <td>
