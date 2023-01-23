@@ -35,6 +35,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import PromotionSummary from "../pages/Promotions/Summary/Summary";
 import ToxicologySummary from "../pages/Toxicologies/Summary/Summary";
 import PollutionSources from "../pages/Toxicologies/PollutionSources";
+import PreventionSummaryForm from "../pages/Preventions/Summary/SummaryForm";
+import PromotionSummaryForm from "../pages/Promotions/Summary/SummaryForm";
+import ToxicologySummaryForm from "../pages/Toxicologies/Summary/SummaryForm";
 
 export default function App() {
     const { userData } = useAuth()
@@ -69,10 +72,13 @@ export default function App() {
                         <Route path="/clinics/summary/new" element={<ClinicSummaryForm />} />
                         {/* Preventions routes */}
                         <Route path="/preventions/summary" element={<PreventionSummary />} />
+                        <Route path="/preventions/summary/new" element={<PreventionSummaryForm />} />
                         {/* Promotions routes */}
                         <Route path="/promotions/summary" element={<PromotionSummary />} />
+                        <Route path="/promotions/summary/new" element={<PromotionSummaryForm />} />
                         {/* Toxicologies routes */}
                         <Route path="/toxicologies/summary" element={<ToxicologySummary />} />
+                        <Route path="/toxicologies/summary/new" element={<ToxicologySummaryForm />} />
                         <Route path="/toxicologies/pollution-sources" element={<PollutionSources />} />
                         {/* Companies routes */}
                         <Route path="/companies" element={<Companies />} />

@@ -26,7 +26,7 @@ const PreventionSummary = () => {
                             <h5 className="card-title">สรุปผลงาน (งานป้องกันและควบคุมโรค)</h5>
                             <div className="row">
                                 <div className="col-md-12">
-                                    <Link to="/checkups/summary/new" className="btn btn-primary float-end mb-2">เพิ่มรายการ</Link>
+                                    <Link to="/preventions/summary/new" className="btn btn-primary float-end mb-2">เพิ่มรายการ</Link>
                                 </div>
                                 <div className="col-md-12">
                                     <table className="table table-striped table-bordered">

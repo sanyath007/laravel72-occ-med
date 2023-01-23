@@ -11,7 +11,7 @@ const PromotionSummary = () => {
             title: 'สรุปผลงาน (งานสร้างเสริมสุขภาพและฟื้นฟูสภาพการทำงาน)',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'preventions', name: 'งานสร้างเสริมสุขภาพและฟื้นฟูสภาพการทำงาน', path: '/preventions' },
+                { id: 'promotions', name: 'งานสร้างเสริมสุขภาพและฟื้นฟูสภาพการทำงาน', path: '/promotions' },
                 { id: 'summary', name: 'สรุปผลงาน', path: null, active: true }
             ]
         }))
@@ -26,7 +26,7 @@ const PromotionSummary = () => {
                             <h5 className="card-title">สรุปผลงาน (งานสร้างเสริมสุขภาพและฟื้นฟูสภาพการทำงาน)</h5>
                             <div className="row">
                                 <div className="col-md-12">
-                                    <Link to="/checkups/summary/new" className="btn btn-primary float-end mb-2">เพิ่มรายการ</Link>
+                                    <Link to="/promotions/summary/new" className="btn btn-primary float-end mb-2">เพิ่มรายการ</Link>
                                 </div>
                                 <div className="col-md-12">
                                     <table className="table table-striped table-bordered">
