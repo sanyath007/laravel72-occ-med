@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react'
+import { Link } from 'react-router-dom';
 import { GlobalContext } from '../../../context/globalContext';
 
 const CheckupSummary = () => {
@@ -24,6 +25,9 @@ const CheckupSummary = () => {
                         <div className="card-body">
                             <h5 className="card-title">สรุปผลงาน (งานตรวจสุขภาพ)</h5>
                             <div className="row">
+                                <div className="col-md-12">
+                                    <Link to="/checkups/summary/new" className="btn btn-primary float-end mb-2">เพิ่มรายการ</Link>
+                                </div>
                                 <div className="col-md-12">
                                     <table className="table table-striped table-bordered">
                                         <thead>

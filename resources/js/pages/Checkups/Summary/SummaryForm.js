@@ -372,7 +372,7 @@ const CheckupSummaryForm = () => {
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <div class="col-md-12 text-center">
+                                            <div className="col-md-12 text-center">
                                                 <button className="btn btn-primary">
                                                     <FaSave className="me-1" />
                                                     บันทึก
