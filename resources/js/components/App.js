@@ -32,6 +32,7 @@ import AuthContext from "../context/authContext";
 import { GlobalProvider } from '../context/globalContext'
 import store from "../store";
 import 'react-toastify/dist/ReactToastify.css';
+import PromotionSummary from "../pages/Promotions/Summary/Summary";
 
 export default function App() {
     const { userData } = useAuth()
@@ -66,6 +67,8 @@ export default function App() {
                         <Route path="/clinics/summary/new" element={<ClinicSummaryForm />} />
                         {/* Preventions routes */}
                         <Route path="/preventions/summary" element={<PreventionSummary />} />
+                        {/* Promotions routes */}
+                        <Route path="/promotions/summary" element={<PromotionSummary />} />
                         {/* Companies routes */}
                         <Route path="/companies" element={<Companies />} />
                         <Route path="/companies/new" element={<CompanyNew />} />

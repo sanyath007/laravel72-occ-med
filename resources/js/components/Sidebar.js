@@ -95,29 +95,26 @@ const Sidebar = () => {
                         </li> */}
                     </ul>
                 </li>
-                {/* Charts */}
-                {/* <li className="nav-item">
+                {/* งานสร้างเสริมสุขภาพและฟื้นฟูสภาพการทำงาน */}
+                <li className="nav-item">
                     <a className="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-                        <i className="bi bi-bar-chart"></i><span>Charts</span><i className="bi bi-chevron-down ms-auto"></i>
+                        <i className="bi bi-bar-chart"></i>
+                        <span>สร้างเสริมสุขภาพฯ</span>
+                        <i className="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="charts-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <a href="charts-chartjs.html" onClick={handleMenuClicked}>
-                                <i className="bi bi-circle"></i><span>Chart.js</span>
-                            </a>
+                            <Link to="/promotions/summary" onClick={handleMenuClicked}>
+                                <i className="bi bi-circle"></i><span>สรุปผลงาน</span>
+                            </Link>
                         </li>
-                        <li>
+                        {/* <li>
                             <a href="charts-apexcharts.html" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>ApexCharts</span>
                             </a>
-                        </li>
-                        <li>
-                            <a href="charts-echarts.html" onClick={handleMenuClicked}>
-                                <i className="bi bi-circle"></i><span>ECharts</span>
-                            </a>
-                        </li>
+                        </li> */}
                     </ul>
-                </li> */}
+                </li>
                 {/* สถานประกอบการ */}
                 <li className="nav-item">
                     <a className="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
