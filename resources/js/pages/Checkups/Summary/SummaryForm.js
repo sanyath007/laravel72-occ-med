@@ -24,7 +24,7 @@ const CheckupSummaryForm = () => {
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'checkups', name: 'งานตรวจสุขภาพ', path: '/checkups' },
-                { id: 'summary', name: 'สรุปผลงาน', path: '/checkups/new' },
+                { id: 'summary', name: 'สรุปผลงาน', path: '/checkups/summary' },
                 { id: 'new', name: 'บันทึกสรุปผลงาน', path: null, active: true }
             ]
         }))
