@@ -84,15 +84,15 @@ const Sidebar = () => {
                     </a>
                     <ul id="prevention-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <a href="tables-general.html" onClick={handleMenuClicked}>
-                                <i className="bi bi-circle"></i><span>General Tables</span>
-                            </a>
+                            <Link to="/preventions/summary" onClick={handleMenuClicked}>
+                                <i className="bi bi-circle"></i><span>สรุปผลงาน</span>
+                            </Link>
                         </li>
-                        <li>
+                        {/* <li>
                             <a href="tables-data.html" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>Data Tables</span>
                             </a>
-                        </li>
+                        </li> */}
                     </ul>
                 </li>
                 {/* Charts */}

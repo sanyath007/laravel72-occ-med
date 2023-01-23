@@ -23,6 +23,7 @@ import CheckupSummaryForm from "../pages/Checkups/Summary/SummaryForm";
 import Clinics from "../pages/Clinics/Clinics";
 import ClinicSummary from "../pages/Clinics/Summary/Summary";
 import ClinicSummaryForm from "../pages/Clinics/Summary/SummaryForm";
+import PreventionSummary from "../pages/Preventions/Summary/Summary";
 import Companies from "../pages/Companies/Companies";
 import CompanyNew from "../pages/Companies/CompanyNew";
 import CompanyEdit from "../pages/Companies/CompanyEdit";
@@ -63,6 +64,8 @@ export default function App() {
                         <Route path="/clinics" element={<Clinics />} />
                         <Route path="/clinics/summary" element={<ClinicSummary />} />
                         <Route path="/clinics/summary/new" element={<ClinicSummaryForm />} />
+                        {/* Preventions routes */}
+                        <Route path="/preventions/summary" element={<PreventionSummary />} />
                         {/* Companies routes */}
                         <Route path="/companies" element={<Companies />} />
                         <Route path="/companies/new" element={<CompanyNew />} />
