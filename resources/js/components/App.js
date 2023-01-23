@@ -34,6 +34,7 @@ import store from "../store";
 import 'react-toastify/dist/ReactToastify.css';
 import PromotionSummary from "../pages/Promotions/Summary/Summary";
 import ToxicologySummary from "../pages/Toxicologies/Summary/Summary";
+import PollutionSources from "../pages/Toxicologies/PollutionSources";
 
 export default function App() {
     const { userData } = useAuth()
@@ -72,6 +73,7 @@ export default function App() {
                         <Route path="/promotions/summary" element={<PromotionSummary />} />
                         {/* Toxicologies routes */}
                         <Route path="/toxicologies/summary" element={<ToxicologySummary />} />
+                        <Route path="/toxicologies/pollution-sources" element={<PollutionSources />} />
                         {/* Companies routes */}
                         <Route path="/companies" element={<Companies />} />
                         <Route path="/companies/new" element={<CompanyNew />} />

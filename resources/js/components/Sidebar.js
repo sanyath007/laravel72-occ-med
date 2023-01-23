@@ -128,11 +128,11 @@ const Sidebar = () => {
                                 <i className="bi bi-circle"></i><span>สรุปผลงาน</span>
                             </Link>
                         </li>
-                        {/* <li>
-                            <a href="charts-apexcharts.html" onClick={handleMenuClicked}>
-                                <i className="bi bi-circle"></i><span>ApexCharts</span>
-                            </a>
-                        </li> */}
+                        <li>
+                            <Link to="/toxicologies/pollution-sources" onClick={handleMenuClicked}>
+                                <i className="bi bi-circle"></i><span>แหล่งมลพิษของจังหวัด</span>
+                            </Link>
+                        </li>
                     </ul>
                 </li>
                 {/* สถานประกอบการ */}
