@@ -135,6 +135,26 @@ const Sidebar = () => {
                         </li>
                     </ul>
                 </li>
+                {/* งานอาชีวอนามัยในโรงพยาบาล */}
+                <li className="nav-item">
+                    <a className="nav-link collapsed" data-bs-target="#occupations-nav" data-bs-toggle="collapse" href="#">
+                        <i className="bi bi-patch-exclamation"></i>
+                        <span>อาชีวอนามัยฯ</span>
+                        <i className="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="occupations-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <Link to="/occupations/summary" onClick={handleMenuClicked}>
+                                <i className="bi bi-circle"></i><span>สรุปผลงาน</span>
+                            </Link>
+                        </li>
+                        {/* <li>
+                            <Link to="/occupations/pollution-sources" onClick={handleMenuClicked}>
+                                <i className="bi bi-circle"></i><span>แหล่งมลพิษของจังหวัด</span>
+                            </Link>
+                        </li> */}
+                    </ul>
+                </li>
                 {/* สถานประกอบการ */}
                 <li className="nav-item">
                     <a className="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
