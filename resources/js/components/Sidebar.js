@@ -138,7 +138,7 @@ const Sidebar = () => {
                 {/* งานอาชีวอนามัยในโรงพยาบาล */}
                 <li className="nav-item">
                     <a className="nav-link collapsed" data-bs-target="#occupations-nav" data-bs-toggle="collapse" href="#">
-                        <i className="bi bi-patch-exclamation"></i>
+                        <i className="bi bi-bandaid"></i>
                         <span>อาชีวอนามัยฯ</span>
                         <i className="bi bi-chevron-down ms-auto"></i>
                     </a>
