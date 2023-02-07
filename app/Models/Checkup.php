@@ -8,23 +8,8 @@ class Checkup extends Model
 {
     protected $table = "checkups";
 
-    public function patient()
+    public function service()
     {
-        return $this->belongsTo(Patient::class, "patient_id", "id");
-    }
-
-    public function company()
-    {
-        return $this->belongsTo(Company::class, "company_id", "id");
-    }
-
-    public function right()
-    {
-        return $this->belongsTo(Right::class, "right_id", "id");
-    }
-
-    public function diag()
-    {
-        return $this->belongsTo(Icd10::class, "pdx", "code");
+        return $this->belongsTo(Service::class, "service_id", "id");
     }
 }
