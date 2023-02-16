@@ -17,14 +17,15 @@ import PatientCard from '../../../components/Patient/PatientCard'
 import ThDatePicker from '../../../components/Forms/ThDatePicker'
 import { GlobalContext } from '../../../context/globalContext'
 
-const checkupSchema = Yup.object().shape({
+const preventionSchema = Yup.object().shape({
     patient_id: Yup.string().required('กรุณาเลือกผู้ป่วย!!'),
-    visit_date: Yup.string().required('กรุณาเลือกวันที่รับบริการ!!'),
-    visit_time: Yup.string().required('กรุณาระบุเวลารับบริการ!!'),
-    lab_result: Yup.string().required('กรุณาเลือกผลตรวจทางห้องปฏิบัติการ!!'),
-    equip_result: Yup.string().required('กรุณาเลือกผลตรวจด้วยเครื่องมือทางอาชีวเวชศาสตร์!!'),
-    xray_result: Yup.string().required('กรุณาเลือกผลตรวจภาพถ่ายรังสีทรวงอก!!'),
-    summary_result: Yup.string().required('กรุณาเลือกสรุปผลการตรวจ!!'),
+    service_date: Yup.string().required('กรุณาเลือกวันที่รับบริการ!!'),
+    service_time: Yup.string().required('กรุณาระบุเวลารับบริการ!!'),
+    weight: Yup.string().required('กรุณาระบุน้ำหนัก!!'),
+    height: Yup.string().required('กรุณาระบุส่วนสูง!!'),
+    waist: Yup.string().required('กรุณาระบุรอบเอว!!'),
+    bpd: Yup.string().required('กรุณาระบุความดันโลหิต!!'),
+    activity_id: Yup.string().required('กรุณาเลือกกิจกรรม!!'),
     pdx: Yup.string().required('กรุณาเลือกการวินิจฉัยโรค!!'),
     right_id: Yup.string().required('กรุณาเลือกสิทธิการรักษา!!'),
 })
@@ -34,7 +35,6 @@ const PreventionForm = () => {
     const dispatch = useDispatch()
     const { success, error } = useSelector(state => state.checkup)
     const { rights } = useSelector(state => state.right)
-    const [labOrders, setLabOrders] = useState([])
     const [showPatients, setShowPatients] = useState(false)
     const [showCompanies, setShowCompanies] = useState(false)
     const [showCompanyForm, setShowCompanyForm] = useState(false)
@@ -76,8 +76,8 @@ const PreventionForm = () => {
         formik.setFieldValue('age_y', calcAgeY(moment(patient.birthdate)))
         formik.setFieldValue('age_m', calcAgeM(moment(patient.birthdate)))
         formik.setFieldValue('right_id', patient.right_id)
-        formik.setFieldValue('visit_date', moment().format('YYYY-MM-DD'))
-        formik.setFieldValue('visit_time', moment().format('HH:mm'))
+        formik.setFieldValue('service_date', moment().format('YYYY-MM-DD'))
+        formik.setFieldValue('service_time', moment().format('HH:mm'))
 
         /** Update errors objects */
         setTimeout(() => formik.setFieldTouched('patient_id', true))
@@ -126,25 +126,26 @@ const PreventionForm = () => {
                                 initialValues={{
                                     id: '',
                                     patient_id: '',
-                                    visit_date: '',
-                                    visit_time: '',
+                                    service_date: '',
+                                    service_time: '',
                                     is_officer: '',
                                     company_id: '',
+                                    right_id: '',
                                     age_y: 0,
                                     age_m: 0,
-                                    lab_result: '',
-                                    equip_result: '',
-                                    xray_result: '',
-                                    screening: '',
-                                    health_edu: '',
-                                    reported: '',
-                                    specialist: '',
-                                    summary_result: '',
+                                    weight: '',
+                                    height: '',
+                                    bmi: '',
+                                    waist: '',
+                                    bpd: '',
+                                    bps: '',
+                                    fbs: '',
+                                    smoking: '',
+                                    drinking: '',
+                                    activity_id: '',
+                                    description: '',
                                     pdx: '',
                                     net_total: '',
-                                    satisfaction: '',
-                                    right_id: '',
-                                    remark: ''
                                 }}
                                 validationSchema={checkupSchema}
                                 onSubmit={handleSubmit}
@@ -186,14 +187,14 @@ const PreventionForm = () => {
                                                 <label htmlFor="">วันที่รับบริการ :</label>
                                                 <ThDatePicker
                                                     onChange={(christDate, buddhistDate) => {
-                                                        formProps.setFieldValue('visit_date', christDate)
+                                                        formProps.setFieldValue('service_date', christDate)
                                                     }}
-                                                    defaultValue={formProps.values.visit_date}
-                                                    error={formProps.errors.visit_date && formProps.touched.visit_date}
+                                                    defaultValue={formProps.values.service_date}
+                                                    error={formProps.errors.service_date && formProps.touched.service_date}
                                                 />
-                                                {formProps.errors.visit_date && formProps.touched.visit_date ? (
+                                                {formProps.errors.service_date && formProps.touched.service_date ? (
                                                     <div className="invalid-feedback">
-                                                        {formProps.errors.visit_date}
+                                                        {formProps.errors.service_date}
                                                     </div>
                                                 ) : null}
                                             </div>
@@ -201,14 +202,14 @@ const PreventionForm = () => {
                                                 <label htmlFor="">เวลา :</label>
                                                 <input
                                                     type="time"
-                                                    name="visit_time"
-                                                    value={formProps.values.visit_time}
+                                                    name="service_time"
+                                                    value={formProps.values.service_time}
                                                     onChange={formProps.handleChange}
-                                                    className={`form-control ${formProps.errors.visit_time && formProps.touched.visit_time ? 'is-invalid' : ''}`}
+                                                    className={`form-control ${formProps.errors.service_time && formProps.touched.service_time ? 'is-invalid' : ''}`}
                                                 />
-                                                {formProps.errors.visit_time && formProps.touched.visit_time ? (
+                                                {formProps.errors.service_time && formProps.touched.service_time ? (
                                                     <div className="invalid-feedback">
-                                                        {formProps.errors.visit_time}
+                                                        {formProps.errors.service_time}
                                                     </div>
                                                 ) : null}
                                             </div>
@@ -253,110 +254,113 @@ const PreventionForm = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-md-4 form-group mb-3">
-                                                <label htmlFor="">ผลตรวจทางห้องปฏิบัติการ :</label>
-                                                <select
-                                                    name="lab_result"
-                                                    value={formProps.values.lab_result}
+                                            <div className="col-md-2 form-group mb-3">
+                                                <label htmlFor="">น้ำหนัก :</label>
+                                                <input
+                                                    type="text"
+                                                    name="weight"
+                                                    value={formProps.values.weight}
                                                     onChange={formProps.handleChange}
-                                                    className={`form-control ${formProps.errors.lab_result && formProps.touched.lab_result ? 'is-invalid' : ''}`}
-                                                >
-                                                    <option value="">-- กรุณาเลือก --</option>
-                                                    <option value="0">ปกติ</option>
-                                                    <option value="1">ผิดปกติ</option>
-                                                </select>
-                                                {formProps.errors.lab_result && formProps.touched.lab_result ? (
+                                                    className={`form-control ${formProps.errors.weight && formProps.touched.weight ? 'is-invalid' : ''}`}
+                                                />
+                                                {formProps.errors.weight && formProps.touched.weight ? (
                                                     <div className="invalid-feedback">
-                                                        {formProps.errors.lab_result}
+                                                        {formProps.errors.weight}
                                                     </div>
                                                 ) : null}
                                             </div>
-                                            <div className="col-md-4 form-group mb-3">
-                                                <label htmlFor="">ผลตรวจด้วยเครื่องมือทางอาชีวเวชศาสตร์ :</label>
-                                                <select
-                                                    name="equip_result"
-                                                    value={formProps.values.equip_result}
+                                            <div className="col-md-2 form-group mb-3">
+                                                <label htmlFor="">ส่วนสูง :</label>
+                                                <input
+                                                    type="text"
+                                                    name="height"
+                                                    value={formProps.values.height}
                                                     onChange={formProps.handleChange}
-                                                    className={`form-control ${formProps.errors.equip_result && formProps.touched.equip_result ? 'is-invalid' : ''}`}
-                                                >
-                                                    <option value="">-- กรุณาเลือก --</option>
-                                                    <option value="0">ปกติ</option>
-                                                    <option value="1">ผิดปกติ</option>
-                                                </select>
-                                                {formProps.errors.equip_result && formProps.touched.equip_result ? (
+                                                    className={`form-control ${formProps.errors.height && formProps.touched.height ? 'is-invalid' : ''}`}
+                                                />
+                                                {formProps.errors.height && formProps.touched.height ? (
                                                     <div className="invalid-feedback">
-                                                        {formProps.errors.equip_result}
+                                                        {formProps.errors.height}
                                                     </div>
                                                 ) : null}
                                             </div>
-                                            <div className="col-md-4 form-group mb-3">
-                                                <label htmlFor="">ผลตรวจภาพถ่ายรังสีทรวงอก :</label>
-                                                <select
-                                                    name="xray_result"
-                                                    value={formProps.values.xray_result}
+                                            <div className="col-md-2 form-group mb-3">
+                                                <label htmlFor="">BMI :</label>
+                                                <input
+                                                    type="text"
+                                                    name="waist"
+                                                    value={formProps.values.waist}
                                                     onChange={formProps.handleChange}
-                                                    className={`form-control ${formProps.errors.xray_result && formProps.touched.xray_result ? 'is-invalid' : ''}`}
-                                                >
-                                                    <option value="">-- กรุณาเลือก --</option>
-                                                    <option value="0">ปกติ</option>
-                                                    <option value="1">ผิดปกติ</option>
-                                                </select>
-                                                {formProps.errors.xray_result && formProps.touched.xray_result ? (
+                                                    className={`form-control ${formProps.errors.waist && formProps.touched.waist ? 'is-invalid' : ''}`}
+                                                />
+                                                {formProps.errors.waist && formProps.touched.waist ? (
                                                     <div className="invalid-feedback">
-                                                        {formProps.errors.xray_result}
+                                                        {formProps.errors.waist}
                                                     </div>
                                                 ) : null}
                                             </div>
-                                            <div className="col-md-3 form-group mb-2">
-                                                {/* <label htmlFor=""></label> */}
-                                                <div className="form-control d-flex justify-content-start">
-                                                    <div className="d-flex">
-                                                        <Field
-                                                            type="checkbox"
-                                                            name="screening"
-                                                            className="mx-2"
-                                                        /> ซักประวัติ/คัดกรอง
+                                            <div className="col-md-2 form-group mb-3">
+                                                <label htmlFor="">รอบเอว :</label>
+                                                <input
+                                                    type="text"
+                                                    name="waist"
+                                                    value={formProps.values.waist}
+                                                    onChange={formProps.handleChange}
+                                                    className={`form-control ${formProps.errors.waist && formProps.touched.waist ? 'is-invalid' : ''}`}
+                                                />
+                                                {formProps.errors.waist && formProps.touched.waist ? (
+                                                    <div className="invalid-feedback">
+                                                        {formProps.errors.waist}
                                                     </div>
-                                                </div>
+                                                ) : null}
                                             </div>
-                                            <div className="col-md-3 form-group mb-2">
-                                                {/* <label htmlFor=""></label> */}
-                                                <div className="form-control d-flex justify-content-start">
-                                                    <div className="d-flex">
-                                                        <Field
-                                                            type="checkbox"
-                                                            name="health_edu"
-                                                            className="mx-2"
-                                                        /> ให้สุขศึกษา
+                                            <div className="col-md-2 form-group mb-3">
+                                                <label htmlFor="">BPD :</label>
+                                                <input
+                                                    type="text"
+                                                    name="waist"
+                                                    value={formProps.values.waist}
+                                                    onChange={formProps.handleChange}
+                                                    className={`form-control ${formProps.errors.waist && formProps.touched.waist ? 'is-invalid' : ''}`}
+                                                />
+                                                {formProps.errors.waist && formProps.touched.waist ? (
+                                                    <div className="invalid-feedback">
+                                                        {formProps.errors.waist}
                                                     </div>
-                                                </div>
+                                                ) : null}
                                             </div>
-                                            <div className="col-md-3 form-group mb-2">
-                                                {/* <label htmlFor=""></label> */}
-                                                <div className="form-control d-flex justify-content-start">
-                                                    <div className="d-flex">
-                                                        <Field
-                                                            type="checkbox"
-                                                            name="reported"
-                                                            className="mx-2"
-                                                        /> รายงานผลการตรวจรายบุคคล
+                                            <div className="col-md-2 form-group mb-3">
+                                                <label htmlFor="">BPS :</label>
+                                                <input
+                                                    type="text"
+                                                    name="waist"
+                                                    value={formProps.values.waist}
+                                                    onChange={formProps.handleChange}
+                                                    className={`form-control ${formProps.errors.waist && formProps.touched.waist ? 'is-invalid' : ''}`}
+                                                />
+                                                {formProps.errors.waist && formProps.touched.waist ? (
+                                                    <div className="invalid-feedback">
+                                                        {formProps.errors.waist}
                                                     </div>
-                                                </div>
+                                                ) : null}
                                             </div>
-                                            <div className="col-md-3 form-group mb-2">
-                                                {/* <label htmlFor=""></label> */}
-                                                <div className="form-control d-flex justify-content-start">
-                                                    <div className="d-flex">
-                                                        <Field
-                                                            type="checkbox"
-                                                            name="specialist"
-                                                            className="mx-2"
-                                                        /> ส่งพบแพทย์เฉพาะทาง
+                                            <div className="col-md-2 form-group mb-3">
+                                                <label htmlFor="">FBS :</label>
+                                                <input
+                                                    type="text"
+                                                    name="waist"
+                                                    value={formProps.values.waist}
+                                                    onChange={formProps.handleChange}
+                                                    className={`form-control ${formProps.errors.waist && formProps.touched.waist ? 'is-invalid' : ''}`}
+                                                />
+                                                {formProps.errors.waist && formProps.touched.waist ? (
+                                                    <div className="invalid-feedback">
+                                                        {formProps.errors.waist}
                                                     </div>
-                                                </div>
+                                                ) : null}
                                             </div>
-                                            <div className="col-md-3 form-group mb-2">
-                                                <label htmlFor="">สรุปผลการตรวจ :</label>
+                                            <div className="col-md-5 form-group mb-2">
+                                                <label htmlFor="">กิจกรรม :</label>
                                                 <select
                                                     name="summary_result"
                                                     value={formProps.values.summary_result}
@@ -374,7 +378,7 @@ const PreventionForm = () => {
                                                     </div>
                                                 ) : null}
                                             </div>
-                                            <div className="col-md-6 form-group mb-2">
+                                            <div className="col-md-5 form-group mb-2">
                                                 <label htmlFor="">สิทธิการรักษา :</label>
                                                 <select
                                                     name="right_id"
@@ -395,7 +399,7 @@ const PreventionForm = () => {
                                                     </div>
                                                 ) : null}
                                             </div>
-                                            <div className="col-md-3 form-group mb-2">
+                                            <div className="col-md-4 form-group mb-2">
                                                 <label htmlFor="">ค่าใช้จ่าย :</label>
                                                 <input
                                                     type="text"
@@ -425,73 +429,21 @@ const PreventionForm = () => {
                                                     ) : null}
                                                 </div>
                                             </div>
-                                            <div className="col-md-10 form-group mb-2">
+                                            <div className="col-md-6 form-group mb-2">
                                                 <label htmlFor=""></label>
                                                 <div className="form-control" style={{ minHeight: '2.3rem' }}>
                                                     { selectedIcd10 && selectedIcd10.name }
                                                 </div>
                                             </div>
                                             <div className="col-md-12 form-group">
-                                                <label htmlFor="">หมายเหตุ</label>
+                                                <label htmlFor="">รายละเอียดเพิ่มเติม</label>
                                                 <textarea
                                                     rows="2"
-                                                    name="remark"
-                                                    value={formProps.values.remark}
+                                                    name="description"
+                                                    value={formProps.values.description}
                                                     onChange={formProps.handleChange}
                                                     className="form-control"
                                                 ></textarea>
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-md-12">
-                                                <ul className="nav nav-tabs" id="borderedTabJustified" role="tablist">
-                                                    <li className="nav-item" role="presentation">
-                                                        <button className="nav-link w-100 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-home" type="button" role="tab" aria-controls="home" aria-selected="true">
-                                                            รายการตรวจทางห้องปฏิบัติการ
-                                                        </button>
-                                                    </li>
-                                                </ul>
-                                                <div className="tab-content pt-2" id="borderedTabJustifiedContent">
-                                                    <div className="tab-pane fade show active p-2" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab">
-                                                        <div className="d-flex gap-1">
-                                                            <table className="table table-striped table-bordered">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th style={{ width: '5%', textAlign: 'center' }}>#</th>
-                                                                        <th style={{ textAlign: 'center' }}>รายการตรวจ</th>
-                                                                        <th style={{ width: '15%', textAlign: 'center' }}>วันที่ตรวจ</th>
-                                                                        <th style={{ width: '12%', textAlign: 'center' }}>ผลตรวจ</th>
-                                                                        <th style={{ width: '10%', textAlign: 'center' }}>Actions</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    {labOrders.length > 0 
-                                                                        ? labOrders.map(lab => (
-                                                                            <tr>
-
-                                                                            </tr>
-                                                                        ))
-                                                                        : (
-                                                                            <tr>
-                                                                                <td colSpan="5" className="text-danger" style={{ textAlign: 'center' }}>
-                                                                                    -- ไม่พบรายการ --
-                                                                                </td>
-                                                                            </tr>
-                                                                        )
-                                                                    }
-                                                                </tbody>
-                                                            </table>
-                                                            <div className="d-flex flex-column text-center gap-1">
-                                                                <a href="#" className="btn btn-primary btn-sm">
-                                                                    <FaPlus />
-                                                                </a>
-                                                                <a href="#" className="btn btn-danger btn-sm">
-                                                                    <FaTrashAlt />
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                         <div className="text-center">
