@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Service;
 use App\Models\Checkup;
 use App\Models\Patient;
 
@@ -18,14 +19,15 @@ class CheckupController extends Controller
         } else {
             $patientsList = Patient::where('hn', $hn)->pluck('id');
 
-            $checkups = Checkup::with('patient','company','right','diag')
-                                ->when(!empty($hn), function($query) use ($patientsList) {
-                                    $query->where('patient_id', $patientsList);
-                                })
-                                ->when(!empty($company), function($query) use ($company) {
-                                    $query->where('company_id', $company);
-                                })
-                                ->paginate(10);
+            $checkups = Service::with('patient','company','right','diag')
+                            ->leftJoin('checkups', 'services.id', '=', 'checkups.service_id')
+                            ->when(!empty($hn), function($query) use ($patientsList) {
+                                $query->where('patient_id', $patientsList);
+                            })
+                            ->when(!empty($company), function($query) use ($company) {
+                                $query->where('company_id', $company);
+                            })
+                            ->paginate(10);
         }
 
         return response()->json($checkups);
