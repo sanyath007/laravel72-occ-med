@@ -52,35 +52,32 @@ class CheckupController extends Controller
             $service->is_officer = $request['is_officer'];
             $service->company_id = $request['company_id'];
             $service->right_id = $request['right_id'];
+            $service->doctor_id = $request['doctor_id'];
             $service->age_y = $request['age_y'];
             $service->age_m = $request['age_m'];
+
+            /** Screening data */
+            $service->weight = $request['weight'];
+            $service->height = $request['height'];
+            $service->bmi = $request['bmi'];
+            $service->waist = $request['waist'];
+            $service->bpd = $request['bpd'];
+            $service->bps = $request['bps'];
+            $service->dtx = $request['dtx'];
+            $service->no_food = $request['no_food'];
+            $service->smoking = $request['smoking'];
+            $service->drinking = $request['drinking'];
+            $service->vision = $request['vision'];
+            $service->hearing = $request['hearing'];
+            $service->lung = $request['lung'];
+            $service->body = $request['body'];
+            $service->heart_wave = $request['heart_wave'];
             $service->pdx = $request['pdx'];
             $service->net_total = $request['net_total'];
             $service->remark = $request['remark'];
+            $service->screen_user = $request['screen_user'];
 
             if ($service->save()) {
-                /** Screening data */
-                $screen = new Screening;
-                $screen->service_id = $service->id;
-                $screen->screen_date = $request['service_date'];
-                $screen->screen_time = $request['service_time'];
-                $screen->weight = $request['weight'];
-                $screen->height = $request['height'];
-                $screen->bmi = $request['bmi'];
-                $screen->waist = $request['waist'];
-                $screen->bpd = $request['bpd'];
-                $screen->bps = $request['bps'];
-                $screen->fbs = $request['fbs'];
-                $screen->smoking = $request['smoking'];
-                $screen->drinking = $request['drinking'];
-                $screen->vision = $request['vision'];
-                $screen->hearing = $request['hearing'];
-                $screen->lung = $request['lung'];
-                $screen->body = $request['body'];
-                $screen->heart_wave = $request['heart_wave'];
-                $screen->screen_user = $request['screen_user'];
-                $screen->save();
-
                 /** Checkuo data */
                 $checkup = new CheckupService;
                 $checkup->service_id = $service->id;
@@ -124,11 +121,30 @@ class CheckupController extends Controller
             $service->is_officer = $request['is_officer'];
             $service->company_id = $request['company_id'];
             $service->right_id = $request['right_id'];
+            $service->doctor_id = $request['doctor_id'];
             $service->age_y = $request['age_y'];
             $service->age_m = $request['age_m'];
+
+            /** Screening data */
+            $service->weight = $request['weight'];
+            $service->height = $request['height'];
+            $service->bmi = $request['bmi'];
+            $service->waist = $request['waist'];
+            $service->bpd = $request['bpd'];
+            $service->bps = $request['bps'];
+            $service->dtx = $request['dtx'];
+            $service->no_food = $request['no_food'];
+            $service->smoking = $request['smoking'];
+            $service->drinking = $request['drinking'];
+            $service->vision = $request['vision'];
+            $service->hearing = $request['hearing'];
+            $service->lung = $request['lung'];
+            $service->body = $request['body'];
+            $service->heart_wave = $request['heart_wave'];
             $service->pdx = $request['pdx'];
             $service->net_total = $request['net_total'];
             $service->remark = $request['remark'];
+            $service->screen_user = $request['screen_user'];
 
             if ($checkup->save()) {
                 /** Checkup data */
