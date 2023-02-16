@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Formik, Form, Field } from 'formik'
@@ -13,8 +13,9 @@ import ModalIcd10s from '../../../components/Modals/ModalIcd10s'
 import { calcAgeM, calcAgeY } from '../../../utils/calculator'
 import { getAll as getRights } from '../../../store/right'
 import { store, resetSuccess } from '../../../store/checkup'
-import PatientCard from './PatientCard'
+import PatientCard from '../../../components/Patient/PatientCard'
 import ThDatePicker from '../../../components/Forms/ThDatePicker'
+import { GlobalContext } from '../../../context/globalContext'
 
 const checkupSchema = Yup.object().shape({
     patient_id: Yup.string().required('กรุณาเลือกผู้ป่วย!!'),
@@ -41,6 +42,19 @@ const PreventionForm = () => {
     const [selectedPatient, setSelectedPatient] = useState(null)
     const [selectedCompany, setSelectedCompany] = useState(null)
     const [selectedIcd10, setSelectedIcd10] = useState(null)
+    const { setGlobal } = useContext(GlobalContext)
+
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'รายการให้บริการ (ป้องกันและควบคุมโรค)',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'preventions', name: 'งานป้องกันและควบคุมโรค', path: '/preventions' },
+                { id: 'list', name: 'รายการให้บริการ', path: null, active: true }
+            ]
+        }))
+    }, [])
 
     useEffect(() => {
         dispatch(getRights({ path: '/api/rights' }))
