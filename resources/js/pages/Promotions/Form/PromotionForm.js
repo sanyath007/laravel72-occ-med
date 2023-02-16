@@ -47,11 +47,11 @@ const PromotionForm = () => {
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'รายการให้บริการ (ป้องกันและควบคุมโรค)',
+            title: 'บันทึกการให้บริการ (งานสร้างเสริมสุขภาพฯ)',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'preventions', name: 'งานป้องกันและควบคุมโรค', path: '/preventions' },
-                { id: 'list', name: 'รายการให้บริการ', path: null, active: true }
+                { id: 'promotions', name: 'งานสร้างเสริมสุขภาพฯ', path: '/promotions' },
+                { id: 'new', name: 'บันทึกการให้บริการ', path: null, active: true }
             ]
         }))
     }, [])
@@ -121,7 +121,7 @@ const PromotionForm = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">บันทึกตรวจสุขภาพ</h5>
+                            <h5 className="card-title">บันทึกการให้บริการ</h5>
                             <Formik
                                 initialValues={{
                                     id: '',

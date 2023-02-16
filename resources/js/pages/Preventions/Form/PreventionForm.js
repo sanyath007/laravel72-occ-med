@@ -47,11 +47,11 @@ const PreventionForm = () => {
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'รายการให้บริการ (ป้องกันและควบคุมโรค)',
+            title: 'บันทึกการให้บริการ (งานป้องกันและควบคุมโรค)',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'preventions', name: 'งานป้องกันและควบคุมโรค', path: '/preventions' },
-                { id: 'list', name: 'รายการให้บริการ', path: null, active: true }
+                { id: 'new', name: 'บันทึกการให้บริการ', path: null, active: true }
             ]
         }))
     }, [])
@@ -121,7 +121,7 @@ const PreventionForm = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">บันทึกตรวจสุขภาพ</h5>
+                            <h5 className="card-title">บันทึกการให้บริการ</h5>
                             <Formik
                                 initialValues={{
                                     id: '',

@@ -16,7 +16,7 @@ const Preventions = () => {
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'รายการให้บริการ (ป้องกันและควบคุมโรค)',
+            title: 'รายการให้บริการ (งานป้องกันและควบคุมโรค)',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'preventions', name: 'งานป้องกันและควบคุมโรค', path: '/preventions' },
