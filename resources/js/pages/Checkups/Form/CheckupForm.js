@@ -13,7 +13,7 @@ import ModalIcd10s from '../../../components/Modals/ModalIcd10s'
 import { calcAgeM, calcAgeY } from '../../../utils/calculator'
 import { getAll as getRights } from '../../../store/right'
 import { store, resetSuccess } from '../../../store/checkup'
-import PatientCard from './PatientCard'
+import PatientCard from '../../../components/Patient/PatientCard'
 import ThDatePicker from '../../../components/Forms/ThDatePicker'
 
 const checkupSchema = Yup.object().shape({

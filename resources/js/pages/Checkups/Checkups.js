@@ -83,8 +83,8 @@ const Checkups = () => {
                                                     </th>
                                                     <td style={{ textAlign: 'center' }}>{checkup.patient.hn}</td>
                                                     <td>{`${checkup.patient.pname}${checkup.patient.fname} ${checkup.patient.lname}`}</td>
-                                                    <td style={{ textAlign: 'center' }}>{thdateBEFormat(checkup.visit_date)}</td>
-                                                    <td style={{ textAlign: 'center' }}>{checkup.visit_time}</td>
+                                                    <td style={{ textAlign: 'center' }}>{thdateBEFormat(checkup.service_date)}</td>
+                                                    <td style={{ textAlign: 'center' }}>{checkup.service_time}</td>
                                                     <td style={{ textAlign: 'center' }}>{thdateBEFormat(checkup.patient.birthdate)}</td>
                                                     <td style={{ textAlign: 'center' }}>{calcAgeY(checkup.patient.birthdate)}ปี</td>
                                                     <td style={{ textAlign: 'center' }}>{checkup.patient.cid}</td>
