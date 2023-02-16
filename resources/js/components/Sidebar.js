@@ -104,15 +104,15 @@ const Sidebar = () => {
                     </a>
                     <ul id="promotions-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
+                            <Link to="/promotions" onClick={handleMenuClicked}>
+                                <i className="bi bi-circle"></i><span>การให้บริการ</span>
+                            </Link>
+                        </li>
+                        <li>
                             <Link to="/promotions/summary" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>สรุปผลงาน</span>
                             </Link>
                         </li>
-                        {/* <li>
-                            <a href="charts-apexcharts.html" onClick={handleMenuClicked}>
-                                <i className="bi bi-circle"></i><span>ApexCharts</span>
-                            </a>
-                        </li> */}
                     </ul>
                 </li>
                 {/* งานพิษวิทยาและเวชศาสตร์สิ่งแวดล้อม */}

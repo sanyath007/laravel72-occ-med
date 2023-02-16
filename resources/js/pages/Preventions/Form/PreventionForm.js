@@ -147,7 +147,7 @@ const PreventionForm = () => {
                                     pdx: '',
                                     net_total: '',
                                 }}
-                                validationSchema={checkupSchema}
+                                validationSchema={preventionSchema}
                                 onSubmit={handleSubmit}
                             >
                                 {(formProps) => (
