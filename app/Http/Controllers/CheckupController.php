@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Service;
+use App\Models\Screening;
 use App\Models\CheckupService;
 use App\Models\Patient;
 
@@ -43,28 +44,56 @@ class CheckupController extends Controller
     public function store(Request $request)
     {
         try {
-            $checkup = new Checkup;
-            $checkup->patient_id = $request['patient_id'];
-            $checkup->visit_date = $request['visit_date'];
-            $checkup->visit_time = $request['visit_time'];
-            $checkup->is_officer = $request['is_officer'];
-            $checkup->company_id = $request['company_id'];
-            $checkup->age_y = $request['age_y'];
-            $checkup->age_m = $request['age_m'];
-            $checkup->lab_result = $request['lab_result'];
-            $checkup->equip_result = $request['equip_result'];
-            $checkup->xray_result = $request['xray_result'];
-            $checkup->screening = $request['screening'];
-            $checkup->health_edu = $request['health_edu'];
-            $checkup->reported = $request['reported'];
-            $checkup->specialist = $request['specialist'];
-            $checkup->summary_result = $request['summary_result'];
-            $checkup->pdx = $request['pdx'];
-            $checkup->net_total = $request['net_total'];
-            $checkup->right_id = $request['right_id'];
-            $checkup->remark = $request['remark'];
+            /** Service data */
+            $service = new CheckupService;
+            $service->patient_id = $request['patient_id'];
+            $service->service_date = $request['service_date'];
+            $service->service_time = $request['service_time'];
+            $service->is_officer = $request['is_officer'];
+            $service->company_id = $request['company_id'];
+            $service->right_id = $request['right_id'];
+            $service->age_y = $request['age_y'];
+            $service->age_m = $request['age_m'];
+            $service->pdx = $request['pdx'];
+            $service->net_total = $request['net_total'];
+            $service->remark = $request['remark'];
 
-            if ($checkup->save()) {
+            if ($service->save()) {
+                /** Screening data */
+                $screen = new Screening;
+                $screen->service_id = $service->id;
+                $screen->screen_date = $request['service_date'];
+                $screen->screen_time = $request['service_time'];
+                $screen->weight = $request['weight'];
+                $screen->height = $request['height'];
+                $screen->bmi = $request['bmi'];
+                $screen->waist = $request['waist'];
+                $screen->bpd = $request['bpd'];
+                $screen->bps = $request['bps'];
+                $screen->fbs = $request['fbs'];
+                $screen->smoking = $request['smoking'];
+                $screen->drinking = $request['drinking'];
+                $screen->vision = $request['vision'];
+                $screen->hearing = $request['hearing'];
+                $screen->lung = $request['lung'];
+                $screen->body = $request['body'];
+                $screen->heart_wave = $request['heart_wave'];
+                $screen->screen_user = $request['screen_user'];
+                $screen->save();
+
+                /** Checkuo data */
+                $checkup = new CheckupService;
+                $checkup->service_id = $service->id;
+                $checkup->lab_result = $request['lab_result'];
+                $checkup->equip_result = $request['equip_result'];
+                $checkup->xray_result = $request['xray_result'];
+                $checkup->screening = $request['screening'];
+                $checkup->health_edu = $request['health_edu'];
+                $checkup->reported = $request['reported'];
+                $checkup->specialist = $request['specialist'];
+                $checkup->summary_result = $request['summary_result'];
+                $checkup->save();
+
                 return [
                     'status'    => 1,
                     'message'   => 'Insertion successfully!!',
@@ -87,28 +116,33 @@ class CheckupController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $checkup = Checkup::find($id);
-            $checkup->patient_id = $request['patient_id'];
-            $checkup->visit_date = $request['visit_date'];
-            $checkup->visit_time = $request['visit_time'];
-            $checkup->is_officer = $request['is_officer'];
-            $checkup->company_id = $request['company_id'];
-            $checkup->age_y = $request['age_y'];
-            $checkup->age_m = $request['age_m'];
-            $checkup->lab_result = $request['lab_result'];
-            $checkup->equip_result = $request['equip_result'];
-            $checkup->xray_result = $request['xray_result'];
-            $checkup->screening = $request['screening'];
-            $checkup->health_edu = $request['health_edu'];
-            $checkup->reported = $request['reported'];
-            $checkup->specialist = $request['specialist'];
-            $checkup->summary_result = $request['summary_result'];
-            $checkup->pdx = $request['pdx'];
-            $checkup->net_total = $request['net_total'];
-            $checkup->right_id = $request['right_id'];
-            $checkup->remark = $request['remark'];
+            /** Service data */
+            $service = Service::find($id);
+            $service->patient_id = $request['patient_id'];
+            $service->service_date = $request['service_date'];
+            $service->service_time = $request['service_time'];
+            $service->is_officer = $request['is_officer'];
+            $service->company_id = $request['company_id'];
+            $service->right_id = $request['right_id'];
+            $service->age_y = $request['age_y'];
+            $service->age_m = $request['age_m'];
+            $service->pdx = $request['pdx'];
+            $service->net_total = $request['net_total'];
+            $service->remark = $request['remark'];
 
             if ($checkup->save()) {
+                /** Checkup data */
+                $checkup = CheckupService::where('service_id', $id)->first();
+                $checkup->lab_result = $request['lab_result'];
+                $checkup->equip_result = $request['equip_result'];
+                $checkup->xray_result = $request['xray_result'];
+                $checkup->screening = $request['screening'];
+                $checkup->health_edu = $request['health_edu'];
+                $checkup->reported = $request['reported'];
+                $checkup->specialist = $request['specialist'];
+                $checkup->summary_result = $request['summary_result'];
+                $checkup->save();
+
                 return [
                     'status'    => 1,
                     'message'   => 'Updation successfully!!',
@@ -131,7 +165,7 @@ class CheckupController extends Controller
     public function delete(Request $request, $id)
     {
         try {
-            $checkup = Checkup::find($id);
+            $checkup = CheckupService::find($id);
 
             if ($checkup->delete()) {
                 return [
