@@ -16,6 +16,7 @@ import { store, resetSuccess } from '../../../store/checkup'
 import PatientCard from '../../../components/Patient/PatientCard'
 import ThDatePicker from '../../../components/Forms/ThDatePicker'
 import { GlobalContext } from '../../../context/globalContext'
+import RadioGroup from '../../../components/Forms/RadioGroup'
 
 const promotionSchema = Yup.object().shape({
     patient_id: Yup.string().required('กรุณาเลือกผู้ป่วย!!'),
@@ -139,7 +140,8 @@ const PromotionForm = () => {
                                     waist: '',
                                     bpd: '',
                                     bps: '',
-                                    fbs: '',
+                                    dtx: '',
+                                    no_food: '',
                                     smoking: '',
                                     drinking: '',
                                     activity_id: '',
@@ -288,14 +290,14 @@ const PromotionForm = () => {
                                                 <label htmlFor="">BMI :</label>
                                                 <input
                                                     type="text"
-                                                    name="waist"
-                                                    value={formProps.values.waist}
+                                                    name="bmi"
+                                                    value={formProps.values.bmi}
                                                     onChange={formProps.handleChange}
-                                                    className={`form-control ${formProps.errors.waist && formProps.touched.waist ? 'is-invalid' : ''}`}
+                                                    className={`form-control ${formProps.errors.bmi && formProps.touched.bmi ? 'is-invalid' : ''}`}
                                                 />
-                                                {formProps.errors.waist && formProps.touched.waist ? (
+                                                {formProps.errors.bmi && formProps.touched.bmi ? (
                                                     <div className="invalid-feedback">
-                                                        {formProps.errors.waist}
+                                                        {formProps.errors.bmi}
                                                     </div>
                                                 ) : null}
                                             </div>
@@ -314,71 +316,155 @@ const PromotionForm = () => {
                                                     </div>
                                                 ) : null}
                                             </div>
-                                            <div className="col-md-2 form-group mb-3">
-                                                <label htmlFor="">BPD :</label>
-                                                <input
-                                                    type="text"
-                                                    name="waist"
-                                                    value={formProps.values.waist}
-                                                    onChange={formProps.handleChange}
-                                                    className={`form-control ${formProps.errors.waist && formProps.touched.waist ? 'is-invalid' : ''}`}
-                                                />
-                                                {formProps.errors.waist && formProps.touched.waist ? (
+                                            <div className="col-md-4 form-group mb-3">
+                                                <label htmlFor="">ความดันโลหิต (BP) :</label>
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                                                    <input
+                                                        type="text"
+                                                        name="bpd"
+                                                        value={formProps.values.bpd}
+                                                        onChange={formProps.handleChange}
+                                                        className={`form-control ${formProps.errors.bpd && formProps.touched.bpd ? 'is-invalid' : ''}`}
+                                                    /> / 
+                                                    <input
+                                                        type="text"
+                                                        name="bps"
+                                                        value={formProps.values.bps}
+                                                        onChange={formProps.handleChange}
+                                                        className={`form-control ${formProps.errors.bps && formProps.touched.bps ? 'is-invalid' : ''}`}
+                                                    />
+                                                </div>
+                                                {formProps.errors.bps && formProps.touched.bps ? (
                                                     <div className="invalid-feedback">
-                                                        {formProps.errors.waist}
+                                                        {formProps.errors.bps}
                                                     </div>
                                                 ) : null}
                                             </div>
-                                            <div className="col-md-2 form-group mb-3">
-                                                <label htmlFor="">BPS :</label>
-                                                <input
-                                                    type="text"
-                                                    name="waist"
-                                                    value={formProps.values.waist}
-                                                    onChange={formProps.handleChange}
-                                                    className={`form-control ${formProps.errors.waist && formProps.touched.waist ? 'is-invalid' : ''}`}
-                                                />
-                                                {formProps.errors.waist && formProps.touched.waist ? (
+                                            <div className="col-md-4 form-group mb-3">
+                                                <label htmlFor="">ค่าน้ำตาลปลายนิ้ว (DTX) :</label>
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                                                    <input
+                                                        style={{ width: '60%' }}
+                                                        type="text"
+                                                        name="dtx"
+                                                        value={formProps.values.dtx}
+                                                        onChange={formProps.handleChange}
+                                                        className={`form-control ${formProps.errors.dtx && formProps.touched.dtx ? 'is-invalid' : ''}`}
+                                                    />
+                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                                        <input type="checkbox" name="" />
+                                                        งดอาหารหรือไม่?
+                                                    </div>
+                                                </div>
+                                                {formProps.errors.dtx && formProps.touched.dtx ? (
                                                     <div className="invalid-feedback">
-                                                        {formProps.errors.waist}
+                                                        {formProps.errors.dtx}
                                                     </div>
                                                 ) : null}
                                             </div>
-                                            <div className="col-md-2 form-group mb-3">
-                                                <label htmlFor="">FBS :</label>
-                                                <input
-                                                    type="text"
-                                                    name="waist"
-                                                    value={formProps.values.waist}
-                                                    onChange={formProps.handleChange}
-                                                    className={`form-control ${formProps.errors.waist && formProps.touched.waist ? 'is-invalid' : ''}`}
-                                                />
-                                                {formProps.errors.waist && formProps.touched.waist ? (
-                                                    <div className="invalid-feedback">
-                                                        {formProps.errors.waist}
-                                                    </div>
-                                                ) : null}
-                                            </div>
-                                            <div className="col-md-5 form-group mb-2">
+                                            <div className="col-md-4 form-group mb-2">
                                                 <label htmlFor="">กิจกรรม :</label>
                                                 <select
-                                                    name="summary_result"
-                                                    value={formProps.values.summary_result}
+                                                    name="activity_id"
+                                                    value={formProps.values.activity_id}
                                                     onChange={formProps.handleChange}
-                                                    className={`form-control ${formProps.errors.summary_result && formProps.touched.summary_result ? 'is-invalid' : ''}`}
+                                                    className={`form-control ${formProps.errors.activity_id && formProps.touched.activity_id ? 'is-invalid' : ''}`}
                                                 >
                                                     <option value="">-- กรุณาเลือก --</option>
                                                     <option value="1">ปกติ</option>
                                                     <option value="2">เสี่ยง</option>
                                                     <option value="3">ส่งพบแพทย์เฉพาะทาง</option>
                                                 </select>
-                                                {formProps.errors.summary_result && formProps.touched.summary_result ? (
+                                                {formProps.errors.activity_id && formProps.touched.activity_id ? (
                                                     <div className="invalid-feedback">
-                                                        {formProps.errors.summary_result}
+                                                        {formProps.errors.activity_id}
                                                     </div>
                                                 ) : null}
                                             </div>
-                                            <div className="col-md-5 form-group mb-2">
+                                            <div className="col-md-4 form-group mb-2">
+                                                <label htmlFor="">กลุ่มอาชีพ/ลักษณะงาน :</label>
+                                                <select
+                                                    name="activity_id"
+                                                    value={formProps.values.activity_id}
+                                                    onChange={formProps.handleChange}
+                                                    className={`form-control ${formProps.errors.activity_id && formProps.touched.activity_id ? 'is-invalid' : ''}`}
+                                                >
+                                                    <option value="">-- กรุณาเลือก --</option>
+                                                    <option value="1">พนักงานขับรถ</option>
+                                                    <option value="2">ฝ่ายผลิต</option>
+                                                    <option value="3">ฝ่ายบุคคล/จป.</option>
+                                                    <option value="4">ช่างซ่อมบำรุง</option>
+                                                    <option value="5">ผู้บริหาร</option>
+                                                    <option value="99">อื่นๆ</option>
+                                                </select>
+                                                {formProps.errors.activity_id && formProps.touched.activity_id ? (
+                                                    <div className="invalid-feedback">
+                                                        {formProps.errors.activity_id}
+                                                    </div>
+                                                ) : null}
+                                            </div>
+                                            {/* ========================== ==========================  */}
+                                            <div className="col-md-12 mb-2">
+                                                <div className="row">
+                                                    <div className="col-md-3">
+                                                        <RadioGroup
+                                                            label="สมรรถนะการมองเห็น"
+                                                            name="vision"
+                                                            items={[{id: 1, name: 'ปกติ'}, {id: 2, name: 'เสี่ยง'}, {id: 3, name: 'ผิดปกติ'}]}
+                                                            onSelected={({ name, value }) => {
+                                                                console.log(name, value);
+                                                                formProps.setFieldValue(name, value)
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <div className="col-md-2">
+                                                        <RadioGroup
+                                                            label="สมรรถนะการได้ยิน"
+                                                            name="hearing"
+                                                            items={[{id: 1, name: 'ปกติ'}, {id: 2, name: 'เสี่ยง'}, {id: 3, name: 'ผิดปกติ'}]}
+                                                            onSelected={({ name, value }) => {
+                                                                console.log(name, value);
+                                                                formProps.setFieldValue(name, value)
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <div className="col-md-2">
+                                                        <RadioGroup
+                                                            label="สมรรถนะปอด"
+                                                            name="lung"
+                                                            items={[{id: 1, name: 'ปกติ'}, {id: 2, name: 'เสี่ยง'}, {id: 3, name: 'ผิดปกติ'}]}
+                                                            onSelected={({ name, value }) => {
+                                                                console.log(name, value);
+                                                                formProps.setFieldValue(name, value)
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <div className="col-md-2">
+                                                        <RadioGroup
+                                                            label="สมรรถนะร่างกาย"
+                                                            name="body"
+                                                            items={[{id: 1, name: 'ปกติ'}, {id: 2, name: 'เสี่ยง'}, {id: 3, name: 'ผิดปกติ'}]}
+                                                            onSelected={({ name, value }) => {
+                                                                console.log(name, value);
+                                                                formProps.setFieldValue(name, value)
+                                                            }}
+                                                        />
+                                                    </div>
+                                                    <div className="col-md-3">
+                                                        <RadioGroup
+                                                            label="สมรรถนะคลื่นไฟฟ้าหัวใจ"
+                                                            name="heart_wave"
+                                                            items={[{id: 1, name: 'ปกติ'}, {id: 2, name: 'เสี่ยง'}, {id: 3, name: 'ผิดปกติ'}]}
+                                                            onSelected={({ name, value }) => {
+                                                                console.log(name, value);
+                                                                formProps.setFieldValue(name, value)
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {/* ========================== ==========================  */}
+                                            <div className="col-md-9 form-group mb-2">
                                                 <label htmlFor="">สิทธิการรักษา :</label>
                                                 <select
                                                     name="right_id"
@@ -399,7 +485,7 @@ const PromotionForm = () => {
                                                     </div>
                                                 ) : null}
                                             </div>
-                                            <div className="col-md-4 form-group mb-2">
+                                            <div className="col-md-3 form-group mb-2">
                                                 <label htmlFor="">ค่าใช้จ่าย :</label>
                                                 <input
                                                     type="text"
@@ -409,30 +495,29 @@ const PromotionForm = () => {
                                                     className="form-control"
                                                 />
                                             </div>
-                                            <div className="col-md-2 form-group mb-2">
+                                            <div className="col-md-12 form-group mb-2">
                                                 <label htmlFor="">การวินิจฉัยโรค :</label>
-                                                <div className="input-group">
-                                                    <input
-                                                        type="text"
-                                                        name="pdx"
-                                                        value={formProps.values.pdx}
-                                                        onChange={formProps.handleChange}
-                                                        className={`form-control ${formProps.errors.pdx && formProps.touched.pdx ? 'is-invalid' : ''}`}
-                                                    />
-                                                    <button type="button" className="btn btn-outline-secondary" onClick={() => setShowIcd10s(true)}>
-                                                        <FaSearch />
-                                                    </button>
-                                                    {formProps.errors.pdx && formProps.touched.pdx ? (
-                                                        <div className="invalid-feedback">
-                                                            {formProps.errors.pdx}
-                                                        </div>
-                                                    ) : null}
-                                                </div>
-                                            </div>
-                                            <div className="col-md-6 form-group mb-2">
-                                                <label htmlFor=""></label>
-                                                <div className="form-control" style={{ minHeight: '2.3rem' }}>
-                                                    { selectedIcd10 && selectedIcd10.name }
+                                                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                                                    <div className="input-group" style={{ width: '20%' }}>
+                                                        <input
+                                                            type="text"
+                                                            name="pdx"
+                                                            value={formProps.values.pdx}
+                                                            onChange={formProps.handleChange}
+                                                            className={`form-control ${formProps.errors.pdx && formProps.touched.pdx ? 'is-invalid' : ''}`}
+                                                        />
+                                                        <button type="button" className="btn btn-outline-secondary" onClick={() => setShowIcd10s(true)}>
+                                                            <FaSearch />
+                                                        </button>
+                                                        {formProps.errors.pdx && formProps.touched.pdx ? (
+                                                            <div className="invalid-feedback">
+                                                                {formProps.errors.pdx}
+                                                            </div>
+                                                        ) : null}
+                                                    </div>
+                                                    <div className="form-control" style={{ minHeight: '2.3rem' }}>
+                                                        { selectedIcd10 && selectedIcd10.name }
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div className="col-md-12 form-group">

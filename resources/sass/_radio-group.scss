@@ -1,0 +1,13 @@
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid $gray-400;
+    border-radius: $input-radius;
+    padding: $input-py $input-px;
+}
+
+.input-radio {
+    display: 'flex';
+    align-items: 'center';
+    gap: '5px';
+}
