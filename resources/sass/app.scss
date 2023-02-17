@@ -18,3 +18,13 @@ main {
 a {
     text-decoration: none;
 }
+
+@media (max-width: $media-sm) {
+    #screening_capacity {
+        margin-top: 0.5rem;
+
+        .row > div:not(:last-child) {
+            margin-bottom: 0.5rem;
+        }
+    }
+}

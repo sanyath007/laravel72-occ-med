@@ -184,7 +184,7 @@ const PromotionForm = () => {
                                             errorMessage={formProps.errors.patient_id}
                                         />
 
-                                        <div className="row mb-3">
+                                        <div className="row mb-2">
                                             <div className="col-md-3 form-group mb-2">
                                                 <label htmlFor="">วันที่รับบริการ :</label>
                                                 <ThDatePicker
@@ -256,7 +256,7 @@ const PromotionForm = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-md-2 form-group mb-3">
+                                            <div className="col-md-2 form-group mb-2">
                                                 <label htmlFor="">น้ำหนัก :</label>
                                                 <input
                                                     type="text"
@@ -271,7 +271,7 @@ const PromotionForm = () => {
                                                     </div>
                                                 ) : null}
                                             </div>
-                                            <div className="col-md-2 form-group mb-3">
+                                            <div className="col-md-2 form-group mb-2">
                                                 <label htmlFor="">ส่วนสูง :</label>
                                                 <input
                                                     type="text"
@@ -286,7 +286,7 @@ const PromotionForm = () => {
                                                     </div>
                                                 ) : null}
                                             </div>
-                                            <div className="col-md-2 form-group mb-3">
+                                            <div className="col-md-2 form-group mb-2">
                                                 <label htmlFor="">BMI :</label>
                                                 <input
                                                     type="text"
@@ -301,7 +301,7 @@ const PromotionForm = () => {
                                                     </div>
                                                 ) : null}
                                             </div>
-                                            <div className="col-md-2 form-group mb-3">
+                                            <div className="col-md-2 form-group mb-2">
                                                 <label htmlFor="">รอบเอว :</label>
                                                 <input
                                                     type="text"
@@ -316,7 +316,7 @@ const PromotionForm = () => {
                                                     </div>
                                                 ) : null}
                                             </div>
-                                            <div className="col-md-4 form-group mb-3">
+                                            <div className="col-md-4 form-group mb-2">
                                                 <label htmlFor="">ความดันโลหิต (BP) :</label>
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
                                                     <input
@@ -340,7 +340,7 @@ const PromotionForm = () => {
                                                     </div>
                                                 ) : null}
                                             </div>
-                                            <div className="col-md-4 form-group mb-3">
+                                            <div className="col-md-4 form-group mb-2">
                                                 <label htmlFor="">ค่าน้ำตาลปลายนิ้ว (DTX) :</label>
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
                                                     <input
@@ -404,7 +404,7 @@ const PromotionForm = () => {
                                                 ) : null}
                                             </div>
                                             {/* ========================== ==========================  */}
-                                            <div className="col-md-12 mb-2">
+                                            <div className="col-md-12 mb-2" id="screening_capacity">
                                                 <div className="row">
                                                     <div className="col-md-3">
                                                         <RadioGroup
