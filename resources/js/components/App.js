@@ -16,6 +16,9 @@ import Patients from "../pages/Patients/Patients";
 import PatientNew from "../pages/Patients/PatientNew";
 import PatientEdit from "../pages/Patients/PatientEdit";
 import PatientDetail from "../pages/Patients/PatientDetail";
+import Companies from "../pages/Companies/Companies";
+import CompanyNew from "../pages/Companies/CompanyNew";
+import CompanyEdit from "../pages/Companies/CompanyEdit";
 import Checkups from "../pages/Checkups/Checkups";
 import CheckupForm from "../pages/Checkups/Form/CheckupForm";
 import CheckupSummary from "../pages/Checkups/Summary/Summary";
@@ -23,23 +26,22 @@ import CheckupSummaryForm from "../pages/Checkups/Summary/SummaryForm";
 import Clinics from "../pages/Clinics/Clinics";
 import ClinicSummary from "../pages/Clinics/Summary/Summary";
 import ClinicSummaryForm from "../pages/Clinics/Summary/SummaryForm";
+import Preventions from "../pages/Preventions/Preventions";
+import PreventionForm from "../pages/Preventions/Form/PreventionForm";
 import PreventionSummary from "../pages/Preventions/Summary/Summary";
-import Companies from "../pages/Companies/Companies";
-import CompanyNew from "../pages/Companies/CompanyNew";
-import CompanyEdit from "../pages/Companies/CompanyEdit";
+import PreventionSummaryForm from "../pages/Preventions/Summary/SummaryForm";
+import Promotions from "../pages/Promotions/Promotions";
+import PromotionForm from "../pages/Promotions/Form/PromotionForm";
+import PromotionSummary from "../pages/Promotions/Summary/Summary";
+import PromotionSummaryForm from "../pages/Promotions/Summary/SummaryForm";
+import ToxicologySummaryForm from "../pages/Toxicologies/Summary/SummaryForm";
+import ToxicologySummary from "../pages/Toxicologies/Summary/Summary";
+import PollutionSources from "../pages/Toxicologies/PollutionSources";
 import { useAuth } from "../hooks/useAuth"
 import AuthContext from "../context/authContext";
 import { GlobalProvider } from '../context/globalContext'
 import store from "../store";
 import 'react-toastify/dist/ReactToastify.css';
-import PromotionSummary from "../pages/Promotions/Summary/Summary";
-import ToxicologySummary from "../pages/Toxicologies/Summary/Summary";
-import PollutionSources from "../pages/Toxicologies/PollutionSources";
-import PreventionForm from "../pages/Preventions/Form/PreventionForm";
-import Preventions from "../pages/Preventions/Preventions";
-import PreventionSummaryForm from "../pages/Preventions/Summary/SummaryForm";
-import PromotionSummaryForm from "../pages/Promotions/Summary/SummaryForm";
-import ToxicologySummaryForm from "../pages/Toxicologies/Summary/SummaryForm";
 
 export default function App() {
     const { userData } = useAuth()
@@ -78,6 +80,8 @@ export default function App() {
                         <Route path="/preventions/summary" element={<PreventionSummary />} />
                         <Route path="/preventions/summary/new" element={<PreventionSummaryForm />} />
                         {/* Promotions routes */}
+                        <Route path="/promotions" element={<Promotions />} />
+                        <Route path="/promotions/new" element={<PromotionForm />} />
                         <Route path="/promotions/summary" element={<PromotionSummary />} />
                         <Route path="/promotions/summary/new" element={<PromotionSummaryForm />} />
                         {/* Toxicologies routes */}
