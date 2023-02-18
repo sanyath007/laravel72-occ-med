@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
-import { FaSave } from 'react-icons/fa'
+import { FaSave, FaMapMarkedAlt } from 'react-icons/fa'
 import api from '../../api'
+import ModalMapSelection from '../../components/Modals/ModalMapSelection'
 
 const companySchema = Yup.object().shape({
     name: Yup.string().required(),
@@ -20,6 +21,7 @@ const CompanyForm = ({ onSubmit, ...props }) => {
     const [changwats, setChangwats] = useState([])
     const [amphur, setAmphur] = useState({ amphurs: [], filteredAmphurs: [] })
     const [tambon, setTambon] = useState({ tambons: [], filteredTambons: [] })
+    const [showMap, setShowMap] = useState(false)
 
     useEffect(() => {
         getInitForms()
@@ -59,6 +61,7 @@ const CompanyForm = ({ onSubmit, ...props }) => {
 
     return (
         <Formik
+            enableReinitialize
             initialValues={{
                 id: '',
                 name: '',
@@ -83,6 +86,16 @@ const CompanyForm = ({ onSubmit, ...props }) => {
         >
             {(formProps) => (
                 <Form>
+                    <ModalMapSelection
+                        isOpen={showMap}
+                        hideModal={() => setShowMap(false)}
+                        onSelected={({ lat, lng }) => {
+                            console.log(lat, lng);
+                            formProps.setFieldValue('coordinates', `${lat}, ${lng}`)
+                        }}
+                        center={[14.996016548964164, 102.11682893894752]}
+                    />
+
                     <div className="row mb-3">
                         <div className="col-md-6 form-group">
                             <label htmlFor="">ชื่อสถานประกอบการ</label>
@@ -269,13 +282,18 @@ const CompanyForm = ({ onSubmit, ...props }) => {
                         </div>
                         <div className="col-md-3 form-group mb-2">
                             <label htmlFor="">พิกัดที่ตั้ง</label>
-                            <input
-                                type="text"
-                                name="coordinates"
-                                value={formProps.values.coordinates}
-                                onChange={formProps.handleChange}
-                                className="form-control"
-                            />
+                            <div className="input-group">
+                                <input
+                                    type="text"
+                                    name="coordinates"
+                                    value={formProps.values.coordinates}
+                                    onChange={formProps.handleChange}
+                                    className="form-control text-sm"
+                                />
+                                <button type="button" className="btn btn-outline-secondary" onClick={() => setShowMap(true)}>
+                                    <FaMapMarkedAlt />
+                                </button>
+                            </div>
                         </div>
                         <div className="col-md-4 form-group mb-2">
                             <label htmlFor="">ชื่อผู้ติดต่อ</label>

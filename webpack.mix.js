@@ -11,5 +11,21 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.extend("addWebpackLoaders", (webpackConfig, loaderRules) => {
+    loaderRules.forEach((loaderRule) => {
+        webpackConfig.module.rules.push(loaderRule);
+    });
+});
+
 mix.react('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css')
+    .addWebpackLoaders([
+        {
+            test: /\.(mp4|svg|jpe?g|gif)$/,
+            use: [
+                { 
+                    loader: 'file-loader',            
+                }
+            ]
+        }
+    ]);
