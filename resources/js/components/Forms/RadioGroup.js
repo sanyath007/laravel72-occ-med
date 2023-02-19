@@ -3,7 +3,7 @@
 import React from 'react'
 import { useState } from 'react'
 
-const RadioGroup = ({ label, name, defaultValue, items, onSelected, ...props }) => {
+const RadioGroup = ({ label, name, defaultValue, items, direction, onSelected, ...props }) => {
     const [selected, setSelected] = useState("")
 
     const handleChecked = (e) => {
@@ -14,8 +14,8 @@ const RadioGroup = ({ label, name, defaultValue, items, onSelected, ...props }) 
     }
 
     return (
-        <div className="input-wrapper">
-            <label htmlFor="">{label}</label>
+        <div className={direction == 'row' ? 'input-wrapper drow' : 'input-wrapper dcol'}>
+            {label && <label htmlFor="">{label}</label>}
             {items.map(item => (
                 <div key={item.id} className="input-radio">
                     <input type="radio" name={name} value={item.id} onChange={handleChecked} /> {item.name}
