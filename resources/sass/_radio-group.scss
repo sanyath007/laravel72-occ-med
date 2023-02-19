@@ -1,13 +1,13 @@
 .input-wrapper {
     display: flex;
-    align-items: center;
-    justify-content: flex-start;
     border: 1px solid $gray-400;
     border-radius: $input-radius;
     padding: $input-py $input-px;
 
     &.drow {
         flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
         gap: 15px;
     }
 
