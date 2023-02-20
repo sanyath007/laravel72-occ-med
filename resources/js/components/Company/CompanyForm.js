@@ -290,7 +290,11 @@ const CompanyForm = ({ onSubmit, ...props }) => {
                                     onChange={formProps.handleChange}
                                     className="form-control text-sm"
                                 />
-                                <button type="button" className="btn btn-outline-secondary" onClick={() => setShowMap(true)}>
+                                <button
+                                    type="button"
+                                    className="btn btn-success"
+                                    onClick={() => setShowMap(true)}
+                                >
                                     <FaMapMarkedAlt />
                                 </button>
                             </div>
