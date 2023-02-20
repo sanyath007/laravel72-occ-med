@@ -16,7 +16,7 @@ const companySchema = Yup.object().shape({
     tel: Yup.string().required(),
 })
 
-const CompanyForm = ({ onSubmit, ...props }) => {
+const CompanyForm = ({ company, onSubmit, ...props }) => {
     const [companyTypes, setCompanyTypes] = useState([])
     const [changwats, setChangwats] = useState([])
     const [amphur, setAmphur] = useState({ amphurs: [], filteredAmphurs: [] })
@@ -63,23 +63,23 @@ const CompanyForm = ({ onSubmit, ...props }) => {
         <Formik
             enableReinitialize
             initialValues={{
-                id: '',
-                name: '',
-                company_type_id: '',
-                address: '',
-                moo: '',
-                road: '',
-                tambon_id: '',
-                amphur_id: '',
-                changwat_id: '',
-                zipcode: '',
-                tel: '',
-                email: '',
-                coordinates: '',
-                contact_name: '',
-                contact_tel: '',
-                contact_email: '',
-                remark: ''
+                id: company ? company.id : '',
+                name: company ? company.name || '' : '',
+                company_type_id: company ? company.company_type_id || '' : '',
+                address: company ? company.address || '' : '',
+                moo: company ? company.moo || '' : '',
+                road: company ? company.road || '' : '',
+                tambon_id: company ? company.tambon_id || '' : '',
+                amphur_id: company ? company.amphur_id || '' : '',
+                changwat_id: company ? company.changwat_id || '' : '',
+                zipcode: company ? company.zipcode || '' : '',
+                tel: company ? company.tel || '' : '',
+                email: company ? company.email || '' : '',
+                coordinates: company ? company.coordinates || '' : '',
+                contact_name: company ? company.contact_name || '' : '',
+                contact_tel: company ? company.contact_tel || '' : '',
+                contact_email: company ? company.contact_email || '' : '',
+                remark: company ? company.remark || '' : ''
             }}
             validationSchema={companySchema}
             onSubmit={handleSubmit}
@@ -339,9 +339,9 @@ const CompanyForm = ({ onSubmit, ...props }) => {
                         </div>
                     </div>
                     <div className="text-center">
-                        <button type="submit" className="btn btn-primary">
+                        <button type="submit" className={`btn ${company ? 'btn-warning' : 'btn-primary'}`}>
                             <FaSave className="me-1" />
-                            บันทึก
+                            {company ? 'บันทึกการแก้ไข' : 'บันทึก'}
                         </button>
                     </div>
                 </Form>
