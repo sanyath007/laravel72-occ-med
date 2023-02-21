@@ -29,6 +29,18 @@ const CompanyForm = ({ company, onSubmit, ...props }) => {
         return () => getInitForms
     }, [])
 
+    useEffect(() => {
+        if (company) {
+            handleChangwatSelected(company.changwat_id)
+        }
+    }, [company, amphur.amphurs])
+
+    useEffect(() => {
+        if (company) {
+            handleAmphurSelected(company.amphur_id)
+        }
+    }, [company, tambon.tambons])
+
     const getInitForms = async () => {
         const res = await api.get(`/api/companies/init/forms`)
 
