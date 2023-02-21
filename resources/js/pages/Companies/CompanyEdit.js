@@ -32,7 +32,7 @@ const CompanyEdit = () => {
 
     const handleSubmit = async (data) => {
         console.log(data);
-        dispatch(update(data))
+        dispatch(update({ id, data }))
     }
 
     return (

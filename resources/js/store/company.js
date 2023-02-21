@@ -43,9 +43,9 @@ export const store = createAsyncThunk('company/store', async (data, { rejectWith
     }
 })
 
-export const update = createAsyncThunk('company/update', async (data, { rejectWithValue }) => {
+export const update = createAsyncThunk('company/update', async ({ id, data }, { rejectWithValue }) => {
     try {
-        const res = await api.put('/api/companies', data)
+        const res = await api.put(`/api/companies/${id}`, data)
 
         return res.data
     } catch (error) {
