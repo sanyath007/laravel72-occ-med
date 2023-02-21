@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import CompanyForm from '../../components/Company/CompanyForm'
 import { GlobalContext } from '../../context/globalContext'
-import { getCompany, store } from '../../store/company'
+import { getCompany, update } from '../../store/company'
 
 const CompanyEdit = () => {
     const { id } = useParams()
@@ -32,6 +32,7 @@ const CompanyEdit = () => {
 
     const handleSubmit = async (data) => {
         console.log(data);
+        dispatch(update(data))
     }
 
     return (
