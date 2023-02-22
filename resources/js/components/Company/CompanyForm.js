@@ -22,6 +22,7 @@ const CompanyForm = ({ company, onSubmit, ...props }) => {
     const [amphur, setAmphur] = useState({ amphurs: [], filteredAmphurs: [] })
     const [tambon, setTambon] = useState({ tambons: [], filteredTambons: [] })
     const [showMap, setShowMap] = useState(false)
+    const [companyCoord, setCompanyCoord] = useState([])
 
     useEffect(() => {
         getInitForms()
@@ -40,6 +41,14 @@ const CompanyForm = ({ company, onSubmit, ...props }) => {
             handleAmphurSelected(company.amphur_id)
         }
     }, [company, tambon.tambons])
+
+    useEffect(() => {
+        if (company?.coordinates) {
+            const [x, y] = company?.coordinates.split(',')
+
+            setCompanyCoord([parseFloat(x), parseFloat(y)])
+        }
+    }, [company])
 
     const getInitForms = async () => {
         const res = await api.get(`/api/companies/init/forms`)
@@ -105,7 +114,7 @@ const CompanyForm = ({ company, onSubmit, ...props }) => {
                             console.log(lat, lng);
                             formProps.setFieldValue('coordinates', `${lat}, ${lng}`)
                         }}
-                        center={[14.996016548964164, 102.11682893894752]}
+                        center={(company && companyCoord.length > 0) && companyCoord}
                     />
 
                     <div className="row mb-3">
