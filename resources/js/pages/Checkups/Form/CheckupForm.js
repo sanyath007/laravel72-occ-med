@@ -14,11 +14,12 @@ import ModalPatients from '../../../components/Modals/ModalPatients'
 import PatientCard from '../../../components/Patient/PatientCard'
 import ServiceForm from '../../../components/Service/ServiceForm'
 import CapacityForm from '../../../components/Service/CapacityForm'
+import DiagForm from '../../../components/Service/DiagForm'
 
 const checkupSchema = Yup.object().shape({
     patient_id: Yup.string().required('กรุณาเลือกผู้ป่วย!!'),
-    visit_date: Yup.string().required('กรุณาเลือกวันที่รับบริการ!!'),
-    visit_time: Yup.string().required('กรุณาระบุเวลารับบริการ!!'),
+    service_date: Yup.string().required('กรุณาเลือกวันที่รับบริการ!!'),
+    service_time: Yup.string().required('กรุณาระบุเวลารับบริการ!!'),
     lab_result: Yup.string().required('กรุณาเลือกผลตรวจทางห้องปฏิบัติการ!!'),
     equip_result: Yup.string().required('กรุณาเลือกผลตรวจด้วยเครื่องมือทางอาชีวเวชศาสตร์!!'),
     xray_result: Yup.string().required('กรุณาเลือกผลตรวจภาพถ่ายรังสีทรวงอก!!'),
@@ -155,6 +156,9 @@ const CheckupForm = () => {
                                             </Tab>
                                             <Tab eventKey="capacity" title="สมรรถนะ">
                                                 <CapacityForm formProps={formProps} />
+                                            </Tab>
+                                            <Tab eventKey="diag" title="การวินิจฉัยโรค">
+                                                <DiagForm formProps={formProps} />
                                             </Tab>
                                             <Tab eventKey="checkup" title="ผลตรวจสุขภาพ">
                                                 <div className="row mb-3">
