@@ -9,6 +9,7 @@ import { Tabs, Tab } from 'react-bootstrap'
 import { FaSave, FaSearch } from 'react-icons/fa'
 import { calcAgeM, calcAgeY } from '../../../utils/calculator'
 import { getAll as getRights } from '../../../store/right'
+import { getDoctors } from '../../../store/doctor'
 import { store, resetSuccess } from '../../../store/checkup'
 import ModalPatients from '../../../components/Modals/ModalPatients'
 import PatientCard from '../../../components/Patient/PatientCard'
@@ -38,7 +39,9 @@ const CheckupForm = () => {
     const [selectedPatient, setSelectedPatient] = useState(null)
 
     useEffect(() => {
+        console.log('Load form data...');
         dispatch(getRights({ path: '/api/rights' }))
+        dispatch(getDoctors({ path: '/api/doctors' }))
     }, [])
 
     useEffect(() => {

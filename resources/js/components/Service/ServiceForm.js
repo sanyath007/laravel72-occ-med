@@ -9,6 +9,7 @@ import RadioGroup from '../Forms/RadioGroup'
 
 const ServiceForm = ({ formProps, ...props }) => {
     const { rights } = useSelector(state => state.right)
+    const { doctors } = useSelector(state => state.doctor)
     const [showCompanies, setShowCompanies] = useState(false)
     const [showCompanyForm, setShowCompanyForm] = useState(false)
     const [selectedCompany, setSelectedCompany] = useState(null)
@@ -21,6 +22,8 @@ const ServiceForm = ({ formProps, ...props }) => {
         /** Hide modal */
         setShowCompanies(false)
     }
+
+    console.log(doctors);
 
     return (
         <div className="row mb-2">

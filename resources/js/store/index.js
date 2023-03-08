@@ -7,6 +7,7 @@ import { checkupReducer } from './checkup'
 import { addressReducer } from './address'
 import { nationalityReducer } from './nationality'
 import { pnameReducer } from './pname'
+import doctorReducer from './doctor'
 
 export default configureStore({
     reducer: {
@@ -17,6 +18,7 @@ export default configureStore({
         checkup: checkupReducer,
         address: addressReducer,
         nationality: nationalityReducer,
-        pname: pnameReducer
+        pname: pnameReducer,
+        doctor: doctorReducer,
     }
 })
