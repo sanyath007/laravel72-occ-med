@@ -343,13 +343,20 @@ const ServiceForm = ({ formProps, ...props }) => {
             </div>
             <div className="col-md-6 form-group mb-2">
                 <label htmlFor="">แพทย์ :</label>
-                <input
+                <select
                     type="text"
                     name="doctor_id"
                     value={formProps.values.doctor_id}
                     onChange={formProps.handleChange}
                     className="form-control"
-                />
+                >
+                    <option value=""></option>
+                    {doctors && doctors.map(doctor => (
+                        <option key={doctor.id} value={doctor.id}>
+                            {doctor.title+doctor.employee.fname+ ' ' +doctor.employee.lname}
+                        </option>
+                    ))}
+                </select>
             </div>
             <div className="col-md-12 form-group">
                 <label htmlFor="">รายละเอียดเพิ่มเติม</label>

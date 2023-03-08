@@ -65,6 +65,9 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     /** Pnames */
     Route::get('/pnames', 'PnameController@getPnames');
 
+    /** Doctors */
+    Route::get('/doctors', 'DoctorController@getDoctors');
+
     /** Companies */
     Route::get('/companies', 'CompanyController@getCompanies');
     Route::get('/companies/{id}', 'CompanyController@getCompany');
