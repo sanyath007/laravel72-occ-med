@@ -328,6 +328,26 @@ const ServiceForm = ({ formProps, ...props }) => {
                     className="form-control"
                 />
             </div>
+            <div className="col-md-6 form-group mb-2">
+                <label htmlFor="">ผู้ซักประวัติ :</label>
+                <input
+                    type="text"
+                    name="screen_user"
+                    value={formProps.values.screen_user}
+                    onChange={formProps.handleChange}
+                    className="form-control"
+                />
+            </div>
+            <div className="col-md-6 form-group mb-2">
+                <label htmlFor="">แพทย์ :</label>
+                <input
+                    type="text"
+                    name="doctor_id"
+                    value={formProps.values.doctor_id}
+                    onChange={formProps.handleChange}
+                    className="form-control"
+                />
+            </div>
             <div className="col-md-12 form-group">
                 <label htmlFor="">รายละเอียดเพิ่มเติม</label>
                 <textarea

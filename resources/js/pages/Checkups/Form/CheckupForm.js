@@ -114,6 +114,8 @@ const CheckupForm = () => {
                                     description: '',
                                     pdx: '',
                                     net_total: '',
+                                    screen_user: '',
+                                    doctor_id: '',
                                     /** สมรรถนะ */
                                     vision: '',
                                     hearing: '',
