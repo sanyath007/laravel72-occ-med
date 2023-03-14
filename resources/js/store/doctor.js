@@ -15,9 +15,9 @@ export const getDoctors = createAsyncThunk('doctor/getDoctors', async ({ path },
         const res = await api.get(path);
 
         return res.data;
-    } catch (error) {
-        console.log(error);
-        rejectWithValue(error)
+    } catch (err) {
+        console.log(err);
+        rejectWithValue(err)
     }
 });
 
