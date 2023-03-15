@@ -9,7 +9,7 @@ class EmployeeController extends Controller
 {
     public function getEmployees(Request $request)
     {
-        $employees = Employee::all();
+        $employees = Employee::whereNotIn('position_id', [1])->paginate(20);
 
         return response()->json($employees);
     }

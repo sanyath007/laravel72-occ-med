@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Field } from 'formik'
 import { FaPlus, FaSave, FaSearch, FaTrashAlt } from 'react-icons/fa'
@@ -7,23 +7,21 @@ import ModalCompanies from '../Modals/ModalCompanies'
 import ModalCompanyForm from '../Modals/ModalCompanyForm'
 import RadioGroup from '../Forms/RadioGroup'
 
-const ServiceForm = ({ formProps, ...props }) => {
+const ServiceForm = ({ formProps, selectedCompany, onSelectedCompany, ...props }) => {
     const { rights } = useSelector(state => state.right)
     const { doctors } = useSelector(state => state.doctor)
+    const { employees } = useSelector(state => state.employee)
     const [showCompanies, setShowCompanies] = useState(false)
     const [showCompanyForm, setShowCompanyForm] = useState(false)
-    const [selectedCompany, setSelectedCompany] = useState(null)
 
     const handleSelectedCompany = (company, formik) => {
-        setSelectedCompany(company)
+        onSelectedCompany(company)
 
         formik.setFieldValue('company_id', company.id)
 
         /** Hide modal */
         setShowCompanies(false)
     }
-
-    console.log(doctors);
 
     return (
         <div className="row mb-2">
@@ -333,13 +331,19 @@ const ServiceForm = ({ formProps, ...props }) => {
             </div>
             <div className="col-md-6 form-group mb-2">
                 <label htmlFor="">ผู้ซักประวัติ :</label>
-                <input
-                    type="text"
+                <select
                     name="screen_user"
                     value={formProps.values.screen_user}
                     onChange={formProps.handleChange}
                     className="form-control"
-                />
+                >
+                    <option value="">-- เลือก --</option>
+                    {employees && employees.map(employee => (
+                        <option key={employee.id} value={employee.id}>
+                            {employee.prefix+employee.fname+ ' ' +employee.lname}
+                        </option>
+                    ))}
+                </select>
             </div>
             <div className="col-md-6 form-group mb-2">
                 <label htmlFor="">แพทย์ :</label>
@@ -350,7 +354,7 @@ const ServiceForm = ({ formProps, ...props }) => {
                     onChange={formProps.handleChange}
                     className="form-control"
                 >
-                    <option value=""></option>
+                    <option value="">-- เลือก --</option>
                     {doctors && doctors.map(doctor => (
                         <option key={doctor.id} value={doctor.id}>
                             {doctor.title+doctor.employee.fname+ ' ' +doctor.employee.lname}

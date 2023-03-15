@@ -10,6 +10,7 @@ import { FaSave, FaSearch } from 'react-icons/fa'
 import { calcAgeM, calcAgeY } from '../../../utils/calculator'
 import { getAll as getRights } from '../../../store/right'
 import { getDoctors } from '../../../store/doctor'
+import { getEmployees } from '../../../store/employee'
 import { store, resetSuccess } from '../../../store/checkup'
 import ModalPatients from '../../../components/Modals/ModalPatients'
 import PatientCard from '../../../components/Patient/PatientCard'
@@ -35,6 +36,7 @@ const CheckupForm = () => {
     const { success, error } = useSelector(state => state.checkup)
     const { rights } = useSelector(state => state.right)
     // const [labOrders, setLabOrders] = useState([])
+    const [selectedCompany, setSelectedCompany] = useState(null)
     const [showPatients, setShowPatients] = useState(false)
     const [selectedPatient, setSelectedPatient] = useState(null)
 
@@ -42,6 +44,7 @@ const CheckupForm = () => {
         console.log('Load form data...');
         dispatch(getRights({ path: '/api/rights' }))
         dispatch(getDoctors({ path: '/api/doctors' }))
+        dispatch(getEmployees({ path: '/api/employees' }))
     }, [])
 
     useEffect(() => {
@@ -60,18 +63,18 @@ const CheckupForm = () => {
         formik.setFieldValue('age_y', calcAgeY(moment(patient.birthdate)))
         formik.setFieldValue('age_m', calcAgeM(moment(patient.birthdate)))
         formik.setFieldValue('right_id', patient.right_id)
-        formik.setFieldValue('visit_date', moment().format('YYYY-MM-DD'))
-        formik.setFieldValue('visit_time', moment().format('HH:mm'))
+        formik.setFieldValue('service_date', moment().format('YYYY-MM-DD'))
+        formik.setFieldValue('service_time', moment().format('HH:mm'))
 
         /** Update errors objects */
         setTimeout(() => formik.setFieldTouched('patient_id', true))
 
         /** If patient has been specificed company, set company_id with patient's company */
-        // if (patient.company) {
-        //     setSelectedCompany(patient.company)
+        if (patient.company) {
+            setSelectedCompany(patient.company)
 
-        //     formik.setFieldValue('company_id', patient.company.id)
-        // }
+            formik.setFieldValue('company_id', patient.company.id)
+        }
 
         /** Hide modal */
         setShowPatients(false)
@@ -157,7 +160,11 @@ const CheckupForm = () => {
 
                                         <Tabs id="uncontrolled-tab" defaultActiveKey="service" className="mb-3">
                                             <Tab eventKey="service" title="ข้อมูลบริการ">
-                                                <ServiceForm formProps={formProps} />
+                                                <ServiceForm
+                                                    formProps={formProps}
+                                                    selectedCompany={selectedCompany}
+                                                    onSelectedCompany={(company) => setSelectedCompany(company)}
+                                                />
                                             </Tab>
                                             <Tab eventKey="capacity" title="สมรรถนะ">
                                                 <CapacityForm formProps={formProps} />

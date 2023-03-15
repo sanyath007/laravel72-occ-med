@@ -68,6 +68,9 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     /** Doctors */
     Route::get('/doctors', 'DoctorController@getDoctors');
 
+    /** Employees */
+    Route::get('/employees', 'EmployeeController@getEmployees');
+
     /** Companies */
     Route::get('/companies', 'CompanyController@getCompanies');
     Route::get('/companies/{id}', 'CompanyController@getCompany');
