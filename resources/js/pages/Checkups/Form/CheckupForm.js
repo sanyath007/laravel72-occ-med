@@ -99,7 +99,7 @@ const CheckupForm = () => {
                                     service_date: '',
                                     service_time: '',
                                     service_point: '1',
-                                    service_type_id: '',
+                                    service_type_id: '1',
                                     activity_id: '',
                                     occu_group_id: '',
                                     is_officer: '',

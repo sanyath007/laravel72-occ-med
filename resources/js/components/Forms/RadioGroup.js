@@ -1,5 +1,3 @@
-
-
 import React from 'react'
 import { useState } from 'react'
 
@@ -18,7 +16,13 @@ const RadioGroup = ({ label, name, defaultValue, items, direction, onSelected, .
             {label && <label htmlFor="">{label}</label>}
             {items.map(item => (
                 <div key={item.id} className="input-radio">
-                    <input type="radio" name={name} value={item.id} onChange={handleChecked} /> {item.name}
+                    <input
+                        type="radio"
+                        name={name}
+                        value={item.id}
+                        onChange={handleChecked}
+                        checked={defaultValue == item.id}
+                    /> {item.name}
                 </div>
             ))}
         </div>

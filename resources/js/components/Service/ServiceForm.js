@@ -117,6 +117,7 @@ const ServiceForm = ({ formProps, selectedCompany, onSelectedCompany, ...props }
                         {id: 2, name: 'นอก รพ.'}
                     ]}
                     direction="row"
+                    defaultValue={formProps.values.service_point}
                     onSelected={({ name, value }) => {
                         console.log(name, value);
                         formProps.setFieldValue(name, value)
@@ -137,6 +138,8 @@ const ServiceForm = ({ formProps, selectedCompany, onSelectedCompany, ...props }
                         {id: 99, name: 'อื่นๆ'}
                     ]}
                     direction="row"
+
+                    defaultValue={formProps.values.service_type_id}
                     onSelected={({ name, value }) => {
                         console.log(name, value);
                         formProps.setFieldValue(name, value)
