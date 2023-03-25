@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { Formik, Form, Field } from 'formik'
+import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import * as moment from 'moment'
 import { toast } from 'react-toastify'
@@ -17,6 +17,7 @@ import PatientCard from '../../../components/Patient/PatientCard'
 import ServiceForm from '../../../components/Service/ServiceForm'
 import CapacityForm from '../../../components/Service/CapacityForm'
 import DiagForm from '../../../components/Service/DiagForm'
+import { Checkbox } from '../../../components/Forms'
 
 const checkupSchema = Yup.object().shape({
     patient_id: Yup.string().required('กรุณาเลือกผู้ป่วย!!'),
@@ -257,38 +258,50 @@ const CheckupForm = () => {
                                                         <div className="col-md-12 form-group mb-2">
                                                             <div className="form-control d-flex justify-content-start">
                                                                 <div className="d-flex">
-                                                                    <Field
-                                                                        type="checkbox"
+                                                                    <Checkbox
                                                                         name="screening"
-                                                                        className="mx-2"
-                                                                    /> ซักประวัติ/คัดกรอง
+                                                                        label="ซักประวัติ/คัดกรอง"
+                                                                        handleChange={(checked) => {
+                                                                            formProps.setFieldValue("screening", checked ? 1 : 0)
+                                                                            formProps.setFieldTouched("screening", true)
+                                                                        }}
+                                                                    />
                                                                 </div>
                                                             </div>
                                                             <div className="form-control d-flex justify-content-start">
                                                                 <div className="d-flex">
-                                                                    <Field
-                                                                        type="checkbox"
+                                                                    <Checkbox
                                                                         name="health_edu"
-                                                                        className="mx-2"
-                                                                    /> ให้สุขศึกษา
+                                                                        label="ให้สุขศึกษา"
+                                                                        handleChange={(checked) => {
+                                                                            formProps.setFieldValue("health_edu", checked ? 1 : 0)
+                                                                            formProps.setFieldTouched("health_edu", true)
+                                                                        }}
+                                                                    />
                                                                 </div>
                                                             </div>
                                                             <div className="form-control d-flex justify-content-start">
                                                                 <div className="d-flex">
-                                                                    <Field
-                                                                        type="checkbox"
+                                                                    <Checkbox
                                                                         name="reported"
-                                                                        className="mx-2"
-                                                                    /> รายงานผลการตรวจรายบุคคล
+                                                                        label="รายงานผลการตรวจรายบุคคล"
+                                                                        handleChange={(checked) => {
+                                                                            formProps.setFieldValue("reported", checked ? 1 : 0)
+                                                                            formProps.setFieldTouched("reported", true)
+                                                                        }}
+                                                                    />
                                                                 </div>
                                                             </div>
                                                             <div className="form-control d-flex justify-content-start">
                                                                 <div className="d-flex">
-                                                                    <Field
-                                                                        type="checkbox"
+                                                                    <Checkbox
                                                                         name="specialist"
-                                                                        className="mx-2"
-                                                                    /> ส่งพบแพทย์เฉพาะทาง
+                                                                        label="ส่งพบแพทย์เฉพาะทาง"
+                                                                        handleChange={(checked) => {
+                                                                            formProps.setFieldValue("specialist", checked ? 1 : 0)
+                                                                            formProps.setFieldTouched("specialist", true)
+                                                                        }}
+                                                                    />
                                                                 </div>
                                                             </div>
                                                         </div>
