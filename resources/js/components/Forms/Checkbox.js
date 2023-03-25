@@ -14,6 +14,7 @@ const Checkbox = (props) => {
                     setChecked(e.target.checked)
                     props.handleChange(e.target.checked)
                 }}
+                className="me-1"
             /> {props.label}
         </>
     )
