@@ -171,9 +171,6 @@ const CheckupForm = () => {
                                             <Tab eventKey="capacity" title="สมรรถนะ">
                                                 <CapacityForm formProps={formProps} />
                                             </Tab>
-                                            <Tab eventKey="diag" title="การวินิจฉัยโรค">
-                                                <DiagForm formProps={formProps} />
-                                            </Tab>
                                             <Tab eventKey="checkup" title="ผลตรวจสุขภาพ">
                                                 <div className="row mb-3">
                                                     <div className="col-md-4">

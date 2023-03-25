@@ -45,37 +45,37 @@ class CheckupController extends Controller
     {
         try {
             /** Service data */
-            $service = new CheckupService;
-            $service->patient_id = $request['patient_id'];
-            $service->service_date = $request['service_date'];
-            $service->service_time = $request['service_time'];
-            $service->is_officer = $request['is_officer'];
-            $service->company_id = $request['company_id'];
-            $service->right_id = $request['right_id'];
-            $service->doctor_id = $request['doctor_id'];
-            $service->age_y = $request['age_y'];
-            $service->age_m = $request['age_m'];
-
-            /** Screening data */
-            $service->weight = $request['weight'];
-            $service->height = $request['height'];
-            $service->bmi = $request['bmi'];
-            $service->waist = $request['waist'];
-            $service->bpd = $request['bpd'];
-            $service->bps = $request['bps'];
-            $service->dtx = $request['dtx'];
-            $service->no_food = $request['no_food'];
-            $service->smoking = $request['smoking'];
-            $service->drinking = $request['drinking'];
-            $service->vision = $request['vision'];
-            $service->hearing = $request['hearing'];
-            $service->lung = $request['lung'];
-            $service->body = $request['body'];
-            $service->heart_wave = $request['heart_wave'];
-            $service->pdx = $request['pdx'];
-            $service->net_total = $request['net_total'];
-            $service->remark = $request['remark'];
-            $service->screen_user = $request['screen_user'];
+            $service = new Service;
+            $service->patient_id        = $request['patient_id'];
+            $service->service_date      = $request['service_date'];
+            $service->service_time      = $request['service_time'];
+            $service->service_point     = $request['service_point'];
+            $service->service_type_id   = $request['service_type_id'];
+            $service->age_y             = $request['age_y'];
+            $service->age_m             = $request['age_m'];
+            $service->right_id          = $request['right_id'];
+            $service->company_id        = $request['company_id'];
+            $service->is_officer        = $request['is_officer'];
+            $service->weight            = $request['weight'];
+            $service->height            = $request['height'];
+            $service->bmi               = $request['bmi'];
+            $service->waist             = $request['waist'];
+            $service->bpd               = $request['bpd'];
+            $service->bps               = $request['bps'];
+            $service->dtx               = $request['dtx'];
+            $service->no_food           = $request['no_food'];
+            $service->smoking           = $request['smoking'];
+            $service->drinking          = $request['drinking'];
+            $service->vision            = $request['vision'];
+            $service->hearing           = $request['hearing'];
+            $service->lung              = $request['lung'];
+            $service->body              = $request['body'];
+            $service->heart_wave        = $request['heart_wave'];
+            $service->pdx               = $request['pdx'];
+            $service->net_total         = $request['net_total'];
+            $service->screen_user       = $request['screen_user'];
+            $service->doctor_id         = $request['doctor_id'];
+            $service->remark            = $request['remark'];
 
             if ($service->save()) {
                 /** Checkuo data */

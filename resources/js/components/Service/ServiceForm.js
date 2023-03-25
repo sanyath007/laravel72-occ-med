@@ -4,6 +4,7 @@ import { FaPlus, FaSave, FaSearch, FaTrashAlt } from 'react-icons/fa'
 import ThDatePicker from '../Forms/ThDatePicker'
 import ModalCompanies from '../Modals/ModalCompanies'
 import ModalCompanyForm from '../Modals/ModalCompanyForm'
+import ModalIcd10s from '../Modals/ModalIcd10s'
 import { Checkbox, RadioGroup} from '../Forms'
 
 const ServiceForm = ({ formProps, selectedCompany, onSelectedCompany, ...props }) => {
@@ -12,6 +13,17 @@ const ServiceForm = ({ formProps, selectedCompany, onSelectedCompany, ...props }
     const { employees } = useSelector(state => state.employee)
     const [showCompanies, setShowCompanies] = useState(false)
     const [showCompanyForm, setShowCompanyForm] = useState(false)
+    const [showIcd10s, setShowIcd10s] = useState(false)
+    const [selectedIcd10, setSelectedIcd10] = useState(null)
+
+    const handleSelectedIcd10 = (icd10, formik) => {
+        setSelectedIcd10(icd10)
+
+        formik.setFieldValue('pdx', icd10.code)
+
+        /** Hide modal */
+        setShowIcd10s(false)
+    }
 
     const handleSelectedCompany = (company, formik) => {
         onSelectedCompany(company)
@@ -33,6 +45,12 @@ const ServiceForm = ({ formProps, selectedCompany, onSelectedCompany, ...props }
             <ModalCompanyForm
                 isOpen={showCompanyForm}
                 hideModal={() => setShowCompanyForm(false)}
+            />
+
+            <ModalIcd10s
+                isOpen={showIcd10s}
+                hideModal={() => setShowIcd10s(false)}
+                onSelected={(icd10) => handleSelectedIcd10(icd10, formProps)}
             />
 
             <div className="col-md-3 form-group mb-2">
@@ -101,6 +119,7 @@ const ServiceForm = ({ formProps, selectedCompany, onSelectedCompany, ...props }
                         <Checkbox
                             name="is_officer"
                             label="เป็นเจ้าหน้าที่ รพ."
+                            checked={formProps.values.is_officer}
                             handleChange={(checked) => {
                                 formProps.setFieldValue("is_officer", checked ? 1 : 0)
                                 formProps.setFieldTouched("is_officer", true)
@@ -331,6 +350,31 @@ const ServiceForm = ({ formProps, selectedCompany, onSelectedCompany, ...props }
                     onChange={formProps.handleChange}
                     className="form-control"
                 />
+            </div>
+            <div className="col-md-12 form-group mb-2">
+                <label htmlFor="">ผลการวินิจฉัยโรค :</label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                    <div className="input-group" style={{ width: '20%' }}>
+                        <input
+                            type="text"
+                            name="pdx"
+                            value={formProps.values.pdx}
+                            onChange={formProps.handleChange}
+                            className={`form-control ${formProps.errors.pdx && formProps.touched.pdx ? 'is-invalid' : ''}`}
+                        />
+                        <button type="button" className="btn btn-outline-secondary" onClick={() => setShowIcd10s(true)}>
+                            <FaSearch />
+                        </button>
+                        {formProps.errors.pdx && formProps.touched.pdx ? (
+                            <div className="invalid-feedback">
+                                {formProps.errors.pdx}
+                            </div>
+                        ) : null}
+                    </div>
+                    <div className="form-control" style={{ minHeight: '2.3rem' }}>
+                        { selectedIcd10 && selectedIcd10.name }
+                    </div>
+                </div>
             </div>
             <div className="col-md-6 form-group mb-2">
                 <label htmlFor="">ผู้ซักประวัติ :</label>

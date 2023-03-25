@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Field } from 'formik'
 
 const Checkbox = (props) => {
     const [checked, setChecked] = useState(false)
+
+    useEffect(() => {
+        setChecked(props.checked == 1)
+    }, [props.checked])
 
     return (
         <>

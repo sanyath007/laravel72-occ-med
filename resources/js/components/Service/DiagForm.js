@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FaSave, FaSearch, FaTrashAlt } from 'react-icons/fa'
+import { FaSearch } from 'react-icons/fa'
 import ModalIcd10s from '../Modals/ModalIcd10s'
 
 const DiagForm = ({ formProps }) => {
