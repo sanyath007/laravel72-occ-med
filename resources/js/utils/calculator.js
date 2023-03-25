@@ -17,3 +17,9 @@ export const calcAgeM = (birthdate) => {
     /** Calculate and return age in month */
     return moment().diff(moment(bdInCurrentYear), "months")
 }
+
+export const calcBMI = (weight, height) => {
+    if (weight == 0 || height == 0) return 0
+
+    return (weight / ((height * height) / 100)).toFixed(2)
+}

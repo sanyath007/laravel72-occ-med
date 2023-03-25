@@ -80,14 +80,14 @@ class CheckupController extends Controller
             if ($service->save()) {
                 /** Checkuo data */
                 $checkup = new CheckupService;
-                $checkup->service_id = $service->id;
-                $checkup->lab_result = $request['lab_result'];
-                $checkup->equip_result = $request['equip_result'];
-                $checkup->xray_result = $request['xray_result'];
-                $checkup->screening = $request['screening'];
-                $checkup->health_edu = $request['health_edu'];
-                $checkup->reported = $request['reported'];
-                $checkup->specialist = $request['specialist'];
+                $checkup->service_id    = $service->id;
+                $checkup->lab_result    = $request['lab_result'];
+                $checkup->equip_result  = $request['equip_result'];
+                $checkup->xray_result   = $request['xray_result'];
+                $checkup->screening     = $request['screening'];
+                $checkup->health_edu    = $request['health_edu'];
+                $checkup->reported      = $request['reported'];
+                $checkup->specialist    = $request['specialist'];
                 $checkup->summary_result = $request['summary_result'];
                 $checkup->save();
 

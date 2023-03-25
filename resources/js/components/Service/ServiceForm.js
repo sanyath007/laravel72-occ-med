@@ -6,6 +6,7 @@ import ModalCompanies from '../Modals/ModalCompanies'
 import ModalCompanyForm from '../Modals/ModalCompanyForm'
 import ModalIcd10s from '../Modals/ModalIcd10s'
 import { Checkbox, RadioGroup} from '../Forms'
+import { calcBMI } from '../../utils/calculator'
 
 const ServiceForm = ({ formProps, selectedCompany, onSelectedCompany, ...props }) => {
     const { rights } = useSelector(state => state.right)
@@ -215,7 +216,7 @@ const ServiceForm = ({ formProps, selectedCompany, onSelectedCompany, ...props }
                 ) : null}
             </div>
             <div className="col-md-2 form-group mb-2">
-                <label htmlFor="">น้ำหนัก :</label>
+                <label htmlFor="">น้ำหนัก (กก.) :</label>
                 <input
                     type="text"
                     name="weight"
@@ -230,12 +231,15 @@ const ServiceForm = ({ formProps, selectedCompany, onSelectedCompany, ...props }
                 ) : null}
             </div>
             <div className="col-md-2 form-group mb-2">
-                <label htmlFor="">ส่วนสูง :</label>
+                <label htmlFor="">ส่วนสูง (ซม.) :</label>
                 <input
                     type="text"
                     name="height"
                     value={formProps.values.height}
-                    onChange={formProps.handleChange}
+                    onChange={(e) => {
+                        formProps.handleChange(e)
+                        formProps.setFieldValue("bmi", calcBMI(formProps.values.weight, formProps.values.height))
+                    }}
                     className={`form-control ${formProps.errors.height && formProps.touched.height ? 'is-invalid' : ''}`}
                 />
                 {formProps.errors.height && formProps.touched.height ? (
