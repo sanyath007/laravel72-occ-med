@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Field } from 'formik'
 import { FaPlus, FaSave, FaSearch, FaTrashAlt } from 'react-icons/fa'
 import ThDatePicker from '../Forms/ThDatePicker'
 import ModalCompanies from '../Modals/ModalCompanies'
 import ModalCompanyForm from '../Modals/ModalCompanyForm'
-import RadioGroup from '../Forms/RadioGroup'
+import { Checkbox, RadioGroup} from '../Forms'
 
 const ServiceForm = ({ formProps, selectedCompany, onSelectedCompany, ...props }) => {
     const { rights } = useSelector(state => state.right)
@@ -99,11 +98,14 @@ const ServiceForm = ({ formProps, selectedCompany, onSelectedCompany, ...props }
                 <label htmlFor=""></label>
                 <div className="form-control d-flex justify-content-start">
                     <div className="d-flex">
-                        <Field
-                            type="checkbox"
+                        <Checkbox
                             name="is_officer"
-                            className="mx-2"
-                        /> เป็นเจ้าหน้าที่ รพ.
+                            label="เป็นเจ้าหน้าที่ รพ."
+                            handleChange={(checked) => {
+                                formProps.setFieldValue("is_officer", checked ? 1 : 0)
+                                formProps.setFieldTouched("is_officer", true)
+                            }}
+                        />
                     </div>
                 </div>
             </div>
@@ -119,7 +121,6 @@ const ServiceForm = ({ formProps, selectedCompany, onSelectedCompany, ...props }
                     direction="row"
                     defaultValue={formProps.values.service_point}
                     onSelected={({ name, value }) => {
-                        console.log(name, value);
                         formProps.setFieldValue(name, value)
                     }}
                 />
@@ -141,7 +142,6 @@ const ServiceForm = ({ formProps, selectedCompany, onSelectedCompany, ...props }
 
                     defaultValue={formProps.values.service_type_id}
                     onSelected={({ name, value }) => {
-                        console.log(name, value);
                         formProps.setFieldValue(name, value)
                     }}
                 />
@@ -338,7 +338,7 @@ const ServiceForm = ({ formProps, selectedCompany, onSelectedCompany, ...props }
                     name="screen_user"
                     value={formProps.values.screen_user}
                     onChange={formProps.handleChange}
-                    className="form-control"
+                    className={`form-control ${formProps?.errors.screen_user && formProps?.touched.screen_user ? 'is-invalid' : ''}`}
                 >
                     <option value="">-- เลือก --</option>
                     {employees && employees.map(employee => (
@@ -347,6 +347,11 @@ const ServiceForm = ({ formProps, selectedCompany, onSelectedCompany, ...props }
                         </option>
                     ))}
                 </select>
+                {formProps.errors.screen_user && formProps.touched.screen_user ? (
+                    <div className="invalid-feedback">
+                        {formProps.errors.screen_user}
+                    </div>
+                ) : null}
             </div>
             <div className="col-md-6 form-group mb-2">
                 <label htmlFor="">แพทย์ :</label>

@@ -28,6 +28,7 @@ const checkupSchema = Yup.object().shape({
     summary_result: Yup.string().required('กรุณาเลือกสรุปผลการตรวจ!!'),
     pdx: Yup.string().required('กรุณาเลือกการวินิจฉัยโรค!!'),
     right_id: Yup.string().required('กรุณาเลือกสิทธิการรักษา!!'),
+    screen_user: Yup.string().required('กรุณาระบุผู้ซักประวัติ!!'),
 })
 
 const CheckupForm = () => {
