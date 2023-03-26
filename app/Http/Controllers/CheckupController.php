@@ -28,6 +28,7 @@ class CheckupController extends Controller
                             ->when(!empty($company), function($query) use ($company) {
                                 $query->where('company_id', $company);
                             })
+                            ->orderBy('service_date', 'desc')
                             ->paginate(10);
         }
 
