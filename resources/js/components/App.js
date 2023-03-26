@@ -37,6 +37,8 @@ import PromotionSummaryForm from "../pages/Promotions/Summary/SummaryForm";
 import ToxicologySummaryForm from "../pages/Toxicologies/Summary/SummaryForm";
 import ToxicologySummary from "../pages/Toxicologies/Summary/Summary";
 import PollutionSources from "../pages/Toxicologies/PollutionSources";
+import OccupationSummary from "../pages/Occupations/Summary/Summary";
+import OccupationSummaryForm from "../pages/Occupations/Summary/SummaryForm";
 import { useAuth } from "../hooks/useAuth"
 import AuthContext from "../context/authContext";
 import { GlobalProvider } from '../context/globalContext'
@@ -88,6 +90,9 @@ export default function App() {
                         <Route path="/toxicologies/summary" element={<ToxicologySummary />} />
                         <Route path="/toxicologies/summary/new" element={<ToxicologySummaryForm />} />
                         <Route path="/toxicologies/pollution-sources" element={<PollutionSources />} />
+                        {/* Occupations routes */}
+                        <Route path="/occupations/summary" element={<OccupationSummary />} />
+                        <Route path="/occupations/summary/new" element={<OccupationSummaryForm />} />
                         {/* Companies routes */}
                         <Route path="/companies" element={<Companies />} />
                         <Route path="/companies/new" element={<CompanyNew />} />
