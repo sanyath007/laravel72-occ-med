@@ -41,6 +41,18 @@ const PromotionSummaryForm = () => {
                                         </thead>
                                         <tbody>
                                             <tr>
+                                                <td style={{ textAlign: 'center' }}></td>
+                                                <td>ประจำเดือน</td>
+                                                <td></td>
+                                                <td>
+                                                    <input
+                                                        type="text"
+                                                        name=""
+                                                        className="form-control text-center"
+                                                    />
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <td style={{ textAlign: 'center' }}>1</td>
                                                 <td>สำรวจสภาพปัญหาที่ทำงาน (Walk through survey)</td>
                                                 <td>แผนก/แห่ง</td>

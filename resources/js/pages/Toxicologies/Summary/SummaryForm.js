@@ -41,6 +41,18 @@ const ToxicologySummaryForm = () => {
                                         </thead>
                                         <tbody>
                                             <tr>
+                                                <td style={{ textAlign: 'center' }}></td>
+                                                <td>ประจำเดือน</td>
+                                                <td></td>
+                                                <td>
+                                                    <input
+                                                        type="text"
+                                                        name=""
+                                                        className="form-control text-center"
+                                                    />
+                                                </td>
+                                            </tr>
+                                            <tr>
                                                 <td style={{ textAlign: 'center' }}>1</td>
                                                 <td>จัดทำฐานข้อมูลแหล่งมลพิษของจังหวัด</td>
                                                 <td>เรื่อง</td>

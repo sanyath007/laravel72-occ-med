@@ -57,7 +57,7 @@ const ClinicSummaryForm = () => {
                                                         <tbody>
                                                             <tr>
                                                                 <td style={{ textAlign: 'center' }}></td>
-                                                                <td>ปีงบประมาณ</td>
+                                                                <td>ประจำเดือน</td>
                                                                 <td></td>
                                                                 <td>
                                                                     <input

@@ -92,7 +92,7 @@ const CheckupSummaryForm = () => {
                                                     <tbody>
                                                         <tr>
                                                             <td style={{ textAlign: 'center' }}></td>
-                                                            <td>ปีงบประมาณ</td>
+                                                            <td>ประจำเดือน</td>
                                                             <td></td>
                                                             <td>
                                                                 <input type="text" id="" name="" className="form-control text-center" />

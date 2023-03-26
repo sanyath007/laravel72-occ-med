@@ -35,18 +35,38 @@ const ClinicSummary = () => {
                                                 <th rowSpan="2" style={{ width: '3%', textAlign: 'center' }}>ลำดับ</th>
                                                 <th rowSpan="2" style={{ textAlign: 'center' }}>กิจกรรม</th>
                                                 <th rowSpan="2" style={{ width: '8%', textAlign: 'center' }}>เป้าหมาย</th>
-                                                <th colSpan="3" style={{ textAlign: 'center' }}>ผลงาน</th>
+                                                <th colSpan="13" style={{ textAlign: 'center' }}>ผลงาน</th>
                                             </tr>
                                             <tr>
-                                                <th style={{ width: '8%', textAlign: 'center' }}>2563</th>
-                                                <th style={{ width: '8%', textAlign: 'center' }}>2564</th>
-                                                <th style={{ width: '8%', textAlign: 'center' }}>2565</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>ต.ค.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>พ.ย.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>ธ.ค.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>ม.ค.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>ก.พ.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>มี.ค.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>เม.ย.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>พ.ค.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>มิ.ย.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>ก.ค.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>ส.ค.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>ก.ย.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>2566</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}></td>
                                                 <td>กลุ่มทั่วไป (1-2)</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -59,10 +79,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>1.1 ผู้ปะกันตน (ตรวจตามสิทธิประกันสังคม)</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -75,10 +115,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>2</td>
                                                 <td>ตรวจรักษา/วินิจฉัยโรคทั่วไป</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -91,9 +151,29 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr><tr>
                                                 <td style={{ textAlign: 'center' }}>3</td>
                                                 <td>ตรวจก่อนเข้างาน</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -106,10 +186,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>5</td>
                                                 <td>กลุ่มอาชีพเฉพาะ</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -122,10 +222,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}></td>
                                                 <td>5.2 งานอับอากาศ</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -138,10 +258,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}></td>
                                                 <td>5.4 งานที่สูง</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -154,10 +294,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>7</td>
                                                 <td>วินิจฉัยโรคจากการทำงาน</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -170,10 +330,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- โรคจาการทำงาน</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -186,10 +366,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ไม่ชัดเจน</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -202,10 +402,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- โรคจาการทำงาน</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -218,10 +438,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ไม่ชัดเจน</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -234,10 +474,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- บาดเจ็บจากการทำงาน (สิทธิ กท.)</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -250,6 +510,16 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>9.1</td>
@@ -258,10 +528,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ปกติ</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -274,10 +564,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ป่วย</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -290,10 +600,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>9.3</td>
                                                 <td>รวมผู้รับบริการทั้งหมด (1-8)</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -306,10 +636,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>10.1</td>
                                                 <td>ตรวจสมรรถภาพการได้ยิน</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -322,10 +672,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ผลต้องเฝ้าระวัง</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -338,6 +708,16 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
@@ -346,10 +726,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ไม่ระบุรายละเอียด</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -362,10 +762,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ปกติ</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -378,10 +798,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ต่ำกว่าเกณฑ์แบบอุดกั้น</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -394,10 +834,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ไม่ระบุรายละเอียด</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -410,10 +870,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- เหมาะกับลักษณะงาน</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -426,10 +906,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ไม่ระบุรายละเอียด</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -442,10 +942,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>10.5</td>
                                                 <td>ภาพ 3 มิติ</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -458,10 +978,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>10.7</td>
                                                 <td>ตรวจหาสารเคมีตกค้างในร่างกาย</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -474,10 +1014,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- VA</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -490,10 +1050,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- EKG</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -506,10 +1086,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- สารเสพติดในปัสสวะ</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -522,6 +1122,16 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
@@ -530,10 +1140,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- อื่นๆ</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -546,10 +1176,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ปกติ ระดับ 0/0</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -562,10 +1212,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ผิดปกติตั้งแต่ 1/1 ขึ้นไป</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -578,10 +1248,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>13</td>
                                                 <td>กิจกรรมอื่นๆ</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -594,10 +1284,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>ให้อาชีวสุขศึกษา</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -610,10 +1320,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- อายุรกรรม</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -626,10 +1356,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- จักษุ</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -642,10 +1392,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- Ortho</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -658,10 +1428,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- คลินิกประกันสังคม</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -674,10 +1464,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- อื่นๆ</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -690,10 +1500,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- เพื่อหาข้อมูลเพิ่มเติม</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -706,10 +1536,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ปรับพฤติกรรมการทำงานที่ปลอดภัย</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -722,6 +1572,16 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
@@ -730,10 +1590,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- อื่นๆ</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -746,10 +1626,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- สถานประกอบการ/เอกชน</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -762,10 +1662,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- บุคคลทั่วไป</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -778,10 +1698,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- จนท.รพ.</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -794,10 +1734,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- รับ Consult จากแผนกอื่นๆ ในโรงพยาบาล</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -810,10 +1770,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>15</td>
                                                 <td>จำนวนผู้รับบริการที่ได้รับการซักประวัติด้วยคำถามคัดกรองโรคจากการทำงาน</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -826,10 +1806,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>17</td>
                                                 <td>จำนวนการวินิจฉัยด้วยรหัส Y97 ทั้งหมด</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -842,10 +1842,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- พิษจากสารกำจัดศัตรูพืช (T60.0 - T60.9 + Y96)</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -858,10 +1878,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ระบบทางเดินหายใจจากแอสเบสตอล (J61, J92.0)</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -874,10 +1914,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- Silicosis (J62.8)</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -890,10 +1950,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- พิษสารตัวทำละลายอินทรีย์จากงาน (T52.0 - T52.9 + Y96)</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -906,10 +1986,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- พิษโลหะหนักจากงาน (T56 - T56.9 + Y96)</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -922,10 +2022,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- พิษปรอทจากงาน (T56.1 + Y96)</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -938,10 +2058,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- โรคผิวหนังจากงาน (L00 - L99 + Y96)</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -954,10 +2094,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>19</td>
                                                 <td>แหล่งที่มาของผู้ที่สงสัยจะป่วยจากงาน</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -970,10 +2130,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- รับจาก รพศ./รพท./รพช./รพ.สต./PCU/รพ.เอกชน (ราย/แห่ง)</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -986,10 +2166,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ลูกจ้างมาเอง (ราย/แห่ง)</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -1002,10 +2202,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ออกให้บริการเชิงรุกนอก รพ. (ราย/แห่ง)</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -1018,10 +2238,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>21</td>
                                                 <td>รายรับคลินิกอาชีวเวชกรรม (รวมทุกสิทธิ์การรักษายกเว้นเงินเชื่อ)</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -1034,10 +2274,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- รายรับรวมสุทธิ</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -1050,10 +2310,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>23</td>
                                                 <td>การตรวจประเมินสภาพแวดล้อมในการทำงาน</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -1066,10 +2346,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- การวัดอัตราการไหลเวียนของอากาศห้องตรวจสมรรถภาพปอด (ครั้ง)</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -1082,10 +2382,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>25</td>
                                                 <td>การติดตามผู้ป่วยประเมินการสูญเสียสมรรถภาพการทำงานการทำ Case Conference</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -1098,10 +2418,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>พญ.นภัค</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -1114,10 +2454,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- กลุ่มตรวจทางอาชีวเวชศาสตร์</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -1130,6 +2490,16 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
@@ -1138,10 +2508,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- กลุ่มตรวจทางอาชีวเวชศาสตร์</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -1154,6 +2544,16 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
@@ -1162,10 +2562,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- กลุ่มตรวจทางอาชีวเวชศาสตร์</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -1178,10 +2598,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- กลุ่มทั่วไป</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -1194,10 +2634,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>27</td>
                                                 <td>จำนวนการวินิจฉัยโรคด้วยรหัสจาการทำงานและโรคจากสิ่งแวดล้อม (Y96 - Y97)</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -1210,6 +2670,16 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>29</td>
@@ -1218,10 +2688,30 @@ const ClinicSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>30</td>
                                                 <td>5 ลำดับแรกของการวินิจฉัยโรคจากการทำงาน</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>

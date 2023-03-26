@@ -35,18 +35,38 @@ const CheckupSummary = () => {
                                                 <th rowSpan="2" style={{ width: '3%', textAlign: 'center' }}>ลำดับ</th>
                                                 <th rowSpan="2" style={{ textAlign: 'center' }}>กิจกรรม</th>
                                                 <th rowSpan="2" style={{ width: '8%', textAlign: 'center' }}>เป้าหมาย</th>
-                                                <th colSpan="3" style={{ textAlign: 'center' }}>ผลงาน</th>
+                                                <th colSpan="13" style={{ textAlign: 'center' }}>ผลงาน</th>
                                             </tr>
                                             <tr>
-                                                <th style={{ width: '8%', textAlign: 'center' }}>2568</th>
-                                                <th style={{ width: '8%', textAlign: 'center' }}>2564</th>
-                                                <th style={{ width: '8%', textAlign: 'center' }}>2565</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>ต.ค.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>พ.ย.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>ธ.ค.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>ม.ค.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>ก.พ.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>มี.ค.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>เม.ย.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>พ.ค.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>มิ.ย.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>ก.ค.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>ส.ค.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>ก.ย.</th>
+                                                <th style={{ width: '5%', textAlign: 'center' }}>2566</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>1</td>
                                                 <td>ผู้รับบริการตรวจสุขภาพ</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -59,6 +79,16 @@ const CheckupSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
@@ -67,10 +97,30 @@ const CheckupSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ปกติ</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -83,10 +133,30 @@ const CheckupSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>4</td>
                                                 <td>ตรวจภาพถ่ายรังสีทรวงอก</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -98,10 +168,30 @@ const CheckupSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ปกติ</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -114,10 +204,30 @@ const CheckupSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>6</td>
                                                 <td>ให้สุขศึกษา</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -130,10 +240,30 @@ const CheckupSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>8</td>
                                                 <td>ส่งพบแพทย์เฉพาะทาง</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -146,10 +276,30 @@ const CheckupSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ปกติ</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -162,10 +312,30 @@ const CheckupSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ส่งพบแพทย์เฉพาะทาง</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -178,10 +348,30 @@ const CheckupSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- โรคทั่วไป</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -194,10 +384,30 @@ const CheckupSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>11</td>
                                                 <td>จำนวนวันที่ให้บริการ (วัน)</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -210,10 +420,30 @@ const CheckupSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ตรวจภายนอกโรงพยาบาล (อ.เมือง)</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -226,10 +456,30 @@ const CheckupSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>11</td>
                                                 <td>จำนวนหน่วยงาน</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -242,10 +492,30 @@ const CheckupSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- รัฐวิสาหกิจ</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -258,10 +528,30 @@ const CheckupSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- เอกชน/บริษัท/อื่นๆ</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -274,10 +564,30 @@ const CheckupSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td>- ต่ำกว่า 35 ปี</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -290,10 +600,30 @@ const CheckupSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>14</td>
                                                 <td>เพศ</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -306,6 +636,16 @@ const CheckupSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
@@ -314,8 +654,10 @@ const CheckupSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                            </tr>
-                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
