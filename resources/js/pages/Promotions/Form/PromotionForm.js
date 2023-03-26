@@ -155,10 +155,8 @@ const PromotionForm = () => {
                                             <Tab eventKey="risk" title="ความเสี่ยง">
                                                 <RiskForm formProps={formProps} />
                                             </Tab>
-                                            <Tab eventKey="diag" title="การวินิจฉัยโรค">
-                                                <DiagForm formProps={formProps} />
-                                            </Tab>
                                         </Tabs>
+
                                         <div className="text-center">
                                             <button type="submit" className="btn btn-primary">
                                                 <FaSave className="me-1" />
