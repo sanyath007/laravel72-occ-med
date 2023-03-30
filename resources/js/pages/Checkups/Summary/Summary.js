@@ -110,7 +110,7 @@ const CheckupSummary = () => {
                                             </tr>
                                             <tr>
                                                 <td></td>
-                                                <td>- ปกติ</td>
+                                                <td>- ผิดปกติ</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
@@ -181,7 +181,7 @@ const CheckupSummary = () => {
                                             </tr>
                                             <tr>
                                                 <td></td>
-                                                <td>- ปกติ</td>
+                                                <td>- ผิดปกติ</td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
