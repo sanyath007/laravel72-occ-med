@@ -1,21 +1,19 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { FaSave } from 'react-icons/fa'
 import { GlobalContext } from '../../../context/globalContext';
+import api from '../../../api'
 
 const summarySchema = Yup.object().shape({
-    year: Yup.string().required(),
-    patient_amt: Yup.string().required(),
-    lab_normal: Yup.string().required(),
-    lab_abnormal: Yup.string().required(),
-    equip: Yup.string().required(),
-    xray_normal: Yup.string().required(),
-    xray_abnormal: Yup.string().required(),
+    // year: Yup.string().required(),
+    // month: Yup.string().required()
 })
 
 const CheckupSummaryForm = () => {
     const { setGlobal } = useContext(GlobalContext)
+    const [bullets, setBullets] = useState([]);
+    const [results, setResults] = useState([]);
 
     useEffect(() => {
         setGlobal((prev) => ({
@@ -30,6 +28,46 @@ const CheckupSummaryForm = () => {
         }))
     }, [])
 
+    useEffect(() => {
+        getReportBullets()
+    }, [])
+
+    const getReportBullets = async () => {
+        try {
+            const res = await api.get('/api/report-bullets');
+
+            setBullets(res.data)
+
+            const resultBullets = res.data.map(bullet => ({ id: bullet.id, unit: bullet.unit_text, value: 0 }))
+            setResults(resultBullets)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    console.log(results);
+
+    const handleResultChange = (e) => {
+        const { name, value } = e.target
+
+        const updatedResults = results.map(result => {
+            if (result.id == name) result.value = value
+
+            return result
+        })
+
+        setResults(updatedResults)
+    }
+
+    const handleSubmit = async (values, props) => {
+        const { id, month, year } = values
+        const data = { id, month, year, results }
+
+        const res = await api.post('/api/checkup-monthlies', data);
+
+        console.log(res);
+    }
+
     return (
         <section className="section">
             <div className="row">
@@ -41,41 +79,12 @@ const CheckupSummaryForm = () => {
                                 <Formik
                                     initialValues={{
                                         id: '',
+                                        month: '',
                                         year: '',
-                                        patient_amt: '',
-                                        lab_all: '',
-                                        lab_normal: '',
-                                        lab_abnormal: '',
-                                        equip: '',
-                                        xray_all: '',
-                                        xray_normal: '',
-                                        xray_abnormal: '',
-                                        screening: '',
-                                        health_edu: '',
-                                        reported: '',
-                                        specialist: '',
-                                        summary_normal: '',
-                                        summary_abnormal: '',
-                                        summary_specialist: '',
-                                        diag_gen: '',
-                                        diag_oth: '',
-                                        service_days: '',
-                                        service_inhosp_days: '',
-                                        service_mueang_days: '',
-                                        service_amphur_days: '',
-                                        company_government: '',
-                                        company_special: '',
-                                        company_private: '',
-                                        age_under35: '',
-                                        age_over35: '',
-                                        sex_male: '',
-                                        sex_female: '',
-                                        satisfaction: ''
+                                        results: []
                                     }}
                                     validationSchema={summarySchema}
-                                    onSubmit={(values) => {
-                                        console.log(values);
-                                    }}
+                                    onSubmit={handleSubmit}
                                 >
                                     {(formProps) => (
                                         <Form>
@@ -92,13 +101,49 @@ const CheckupSummaryForm = () => {
                                                     <tbody>
                                                         <tr>
                                                             <td style={{ textAlign: 'center' }}></td>
-                                                            <td>ประจำเดือน</td>
-                                                            <td></td>
-                                                            <td>
-                                                                <input type="text" id="" name="" className="form-control text-center" />
+                                                            <td>ปีงบประมาณ</td>
+                                                            <td style={{ textAlign: 'center' }}></td>
+                                                            <td style={{ textAlign: 'center' }}>
+                                                                <input
+                                                                    type="text"
+                                                                    name="year"
+                                                                    value={formProps.values.year}
+                                                                    onChange={formProps.handleChange}
+                                                                    className="form-control text-center"
+                                                                />
                                                             </td>
                                                         </tr>
                                                         <tr>
+                                                            <td style={{ textAlign: 'center' }}></td>
+                                                            <td>ประจำเดือน</td>
+                                                            <td style={{ textAlign: 'center' }}></td>
+                                                            <td style={{ textAlign: 'center' }}>
+                                                                <input
+                                                                    type="text"
+                                                                    name="month"
+                                                                    value={formProps.values.month}
+                                                                    onChange={formProps.handleChange}
+                                                                    className="form-control text-center"
+                                                                />
+                                                            </td>
+                                                        </tr>
+
+                                                        {bullets && bullets.map(bullet => (
+                                                            <tr key={bullet.id}>
+                                                                <td style={{ textAlign: 'center' }}>{bullet.bullet_no}</td>
+                                                                <td>{bullet.name}</td>
+                                                                <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
+                                                                <td style={{ textAlign: 'center' }}>
+                                                                    <input
+                                                                        type="text"
+                                                                        name={bullet.id}
+                                                                        onChange={handleResultChange}
+                                                                        className="form-control text-center h-25"
+                                                                    />
+                                                                </td>
+                                                            </tr>
+                                                        ))}
+                                                        {/* <tr>
                                                             <td style={{ textAlign: 'center' }}>1</td>
                                                             <td>ผู้รับบริการตรวจสุขภาพ</td>
                                                             <td></td>
@@ -368,12 +413,12 @@ const CheckupSummaryForm = () => {
                                                             <td>
                                                                 <input type="text" id="" name="" className="form-control" />
                                                             </td>
-                                                        </tr>
+                                                        </tr> */}
                                                     </tbody>
                                                 </table>
                                             </div>
                                             <div className="col-md-12 text-center">
-                                                <button className="btn btn-primary">
+                                                <button type="submit" className="btn btn-primary">
                                                     <FaSave className="me-1" />
                                                     บันทึก
                                                 </button>

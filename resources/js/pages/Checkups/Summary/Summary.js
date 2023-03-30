@@ -1,9 +1,11 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { GlobalContext } from '../../../context/globalContext';
+import api from '../../../api'
 
 const CheckupSummary = () => {
     const { setGlobal } = useContext(GlobalContext)
+    const [bullets, setBullets] = useState([]);
 
     useEffect(() => {
         setGlobal((prev) => ({
@@ -16,6 +18,21 @@ const CheckupSummary = () => {
             ]
         }))
     }, [])
+
+    useEffect(() => {
+        getReportBullets()
+    }, [])
+
+    const getReportBullets = async () => {
+        try {
+            const res = await api.get('/api/checkup-monthlies?year=2566');
+            console.log(res.data);
+
+            setBullets(res.data.bullets)
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <section className="section">
@@ -54,23 +71,43 @@ const CheckupSummary = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td style={{ textAlign: 'center' }}>1</td>
-                                                <td>ผู้รับบริการตรวจสุขภาพ</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                            {bullets && bullets.map(bullet => (
+                                                <tr key={bullet.id}>
+                                                    <td style={{ textAlign: 'center' }}>{bullet.bullet_no}</td>
+                                                    <td>{bullet.name}</td>
+                                                    <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            ))}
+                                            {/* <tr>
+                                                    <td style={{ textAlign: 'center' }}>1</td>
+                                                    <td>ผู้รับบริการตรวจสุขภาพ</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
                                             </tr>
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>2</td>
@@ -664,7 +701,7 @@ const CheckupSummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                            </tr>
+                                            </tr> */}
                                         </tbody>
                                     </table>
                                 </div>

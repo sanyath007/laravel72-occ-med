@@ -7,4 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class CheckupMonthly extends Model
 {
     protected $table = "checkup_monthly";
+
+    public function bullet()
+    {
+        return $this->belongsTo(ReportBullet::class, 'report_bullet_id', 'id');
+    }
 }
