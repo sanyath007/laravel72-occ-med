@@ -71,6 +71,9 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     /** Employees */
     Route::get('/employees', 'EmployeeController@getEmployees');
 
+    /** ReportBullets */
+    Route::get('/report-bullets', 'ReportBulletController@getReportBullets');
+
     /** Companies */
     Route::get('/companies', 'CompanyController@getCompanies');
     Route::get('/companies/{id}', 'CompanyController@getCompany');
