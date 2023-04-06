@@ -9,7 +9,11 @@ class ReportBulletController extends Controller
 {
     public function getReportBullets(Request $request)
     {
-        $bullets = ReportBullet::all();
+        $division = $request->get('division');
+
+        $bullets = ReportBullet::when(!empty($division), function($query) use ($division) {
+                            $query->where('division_id', $division);
+                        })->paginate(20);
 
         return response()->json($bullets);
     }

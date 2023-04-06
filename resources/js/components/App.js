@@ -44,6 +44,7 @@ import AuthContext from "../context/authContext";
 import { GlobalProvider } from '../context/globalContext'
 import store from "../store";
 import 'react-toastify/dist/ReactToastify.css';
+import ReportBullets from "../pages/ReportBullets/ReportBullets";
 
 export default function App() {
     const { userData } = useAuth()
@@ -97,6 +98,8 @@ export default function App() {
                         <Route path="/companies" element={<Companies />} />
                         <Route path="/companies/new" element={<CompanyNew />} />
                         <Route path="/companies/:id/edit" element={<CompanyEdit />} />
+                        {/* Report Bullets */}
+                        <Route path="/report-bullets" element={<ReportBullets />} />
                     </Route>
                     {/* ============================= Public routes ============================= */}
                     <Route path="/signin" element={<Signin />} />

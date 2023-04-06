@@ -3,6 +3,7 @@ import api from "../api";
 
 const initialState = {
     bullets: [],
+    pager: null,
     loading: false,
     success: false,
     error: null
@@ -50,10 +51,14 @@ export const reportBulletSlice = createSlice({
     extraReducers: {
         [getReportBullets.pending]: (state) => {
             state.bullets = [];
+            state.pager = null;
             state.loading = true;
         },
         [getReportBullets.fulfilled]: (state, { payload }) => {
-            state.bullets = payload;
+            const { data, ...pager } = payload;
+
+            state.bullets = data;
+            state.pager = pager;
             state.loading = false
         },
         [getReportBullets.rejected]: (state, { payload }) => {
