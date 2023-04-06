@@ -39,12 +39,13 @@ import ToxicologySummary from "../pages/Toxicologies/Summary/Summary";
 import PollutionSources from "../pages/Toxicologies/PollutionSources";
 import OccupationSummary from "../pages/Occupations/Summary/Summary";
 import OccupationSummaryForm from "../pages/Occupations/Summary/SummaryForm";
+import ReportBullets from "../pages/ReportBullets/ReportBullets";
+import ReportBulletForm from "../pages/ReportBullets/Form/ReportBulletForm";
 import { useAuth } from "../hooks/useAuth"
 import AuthContext from "../context/authContext";
 import { GlobalProvider } from '../context/globalContext'
 import store from "../store";
 import 'react-toastify/dist/ReactToastify.css';
-import ReportBullets from "../pages/ReportBullets/ReportBullets";
 
 export default function App() {
     const { userData } = useAuth()
@@ -100,6 +101,7 @@ export default function App() {
                         <Route path="/companies/:id/edit" element={<CompanyEdit />} />
                         {/* Report Bullets */}
                         <Route path="/report-bullets" element={<ReportBullets />} />
+                        <Route path="/report-bullets/new" element={<ReportBulletForm />} />
                     </Route>
                     {/* ============================= Public routes ============================= */}
                     <Route path="/signin" element={<Signin />} />
