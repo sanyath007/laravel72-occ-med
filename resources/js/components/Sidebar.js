@@ -35,26 +35,6 @@ const Sidebar = () => {
                         <span>Dashboard</span>
                     </Link>
                 </li>
-                {/* ตรวจสุขภาพ */}
-                <li className="nav-item">
-                    <a className="nav-link collapsed" data-bs-target="#checkup-nav" data-bs-toggle="collapse" href="#">
-                        <i className="bi bi-menu-button-wide"></i>
-                        <span>ตรวจสุขภาพ</span>
-                        <i className="bi bi-chevron-down ms-auto"></i>
-                    </a>
-                    <ul id="checkup-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
-                        <li>
-                            <Link to="/checkups" onClick={handleMenuClicked}>
-                                <i className="bi bi-circle"></i><span>การให้บริการ</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="/checkups/summary" onClick={handleMenuClicked}>
-                                <i className="bi bi-circle"></i><span>สรุปผลงาน</span>
-                            </Link>
-                        </li>
-                    </ul>
-                </li>
                 {/* คลินิกบริการ */}
                 <li className="nav-item">
                     <a className="nav-link collapsed" data-bs-target="#clinic-nav" data-bs-toggle="collapse" href="#">
@@ -153,6 +133,26 @@ const Sidebar = () => {
                                 <i className="bi bi-circle"></i><span>แหล่งมลพิษของจังหวัด</span>
                             </Link>
                         </li> */}
+                    </ul>
+                </li>
+                {/* ตรวจสุขภาพ */}
+                <li className="nav-item">
+                    <a className="nav-link collapsed" data-bs-target="#checkup-nav" data-bs-toggle="collapse" href="#">
+                        <i className="bi bi-menu-button-wide"></i>
+                        <span>ตรวจสุขภาพ</span>
+                        <i className="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="checkup-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <Link to="/checkups" onClick={handleMenuClicked}>
+                                <i className="bi bi-circle"></i><span>การให้บริการ</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/checkups/summary" onClick={handleMenuClicked}>
+                                <i className="bi bi-circle"></i><span>สรุปผลงาน</span>
+                            </Link>
+                        </li>
                     </ul>
                 </li>
                 {/* สถานประกอบการ */}
