@@ -12,14 +12,14 @@ const bulletSchema = Yup.object().shape({
 
 const ReportBulletForm = () => {
     const dispatch = useDispatch();
-    const [divisiobs, setDivisions] = useState([]);
+    const [divisions, setDivisions] = useState([]);
 
     useEffect(() => {
         getDivisions();
     }, []);
 
     const getDivisions = async () => {
-        const res = api.get('/api/divisions');
+        const res = await api.get('/api/divisions');
 
         setDivisions(res.data)
     }
@@ -61,8 +61,11 @@ const ReportBulletForm = () => {
                                                     className={`form-control ${formProps.errors.division_id && formProps.touched.division_id ? 'is-invalid' : ''}`}
                                                 >
                                                     <option value="">-- กรุณาเลือก --</option>
-                                                    <option value="0">ปกติ</option>
-                                                    <option value="1">ผิดปกติ</option>
+                                                    {divisions && divisions.map(division => (
+                                                        <option key={division.id} value={division.id}>
+                                                            {division.name}
+                                                        </option>
+                                                    ))}
                                                 </select>
                                                 {formProps.errors.division_id && formProps.touched.division_id ? (
                                                     <div className="invalid-feedback">
