@@ -11,7 +11,8 @@ class ReportBulletController extends Controller
     {
         $division = $request->get('division');
 
-        $bullets = ReportBullet::when(!empty($division), function($query) use ($division) {
+        $bullets = ReportBullet::with('division')
+                        ->when(!empty($division), function($query) use ($division) {
                             $query->where('division_id', $division);
                         })->paginate(20);
 

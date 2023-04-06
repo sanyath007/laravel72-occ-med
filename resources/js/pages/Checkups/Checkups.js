@@ -28,7 +28,7 @@ const Checkups = () => {
     useEffect(() => {
         dispatch(getCheckups({ path: '/api/checkups' }))
     }, [])
-    
+
     const handlePageBtnClicked = (path) => {
         dispatch(getCheckups({ path }))
     }

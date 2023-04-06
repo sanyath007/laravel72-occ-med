@@ -197,7 +197,7 @@ const Sidebar = () => {
                 {/* หัวข้อรายงาน */}
                 <li className="nav-item">
                     <Link className="nav-link collapsed" to="/report-bullets" onClick={handleMenuClicked}>
-                        <i className="bi bi-person-circle"></i>
+                        <i className="bi bi-card-checklist"></i>
                         <span>หัวข้อรายงาน</span>
                     </Link>
                 </li>
