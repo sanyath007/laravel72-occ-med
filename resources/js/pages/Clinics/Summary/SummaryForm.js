@@ -1,15 +1,20 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { useDispatch, useSelector  } from 'react-redux'
 import { Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { FaSave } from 'react-icons/fa'
 import { GlobalContext } from '../../../context/globalContext'
+import { getReportBulletsByDivision } from '../../../store/reportBullet'
 
 const summarySchema = Yup.object().shape({
 
 })
 
 const ClinicSummaryForm = () => {
+    const dispatch = useDispatch()
     const { setGlobal } = useContext(GlobalContext)
+    const { bullets } = useSelector(state => state.reportBullet) 
+    const [results, setResults] = useState([]);
 
     useEffect(() => {
         setGlobal((prev) => ({
@@ -24,6 +29,37 @@ const ClinicSummaryForm = () => {
         }))
     }, [])
 
+    useEffect(() => {
+        dispatch(getReportBulletsByDivision({ path: '/api/report-bullets/division/1' }))
+    }, [])
+
+    useEffect(() => {
+        if (bullets) {
+            setResults(bullets.map(bullet => ({ id: bullet.id, unit: bullet.unit_text, value: 0 })))
+        }
+    }, [bullets])
+
+    const handleResultChange = (e) => {
+        const { name, value } = e.target
+
+        const updatedResults = results.map(result => {
+            if (result.id == name) result.value = value
+
+            return result
+        })
+
+        setResults(updatedResults)
+    }
+
+    const handleSubmit = async (values, props) => {
+        const { id, month, year } = values
+        const data = { id, month, year, results }
+
+        const res = await api.post('/api/checkup-monthlies', data);
+
+        console.log(res);
+    }
+
     return (
         <section className="section">
             <div className="row">
@@ -34,12 +70,13 @@ const ClinicSummaryForm = () => {
                             <div className="row">
                                 <Formik
                                     initialValues={{
-
+                                        id: '',
+                                        year: '',
+                                        month: '',
+                                        results: []
                                     }}
                                     validationSchema={summarySchema}
-                                    onSubmit={() => {
-                                        //
-                                    }}
+                                    onSubmit={handleSubmit}
                                 >
                                     {(formProps) => {
                                         return (
@@ -57,6 +94,20 @@ const ClinicSummaryForm = () => {
                                                         <tbody>
                                                             <tr>
                                                                 <td style={{ textAlign: 'center' }}></td>
+                                                                <td>ปีงบประมาณ</td>
+                                                                <td style={{ textAlign: 'center' }}></td>
+                                                                <td style={{ textAlign: 'center' }}>
+                                                                    <input
+                                                                        type="text"
+                                                                        name="year"
+                                                                        value={formProps.values.year}
+                                                                        onChange={formProps.handleChange}
+                                                                        className="form-control text-center"
+                                                                    />
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td style={{ textAlign: 'center' }}></td>
                                                                 <td>ประจำเดือน</td>
                                                                 <td></td>
                                                                 <td>
@@ -67,7 +118,27 @@ const ClinicSummaryForm = () => {
                                                                     />
                                                                 </td>
                                                             </tr>
-                                                            <tr>
+                                                            {bullets && bullets.map(bullet => (
+                                                                <tr key={bullet.id}>
+                                                                    <td style={{ textAlign: 'center' }}>{bullet.bullet_no}</td>
+                                                                    <td>{bullet.name}</td>
+                                                                    <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
+                                                                    <td style={{ textAlign: 'center' }}>
+                                                                        {bullet.bullet_type_id !== 1 
+                                                                            ? (
+                                                                                <input
+                                                                                    type="text"
+                                                                                    name={bullet.id}
+                                                                                    onChange={handleResultChange}
+                                                                                    className="form-control text-center h-25"
+                                                                                />
+                                                                            )
+                                                                            : null
+                                                                        }
+                                                                    </td>
+                                                                </tr>
+                                                            ))}
+                                                            {/* <tr>
                                                                 <td style={{ textAlign: 'center' }}></td>
                                                                 <td>กลุ่มทั่วไป (1-2)</td>
                                                                 <td></td>
@@ -1835,7 +1906,7 @@ const ClinicSummaryForm = () => {
                                                                         className="form-control text-center"
                                                                     />
                                                                 </td>
-                                                            </tr>
+                                                            </tr> */}
                                                         </tbody>
                                                     </table>
                                                 </div>

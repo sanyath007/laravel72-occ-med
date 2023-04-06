@@ -37,9 +37,7 @@ const CheckupSummaryForm = () => {
 
     useEffect(() => {
         if (bullets) {
-            console.log('on bullets has data...');
-            const resultBullets = bullets.map(bullet => ({ id: bullet.id, unit: bullet.unit_text, value: 0 }))
-            setResults(resultBullets)
+            setResults(bullets.map(bullet => ({ id: bullet.id, unit: bullet.unit_text, value: 0 })))
         }
     }, [bullets])
 
@@ -75,8 +73,8 @@ const CheckupSummaryForm = () => {
                                 <Formik
                                     initialValues={{
                                         id: '',
-                                        month: '',
                                         year: '',
+                                        month: '',
                                         results: []
                                     }}
                                     validationSchema={summarySchema}
