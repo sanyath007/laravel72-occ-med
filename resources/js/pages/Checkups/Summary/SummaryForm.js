@@ -34,7 +34,7 @@ const CheckupSummaryForm = () => {
 
     const getReportBullets = async () => {
         try {
-            const res = await api.get('/api/report-bullets');
+            const res = await api.get('/api/report-bullets/division/6');
 
             setBullets(res.data)
 
