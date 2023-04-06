@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { FaSave } from 'react-icons/fa'
 import { GlobalContext } from '../../../context/globalContext';
+import { getReportBulletsByDivision } from '../../../store/reportBullet';
 import api from '../../../api'
 
 const summarySchema = Yup.object().shape({
@@ -11,8 +13,9 @@ const summarySchema = Yup.object().shape({
 })
 
 const CheckupSummaryForm = () => {
+    const dispatch = useDispatch();
+    const { bullets } = useSelector(state => state.reportBullet);
     const { setGlobal } = useContext(GlobalContext)
-    const [bullets, setBullets] = useState([]);
     const [results, setResults] = useState([]);
 
     useEffect(() => {
@@ -29,21 +32,16 @@ const CheckupSummaryForm = () => {
     }, [])
 
     useEffect(() => {
-        getReportBullets()
+        dispatch(getReportBulletsByDivision({ path: '/api/report-bullets/division/6' }))
     }, [])
 
-    const getReportBullets = async () => {
-        try {
-            const res = await api.get('/api/report-bullets/division/6');
-
-            setBullets(res.data)
-
-            const resultBullets = res.data.map(bullet => ({ id: bullet.id, unit: bullet.unit_text, value: 0 }))
+    useEffect(() => {
+        if (bullets) {
+            console.log('on bullets has data...');
+            const resultBullets = bullets.map(bullet => ({ id: bullet.id, unit: bullet.unit_text, value: 0 }))
             setResults(resultBullets)
-        } catch (error) {
-            console.log(error);
         }
-    }
+    }, [bullets])
 
     const handleResultChange = (e) => {
         const { name, value } = e.target

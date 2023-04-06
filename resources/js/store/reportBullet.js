@@ -12,8 +12,15 @@ export const getReportBullets = createAsyncThunk('reportBullet/getReportBullets'
 
 });
 
-export const getReportBulletsByDivision = createAsyncThunk('reportBullet/getReportBulletsByDivision', async () => {
+export const getReportBulletsByDivision = createAsyncThunk('reportBullet/getReportBulletsByDivision', async ({ path }, { rejectWithValue }) => {
+    try {
+        const res = await api.get('/api/report-bullets/division/6');
 
+        return res.data;
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error)
+    }
 });
 
 export const reportBulletSlice = createSlice({
