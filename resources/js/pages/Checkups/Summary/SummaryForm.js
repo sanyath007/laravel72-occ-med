@@ -45,8 +45,6 @@ const CheckupSummaryForm = () => {
         }
     }
 
-    console.log(results);
-
     const handleResultChange = (e) => {
         const { name, value } = e.target
 
