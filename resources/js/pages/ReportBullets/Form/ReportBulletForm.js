@@ -7,7 +7,9 @@ import { store } from '../../../store/reportBullet'
 import api from '../../../api'
 
 const bulletSchema = Yup.object().shape({
-
+    name: Yup.string().required(),
+    division_id: Yup.string().required(),
+    bullet_type_id: Yup.string().required()
 });
 
 const ReportBulletForm = () => {
@@ -51,8 +53,8 @@ const ReportBulletForm = () => {
                             >
                                 {(formProps) => (
                                     <Form>
-                                        <div className="row mb-3">
-                                            <div className="col-md-12 form-group mb-3">
+                                        <div className="row mb-2">
+                                            <div className="col-md-12 form-group mb-2">
                                                 <label htmlFor="">งาน :</label>
                                                 <select
                                                     name="division_id"
@@ -73,7 +75,17 @@ const ReportBulletForm = () => {
                                                     </div>
                                                 ) : null}
                                             </div>
-                                            <div className="col-md-12 form-group mb-3">
+                                            <div className="col-md-2 form-group mb-2">
+                                                <label htmlFor="">ลำดับที่ :</label>
+                                                <input
+                                                    type="text"
+                                                    name="bullet_no"
+                                                    value={formProps.values.bullet_no}
+                                                    onChange={formProps.handleChange}
+                                                    className={`form-control ${formProps.errors.bullet_no && formProps.touched.bullet_no ? 'is-invalid' : ''}`}
+                                                />
+                                            </div>
+                                            <div className="col-md-10 form-group mb-2">
                                                 <label htmlFor="">ชื่อหัวข้อ :</label>
                                                 <input
                                                     type="text"
@@ -88,20 +100,7 @@ const ReportBulletForm = () => {
                                                     </div>
                                                 ) : null}
                                             </div>
-                                            <div className="col-md-12 form-group mb-3">
-                                                <label htmlFor="">ลำดับที่ :</label>
-                                                <select
-                                                    name="bullet_no"
-                                                    value={formProps.values.bullet_no}
-                                                    onChange={formProps.handleChange}
-                                                    className={`form-control ${formProps.errors.bullet_no && formProps.touched.bullet_no ? 'is-invalid' : ''}`}
-                                                >
-                                                    <option value="">-- กรุณาเลือก --</option>
-                                                    <option value="1">1</option>
-                                                    <option value="2">2</option>
-                                                </select>
-                                            </div>
-                                            <div className="col-md-12 form-group mb-3">
+                                            <div className="col-md-9 form-group mb-2">
                                                 <label htmlFor="">ประเภท :</label>
                                                 <select
                                                     name="bullet_type_id"
@@ -120,8 +119,18 @@ const ReportBulletForm = () => {
                                                     </div>
                                                 ) : null}
                                             </div>
-                                            <div className="col-md-12 form-group mb-3">
-                                                <label htmlFor="">เป็นหัวข้อย่อยของ :</label>
+                                            <div className="col-md-3 form-group">
+                                                <label htmlFor="">เป้าหมาย :</label>
+                                                <input
+                                                    type="text"
+                                                    name="unit_text"
+                                                    value={formProps.values.unit_text}
+                                                    onChange={formProps.handleChange}
+                                                    className={`form-control ${formProps.errors.unit_text && formProps.touched.unit_text ? 'is-invalid' : ''}`}
+                                                />
+                                            </div>
+                                            <div className="col-md-12 form-group mb-2">
+                                                <label htmlFor="">เป็นหัวข้อย่อยของ (ถ้ามี) :</label>
                                                 <div className="input-group">
                                                     <div className="form-control">
                                                         
@@ -140,16 +149,6 @@ const ReportBulletForm = () => {
                                                         <FaSearch />
                                                     </button>
                                                 </div>
-                                            </div>
-                                            <div className="col-md-12 form-group mb-3">
-                                                <label htmlFor="">เป้าหมาย :</label>
-                                                <input
-                                                    type="text"
-                                                    name="unit_text"
-                                                    value={formProps.values.unit_text}
-                                                    onChange={formProps.handleChange}
-                                                    className={`form-control ${formProps.errors.unit_text && formProps.touched.unit_text ? 'is-invalid' : ''}`}
-                                                />
                                             </div>
                                         </div>
                                         <div className="text-center">
