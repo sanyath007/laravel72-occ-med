@@ -5,6 +5,7 @@ import { Formik, Form } from 'formik'
 import { FaSearch, FaSave } from 'react-icons/fa'
 import { store } from '../../../store/reportBullet'
 import api from '../../../api'
+import ModalReportBullets from '../../../components/Modals/ModalReportBullets'
 
 const bulletSchema = Yup.object().shape({
     name: Yup.string().required(),
@@ -15,6 +16,7 @@ const bulletSchema = Yup.object().shape({
 const ReportBulletForm = () => {
     const dispatch = useDispatch();
     const [divisions, setDivisions] = useState([]);
+    const [showReportBullets, setShowReportBullets] = useState(false)
 
     useEffect(() => {
         getDivisions();
@@ -28,6 +30,10 @@ const ReportBulletForm = () => {
 
     const handleSubmit = (values, props) => {
         console.log(values, props);
+    }
+
+    const handleSelectedReportBullet = (selected) => {
+        console.log(selected);
     }
 
     return (
@@ -53,6 +59,12 @@ const ReportBulletForm = () => {
                             >
                                 {(formProps) => (
                                     <Form>
+                                        <ModalReportBullets
+                                            isOpen={showReportBullets}
+                                            hideModal={() => setShowReportBullets(false)}
+                                            onSelected={handleSelectedReportBullet}
+                                        />
+
                                         <div className="row mb-2">
                                             <div className="col-md-12 form-group mb-2">
                                                 <label htmlFor="">งาน :</label>
@@ -145,6 +157,7 @@ const ReportBulletForm = () => {
                                                     <button
                                                         type="button"
                                                         className="btn btn-outline-secondary"
+                                                        onClick={() => setShowReportBullets(true)}
                                                     >
                                                         <FaSearch />
                                                     </button>
