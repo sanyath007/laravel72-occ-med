@@ -39,7 +39,7 @@ const ReportBullets = () => {
                                             <tr>
                                                 <th style={{ width: '3%', textAlign: 'center' }}>ลำดับ</th>
                                                 <th style={{ textAlign: 'left' }}>หัวข้อรายงาน</th>
-                                                <th style={{ width: '20%', textAlign: 'center' }}>งาน</th>
+                                                <th style={{ width: '20%', textAlign: 'center' }}>หน่วยงาน</th>
                                                 <th style={{ width: '10%', textAlign: 'center' }}>Actions</th>
                                             </tr>
                                         </thead>

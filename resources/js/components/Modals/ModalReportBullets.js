@@ -2,28 +2,28 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Modal } from 'react-bootstrap'
-import { getIcd10s } from '../../store/icd10'
+import { getReportBullets } from '../../store/reportBullet'
 import Pagination from '../Pagination'
 
 const ModalReportBullets = ({ isOpen, hideModal, onSelected, ...props }) => {
     const dispatch = useDispatch()
-    const { icd10s, pager, loading } = useSelector(state => state.icd10)
-    const [filterings, setFilterings] = useState({ icd10: '', desc: '' })
+    const { bullets, pager, loading } = useSelector(state => state.reportBullet)
+    const [filterings, setFilterings] = useState({ name: '', division: '' })
 
     useEffect(() => {
-        fetchIcd10s()
+        fetchBullets()
     }, [filterings])
 
-    const fetchIcd10s = (path='/api/icd10s?page=') => {
+    const fetchBullets = (path='/api/report-bullets?page=') => {
         /** Filtering params */
-        const code = filterings.icd10 ? filterings.icd10 : ''
-        const name = filterings.desc ? filterings.desc : ''
+        const name = filterings.name ? filterings.name : ''
+        const division = filterings.division ? filterings.division : ''
 
-        dispatch(getIcd10s({ path: `${path}&code=${code}&name=${name}` }))
+        dispatch(getReportBullets({ path: `${path}&division=${division}&name=${name}` }))
     }
 
     const handlePageBtnClicked = (path) => {
-        fetchIcd10s(path)
+        fetchBullets(path)
     }
 
     const handleChange = (e) => {
@@ -38,15 +38,15 @@ const ModalReportBullets = ({ isOpen, hideModal, onSelected, ...props }) => {
             onHide={hideModal}
             size="xl"
         >
-            <Modal.Header closeButton>รายการ ICD-10 ทั้งหมด</Modal.Header>
+            <Modal.Header closeButton>รายการหัวข้อรายงานทั้งหมด</Modal.Header>
             <Modal.Body>
                 <div className="alert border-dark alert-dismissible fade show" role="alert">
                     <div className="row">
                         <div className="col-md-3">
                             <input
                                 type="text"
-                                name="icd10"
-                                value={filterings.icd10}
+                                name="division"
+                                value={filterings.division}
                                 onChange={(e) => handleChange(e)}
                                 className="form-control"
                                 placeholder="ค้นหาด้วย ICD-10"
@@ -55,11 +55,11 @@ const ModalReportBullets = ({ isOpen, hideModal, onSelected, ...props }) => {
                         <div className="col-md-9">
                             <input
                                 type="text"
-                                name="desc"
-                                value={filterings.desc}
+                                name="name"
+                                value={filterings.name}
                                 onChange={(e) => handleChange(e)}
                                 className="form-control"
-                                placeholder="ค้นหาด้วยรายละเอียด"
+                                placeholder="ค้นหาด้วยชื่อหัวข้อรายงาน"
                             />
                         </div>
                     </div>
@@ -69,9 +69,9 @@ const ModalReportBullets = ({ isOpen, hideModal, onSelected, ...props }) => {
                     <thead>
                         <tr>
                             <th scope="col" style={{ width: '3%', textAlign: 'center' }}>#</th>
-                            <th scope="col" style={{ width: '8%', textAlign: 'center' }}>ICD10</th>
-                            <th scope="col">Description</th>
-                            <th scope="col" style={{ width: '40%' }}>ภาษาไทย</th>
+                            <th scope="col" style={{ width: '8%', textAlign: 'center' }}>ลำดับที่</th>
+                            <th scope="col">ชื่อหัวข้อรายงาน</th>
+                            <th scope="col" style={{ width: '40%' }}>หน่วยงาน</th>
                             <th scope="col" style={{ width: '5%', textAlign: 'center' }}>Actions</th>
                         </tr>
                     </thead>
@@ -86,18 +86,18 @@ const ModalReportBullets = ({ isOpen, hideModal, onSelected, ...props }) => {
                             </tr>
                         )}
 
-                        {(!loading && icd10s) && icd10s.map((icd, row) => (
-                            <tr key={icd.code}>
+                        {(!loading && bullets) && bullets.map((bullet, row) => (
+                            <tr key={bullet.id}>
                                 <th scope="row" style={{ textAlign: 'center' }}>{pager?.from+row}</th>
-                                <td style={{ textAlign: 'center' }}>{icd.code}</td>
-                                <td>{icd.name}</td>
-                                <td>{icd.tname}</td>
+                                <td style={{ textAlign: 'center' }}>{bullet.bullet_no}</td>
+                                <td>{bullet.name}</td>
+                                <td>{bullet.division.name}</td>
                                 <td style={{ textAlign: 'center' }}>
                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
                                         <button
                                             type="button"
                                             className="btn btn-primary btn-sm"
-                                            onClick={() => onSelected(icd)}
+                                            onClick={() => onSelected(bullet)}
                                         >
                                             <i className="bi bi-download"></i>
                                         </button>
