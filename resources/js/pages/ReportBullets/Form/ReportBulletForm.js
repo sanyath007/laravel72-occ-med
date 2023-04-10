@@ -63,6 +63,7 @@ const ReportBulletForm = () => {
                                             isOpen={showReportBullets}
                                             hideModal={() => setShowReportBullets(false)}
                                             onSelected={handleSelectedReportBullet}
+                                            division={formProps.values.division_id}
                                         />
 
                                         <div className="row mb-2">
