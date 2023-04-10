@@ -20,7 +20,7 @@ class ReportBulletController extends Controller
                             $query->where('division_id', $division);
                         })
                         ->when(!empty($name), function($query) use ($name) {
-                            $query->where('name', $name);
+                            $query->where('name', 'like', '%'.$name.'%');
                         })
                         ->when(!empty($types), function($query) use ($types) {
                             if (is_array($types)) {
