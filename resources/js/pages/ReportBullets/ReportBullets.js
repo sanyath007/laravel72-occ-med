@@ -1,20 +1,30 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { FaPlus } from 'react-icons/fa'
 import { getReportBullets } from '../../store/reportBullet'
 import Pagination from '../../components/Pagination'
+import ReportBulletFillter from '../../components/ReportBullet/Fillter'
 
 const ReportBullets = () => {
     const dispatch = useDispatch();
     const { bullets, pager, loading } = useSelector(state => state.reportBullet);
+    const [filterings, setFilterings] = useState({ name: '', division: '' });
 
     useEffect(() => {
-        dispatch(getReportBullets({  path: `/api/report-bullets` }))
-    }, []);
+        fetchBullets()
+    }, [filterings])
+
+    const fetchBullets = (path='/api/report-bullets?page=') => {
+        /** Filtering params */
+        const name = filterings.name ? filterings.name : ''
+        const division = filterings.division ? filterings.division : ''
+
+        dispatch(getReportBullets({ path: `${path}&division=${division}&name=${name}&type=1,2` }))
+    }
 
     const handlePageBtnClicked = (path) => {
-        dispatch(getReportBullets({ path }))
+        fetchBullets(path)
     }
 
     return (
@@ -25,20 +35,25 @@ const ReportBullets = () => {
                         <div className="card-body">
                             <h5 className="card-title">หัวข้อรายงาน</h5>
 
+                            <div className="row mb-3">
+                                <ReportBulletFillter fetchData={setFilterings} />
+
+                                <div className="col-md-3">
+                                    <Link to="/report-bullets/new" className="btn btn-primary float-end">
+                                        <FaPlus className="me-1" />
+                                        สร้างหัวข้อรายงาน
+                                    </Link>
+                                </div>
+                            </div>
+
                             <div className="row">
                                 <div className="col-md-12">
-                                    <div className="d-flex justify-content-end mb-3">
-                                        <Link to="/report-bullets/new" className="btn btn-primary">
-                                            <FaPlus className="me-1" />
-                                            สร้างหัวข้อรายงาน
-                                        </Link>
-                                    </div>
-
                                     <table className="table table-striped table-bordered">
                                         <thead>
                                             <tr>
                                                 <th style={{ width: '3%', textAlign: 'center' }}>ลำดับ</th>
                                                 <th style={{ textAlign: 'left' }}>หัวข้อรายงาน</th>
+                                                <th scope="col" style={{ width: '10%' }}>ประเภท</th>
                                                 <th style={{ width: '20%', textAlign: 'center' }}>หน่วยงาน</th>
                                                 <th style={{ width: '10%', textAlign: 'center' }}>Actions</th>
                                             </tr>
@@ -55,8 +70,11 @@ const ReportBullets = () => {
                                             )}
                                             {!loading && bullets && bullets.map((bullet, index) => (
                                                 <tr key={bullet.id}>
-                                                    <td style={{ textAlign: 'center' }}>{index+1}</td>
+                                                    <td style={{ textAlign: 'center' }}>{pager.from+index}</td>
                                                     <td>{bullet.name}</td>
+                                                    <td style={{ textAlign: 'center' }}>
+                                                        ระดับ {bullet.bullet_type_id - 1}
+                                                    </td>
                                                     <td style={{ textAlign: 'center' }}>{bullet.division?.name}</td>
                                                     <td style={{ textAlign: 'center' }}>
 
