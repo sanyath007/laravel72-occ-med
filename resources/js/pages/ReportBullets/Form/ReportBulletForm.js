@@ -21,6 +21,10 @@ const ReportBulletForm = () => {
 
     useEffect(() => {
         getDivisions();
+
+        return () => {
+            // Anything in here is fired on component unmount
+        };
     }, []);
 
     const getDivisions = async () => {
@@ -34,15 +38,28 @@ const ReportBulletForm = () => {
     }
 
     const handleSelectedReportBullet = (bullet, formik) => {
-        /** Set state */
-        setSelectedReportBullet(bullet)
+        if (bullet) {
+            /** Set state's value */
+            setSelectedReportBullet(bullet)
+    
+            /** Set formik field's value */
+            formik.setFieldValue('bullet_id', bullet.id);
 
-        /** Set formik field's value */
-        formik.setFieldValue('bullet_id', bullet.id);
-        formik.setFieldTouched('bullet_id', true);
+            setTimeout(() => formik.setFieldTouched('bullet_id', true));
+        }
 
         /** Hide modal */
         setShowReportBullets(false);
+    }
+
+    const handleClearSelectedReportBullet = (formik) => {
+        /** Clear state's value */
+        setSelectedReportBullet(null)
+
+        /** Clear formik field's value */
+        formik.setFieldValue('bullet_id', '');
+
+        setTimeout(() => formik.setFieldTouched('bullet_id', false));
     }
 
     return (
@@ -170,6 +187,13 @@ const ReportBulletForm = () => {
                                                         onClick={() => setShowReportBullets(true)}
                                                     >
                                                         <FaSearch />
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        className="btn btn-danger"
+                                                        onClick={() => handleClearSelectedReportBullet(formProps)}
+                                                    >
+                                                        เคลียร์
                                                     </button>
                                                 </div>
                                             </div>

@@ -7,6 +7,10 @@ const ReportBulletFillter = ({ fetchData }) => {
 
     useEffect(() => {
         getDivisions();
+
+        return () => {
+            // Anything in here is fired on component unmount
+        }
     }, []);
 
     const getDivisions = async () => {

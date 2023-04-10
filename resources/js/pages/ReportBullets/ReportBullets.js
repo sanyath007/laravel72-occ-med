@@ -20,7 +20,7 @@ const ReportBullets = () => {
         const name = filterings.name ? filterings.name : ''
         const division = filterings.division ? filterings.division : ''
 
-        dispatch(getReportBullets({ path: `${path}&division=${division}&name=${name}&type=1,2` }))
+        dispatch(getReportBullets({ path: `${path}&division=${division}&name=${name}` }))
     }
 
     const handlePageBtnClicked = (path) => {
