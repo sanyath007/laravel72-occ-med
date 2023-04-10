@@ -71,6 +71,7 @@ const ModalReportBullets = ({ isOpen, hideModal, onSelected, ...props }) => {
                             <th scope="col" style={{ width: '3%', textAlign: 'center' }}>#</th>
                             <th scope="col" style={{ width: '8%', textAlign: 'center' }}>ลำดับที่</th>
                             <th scope="col">ชื่อหัวข้อรายงาน</th>
+                            <th scope="col" style={{ width: '10%' }}>ประเภท</th>
                             <th scope="col" style={{ width: '40%' }}>หน่วยงาน</th>
                             <th scope="col" style={{ width: '5%', textAlign: 'center' }}>Actions</th>
                         </tr>
@@ -91,6 +92,9 @@ const ModalReportBullets = ({ isOpen, hideModal, onSelected, ...props }) => {
                                 <th scope="row" style={{ textAlign: 'center' }}>{pager?.from+row}</th>
                                 <td style={{ textAlign: 'center' }}>{bullet.bullet_no}</td>
                                 <td>{bullet.name}</td>
+                                <td style={{ textAlign: 'center' }}>
+                                    ระดับ {bullet.bullet_type_id - 1}
+                                </td>
                                 <td>{bullet.division.name}</td>
                                 <td style={{ textAlign: 'center' }}>
                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">

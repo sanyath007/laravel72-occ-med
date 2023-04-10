@@ -29,7 +29,7 @@ class ReportBulletController extends Controller
                                 $query->where('bullet_type_id', $types);
                             }
                         })
-                        ->paginate(20);
+                        ->paginate(10);
 
         return response()->json($bullets);
     }
