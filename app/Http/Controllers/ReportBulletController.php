@@ -40,4 +40,34 @@ class ReportBulletController extends Controller
 
         return response()->json($bullets);
     }
+
+    public function store(Request $request)
+    {
+        try {
+            $bullet = new ReportBullet;
+            $bullet->name           = $request['name'];
+            $bullet->bullet_no      = $request['bullet_no'];
+            $bullet->bullet_type_id = $request['bullet_type_id'];
+            $bullet->bullet_id      = $request['bullet_id'];
+            $bullet->unit_text      = $request['unit_text'];
+            $bullet->division_id    = $request['division_id'];
+    
+            if($bullet->save()) {
+                return response()->json([
+                    'status'    => 1,
+                    'bullet'    => $bullet
+                ]);
+            } else {
+                return response()->json([
+                    'status'    => 0,
+                    'message'   => 'Something went wrong!!'
+                ]);
+            }
+        } catch (\Exception $ex) {
+            return response()->json([
+                'status'    => 0,
+                'message' => $ex->getMessage()
+            ]);
+        }
+    }
 }
