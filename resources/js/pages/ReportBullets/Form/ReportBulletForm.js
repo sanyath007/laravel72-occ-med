@@ -16,7 +16,8 @@ const bulletSchema = Yup.object().shape({
 const ReportBulletForm = () => {
     const dispatch = useDispatch();
     const [divisions, setDivisions] = useState([]);
-    const [showReportBullets, setShowReportBullets] = useState(false)
+    const [showReportBullets, setShowReportBullets] = useState(false);
+    const [selectedReportBullet, setSelectedReportBullet] = useState(null);
 
     useEffect(() => {
         getDivisions();
@@ -32,8 +33,16 @@ const ReportBulletForm = () => {
         console.log(values, props);
     }
 
-    const handleSelectedReportBullet = (selected) => {
-        console.log(selected);
+    const handleSelectedReportBullet = (bullet, formik) => {
+        /** Set state */
+        setSelectedReportBullet(bullet)
+
+        /** Set formik field's value */
+        formik.setFieldValue('bullet_id', bullet.id);
+        formik.setFieldTouched('bullet_id', true);
+
+        /** Hide modal */
+        setShowReportBullets(false);
     }
 
     return (
@@ -62,7 +71,7 @@ const ReportBulletForm = () => {
                                         <ModalReportBullets
                                             isOpen={showReportBullets}
                                             hideModal={() => setShowReportBullets(false)}
-                                            onSelected={handleSelectedReportBullet}
+                                            onSelected={(bullet) => handleSelectedReportBullet(bullet, formProps)}
                                             division={formProps.values.division_id}
                                         />
 
@@ -146,7 +155,7 @@ const ReportBulletForm = () => {
                                                 <label htmlFor="">เป็นหัวข้อย่อยของ (ถ้ามี) :</label>
                                                 <div className="input-group">
                                                     <div className="form-control">
-                                                        
+                                                        {selectedReportBullet && selectedReportBullet.name}
                                                     </div>
                                                     <input
                                                         type="hidden"
