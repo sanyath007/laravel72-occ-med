@@ -34,7 +34,7 @@ const ReportBulletForm = () => {
     }
 
     const handleSubmit = (values, props) => {
-        console.log(values, props);
+        dispatch(store({ data: values }));
     }
 
     const handleSelectedReportBullet = (bullet, formik) => {
