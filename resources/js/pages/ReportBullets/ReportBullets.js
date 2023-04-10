@@ -36,8 +36,9 @@ const ReportBullets = () => {
                             <h5 className="card-title">หัวข้อรายงาน</h5>
 
                             <div className="row mb-3">
-                                <ReportBulletFillter fetchData={setFilterings} />
-
+                                <div className="col-md-9">
+                                    <ReportBulletFillter fetchData={setFilterings} />
+                                </div>
                                 <div className="col-md-3">
                                     <Link to="/report-bullets/new" className="btn btn-primary float-end">
                                         <FaPlus className="me-1" />

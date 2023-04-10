@@ -4,13 +4,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Modal } from 'react-bootstrap'
 import { getReportBullets } from '../../store/reportBullet'
 import Pagination from '../Pagination'
-import api from '../../api'
+import ReportBulletFillter from '../ReportBullet/Fillter'
 
 const ModalReportBullets = ({ isOpen, hideModal, onSelected, ...props }) => {
     const dispatch = useDispatch()
     const { bullets, pager, loading } = useSelector(state => state.reportBullet)
     const [filterings, setFilterings] = useState({ name: '', division: '' })
-    const [divisions, setDivisions] = useState([]);
 
     useEffect(() => {
         setFilterings(prev => ({ ...prev, division: props.division }))
@@ -19,16 +18,6 @@ const ModalReportBullets = ({ isOpen, hideModal, onSelected, ...props }) => {
     useEffect(() => {
         fetchBullets()
     }, [filterings])
-
-    useEffect(() => {
-        getDivisions();
-    }, []);
-
-    const getDivisions = async () => {
-        const res = await api.get('/api/divisions');
-
-        setDivisions(res.data)
-    }
 
     const fetchBullets = (path='/api/report-bullets?page=') => {
         /** Filtering params */
@@ -42,12 +31,6 @@ const ModalReportBullets = ({ isOpen, hideModal, onSelected, ...props }) => {
         fetchBullets(path)
     }
 
-    const handleChange = (e) => {
-        const { name, value } = e.target
-
-        setFilterings(prev => ({ ...prev, [name]: value }))
-    }
-
     return (
         <Modal
             show={isOpen}
@@ -58,31 +41,7 @@ const ModalReportBullets = ({ isOpen, hideModal, onSelected, ...props }) => {
             <Modal.Body>
                 <div className="alert border-dark alert-dismissible fade show" role="alert">
                     <div className="row">
-                        <div className="col-md-4">
-                            <select
-                                name="division"
-                                value={filterings.division}
-                                onChange={(e) => handleChange(e)}
-                                className={`form-control`}
-                            >
-                                <option value="">-- กรุณาเลือก --</option>
-                                {divisions && divisions.map(division => (
-                                    <option key={division.id} value={division.id}>
-                                        {division.name}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className="col-md-8">
-                            <input
-                                type="text"
-                                name="name"
-                                value={filterings.name}
-                                onChange={(e) => handleChange(e)}
-                                className="form-control"
-                                placeholder="ค้นหาด้วยชื่อหัวข้อรายงาน"
-                            />
-                        </div>
+                        <ReportBulletFillter fetchData={setFilterings} />
                     </div>
                 </div>
 

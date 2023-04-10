@@ -24,8 +24,8 @@ const ReportBulletFillter = ({ fetchData }) => {
     }
 
     return (
-        <>
-            <div className="col-md-3">
+        <div className="row">
+            <div className="col-md-4">
                 <select
                     name="division"
                     value={filterings.division}
@@ -40,7 +40,7 @@ const ReportBulletFillter = ({ fetchData }) => {
                     ))}
                 </select>
             </div>
-            <div className="col-md-6">
+            <div className="col-md-8">
                 <input
                     type="text"
                     name="name"
@@ -50,7 +50,7 @@ const ReportBulletFillter = ({ fetchData }) => {
                     placeholder="ค้นหาด้วยชื่อหัวข้อรายงาน"
                 />
             </div>
-        </>
+        </div>
     )
 }
 
