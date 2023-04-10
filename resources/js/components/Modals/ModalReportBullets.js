@@ -4,15 +4,31 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Modal } from 'react-bootstrap'
 import { getReportBullets } from '../../store/reportBullet'
 import Pagination from '../Pagination'
+import api from '../../api'
 
 const ModalReportBullets = ({ isOpen, hideModal, onSelected, ...props }) => {
     const dispatch = useDispatch()
     const { bullets, pager, loading } = useSelector(state => state.reportBullet)
     const [filterings, setFilterings] = useState({ name: '', division: '' })
+    const [divisions, setDivisions] = useState([]);
+
+    useEffect(() => {
+        setFilterings(prev => ({ ...prev, division: props.division }))
+    }, [props.division])
 
     useEffect(() => {
         fetchBullets()
     }, [filterings])
+
+    useEffect(() => {
+        getDivisions();
+    }, []);
+
+    const getDivisions = async () => {
+        const res = await api.get('/api/divisions');
+
+        setDivisions(res.data)
+    }
 
     const fetchBullets = (path='/api/report-bullets?page=') => {
         /** Filtering params */
@@ -42,17 +58,22 @@ const ModalReportBullets = ({ isOpen, hideModal, onSelected, ...props }) => {
             <Modal.Body>
                 <div className="alert border-dark alert-dismissible fade show" role="alert">
                     <div className="row">
-                        <div className="col-md-3">
-                            <input
-                                type="text"
+                        <div className="col-md-4">
+                            <select
                                 name="division"
                                 value={filterings.division}
                                 onChange={(e) => handleChange(e)}
-                                className="form-control"
-                                placeholder="ค้นหาด้วย ICD-10"
-                            />
+                                className={`form-control`}
+                            >
+                                <option value="">-- กรุณาเลือก --</option>
+                                {divisions && divisions.map(division => (
+                                    <option key={division.id} value={division.id}>
+                                        {division.name}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
-                        <div className="col-md-9">
+                        <div className="col-md-8">
                             <input
                                 type="text"
                                 name="name"
@@ -79,7 +100,7 @@ const ModalReportBullets = ({ isOpen, hideModal, onSelected, ...props }) => {
                     <tbody>
                         {loading && (
                             <tr>
-                                <td colSpan="5" style={{ textAlign: 'center' }}>
+                                <td colSpan="6" style={{ textAlign: 'center' }}>
                                     <div className="spinner-border text-secondary" role="status">
                                         <span className="visually-hidden">Loading...</span>
                                     </div>

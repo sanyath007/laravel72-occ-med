@@ -67,7 +67,7 @@ const ReportBulletForm = () => {
 
                                         <div className="row mb-2">
                                             <div className="col-md-12 form-group mb-2">
-                                                <label htmlFor="">งาน :</label>
+                                                <label htmlFor="">หน่วยงาน :</label>
                                                 <select
                                                     name="division_id"
                                                     value={formProps.values.division_id}
