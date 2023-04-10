@@ -56,7 +56,7 @@ const ReportBullets = () => {
                                                 <th style={{ textAlign: 'left' }}>หัวข้อรายงาน</th>
                                                 <th scope="col" style={{ width: '10%' }}>ประเภท</th>
                                                 <th style={{ width: '20%', textAlign: 'center' }}>หน่วยงาน</th>
-                                                <th style={{ width: '10%', textAlign: 'center' }}>Actions</th>
+                                                <th style={{ width: '8%', textAlign: 'center' }}>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -78,7 +78,14 @@ const ReportBullets = () => {
                                                     </td>
                                                     <td style={{ textAlign: 'center' }}>{bullet.division?.name}</td>
                                                     <td style={{ textAlign: 'center' }}>
-
+                                                        <div className="btn-group" role="group" aria-label="Basic mixed styles example">
+                                                            <Link to={`/report-bullets/${bullet.id}/edit`} className="btn btn-warning btn-sm">
+                                                                <i className="bi bi-pencil-square"></i>
+                                                            </Link>
+                                                            <a href="#" className="btn btn-danger btn-sm" onClick={(e) => console.log('Deleting report bullet data!!')}>
+                                                                <i className="bi bi-trash"></i>
+                                                            </a>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             ))}
