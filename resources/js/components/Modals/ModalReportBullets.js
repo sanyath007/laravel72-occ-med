@@ -19,7 +19,7 @@ const ModalReportBullets = ({ isOpen, hideModal, onSelected, ...props }) => {
         const name = filterings.name ? filterings.name : ''
         const division = filterings.division ? filterings.division : ''
 
-        dispatch(getReportBullets({ path: `${path}&division=${division}&name=${name}` }))
+        dispatch(getReportBullets({ path: `${path}&division=${division}&name=${name}&type=1,2` }))
     }
 
     const handlePageBtnClicked = (path) => {
