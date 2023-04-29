@@ -55,18 +55,19 @@ class ReportBulletController extends Controller
             if($bullet->save()) {
                 return response()->json([
                     'status'    => 1,
-                    'bullet'    => $bullet
+                    'message'   => 'Insertion successfully!!',
+                    'bullet'    => $bullet,
                 ]);
             } else {
                 return response()->json([
                     'status'    => 0,
-                    'message'   => 'Something went wrong!!'
+                    'message'   => 'Something went wrong!!',
                 ]);
             }
         } catch (\Exception $ex) {
             return response()->json([
                 'status'    => 0,
-                'message' => $ex->getMessage()
+                'message'   => $ex->getMessage(),
             ]);
         }
     }

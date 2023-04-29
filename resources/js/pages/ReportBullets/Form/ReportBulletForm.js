@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
 import { Formik, Form } from 'formik'
+import { toast } from 'react-toastify'
 import { FaSearch, FaSave } from 'react-icons/fa'
-import { store } from '../../../store/reportBullet'
+import { store, resetSuccess } from '../../../store/reportBullet'
 import api from '../../../api'
 import ModalReportBullets from '../../../components/Modals/ModalReportBullets'
 
@@ -14,10 +16,12 @@ const bulletSchema = Yup.object().shape({
 });
 
 const ReportBulletForm = () => {
-    const dispatch = useDispatch();
-    const [divisions, setDivisions] = useState([]);
-    const [showReportBullets, setShowReportBullets] = useState(false);
-    const [selectedReportBullet, setSelectedReportBullet] = useState(null);
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const { success } = useSelector(state => state.reportBullet)
+    const [divisions, setDivisions] = useState([])
+    const [showReportBullets, setShowReportBullets] = useState(false)
+    const [selectedReportBullet, setSelectedReportBullet] = useState(null)
 
     useEffect(() => {
         getDivisions();
@@ -25,7 +29,15 @@ const ReportBulletForm = () => {
         return () => {
             // Anything in here is fired on component unmount
         };
-    }, []);
+    }, [])
+
+    useEffect(() => {
+        if (success) {
+            toast.success('บันทึกข้อมูลเรียบร้อย !!!', { autoClose: 1000, hideProgressBar: true })
+            dispatch(resetSuccess())
+            navigate('/report-bullets')
+        }
+    }, [success])
 
     const getDivisions = async () => {
         const res = await api.get('/api/divisions');
@@ -49,7 +61,7 @@ const ReportBulletForm = () => {
         }
 
         /** Hide modal */
-        setShowReportBullets(false);
+        setShowReportBullets(false)
     }
 
     const handleClearSelectedReportBullet = (formik) => {

@@ -46,7 +46,9 @@ export const reportBulletSlice = createSlice({
     name: 'reportBullet',
     initialState,
     reducers: {
-
+        resetSuccess(state) {
+            state.success = false
+        }
     },
     extraReducers: {
         [getReportBullets.pending]: (state) => {
@@ -81,9 +83,17 @@ export const reportBulletSlice = createSlice({
             state.loading = true;
         },
         [store.fulfilled]: (state, { payload }) => {
-            const newBullet = [ ...state.bullets, payload];
+            const { status, message, bullet } = payload
+            let newBullet = []
 
-            state.bullets = newBullet;
+            if (status === 1) {
+                state.success = true
+                newBullet = [ ...state.bullets, bullet]
+            } else {
+                state.error = message
+            }
+
+            // state.bullets = newBullet;
             state.loading = false;
         },
         [store.rejected]: (state, { payload }) => {
@@ -93,4 +103,6 @@ export const reportBulletSlice = createSlice({
     }
 });
 
-export default reportBulletSlice.reducer;
+export const { resetSuccess } = reportBulletSlice.actions
+
+export default reportBulletSlice.reducer

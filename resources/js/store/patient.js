@@ -99,7 +99,7 @@ export const patientSlice = createSlice({
             }
 
             // state.patients = payload
-            // state.loading = false
+            state.loading = false
         },
         [store.rejected]: (state) => {
             state.loading = false
