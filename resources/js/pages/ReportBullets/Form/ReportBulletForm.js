@@ -151,6 +151,7 @@ const ReportBulletForm = () => {
                                                     <option value="1">ระดับ 0</option>
                                                     <option value="2">ระดับ 1</option>
                                                     <option value="3">ระดับ 2</option>
+                                                    <option value="4">ระดับ 3</option>
                                                 </select>
                                                 {formProps.errors.bullet_type_id && formProps.touched.bullet_type_id ? (
                                                     <div className="invalid-feedback">
