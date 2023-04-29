@@ -155,25 +155,8 @@ const Sidebar = () => {
                         </li>
                     </ul>
                 </li>
-                {/* สถานประกอบการ */}
-                <li className="nav-item">
-                    <a className="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-                        <i className="bi bi-house-door"></i><span>สถานประกอบการ</span>
-                        <i className="bi bi-chevron-down ms-auto"></i>
-                    </a>
-                    <ul id="icons-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
-                        <li>
-                            <Link to="companies/new" onClick={handleMenuClicked}>
-                                <i className="bi bi-circle"></i><span>ลงทะเบียน</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link to="companies" onClick={handleMenuClicked}>
-                                <i className="bi bi-circle"></i><span>รายการ</span>
-                            </Link>
-                        </li>
-                    </ul>
-                </li>
+                {/* Pages */}
+                <li className="nav-heading">ข้อมูลพื้นฐาน</li>
                 {/* ผู้ป่วย */}
                 <li className="nav-item">
                     <a className="nav-link collapsed" data-bs-target="#patients-nav" data-bs-toggle="collapse" href="#">
@@ -194,6 +177,25 @@ const Sidebar = () => {
                         </li>
                     </ul>
                 </li>
+                {/* สถานประกอบการ */}
+                <li className="nav-item">
+                    <a className="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                        <i className="bi bi-house-door"></i><span>สถานประกอบการ</span>
+                        <i className="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="icons-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <Link to="companies/new" onClick={handleMenuClicked}>
+                                <i className="bi bi-circle"></i><span>ลงทะเบียน</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="companies" onClick={handleMenuClicked}>
+                                <i className="bi bi-circle"></i><span>รายการ</span>
+                            </Link>
+                        </li>
+                    </ul>
+                </li>
                 {/* หัวข้อรายงาน */}
                 <li className="nav-item">
                     <Link className="nav-link collapsed" to="/report-bullets" onClick={handleMenuClicked}>
@@ -201,8 +203,12 @@ const Sidebar = () => {
                         <span>หัวข้อรายงาน</span>
                     </Link>
                 </li>
-                {/* Pages */}
-                <li className="nav-heading">Pages</li>
+                <li className="nav-item">
+                    <Link className="nav-link collapsed" to="/users" onClick={handleMenuClicked}>
+                        <i className="bi bi-people"></i>
+                        <span>ผู้ใช้งาน</span>
+                    </Link>
+                </li>
                 <li className="nav-item">
                     <Link className="nav-link collapsed" to="/users/profile" onClick={handleMenuClicked}>
                         <i className="bi bi-person-circle"></i>
@@ -219,12 +225,6 @@ const Sidebar = () => {
                     <Link className="nav-link collapsed" to="/contact" onClick={handleMenuClicked}>
                         <i className="bi bi-envelope"></i>
                         <span>ติดต่อเรา</span>
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link className="nav-link collapsed" to="/users" onClick={handleMenuClicked}>
-                        <i className="bi bi-people"></i>
-                        <span>ผู้ใช้งาน</span>
                     </Link>
                 </li>
                 {/* <li className="nav-item">
