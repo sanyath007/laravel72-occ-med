@@ -72,7 +72,7 @@ const ReportBullets = () => {
                                             {!loading && bullets && bullets.map((bullet, index) => (
                                                 <tr key={bullet.id}>
                                                     <td style={{ textAlign: 'center' }}>{pager.from+index}</td>
-                                                    <td>{bullet.name}</td>
+                                                    <td>{bullet.bullet_no && <span>{bullet.bullet_no} </span>}{bullet.name}</td>
                                                     <td style={{ textAlign: 'center' }}>
                                                         ระดับ {bullet.bullet_type_id - 1}
                                                     </td>
