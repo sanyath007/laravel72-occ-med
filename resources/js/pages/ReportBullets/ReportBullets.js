@@ -54,7 +54,8 @@ const ReportBullets = () => {
                                             <tr>
                                                 <th style={{ width: '3%', textAlign: 'center' }}>ลำดับ</th>
                                                 <th style={{ textAlign: 'left' }}>หัวข้อรายงาน</th>
-                                                <th scope="col" style={{ width: '10%' }}>ประเภท</th>
+                                                <th scope="col" style={{ width: '10%', textAlign: 'center' }}>เป้าหมาย</th>
+                                                <th scope="col" style={{ width: '10%', textAlign: 'center' }}>ประเภท</th>
                                                 <th style={{ width: '20%', textAlign: 'center' }}>หน่วยงาน</th>
                                                 <th style={{ width: '8%', textAlign: 'center' }}>Actions</th>
                                             </tr>
@@ -73,6 +74,7 @@ const ReportBullets = () => {
                                                 <tr key={bullet.id}>
                                                     <td style={{ textAlign: 'center' }}>{pager.from+index}</td>
                                                     <td>{bullet.bullet_no && <span>{bullet.bullet_no} </span>}{bullet.name}</td>
+                                                    <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
                                                     <td style={{ textAlign: 'center' }}>
                                                         ระดับ {bullet.bullet_type_id - 1}
                                                     </td>
