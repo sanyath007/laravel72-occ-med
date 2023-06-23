@@ -46,14 +46,34 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::put('/patients/{id}', 'PatientController@update');
     Route::delete('/patients/{id}', 'PatientController@delete');
 
-    /** Checkups */
-    Route::get('/checkups', 'CheckupController@getCheckups');
-    Route::get('/checkups/{id}', 'CheckupController@getCheckup');
-    Route::post('/checkups', 'CheckupController@store');
+    /** Clinic Monthly */
+    Route::get('/clinic-monthlies', 'ClinicMonthlyController@getMonthlies');
+    Route::post('/clinic-monthlies', 'ClinicMonthlyController@store');
+
+    /** Prevention Monthly */
+    Route::get('/prevention-monthlies', 'PreventionMonthlyController@getMonthlies');
+    Route::post('/prevention-monthlies', 'PreventionMonthlyController@store');
+
+    /** Promotion Monthly */
+    Route::get('/promotion-monthlies', 'PromotionMonthlyController@getMonthlies');
+    Route::post('/promotion-monthlies', 'PromotionMonthlyController@store');
+
+    /** Toxicology Monthly */
+    Route::get('/toxicology-monthlies', 'ToxicologyMonthlyController@getMonthlies');
+    Route::post('/toxicology-monthlies', 'ToxicologyMonthlyController@store');
+
+    /** Occupation Monthly */
+    Route::get('/occupation-monthlies', 'OccupationMonthlyController@getMonthlies');
+    Route::post('/occupation-monthlies', 'OccupationMonthlyController@store');
 
     /** Checkup Monthly */
     Route::get('/checkup-monthlies', 'CheckupMonthlyController@getMonthlies');
     Route::post('/checkup-monthlies', 'CheckupMonthlyController@store');
+
+    /** Checkups */
+    Route::get('/checkups', 'CheckupController@getCheckups');
+    Route::get('/checkups/{id}', 'CheckupController@getCheckup');
+    Route::post('/checkups', 'CheckupController@store');
 
     /** ICD-10 */
     Route::get('/icd10s', 'Icd10Controller@getIcd10s');

@@ -1,9 +1,15 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { GlobalContext } from '../../../context/globalContext';
+import { getReportBulletsByDivision } from '../../../store/reportBullet';
+import api from '../../../api';
 
 const ToxicologySummary = () => {
+    const dispatch = useDispatch();
+    const { bullets } = useSelector(state => state.reportBullet);
     const { setGlobal } = useContext(GlobalContext)
+    const [monthlies, setMonthlies] = useState([])
 
     useEffect(() => {
         setGlobal((prev) => ({
@@ -16,6 +22,26 @@ const ToxicologySummary = () => {
             ]
         }))
     }, [])
+
+    useEffect(() => {
+        dispatch(getReportBulletsByDivision({ path: '/api/report-bullets/division/4' }))
+    }, [])
+
+    useEffect(() => {
+        getMonthlies();
+
+        return () => getMonthlies();
+    }, [])
+
+    const getMonthlies = async () => {
+        const res = await api.get('/api/toxicology-monthlies?year=2566')
+
+        setMonthlies(res.data.monthlies)
+    }
+
+    const getMonthly = (month, bullet) => {
+        return monthlies.find(item => item.month === month && item.report_bullet_id === bullet);
+    }
 
     return (
         <section className="section">
@@ -54,7 +80,20 @@ const ToxicologySummary = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+                                            {bullets && bullets.map(bullet => (
+                                                <tr key={bullet.id}>
+                                                    <td style={{ textAlign: 'center' }}>{bullet.bullet_no}</td>
+                                                    <td>{bullet.name}</td>
+                                                    <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
+                                                    {[10,11,12,1,2,3,4,5,6,7,8,9].map(month => (
+                                                        <td key={month+bullet.id} style={{ textAlign: 'center', fontSize: '12px' }}>
+                                                            {getMonthly(month, bullet.id)?.result}
+                                                        </td>
+                                                    ))}
+                                                    <td></td>
+                                                </tr>
+                                            ))}
+                                            {/* <tr>
                                                 <td style={{ textAlign: 'center' }}>1</td>
                                                 <td>จัดทำฐานข้อมูลแหล่งมลพิษของจังหวัด</td>
                                                 <td style={{ textAlign: 'center' }}>เรื่อง</td>
@@ -503,7 +542,7 @@ const ToxicologySummary = () => {
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>
-                                            </tr>
+                                            </tr> */}
                                         </tbody>
                                     </table>
                                 </div>

@@ -5,6 +5,8 @@ import * as Yup from 'yup'
 import { FaSave } from 'react-icons/fa'
 import { GlobalContext } from '../../../context/globalContext'
 import { getReportBulletsByDivision } from '../../../store/reportBullet'
+import { monthNames } from '../../../utils/constraints'
+import api from '../../../api';
 
 const summarySchema = Yup.object().shape({
 
@@ -55,7 +57,7 @@ const ClinicSummaryForm = () => {
         const { id, month, year } = values
         const data = { id, month, year, results }
 
-        const res = await api.post('/api/checkup-monthlies', data);
+        const res = await api.post('/api/clinic-monthlies', data);
 
         console.log(res);
     }
@@ -111,11 +113,19 @@ const ClinicSummaryForm = () => {
                                                                 <td>ประจำเดือน</td>
                                                                 <td></td>
                                                                 <td>
-                                                                    <input
-                                                                        type="text"
-                                                                        name=""
-                                                                        className="form-control text-center"
-                                                                    />
+                                                                    <select
+                                                                        name="month"
+                                                                        value={formProps.values.month}
+                                                                        onChange={formProps.handleChange}
+                                                                        className="form-control"
+                                                                    >
+                                                                        <option value="">-- เลือกเดือน --</option>
+                                                                        {monthNames.map(month => (
+                                                                            <option key={month.id} value={month.id}>
+                                                                                {month.name}
+                                                                            </option>
+                                                                        ))}
+                                                                    </select>
                                                                 </td>
                                                             </tr>
                                                             {bullets && bullets.map(bullet => (
@@ -1911,7 +1921,7 @@ const ClinicSummaryForm = () => {
                                                     </table>
                                                 </div>
                                                 <div className="col-md-12 text-center">
-                                                    <button className="btn btn-primary">
+                                                    <button type="submit" className="btn btn-primary">
                                                         <FaSave className="me-1" />
                                                         บันทึก
                                                     </button>

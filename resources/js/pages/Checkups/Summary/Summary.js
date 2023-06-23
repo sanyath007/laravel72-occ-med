@@ -1,11 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { GlobalContext } from '../../../context/globalContext';
-import api from '../../../api'
+import { getReportBulletsByDivision } from '../../../store/reportBullet';
+import api from '../../../api';
 
 const CheckupSummary = () => {
+    const dispatch = useDispatch();
+    const { bullets } = useSelector(state => state.reportBullet);
     const { setGlobal } = useContext(GlobalContext)
-    const [bullets, setBullets] = useState([]);
+    const [monthlies, setMonthlies] = useState([])
 
     useEffect(() => {
         setGlobal((prev) => ({
@@ -20,18 +24,23 @@ const CheckupSummary = () => {
     }, [])
 
     useEffect(() => {
-        getReportBullets()
+        dispatch(getReportBulletsByDivision({ path: '/api/report-bullets/division/6' }))
     }, [])
 
-    const getReportBullets = async () => {
-        try {
-            const res = await api.get('/api/checkup-monthlies?year=2566');
-            console.log(res.data);
+    useEffect(() => {
+        getMonthlies();
 
-            setBullets(res.data.bullets)
-        } catch (error) {
-            console.log(error);
-        }
+        return () => getMonthlies();
+    }, [])
+
+    const getMonthlies = async () => {
+        const res = await api.get('/api/checkup-monthlies?year=2566')
+
+        setMonthlies(res.data.monthlies)
+    }
+
+    const getMonthly = (month, bullet) => {
+        return monthlies.find(item => item.month === month && item.report_bullet_id === bullet);
     }
 
     return (
@@ -76,18 +85,11 @@ const CheckupSummary = () => {
                                                     <td style={{ textAlign: 'center' }}>{bullet.bullet_no}</td>
                                                     <td>{bullet.name}</td>
                                                     <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    {[10,11,12,1,2,3,4,5,6,7,8,9].map(month => (
+                                                        <td key={month+bullet.id} style={{ textAlign: 'center', fontSize: '12px' }}>
+                                                            {getMonthly(month, bullet.id)?.result}
+                                                        </td>
+                                                    ))}
                                                     <td></td>
                                                 </tr>
                                             ))}

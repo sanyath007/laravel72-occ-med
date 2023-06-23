@@ -121,7 +121,6 @@ const CheckupSummaryForm = () => {
                                                                 />
                                                             </td>
                                                         </tr>
-
                                                         {bullets && bullets.map(bullet => (
                                                             <tr key={bullet.id}>
                                                                 <td style={{ textAlign: 'center' }}>{bullet.bullet_no}</td>
@@ -321,7 +320,7 @@ const CheckupSummaryForm = () => {
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td style={{ textAlign: 'center' }}>11</td>
+                                                            <td style={{ textAlign: 'center' }}>12</td>
                                                             <td>จำนวนหน่วยงาน</td>
                                                             <td></td>
                                                             <td>
