@@ -43,11 +43,11 @@ const Sidebar = () => {
                         <i className="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="clinic-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
-                        <li>
+                        {/* <li>
                             <Link to="/clinics" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>การให้บริการ</span>
                             </Link>
-                        </li>
+                        </li> */}
                         <li>
                             <Link to="/clinics/summary" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>สรุปผลงาน</span>
@@ -104,15 +104,20 @@ const Sidebar = () => {
                     </a>
                     <ul id="toxicologies-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
+                            <Link to="/toxicologies" onClick={handleMenuClicked}>
+                                <i className="bi bi-circle"></i><span>การให้บริการ</span>
+                            </Link>
+                        </li>
+                        <li>
                             <Link to="/toxicologies/summary" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>สรุปผลงาน</span>
                             </Link>
                         </li>
-                        <li>
+                        {/* <li>
                             <Link to="/toxicologies/pollution-sources" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>แหล่งมลพิษของจังหวัด</span>
                             </Link>
-                        </li>
+                        </li> */}
                     </ul>
                 </li>
                 {/* งานอาชีวอนามัยในโรงพยาบาล */}
