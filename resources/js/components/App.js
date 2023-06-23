@@ -23,22 +23,28 @@ import Checkups from "../pages/Checkups/Checkups";
 import CheckupForm from "../pages/Checkups/Form/CheckupForm";
 import CheckupSummary from "../pages/Checkups/Summary/Summary";
 import CheckupSummaryForm from "../pages/Checkups/Summary/SummaryForm";
+import CheckupSummaryYear from "../pages/Checkups/Summary/SummaryYear";
 import Clinics from "../pages/Clinics/Clinics";
 import ClinicSummary from "../pages/Clinics/Summary/Summary";
 import ClinicSummaryForm from "../pages/Clinics/Summary/SummaryForm";
+import ClinicSummaryYear from "../pages/Clinics/Summary/SummaryYear";
 import Preventions from "../pages/Preventions/Preventions";
 import PreventionForm from "../pages/Preventions/Form/PreventionForm";
 import PreventionSummary from "../pages/Preventions/Summary/Summary";
 import PreventionSummaryForm from "../pages/Preventions/Summary/SummaryForm";
+import PreventionSummaryYear from "../pages/Preventions/Summary/SummaryYear";
 import Promotions from "../pages/Promotions/Promotions";
 import PromotionForm from "../pages/Promotions/Form/PromotionForm";
 import PromotionSummary from "../pages/Promotions/Summary/Summary";
 import PromotionSummaryForm from "../pages/Promotions/Summary/SummaryForm";
-import ToxicologySummaryForm from "../pages/Toxicologies/Summary/SummaryForm";
+import PromotionSummaryYear from "../pages/Promotions/Summary/SummaryYear";
 import ToxicologySummary from "../pages/Toxicologies/Summary/Summary";
+import ToxicologySummaryForm from "../pages/Toxicologies/Summary/SummaryForm";
+import ToxicologySummaryYear from "../pages/Toxicologies/Summary/SummaryYear";
 import PollutionSources from "../pages/Toxicologies/PollutionSources";
 import OccupationSummary from "../pages/Occupations/Summary/Summary";
 import OccupationSummaryForm from "../pages/Occupations/Summary/SummaryForm";
+import OccupationSummaryYear from "../pages/Occupations/Summary/SummaryYear";
 import ReportBullets from "../pages/ReportBullets/ReportBullets";
 import ReportBulletForm from "../pages/ReportBullets/Form/ReportBulletForm";
 import { useAuth } from "../hooks/useAuth"
@@ -74,27 +80,33 @@ export default function App() {
                         <Route path="/checkups/new" element={<CheckupForm />} />
                         <Route path="/checkups/summary" element={<CheckupSummary />} />
                         <Route path="/checkups/summary/new" element={<CheckupSummaryForm />} />
+                        <Route path="/checkups/summary-year" element={<CheckupSummaryYear />} />
                         {/* Clinics routes */}
                         <Route path="/clinics" element={<Clinics />} />
                         <Route path="/clinics/summary" element={<ClinicSummary />} />
                         <Route path="/clinics/summary/new" element={<ClinicSummaryForm />} />
+                        <Route path="/clinics/summary-year" element={<ClinicSummaryYear />} />
                         {/* Preventions routes */}
                         <Route path="/preventions" element={<Preventions />} />
                         <Route path="/preventions/new" element={<PreventionForm />} />
                         <Route path="/preventions/summary" element={<PreventionSummary />} />
                         <Route path="/preventions/summary/new" element={<PreventionSummaryForm />} />
+                        <Route path="/preventions/summary-year" element={<PreventionSummaryYear />} />
                         {/* Promotions routes */}
                         <Route path="/promotions" element={<Promotions />} />
                         <Route path="/promotions/new" element={<PromotionForm />} />
                         <Route path="/promotions/summary" element={<PromotionSummary />} />
                         <Route path="/promotions/summary/new" element={<PromotionSummaryForm />} />
+                        <Route path="/promotions/summary-year" element={<PromotionSummaryYear />} />
                         {/* Toxicologies routes */}
                         <Route path="/toxicologies/summary" element={<ToxicologySummary />} />
                         <Route path="/toxicologies/summary/new" element={<ToxicologySummaryForm />} />
+                        <Route path="/toxicologies/summary-year" element={<ToxicologySummaryYear />} />
                         <Route path="/toxicologies/pollution-sources" element={<PollutionSources />} />
                         {/* Occupations routes */}
                         <Route path="/occupations/summary" element={<OccupationSummary />} />
                         <Route path="/occupations/summary/new" element={<OccupationSummaryForm />} />
+                        <Route path="/occupations/summary-year" element={<OccupationSummaryYear />} />
                         {/* Companies routes */}
                         <Route path="/companies" element={<Companies />} />
                         <Route path="/companies/new" element={<CompanyNew />} />

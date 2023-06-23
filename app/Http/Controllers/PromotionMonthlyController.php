@@ -22,6 +22,26 @@ class PromotionMonthlyController extends Controller
         ]);
     }
 
+    public function getMonthlySummary(Request $request, $year)
+    {
+        $monthlies = \DB::table('promotion')
+                        ->select(
+                            'promotion.year', 'promotion.report_bullet_id',
+                            \DB::raw('SUM(promotion.result) as sum_result')
+                        )
+                        ->where('year', $year)
+                        ->groupBy('promotion.year')
+                        ->groupBy('promotion.report_bullet_id')
+                        ->get();
+        $bullets = ReportBullet::all();
+
+
+        return response()->json([
+            "monthlies" => $monthlies,
+            "bullets"   => $bullets
+        ]);
+    }
+
     public function store(Request $request)
     {
         try {

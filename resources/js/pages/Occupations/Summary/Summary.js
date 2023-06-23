@@ -74,7 +74,10 @@ const OccupationSummary = () => {
                                             <option value="2566">2566</option>
                                         </select>
                                     </div>
-                                    <Link to="/occupations/summary/new" className="btn btn-primary float-end mb-2">เพิ่มรายการ</Link>
+                                    <div>
+                                        <Link to="/occupations/summary/new" className="btn btn-primary float-end mb-2">เพิ่มรายการ</Link>
+                                        <Link to="/occupations/summary-year" className="btn btn-danger float-end mb-2 me-2">สรุปผลงานรายปี</Link>
+                                    </div>
                                 </div>
                                 <div className="col-md-12">
                                     <table className="table table-striped table-bordered">

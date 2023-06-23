@@ -22,6 +22,26 @@ class CheckupMonthlyController extends Controller
         ]);
     }
 
+    public function getMonthlySummary(Request $request, $year)
+    {
+        $monthlies = \DB::table('checkup_monthly')
+                        ->select(
+                            'checkup_monthly.year', 'checkup_monthly.report_bullet_id',
+                            \DB::raw('SUM(checkup_monthly.result) as sum_result')
+                        )
+                        ->where('year', $year)
+                        ->groupBy('checkup_monthly.year')
+                        ->groupBy('checkup_monthly.report_bullet_id')
+                        ->get();
+        $bullets = ReportBullet::all();
+
+
+        return response()->json([
+            "monthlies" => $monthlies,
+            "bullets"   => $bullets
+        ]);
+    }
+
     public function store(Request $request)
     {
         try {

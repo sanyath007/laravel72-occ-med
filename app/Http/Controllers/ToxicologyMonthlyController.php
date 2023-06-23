@@ -22,6 +22,26 @@ class ToxicologyMonthlyController extends Controller
         ]);
     }
 
+    public function getMonthlySummary(Request $request, $year)
+    {
+        $monthlies = \DB::table('toxicology_monthly')
+                        ->select(
+                            'toxicology_monthly.year', 'toxicology_monthly.report_bullet_id',
+                            \DB::raw('SUM(toxicology_monthly.result) as sum_result')
+                        )
+                        ->where('year', $year)
+                        ->groupBy('toxicology_monthly.year')
+                        ->groupBy('toxicology_monthly.report_bullet_id')
+                        ->get();
+        $bullets = ReportBullet::all();
+
+
+        return response()->json([
+            "monthlies" => $monthlies,
+            "bullets"   => $bullets
+        ]);
+    }
+
     public function store(Request $request)
     {
         try {

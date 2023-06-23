@@ -5,6 +5,7 @@ import * as Yup from 'yup'
 import { FaSave } from 'react-icons/fa'
 import { GlobalContext } from '../../../context/globalContext';
 import { getReportBulletsByDivision } from '../../../store/reportBullet';
+import { monthNames } from '../../../utils/constraints'
 import api from '../../../api'
 
 const summarySchema = Yup.object().shape({
@@ -112,13 +113,19 @@ const CheckupSummaryForm = () => {
                                                             <td>ประจำเดือน</td>
                                                             <td style={{ textAlign: 'center' }}></td>
                                                             <td style={{ textAlign: 'center' }}>
-                                                                <input
-                                                                    type="text"
+                                                                <select
                                                                     name="month"
                                                                     value={formProps.values.month}
                                                                     onChange={formProps.handleChange}
-                                                                    className="form-control text-center"
-                                                                />
+                                                                    className="form-control"
+                                                                >
+                                                                    <option value="">-- เลือกเดือน --</option>
+                                                                    {monthNames.map(month => (
+                                                                        <option key={month.id} value={month.id}>
+                                                                            {month.name}
+                                                                        </option>
+                                                                    ))}
+                                                                </select>
                                                             </td>
                                                         </tr>
                                                         {bullets && bullets.map(bullet => (

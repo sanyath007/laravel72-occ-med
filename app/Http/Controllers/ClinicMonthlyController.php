@@ -22,6 +22,26 @@ class ClinicMonthlyController extends Controller
         ]);
     }
 
+    public function getMonthlySummary(Request $request, $year)
+    {
+        $monthlies = \DB::table('clinic_monthly')
+                        ->select(
+                            'clinic_monthly.year', 'clinic_monthly.report_bullet_id',
+                            \DB::raw('SUM(clinic_monthly.result) as sum_result')
+                        )
+                        ->where('year', $year)
+                        ->groupBy('clinic_monthly.year')
+                        ->groupBy('clinic_monthly.report_bullet_id')
+                        ->get();
+        $bullets = ReportBullet::all();
+
+
+        return response()->json([
+            "monthlies" => $monthlies,
+            "bullets"   => $bullets
+        ]);
+    }
+
     public function store(Request $request)
     {
         try {

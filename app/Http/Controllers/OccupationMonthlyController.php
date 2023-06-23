@@ -22,6 +22,26 @@ class OccupationMonthlyController extends Controller
         ]);
     }
 
+    public function getMonthlySummary(Request $request, $year)
+    {
+        $monthlies = \DB::table('occupation_monthly')
+                        ->select(
+                            'occupation_monthly.year', 'occupation_monthly.report_bullet_id',
+                            \DB::raw('SUM(occupation_monthly.result) as sum_result')
+                        )
+                        ->where('year', $year)
+                        ->groupBy('occupation_monthly.year')
+                        ->groupBy('occupation_monthly.report_bullet_id')
+                        ->get();
+        $bullets = ReportBullet::all();
+
+
+        return response()->json([
+            "monthlies" => $monthlies,
+            "bullets"   => $bullets
+        ]);
+    }
+
     public function store(Request $request)
     {
         try {

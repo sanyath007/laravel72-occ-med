@@ -22,6 +22,26 @@ class PreventionMonthlyController extends Controller
         ]);
     }
 
+    public function getMonthlySummary(Request $request, $year)
+    {
+        $monthlies = \DB::table('prevention_monthly')
+                        ->select(
+                            'prevention_monthly.year', 'prevention_monthly.report_bullet_id',
+                            \DB::raw('SUM(prevention_monthly.result) as sum_result')
+                        )
+                        ->where('year', $year)
+                        ->groupBy('prevention_monthly.year')
+                        ->groupBy('prevention_monthly.report_bullet_id')
+                        ->get();
+        $bullets = ReportBullet::all();
+
+
+        return response()->json([
+            "monthlies" => $monthlies,
+            "bullets"   => $bullets
+        ]);
+    }
+
     public function store(Request $request)
     {
         try {
