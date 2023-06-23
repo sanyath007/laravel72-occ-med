@@ -10,6 +10,7 @@ const ToxicologySummary = () => {
     const { bullets } = useSelector(state => state.reportBullet);
     const { setGlobal } = useContext(GlobalContext)
     const [monthlies, setMonthlies] = useState([])
+    const [filter, setFilter] = useState(2566)
 
     useEffect(() => {
         setGlobal((prev) => ({
@@ -28,15 +29,20 @@ const ToxicologySummary = () => {
     }, [])
 
     useEffect(() => {
-        getMonthlies();
+        getMonthlies(2566);
 
-        return () => getMonthlies();
+        return () => getMonthlies(2566);
     }, [])
 
-    const getMonthlies = async () => {
-        const res = await api.get('/api/toxicology-monthlies?year=2566')
+    const getMonthlies = async (year) => {
+        const res = await api.get(`/api/toxicology-monthlies?year=${year}`)
 
         setMonthlies(res.data.monthlies)
+    }
+
+    const handleFilterChange = (e) => {
+        setFilter(e.target.value)
+        getMonthlies(e.target.value)
     }
 
     const getMonthly = (month, bullet) => {
@@ -51,9 +57,26 @@ const ToxicologySummary = () => {
                         <div className="card-body">
                             <h5 className="card-title">สรุปผลงาน (งานพิษวิทยาและเวชศาสตร์สิ่งแวดล้อม)</h5>
                             <div className="row">
-                                <div className="col-md-12">
+                                <div
+                                    className="col-md-12"
+                                    style={{
+                                        display: 'flex',
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-between'
+                                    }}
+                                >
+                                    <div style={{ width: '40%', display: 'flex', alignItems: 'center', gap: '5px', marginBottom: '10px' }}>
+                                        <label>ปีงบประมาณ</label>
+                                        <select name="filter" value={filter} onChange={handleFilterChange} className="form-control">
+                                            <option value="2563">2563</option>
+                                            <option value="2564">2564</option>
+                                            <option value="2565">2565</option>
+                                            <option value="2566">2566</option>
+                                        </select>
+                                    </div>
                                     <Link to="/toxicologies/summary/new" className="btn btn-primary float-end mb-2">เพิ่มรายการ</Link>
                                 </div>
+
                                 <div className="col-md-12">
                                     <table className="table table-striped table-bordered">
                                         <thead>
