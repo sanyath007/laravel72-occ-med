@@ -116,7 +116,7 @@ const Dashboard = () => {
 
                         {/* =================================== Recent Sales =================================== */}
                         <div className="col-12">
-                            <div className="card recent-sales overflow-auto">
+                            {/* <div className="card recent-sales overflow-auto">
                                 <div className="filter">
                                     <a className="icon" href="#" data-bs-toggle="dropdown">
                                         <i className="bi bi-three-dots"></i>
@@ -181,13 +181,13 @@ const Dashboard = () => {
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         {/* =================================== End of Recent Sales =================================== */}
 
                         {/* =================================== Top Selling =================================== */}
                         <div className="col-12">
-                            <div className="card top-selling overflow-auto">
+                            {/* <div className="card top-selling overflow-auto">
                                 <div className="filter">
                                     <a className="icon" href="#" data-bs-toggle="dropdown">
                                         <i className="bi bi-three-dots"></i>
@@ -252,7 +252,7 @@ const Dashboard = () => {
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         {/* =================================== End of Top Selling =================================== */}
                     </div>
@@ -262,7 +262,7 @@ const Dashboard = () => {
                 {/* =================================== Right =================================== */}
                 <div className="col-lg-4">
                     {/* =================================== Recent Activities =================================== */}
-                    <div className="card">
+                    {/* <div className="card">
                         <div className="filter">
                             <a className="icon" href="#" data-bs-toggle="dropdown">
                                 <i className="bi bi-three-dots"></i>
@@ -311,11 +311,11 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     {/* =================================== End of Recent Activities =================================== */}
 
                     {/* =================================== News & Updates =================================== */}
-                    <div className="card">
+                    {/* <div className="card">
                         <div className="filter">
                             <a className="icon" href="#" data-bs-toggle="dropdown">
                                 <i className="bi bi-three-dots"></i>
@@ -359,7 +359,7 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     {/* =================================== End of News & Updates =================================== */}
                 </div>
                 {/* =================================== End of Right =================================== */}
