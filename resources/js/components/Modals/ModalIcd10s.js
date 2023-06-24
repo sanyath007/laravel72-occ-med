@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Modal } from 'react-bootstrap'
-import { getIcd10s } from '../../store/icd10'
+import { getIcd10s } from '../../store/slices/icd10'
 import Pagination from '../Pagination'
 
 const ModalIcd10s = ({ isOpen, hideModal, onSelected, ...props }) => {

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { FaPlus } from 'react-icons/fa'
-import { getReportBullets } from '../../store/reportBullet'
+import { getReportBullets } from '../../store/slices/reportBullet'
 import Pagination from '../../components/Pagination'
 import ReportBulletFillter from '../../components/ReportBullet/Fillter'
 

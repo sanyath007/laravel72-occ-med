@@ -1,15 +1,16 @@
-import { configureStore } from '@reduxjs/toolkit'
-import { patientReducer } from './patient'
-import { companyReducer } from './company'
-import { icd10Reducer } from './icd10'
-import { rightReducer } from './right'
-import { checkupReducer } from './checkup'
-import { addressReducer } from './address'
-import { nationalityReducer } from './nationality'
-import { pnameReducer } from './pname'
-import doctorReducer from './doctor'
-import employeeReducer from './employee'
-import reportBulletReducer from './reportBullet'
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+import { patientReducer } from './slices/patient'
+import { companyReducer } from './slices/company'
+import { icd10Reducer } from './slices/icd10'
+import { rightReducer } from './slices/right'
+import { checkupReducer } from './slices/checkup'
+import { addressReducer } from './slices/address'
+import { nationalityReducer } from './slices/nationality'
+import { pnameReducer } from './slices/pname'
+import doctorReducer from './slices/doctor'
+import employeeReducer from './slices/employee'
+import reportBulletReducer from './slices/reportBullet'
+import { patientsApi } from './services/patientsApi'
 
 export default configureStore({
     reducer: {
@@ -24,5 +25,8 @@ export default configureStore({
         doctor: doctorReducer,
         employee: employeeReducer,
         reportBullet: reportBulletReducer,
-    }
+        [patientsApi.reducerPath]: patientsApi.reducer
+    },
+    middleware: (getDefaultMiddleware) => 
+        getDefaultMiddleware().concat(patientsApi.middleware),
 })

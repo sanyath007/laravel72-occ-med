@@ -4,16 +4,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as moment from 'moment'
 import { AiOutlineMan, AiOutlineWoman } from 'react-icons/ai'
 import { GlobalContext } from '../../context/globalContext';
-import { getPatients } from '../../store/patient'
-import { calcAgeY } from '../../utils/calculator'
 import Pagination from '../../components/Pagination'
 import PatientFilter from '../../components/Patient/PatientFilter';
+import { getPatients } from '../../store/slices/patient'
+import { useGetPatientsQuery } from '../../store/services/patientsApi';
+import { calcAgeY } from '../../utils/calculator'
 
 const Patients = () => {
     const dispatch = useDispatch()
-    const { patients, pager, loading } = useSelector(state => state.patient)
+    // const { patients, pager, loading } = useSelector(state => state.patient)
     const { setGlobal } = useContext(GlobalContext)
     const [queryStrings, setQueryStrings] = useState('')
+    const { data, isLoading } = useGetPatientsQuery()
 
     useEffect(() => {
         setGlobal((prev) => ({
@@ -27,16 +29,16 @@ const Patients = () => {
         }))
     }, [])
 
-    useEffect(() => {
-        fetchPatients()
-    }, [queryStrings])
+    // useEffect(() => {
+    //     fetchPatients()
+    // }, [queryStrings])
 
-    const fetchPatients = (path='/api/patients?page=') => {
-        dispatch(getPatients({ path: `${path}${queryStrings}` }))
-    }
+    // const fetchPatients = (path='/api/patients?page=') => {
+    //     dispatch(getPatients({ path: `${path}${queryStrings}` }))
+    // }
 
     const handlePageBtnClicked = (path) => {
-        fetchPatients(path)
+        // fetchPatients(path)
     }
 
     return (
@@ -68,7 +70,7 @@ const Patients = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {loading && (
+                                    {/* {loading && (
                                         <tr>
                                             <td colSpan="9" style={{ textAlign: 'center' }}>
                                                 <div className="spinner-border text-secondary" role="status">
@@ -115,14 +117,14 @@ const Patients = () => {
                                                 </div>
                                             </td>
                                         </tr>
-                                    ))}
+                                    ))} */}
                                 </tbody>
                             </table>
 
-                            <Pagination
+                            {/* <Pagination
                                 pager={pager}
                                 handlePageBtnClicked={handlePageBtnClicked}
-                            />
+                            /> */}
                         </div>
                     </div>
                 </div>

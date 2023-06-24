@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { GlobalContext } from '../../context/globalContext'
-import { getPatient, update, resetSuccess } from '../../store/patient'
+import { getPatient, update, resetSuccess } from '../../store/slices/patient'
 import PatientForm from '../../components/Patient/PatientForm'
 
 const PatientEdit = () => {

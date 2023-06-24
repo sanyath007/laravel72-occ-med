@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Modal } from 'react-bootstrap'
-import { getCompanies } from '../../store/company'
+import { getCompanies } from '../../store/slices/company'
 import Pagination from '../Pagination'
 import CompanyFilter from '../Company/CompanyFilter'
 

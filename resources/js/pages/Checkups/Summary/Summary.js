@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { GlobalContext } from '../../../context/globalContext';
-import { getReportBulletsByDivision } from '../../../store/reportBullet';
+import { getReportBulletsByDivision } from '../../../store/slices/reportBullet';
 import api from '../../../api';
 
 const CheckupSummary = () => {

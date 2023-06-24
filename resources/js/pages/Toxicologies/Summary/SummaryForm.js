@@ -5,7 +5,7 @@ import { Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { FaSave } from 'react-icons/fa'
 import { GlobalContext } from '../../../context/globalContext';
-import { getReportBulletsByDivision } from '../../../store/reportBullet';
+import { getReportBulletsByDivision } from '../../../store/slices/reportBullet';
 import { monthNames } from '../../../utils/constraints'
 import api from '../../../api';
 

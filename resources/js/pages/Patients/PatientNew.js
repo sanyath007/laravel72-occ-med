@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { GlobalContext } from '../../context/globalContext'
-import { store, resetSuccess } from '../../store/patient'
+import { store, resetSuccess } from '../../store/slices/patient'
 import PatientForm from '../../components/Patient/PatientForm'
 
 const PatientNew = () => {

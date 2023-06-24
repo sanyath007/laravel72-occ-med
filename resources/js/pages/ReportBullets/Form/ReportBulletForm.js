@@ -5,7 +5,7 @@ import * as Yup from 'yup'
 import { Formik, Form } from 'formik'
 import { toast } from 'react-toastify'
 import { FaSearch, FaSave } from 'react-icons/fa'
-import { store, resetSuccess } from '../../../store/reportBullet'
+import { store, resetSuccess } from '../../../store/slices/reportBullet'
 import api from '../../../api'
 import ModalReportBullets from '../../../components/Modals/ModalReportBullets'
 

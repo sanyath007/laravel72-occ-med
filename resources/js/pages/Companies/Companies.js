@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FaEnvelope, FaMobileAlt, FaUserAlt } from 'react-icons/fa'
 import Pagination from '../../components/Pagination'
 import { GlobalContext } from '../../context/globalContext'
-import { getCompanies } from '../../store/company'
+import { getCompanies } from '../../store/slices/company'
 
 const Companies = () => {
     const dispatch = useDispatch()

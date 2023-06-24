@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FaCheckSquare, FaTimesCircle } from 'react-icons/fa'
 import * as moment from 'moment'
 import { GlobalContext } from '../../context/globalContext'
-import { getPatient } from '../../store/patient'
+import { getPatient } from '../../store/slices/patient'
 import { calcAgeY } from '../../utils/calculator'
 
 const PatientDetail = () => {

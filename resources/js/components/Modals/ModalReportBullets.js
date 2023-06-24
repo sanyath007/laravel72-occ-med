@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Modal } from 'react-bootstrap'
-import { getReportBullets } from '../../store/reportBullet'
+import { getReportBullets } from '../../store/slices/reportBullet'
 import Pagination from '../Pagination'
 import ReportBulletFillter from '../ReportBullet/Fillter'
 

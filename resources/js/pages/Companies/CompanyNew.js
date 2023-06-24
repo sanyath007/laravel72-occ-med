@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import CompanyForm from '../../components/Company/CompanyForm'
 import { GlobalContext } from '../../context/globalContext'
-import { store, resetSuccess } from '../../store/company'
+import { store, resetSuccess } from '../../store/slices/company'
 
 const CompanyNew = () => {
     const dispatch = useDispatch()
