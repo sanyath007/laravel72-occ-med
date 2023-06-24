@@ -46,35 +46,11 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::put('/patients/{id}', 'PatientController@update');
     Route::delete('/patients/{id}', 'PatientController@delete');
 
-    /** Clinic Monthly */
-    Route::get('/clinic-monthlies', 'ClinicMonthlyController@getMonthlies');
-    Route::get('/clinic-monthlies/{year}', 'ClinicMonthlyController@getMonthlySummary');
-    Route::post('/clinic-monthlies', 'ClinicMonthlyController@store');
-
-    /** Prevention Monthly */
-    Route::get('/prevention-monthlies', 'PreventionMonthlyController@getMonthlies');
-    Route::get('/prevention-monthlies/{year}', 'PreventionMonthlyController@getMonthlySummary');
-    Route::post('/prevention-monthlies', 'PreventionMonthlyController@store');
-
-    /** Promotion Monthly */
-    Route::get('/promotion-monthlies', 'PromotionMonthlyController@getMonthlies');
-    Route::get('/promotion-monthlies/{year}', 'PromotionMonthlyController@getMonthlySummary');
-    Route::post('/promotion-monthlies', 'PromotionMonthlyController@store');
-
-    /** Toxicology Monthly */
-    Route::get('/toxicology-monthlies', 'ToxicologyMonthlyController@getMonthlies');
-    Route::get('/toxicology-monthlies/{year}', 'ToxicologyMonthlyController@getMonthlySummary');
-    Route::post('/toxicology-monthlies', 'ToxicologyMonthlyController@store');
-
-    /** Occupation Monthly */
-    Route::get('/occupation-monthlies', 'OccupationMonthlyController@getMonthlies');
-    Route::get('/occupation-monthlies/{year}', 'OccupationMonthlyController@getMonthlySummary');
-    Route::post('/occupation-monthlies', 'OccupationMonthlyController@store');
-
-    /** Checkup Monthly */
-    Route::get('/checkup-monthlies', 'CheckupMonthlyController@getMonthlies');
-    Route::get('/checkup-monthlies/{year}', 'CheckupMonthlyController@getMonthlySummary');
-    Route::post('/checkup-monthlies', 'CheckupMonthlyController@store');
+    /** Monthlies */
+    Route::get('/monthlies', 'MonthlyController@getMonthlies');
+    Route::get('/monthlies/division/{division}', 'MonthlyController@getMonthliesByDivision');
+    Route::get('/monthlies/division/{division}/{year}', 'MonthlyController@getMonthlySummaryByDivision');
+    Route::post('/monthlies', 'MonthlyController@store');
 
     /** Checkups */
     Route::get('/checkups', 'CheckupController@getCheckups');

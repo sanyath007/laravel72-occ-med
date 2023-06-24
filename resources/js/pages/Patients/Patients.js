@@ -41,6 +41,8 @@ const Patients = () => {
         // fetchPatients(path)
     }
 
+    console.log(data);
+
     return (
         <section className="section">
             <div className="row">

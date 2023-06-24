@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\PreventionMonthly;
+use App\Models\Monthly;
 use App\Models\ReportBullet;
 
-class PreventionMonthlyController extends Controller
+class MonthlyController extends Controller
 {
     public function getMonthlies(Request $request)
     {
         $year = $request->get('year');
 
-        $monthlies = PreventionMonthly::where('year', $year)->get();
+        $monthlies = Monthly::where('year', $year)->get();
         $bullets = ReportBullet::all();
 
 
@@ -22,16 +22,33 @@ class PreventionMonthlyController extends Controller
         ]);
     }
 
-    public function getMonthlySummary(Request $request, $year)
+    public function getMonthliesByDivision(Request $request, $division)
     {
-        $monthlies = \DB::table('prevention_monthly')
-                        ->select(
-                            'prevention_monthly.year', 'prevention_monthly.report_bullet_id',
-                            \DB::raw('SUM(prevention_monthly.result) as sum_result')
-                        )
+        $year = $request->get('year');
+
+        $monthlies = Monthly::where('division_id', $division)
                         ->where('year', $year)
-                        ->groupBy('prevention_monthly.year')
-                        ->groupBy('prevention_monthly.report_bullet_id')
+                        ->get();
+        $bullets = ReportBullet::where('division_id', $division)->get();
+
+
+        return response()->json([
+            "monthlies" => $monthlies,
+            "bullets"   => $bullets
+        ]);
+    }
+
+    public function getMonthlySummaryByDivision(Request $request, $division, $year)
+    {
+        $monthlies = \DB::table('monthlies')
+                        ->select(
+                            'monthlies.year', 'monthlies.report_bullet_id',
+                            \DB::raw('SUM(monthlies.result) as sum_result')
+                        )
+                        ->where('division_id', $division)
+                        ->where('year', $year)
+                        ->groupBy('monthlies.year')
+                        ->groupBy('monthlies.report_bullet_id')
                         ->get();
         $bullets = ReportBullet::all();
 
@@ -48,7 +65,7 @@ class PreventionMonthlyController extends Controller
             $monthlies = [];
 
             foreach($request['results'] as $result) {
-                $monthly = new PreventionMonthly;
+                $monthly = new Monthly;
                 $monthly->month         = $request['month'];
                 $monthly->year          = $request['year'];
                 $monthly->report_bullet_id  = $result['id'];

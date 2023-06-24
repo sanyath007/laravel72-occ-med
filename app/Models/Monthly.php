@@ -4,12 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ClinicMonthly extends Model
+class Monthly extends Model
 {
-    protected $table = "clinic_monthly";
+    protected $table = "monthlies";
 
     public function bullet()
     {
         return $this->belongsTo(ReportBullet::class, 'report_bullet_id', 'id');
+    }
+
+    public function division()
+    {
+        return $this->belongsTo(Division::class, 'division_id', 'id');
     }
 }
