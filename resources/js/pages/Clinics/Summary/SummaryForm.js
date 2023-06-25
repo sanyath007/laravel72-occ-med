@@ -26,7 +26,7 @@ const ClinicSummaryForm = () => {
                         <div className="card-body">
                             <h5 className="card-title">บันทึกสรุปผลงาน (งานคลินิกบริการ)</h5>
 
-                            <MonthlyForm division={1} />
+                            <MonthlyForm division={1} routePath="/clinics/summary" />
                         </div>
                     </div>
                 </div>

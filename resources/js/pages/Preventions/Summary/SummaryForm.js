@@ -26,7 +26,7 @@ const PreventionSummaryForm = () => {
                         <div className="card-body">
                             <h5 className="card-title">บันทึกสรุปผลงาน (งานป้องกันและควบคุมโรค)</h5>
 
-                            <MonthlyForm division={2} />
+                            <MonthlyForm division={2} routePath="/preventions/summary" />
                         </div>
                     </div>
                 </div>

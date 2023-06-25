@@ -26,7 +26,7 @@ const ToxicologySummaryForm = () => {
                         <div className="card-body">
                             <h5 className="card-title">บันทึกสรุปผลงาน (งานพิษวิทยาและเวชศาสตร์สิ่งแวดล้อม)</h5>
 
-                            <MonthlyForm division={4} />
+                            <MonthlyForm division={4} routePath="/toxicologies/summary" />
                         </div>
                     </div>
                 </div>

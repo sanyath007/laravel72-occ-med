@@ -26,7 +26,7 @@ const PromotionSummaryForm = () => {
                         <div className="card-body">
                             <h5 className="card-title">บันทึกสรุปผลงาน (งานสร้างเสริมสุขภาพและฟื้นฟูสภาพการทำงาน)</h5>
 
-                            <MonthlyForm division={3} />
+                            <MonthlyForm division={3} routePath="/promotions/summary" />
                         </div>
                     </div>
                 </div>

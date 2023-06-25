@@ -26,7 +26,7 @@ const OccupationSummaryForm = () => {
                         <div className="card-body">
                             <h5 className="card-title">บันทึกสรุปผลงาน (งานอาชีวอนามันใน รพ.)</h5>
 
-                            <MonthlyForm division={5} />
+                            <MonthlyForm division={5} routePath="/occupations/summary" />
                         </div>
                     </div>
                 </div>
