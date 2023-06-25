@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
+import { toast } from 'react-toastify'
 import { FaSave } from 'react-icons/fa'
 import { getReportBulletsByDivision } from '../../store/slices/reportBullet';
-import { monthNames } from '../../utils/constraints'
-import api from '../../api'
+import { resetSuccess, store } from '../../store/slices/monthly';
+import { monthNames } from '../../utils/constraints';
+import moment from 'moment'
 
 const summarySchema = Yup.object().shape({
-    // year: Yup.string().required(),
-    // month: Yup.string().required(),
-    // division_id: Yup.string().required(),
+    year: Yup.string().required(),
+    month: Yup.string().required(),
+    division_id: Yup.string().required(),
 })
 
-const MonthlyForm = ({ division }) => {
+const MonthlyForm = ({ division, routePath }) => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { bullets } = useSelector(state => state.reportBullet);
+    const { isSuccess } = useSelector(state => state.monthly);
     const [results, setResults] = useState([]);
 
     useEffect(() => {
@@ -27,6 +32,14 @@ const MonthlyForm = ({ division }) => {
             setResults(bullets.map(bullet => ({ id: bullet.id, unit: bullet.unit_text, value: 0 })))
         }
     }, [bullets])
+
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success('บันทึกข้อมูลเรียบร้อย !!!', { autoClose: 1000, hideProgressBar: true })
+            dispatch(resetSuccess())
+            navigate(routePath)
+        }
+    }, [isSuccess]);
 
     const handleResultChange = (e) => {
         const { name, value } = e.target
@@ -43,7 +56,7 @@ const MonthlyForm = ({ division }) => {
     const handleSubmit = async (values, props) => {
         const { id, month, year, division_id } = values
 
-        const res = await api.post('/api/monthlies', { id, month, year, division_id, results });
+        dispatch(store({ id, month, year, division_id, results }));
     }
 
     return (
@@ -51,7 +64,7 @@ const MonthlyForm = ({ division }) => {
             <Formik
                 initialValues={{
                     id: '',
-                    year: '',
+                    year: moment().year() + 543,
                     month: '',
                     division_id: division,
                     results: [],
@@ -68,7 +81,7 @@ const MonthlyForm = ({ division }) => {
                                         <th style={{ width: '3%', textAlign: 'center' }}>ลำดับ</th>
                                         <th style={{ textAlign: 'center' }}>กิจกรรม</th>
                                         <th style={{ width: '10%', textAlign: 'center' }}>เป้าหมาย</th>
-                                        <th style={{ width: '10%', textAlign: 'center' }}>ผลงาน</th>
+                                        <th style={{ width: '12%', textAlign: 'center' }}>ผลงาน</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -77,13 +90,19 @@ const MonthlyForm = ({ division }) => {
                                         <td>ปีงบประมาณ</td>
                                         <td style={{ textAlign: 'center' }}></td>
                                         <td style={{ textAlign: 'center' }}>
-                                            <input
-                                                type="text"
-                                                name="year"
+                                            <select
                                                 value={formProps.values.year}
                                                 onChange={formProps.handleChange}
-                                                className="form-control text-center"
-                                            />
+                                                className={`form-control text-center ${(formProps.errors.year && formProps.touched.year) ? 'is-invalid' : ''}`}
+                                            >
+                                                <option value="2563">2563</option>
+                                                <option value="2564">2564</option>
+                                                <option value="2565">2565</option>
+                                                <option value="2566">2566</option>
+                                            </select>
+                                            {(formProps.errors.year && formProps.touched.year) && (
+                                                <div className="invalid-feedback">กรุณาเลือกปีก่อน</div>
+                                            )}
                                         </td>
                                     </tr>
                                     <tr>
@@ -95,7 +114,7 @@ const MonthlyForm = ({ division }) => {
                                                 name="month"
                                                 value={formProps.values.month}
                                                 onChange={formProps.handleChange}
-                                                className="form-control"
+                                                className={`form-control text-center ${(formProps.errors.month && formProps.touched.month) ? 'is-invalid' : ''}`}
                                             >
                                                 <option value="">-- เลือกเดือน --</option>
                                                 {monthNames.map(month => (
@@ -104,6 +123,9 @@ const MonthlyForm = ({ division }) => {
                                                     </option>
                                                 ))}
                                             </select>
+                                            {(formProps.errors.month && formProps.touched.month) && (
+                                                <div className="invalid-feedback">กรุณาเลือกเดือนก่อน</div>
+                                            )}
                                         </td>
                                     </tr>
                                     {bullets && bullets.map(bullet => (

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Cookies } from 'react-cookie'
-import * as moment from 'moment'
+import moment from 'moment'
 
 const api = axios.create({
     baseURL: process.env.MIX_APP_URL,

@@ -77,7 +77,11 @@ class MonthlyController extends Controller
                 array_push($monthlies, $monthly);
             }
 
-            return response()->json($monthlies);
+            return response()->json([
+                "status"    => 1,
+                "message"   => "Insertion successfully",
+                "monthlies" => $monthlies
+            ]);
         } catch (\Exception $ex) {
             return response()->json([
                 "status"    => 0,
