@@ -68,6 +68,7 @@ class MonthlyController extends Controller
                 $monthly = new Monthly;
                 $monthly->month         = $request['month'];
                 $monthly->year          = $request['year'];
+                $monthly->division_id   = $request['division_id'];
                 $monthly->report_bullet_id  = $result['id'];
                 $monthly->unit_text     = $result['unit'];
                 $monthly->result        = $result['value'];
