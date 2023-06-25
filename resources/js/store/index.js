@@ -10,6 +10,7 @@ import { pnameReducer } from './slices/pname'
 import doctorReducer from './slices/doctor'
 import employeeReducer from './slices/employee'
 import reportBulletReducer from './slices/reportBullet'
+import monthlyReducer from './slices/monthly'
 import { patientsApi } from './services/patientsApi'
 
 export default configureStore({
@@ -25,6 +26,7 @@ export default configureStore({
         doctor: doctorReducer,
         employee: employeeReducer,
         reportBullet: reportBulletReducer,
+        monthly: monthlyReducer,
         [patientsApi.reducerPath]: patientsApi.reducer
     },
     middleware: (getDefaultMiddleware) => 
