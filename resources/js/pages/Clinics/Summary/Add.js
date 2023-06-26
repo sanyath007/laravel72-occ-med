@@ -3,7 +3,8 @@ import { GlobalContext } from '../../../context/globalContext'
 import MonthlyForm from '../../../components/Summary/MonthlyForm'
 
 const AddClinicMonthly = () => {
-    const { setGlobal } = useContext(GlobalContext)
+    const { setGlobal } = useContext(GlobalContext);
+    const division = 1;
 
     useEffect(() => {
         setGlobal((prev) => ({
@@ -26,7 +27,7 @@ const AddClinicMonthly = () => {
                         <div className="card-body">
                             <h5 className="card-title">บันทึกสรุปผลงาน (งานคลินิกบริการ)</h5>
 
-                            <MonthlyForm division={1} routePath="/clinics/summary" />
+                            <MonthlyForm division={division} routePath="/clinics/summary" />
                         </div>
                     </div>
                 </div>
