@@ -38,8 +38,9 @@ import PromotionForm from "../pages/Promotions/Form/PromotionForm";
 import PromotionSummary from "../pages/Promotions/Summary/Summary";
 import PromotionSummaryForm from "../pages/Promotions/Summary/SummaryForm";
 import PromotionSummaryYear from "../pages/Promotions/Summary/SummaryYear";
-import ToxicologySummary from "../pages/Toxicologies/Summary/Summary";
-import ToxicologySummaryForm from "../pages/Toxicologies/Summary/SummaryForm";
+import ToxicologyMonthly from "../pages/Toxicologies/Summary/Monthly";
+import AddToxicologyMonthly from "../pages/Toxicologies/Summary/Add";
+import EditToxicologyMonthly from "../pages/Toxicologies/Summary/Edit";
 import ToxicologySummaryYear from "../pages/Toxicologies/Summary/SummaryYear";
 import PollutionSources from "../pages/Toxicologies/PollutionSources";
 import OccupationSummary from "../pages/Occupations/Summary/Summary";
@@ -99,8 +100,9 @@ export default function App() {
                         <Route path="/promotions/summary/new" element={<PromotionSummaryForm />} />
                         <Route path="/promotions/summary-year" element={<PromotionSummaryYear />} />
                         {/* Toxicologies routes */}
-                        <Route path="/toxicologies/summary" element={<ToxicologySummary />} />
-                        <Route path="/toxicologies/summary/new" element={<ToxicologySummaryForm />} />
+                        <Route path="/toxicologies/summary" element={<ToxicologyMonthly />} />
+                        <Route path="/toxicologies/summary/add" element={<AddToxicologyMonthly />} />
+                        <Route path="/toxicologies/summary/:id/edit" element={<EditToxicologyMonthly />} />
                         <Route path="/toxicologies/summary-year" element={<ToxicologySummaryYear />} />
                         <Route path="/toxicologies/pollution-sources" element={<PollutionSources />} />
                         {/* Occupations routes */}

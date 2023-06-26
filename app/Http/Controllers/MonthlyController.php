@@ -15,11 +15,17 @@ class MonthlyController extends Controller
         $monthlies = Monthly::where('year', $year)->get();
         $bullets = ReportBullet::all();
 
-
         return response()->json([
             "monthlies" => $monthlies,
             "bullets"   => $bullets
         ]);
+    }
+
+    public function getMonthly($id)
+    {
+        $monthly = Monthly::find($id);
+
+        return response()->json($monthly);
     }
 
     public function getMonthliesByDivision(Request $request, $division)
