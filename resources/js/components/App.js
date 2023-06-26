@@ -21,30 +21,35 @@ import CompanyNew from "../pages/Companies/CompanyNew";
 import CompanyEdit from "../pages/Companies/CompanyEdit";
 import Checkups from "../pages/Checkups/Checkups";
 import CheckupForm from "../pages/Checkups/Form/CheckupForm";
-import CheckupSummary from "../pages/Checkups/Summary/Summary";
-import CheckupSummaryForm from "../pages/Checkups/Summary/SummaryForm";
+import CheckupMonthly from "../pages/Checkups/Summary/Monthly";
+import AddCheckupMonthly from "../pages/Checkups/Summary/Add";
+import EditCheckupMonthly from "../pages/Checkups/Summary/Edit";
 import CheckupSummaryYear from "../pages/Checkups/Summary/SummaryYear";
 import Clinics from "../pages/Clinics/Clinics";
-import ClinicSummary from "../pages/Clinics/Summary/Summary";
-import ClinicSummaryForm from "../pages/Clinics/Summary/SummaryForm";
+import ClinicMonthly from "../pages/Clinics/Summary/Monthly";
+import AddClinicMonthly from "../pages/Clinics/Summary/Add";
+import EditClinicMonthly from "../pages/Clinics/Summary/Edit";
 import ClinicSummaryYear from "../pages/Clinics/Summary/SummaryYear";
 import Preventions from "../pages/Preventions/Preventions";
 import PreventionForm from "../pages/Preventions/Form/PreventionForm";
-import PreventionSummary from "../pages/Preventions/Summary/Summary";
-import PreventionSummaryForm from "../pages/Preventions/Summary/SummaryForm";
+import PreventionMonthly from "../pages/Preventions/Summary/Monthly";
+import AddPreventionMonthly from "../pages/Preventions/Summary/Add";
+import EditPreventionMonthly from "../pages/Preventions/Summary/Edit";
 import PreventionSummaryYear from "../pages/Preventions/Summary/SummaryYear";
 import Promotions from "../pages/Promotions/Promotions";
 import PromotionForm from "../pages/Promotions/Form/PromotionForm";
-import PromotionSummary from "../pages/Promotions/Summary/Summary";
-import PromotionSummaryForm from "../pages/Promotions/Summary/SummaryForm";
+import PromotionMonthly from "../pages/Promotions/Summary/Monthly";
+import AddPromotionMonthly from "../pages/Promotions/Summary/Add";
+import EditPromotionMonthly from "../pages/Promotions/Summary/Edit";
 import PromotionSummaryYear from "../pages/Promotions/Summary/SummaryYear";
 import ToxicologyMonthly from "../pages/Toxicologies/Summary/Monthly";
 import AddToxicologyMonthly from "../pages/Toxicologies/Summary/Add";
 import EditToxicologyMonthly from "../pages/Toxicologies/Summary/Edit";
 import ToxicologySummaryYear from "../pages/Toxicologies/Summary/SummaryYear";
 import PollutionSources from "../pages/Toxicologies/PollutionSources";
-import OccupationSummary from "../pages/Occupations/Summary/Summary";
-import OccupationSummaryForm from "../pages/Occupations/Summary/SummaryForm";
+import OccupationMonthly from "../pages/Occupations/Summary/Monthly";
+import AddOccupationMonthly from "../pages/Occupations/Summary/Add";
+import EditOccupationMonthly from "../pages/Occupations/Summary/Edit";
 import OccupationSummaryYear from "../pages/Occupations/Summary/SummaryYear";
 import ReportBullets from "../pages/ReportBullets/ReportBullets";
 import ReportBulletForm from "../pages/ReportBullets/Form/ReportBulletForm";
@@ -76,28 +81,25 @@ export default function App() {
                         <Route path="/patients/new" element={<PatientNew />} />
                         <Route path="/patients/:id/edit" element={<PatientEdit />} />
                         <Route path="/patients/:id/detail" element={<PatientDetail />} />
-                        {/* Checkups routes */}
-                        <Route path="/checkups" element={<Checkups />} />
-                        <Route path="/checkups/new" element={<CheckupForm />} />
-                        <Route path="/checkups/summary" element={<CheckupSummary />} />
-                        <Route path="/checkups/summary/new" element={<CheckupSummaryForm />} />
-                        <Route path="/checkups/summary-year" element={<CheckupSummaryYear />} />
                         {/* Clinics routes */}
                         <Route path="/clinics" element={<Clinics />} />
-                        <Route path="/clinics/summary" element={<ClinicSummary />} />
-                        <Route path="/clinics/summary/new" element={<ClinicSummaryForm />} />
+                        <Route path="/clinics/summary" element={<ClinicMonthly />} />
+                        <Route path="/clinics/summary/add" element={<AddClinicMonthly />} />
+                        <Route path="/clinics/summary/:month/:year/edit" element={<EditClinicMonthly />} />
                         <Route path="/clinics/summary-year" element={<ClinicSummaryYear />} />
                         {/* Preventions routes */}
                         <Route path="/preventions" element={<Preventions />} />
                         <Route path="/preventions/new" element={<PreventionForm />} />
-                        <Route path="/preventions/summary" element={<PreventionSummary />} />
-                        <Route path="/preventions/summary/new" element={<PreventionSummaryForm />} />
+                        <Route path="/preventions/summary" element={<PreventionMonthly />} />
+                        <Route path="/preventions/summary/add" element={<AddPreventionMonthly />} />
+                        <Route path="/preventions/summary/:month/:year/edit" element={<EditPreventionMonthly />} />
                         <Route path="/preventions/summary-year" element={<PreventionSummaryYear />} />
                         {/* Promotions routes */}
                         <Route path="/promotions" element={<Promotions />} />
                         <Route path="/promotions/new" element={<PromotionForm />} />
-                        <Route path="/promotions/summary" element={<PromotionSummary />} />
-                        <Route path="/promotions/summary/new" element={<PromotionSummaryForm />} />
+                        <Route path="/promotions/summary" element={<PromotionMonthly />} />
+                        <Route path="/promotions/summary/add" element={<AddPromotionMonthly />} />
+                        <Route path="/promotions/summary/:month/:year/edit" element={<EditPromotionMonthly />} />
                         <Route path="/promotions/summary-year" element={<PromotionSummaryYear />} />
                         {/* Toxicologies routes */}
                         <Route path="/toxicologies/summary" element={<ToxicologyMonthly />} />
@@ -106,9 +108,17 @@ export default function App() {
                         <Route path="/toxicologies/summary-year" element={<ToxicologySummaryYear />} />
                         <Route path="/toxicologies/pollution-sources" element={<PollutionSources />} />
                         {/* Occupations routes */}
-                        <Route path="/occupations/summary" element={<OccupationSummary />} />
-                        <Route path="/occupations/summary/new" element={<OccupationSummaryForm />} />
+                        <Route path="/occupations/summary" element={<OccupationMonthly />} />
+                        <Route path="/occupations/summary/add" element={<AddOccupationMonthly />} />
+                        <Route path="/occupations/summary/:month/:year/edit" element={<EditOccupationMonthly />} />
                         <Route path="/occupations/summary-year" element={<OccupationSummaryYear />} />
+                        {/* Checkups routes */}
+                        <Route path="/checkups" element={<Checkups />} />
+                        <Route path="/checkups/new" element={<CheckupForm />} />
+                        <Route path="/checkups/summary" element={<CheckupMonthly />} />
+                        <Route path="/checkups/summary/add" element={<AddCheckupMonthly />} />
+                        <Route path="/checkups/summary/:month/:year/edit" element={<EditCheckupMonthly />} />
+                        <Route path="/checkups/summary-year" element={<CheckupSummaryYear />} />
                         {/* Companies routes */}
                         <Route path="/companies" element={<Companies />} />
                         <Route path="/companies/new" element={<CompanyNew />} />
