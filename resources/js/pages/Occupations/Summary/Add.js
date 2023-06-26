@@ -11,7 +11,7 @@ const AddOccupationMonthly = () => {
             title: 'บันทึกสรุปผลงาน (งานอาชีวอนามันใน รพ.)',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'occupations', name: 'งานอาชีวอนามันใน รพ.', path: '/occupations' },
+                { id: 'occupations', name: 'งานอาชีวอนามันใน รพ.', path: null, active: true },
                 { id: 'summary', name: 'สรุปผลงาน', path: '/occupations/summary' },
                 { id: 'new', name: 'บันทึกสรุปผลงาน', path: null, active: true }
             ]

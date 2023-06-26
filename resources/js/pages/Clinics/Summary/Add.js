@@ -11,7 +11,7 @@ const AddClinicMonthly = () => {
             title: 'บันทึกสรุปผลงาน (งานคลินิกบริการ)',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'clinics', name: 'งานคลินิกบริการ', path: '/clinics' },
+                { id: 'clinics', name: 'งานคลินิกบริการ', path: null, active: true },
                 { id: 'summary', name: 'สรุปผลงาน', path: '/clinics/summary' },
                 { id: 'new', name: 'บันทึกสรุปผลงาน', path: null, active: true }
             ]

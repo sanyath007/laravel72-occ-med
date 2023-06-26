@@ -11,7 +11,7 @@ const AddCheckupMonthly = () => {
             title: 'บันทึกสรุปผลงาน (งานตรวจสุขภาพ)',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'checkups', name: 'งานตรวจสุขภาพ', path: '/checkups' },
+                { id: 'checkups', name: 'งานตรวจสุขภาพ', path: null, active: true },
                 { id: 'summary', name: 'สรุปผลงาน', path: '/checkups/summary' },
                 { id: 'new', name: 'บันทึกสรุปผลงาน', path: null, active: true }
             ]

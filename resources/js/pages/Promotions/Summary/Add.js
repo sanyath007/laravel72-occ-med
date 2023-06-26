@@ -11,7 +11,7 @@ const AddPromotionMonthly = () => {
             title: 'บันทึกสรุปผลงาน (งานสร้างเสริมสุขภาพและฟื้นฟูสภาพการทำงาน)',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'promotions', name: 'งานสร้างเสริมสุขภาพและฟื้นฟูสภาพการทำงาน', path: '/promotions' },
+                { id: 'promotions', name: 'งานสร้างเสริมสุขภาพและฟื้นฟูสภาพการทำงาน', path: null, active: true },
                 { id: 'summary', name: 'สรุปผลงาน', path: 'promotions/summary' },
                 { id: 'new', name: 'บันทึกสรุปผลงาน', path: null, active: true }
             ]

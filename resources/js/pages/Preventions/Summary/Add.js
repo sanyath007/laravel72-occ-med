@@ -11,7 +11,7 @@ const AddPreventionMonthly = () => {
             title: 'บันทึกสรุปผลงาน (งานป้องกันและควบคุมโรค)',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'preventions', name: 'งานป้องกันและควบคุมโรค', path: '/preventions' },
+                { id: 'preventions', name: 'งานป้องกันและควบคุมโรค', path: null, active: true },
                 { id: 'summary', name: 'สรุปผลงาน', path: 'preventions/summary' },
                 { id: 'new', name: 'บันทึกสรุปผลงาน', path: null, active: true }
             ]
