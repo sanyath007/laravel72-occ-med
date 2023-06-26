@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { getReportBulletsByDivision } from '../../store/slices/reportBullet';
 import api from '../../api';
+import { budgetMonths } from '../../utils/constraints';
 
 const Monthly = ({ division, routePath }) => {
     const dispatch = useDispatch();
@@ -35,6 +36,10 @@ const Monthly = ({ division, routePath }) => {
         return monthlies.find(item => item.month === month && item.report_bullet_id === bullet);
     }
 
+    const getMonthlyByMonth = (month) => {
+        return monthlies.find(item => item.month === month);
+    }
+
     return (
         <div className="row">
             <div
@@ -65,18 +70,13 @@ const Monthly = ({ division, routePath }) => {
                             <th colSpan="13" style={{ textAlign: 'center' }}>ผลงาน</th>
                         </tr>
                         <tr>
-                            <th style={{ width: '5%', textAlign: 'center' }}>ต.ค.</th>
-                            <th style={{ width: '5%', textAlign: 'center' }}>พ.ย.</th>
-                            <th style={{ width: '5%', textAlign: 'center' }}>ธ.ค.</th>
-                            <th style={{ width: '5%', textAlign: 'center' }}>ม.ค.</th>
-                            <th style={{ width: '5%', textAlign: 'center' }}>ก.พ.</th>
-                            <th style={{ width: '5%', textAlign: 'center' }}>มี.ค.</th>
-                            <th style={{ width: '5%', textAlign: 'center' }}>เม.ย.</th>
-                            <th style={{ width: '5%', textAlign: 'center' }}>พ.ค.</th>
-                            <th style={{ width: '5%', textAlign: 'center' }}>มิ.ย.</th>
-                            <th style={{ width: '5%', textAlign: 'center' }}>ก.ค.</th>
-                            <th style={{ width: '5%', textAlign: 'center' }}>ส.ค.</th>
-                            <th style={{ width: '5%', textAlign: 'center' }}>ก.ย.</th>
+                            {budgetMonths.map(month => (
+                                <th key={month.id} style={{ width: '5%', textAlign: 'center' }}>
+                                    <Link to={`${routePath}/summary/${getMonthlyByMonth(month.id)?.id}/edit`}>
+                                        {month.sname}
+                                    </Link>
+                                </th>
+                            ))}
                             <th style={{ width: '5%', textAlign: 'center' }}>2566</th>
                         </tr>
                     </thead>
@@ -86,11 +86,17 @@ const Monthly = ({ division, routePath }) => {
                                 <td style={{ textAlign: 'center' }}>{bullet.bullet_no}</td>
                                 <td>{bullet.name}</td>
                                 <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
-                                {[10,11,12,1,2,3,4,5,6,7,8,9].map(month => (
-                                    <td key={month+bullet.id} style={{ textAlign: 'center', fontSize: '12px' }}>
-                                        {getMonthly(month, bullet.id)?.result}
-                                    </td>
-                                ))}
+                                {budgetMonths.map(month => {
+                                    const monthly = getMonthly(month.id, bullet.id);
+
+                                    return (
+                                        <td key={month.id+bullet.id} style={{ textAlign: 'center', fontSize: '12px' }}>
+                                            <Link to={`${routePath}/summary/${monthly?.id}/edit`}>
+                                                {monthly?.result}
+                                            </Link>
+                                        </td>
+                                    )
+                                })}
                                 <td></td>
                             </tr>
                         ))}
