@@ -21,7 +21,7 @@ const EditToxicologyMonthly = () => {
                 { id: 'toxicologies', name: 'งานพิษวิทยาและเวชศาสตร์สิ่งแวดล้อม', path: null, active: true },
                 { id: 'summary', name: 'สรุปผลงาน', path: 'toxicologies/summary' },
                 { id: 'edit', name: 'แก้ไขสรุปผลงาน', path: null, active: true },
-                { id: 'edit', name: id, path: null, active: true }
+                { id: 'id', name: id, path: null, active: true }
             ]
         }))
     }, [])
@@ -41,7 +41,11 @@ const EditToxicologyMonthly = () => {
                             {isLoading ? (
                                 <div className="text-center"><Loading /></div>
                             ) : (
-                                <MonthlyForm division={4} routePath="/toxicologies/summary" />
+                                <MonthlyForm
+                                    monthly={monthly}
+                                    division={4}
+                                    routePath="/toxicologies/summary"
+                                />
                             )}
                         </div>
                     </div>

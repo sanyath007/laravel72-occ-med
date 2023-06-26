@@ -49,6 +49,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     /** Monthlies */
     Route::get('/monthlies', 'MonthlyController@getMonthlies');
     Route::get('/monthlies/{id}', 'MonthlyController@getMonthly');
+    Route::get('/monthlies/month/{month}', 'MonthlyController@getMonthliesByMonth');
     Route::get('/monthlies/division/{division}', 'MonthlyController@getMonthliesByDivision');
     Route::get('/monthlies/division/{division}/{year}', 'MonthlyController@getMonthlySummaryByDivision');
     Route::post('/monthlies', 'MonthlyController@store');

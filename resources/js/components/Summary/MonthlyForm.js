@@ -16,7 +16,7 @@ const summarySchema = Yup.object().shape({
     division_id: Yup.string().required(),
 })
 
-const MonthlyForm = ({ division, routePath }) => {
+const MonthlyForm = ({ monthly, division, routePath }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { bullets } = useSelector(state => state.reportBullet);
@@ -56,17 +56,18 @@ const MonthlyForm = ({ division, routePath }) => {
     const handleSubmit = async (values, props) => {
         const { id, month, year, division_id } = values
 
-        dispatch(store({ id, month, year, division_id, results }));
+            dispatch(store({ id, month, year, division_id, results }));
     }
 
     return (
         <div className="row">
             <Formik
+                enableReinitialize
                 initialValues={{
-                    id: '',
-                    year: moment().year() + 543,
-                    month: '',
-                    division_id: division,
+                    id: monthly ? monthly.id : '',
+                    year: monthly ? monthly.year : moment().year() + 543,
+                    month: monthly ? monthly.month : '',
+                    division_id: monthly ? monthly.division_id : division,
                     results: [],
                 }}
                 validationSchema={summarySchema}
@@ -119,7 +120,7 @@ const MonthlyForm = ({ division, routePath }) => {
                                                 <option value="">-- เลือกเดือน --</option>
                                                 {monthNames.map(month => (
                                                     <option key={month.id} value={month.id}>
-                                                        {month.name}
+                                                        {month.fullname}
                                                     </option>
                                                 ))}
                                             </select>
@@ -147,9 +148,9 @@ const MonthlyForm = ({ division, routePath }) => {
                             </table>
                         </div>
                         <div className="col-md-12 text-center">
-                            <button type="submit" className="btn btn-primary">
+                            <button type="submit" className={`btn ${monthly ? 'btn-warning' : 'btn-primary'}`}>
                                 <FaSave className="me-1" />
-                                บันทึก
+                                {monthly ? 'บันทึก' : 'บันทึกการแก้ไข'}
                             </button>
                         </div>
                     </Form>

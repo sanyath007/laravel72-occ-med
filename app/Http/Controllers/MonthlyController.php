@@ -28,6 +28,17 @@ class MonthlyController extends Controller
         return response()->json($monthly);
     }
 
+    public function getMonthliesByMonth(Request $request, $month)
+    {
+        $year = $request->get('year');
+
+        $monthly = Monthly::where('month', $month)
+                        ->where('year', $year)
+                        ->get();
+
+        return response()->json($monthly);
+    }
+
     public function getMonthliesByDivision(Request $request, $division)
     {
         $year = $request->get('year');
