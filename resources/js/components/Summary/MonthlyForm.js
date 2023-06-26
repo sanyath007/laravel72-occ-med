@@ -68,9 +68,9 @@ const MonthlyForm = ({ monthlies, division, routePath }) => {
             <Formik
                 enableReinitialize
                 initialValues={{
-                    year: monthlies.length > 0 ? monthlies[0].year : moment().year() + 543,
-                    month: monthlies.length > 0 ? monthlies[0].month : '',
-                    division_id: monthlies.length > 0 ? monthlies[0].division_id : division,
+                    year: monthlies && monthlies.length > 0 ? monthlies[0].year : moment().year() + 543,
+                    month: monthlies && monthlies.length > 0 ? monthlies[0].month : '',
+                    division_id: monthlies && monthlies.length > 0 ? monthlies[0].division_id : division,
                     results: [],
                 }}
                 validationSchema={summarySchema}
@@ -141,7 +141,7 @@ const MonthlyForm = ({ monthlies, division, routePath }) => {
                                                 <input
                                                     type="text"
                                                     name={bullet.id}
-                                                    value={getMonthlyByBullet(bullet.id)?.result}
+                                                    value={monthlies ? getMonthlyByBullet(bullet.id)?.result : ''}
                                                     onChange={handleResultChange}
                                                     className="form-control text-center h-25"
                                                 />

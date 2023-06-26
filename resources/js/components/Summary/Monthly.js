@@ -52,7 +52,7 @@ const Monthly = ({ division, routePath }) => {
                     </select>
                 </div>
                 <div>
-                    <Link to={`${routePath}/summary/new`} className="btn btn-primary float-end mb-2">เพิ่มรายการ</Link>
+                    <Link to={`${routePath}/summary/add`} className="btn btn-primary float-end mb-2">เพิ่มรายการ</Link>
                     <Link to={`${routePath}/summary-year`} className="btn btn-danger float-end mb-2 me-2">สรุปผลงานรายปี</Link>
                 </div>
             </div>
