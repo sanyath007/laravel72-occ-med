@@ -2,12 +2,23 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../api";
 
 const initialState = {
+    monthly: null,
     monthlies: [],
     pager: null,
     isLoading: false,
     isSuccess: false,
     error: null,
 };
+
+export const getMonthly = createAsyncThunk("monthly/getMonthly", async ({ id }, { rejectWithValue }) => {
+    try {
+        const res = await api.get(`/api/monthlies/${id}`);
+
+        return res.data;
+    } catch (error) {
+        rejectWithValue(error);
+    }
+});
 
 export const getMonthliesByDivision = createAsyncThunk("monthly/getMonthliesByDivision", async ({ division, queryStr }, { rejectWithValue }) => {
     try {
@@ -38,7 +49,21 @@ export const monthlySlice = createSlice({
         },
     },
     extraReducers: {
+        [getMonthly.pending]: (state) => {
+            state.monthly = null;
+            state.isLoading = true;
+            state.error = null;
+        },
+        [getMonthly.fulfilled]: (state, { payload }) => {
+            state.isLoading = false;
+            state.monthly = payload;
+        },
+        [getMonthly.rejected]: (state, { payload }) => {
+            state.isLoading = false;
+            state.error = payload;
+        },
         [getMonthliesByDivision.pending]: (state) => {
+            state.monthlies = null;
             state.isLoading = true;
             state.error = null;
         },

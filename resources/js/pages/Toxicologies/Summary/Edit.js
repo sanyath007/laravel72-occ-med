@@ -1,10 +1,15 @@
 import React, { useContext, useEffect } from 'react'
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { GlobalContext } from '../../../context/globalContext';
 import MonthlyForm from '../../../components/Summary/MonthlyForm';
-import { useParams } from 'react-router-dom';
+import Loading from '../../../components/Loading';
+import { getMonthly } from '../../../store/slices/monthly';
 
 const EditToxicologyMonthly = () => {
     const { id } = useParams();
+    const dispatch = useDispatch();
+    const { monthly, isLoading } = useSelector(state => state.monthly);
     const { setGlobal } = useContext(GlobalContext)
 
     useEffect(() => {
@@ -21,6 +26,10 @@ const EditToxicologyMonthly = () => {
         }))
     }, [])
 
+    useEffect(() => {
+        if (id) dispatch(getMonthly({ id }));
+    }, [id]);
+
     return (
         <section className="section">
             <div className="row">
@@ -29,7 +38,11 @@ const EditToxicologyMonthly = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขสรุปผลงาน (งานพิษวิทยาและเวชศาสตร์สิ่งแวดล้อม) : {id}</h5>
 
-                            <MonthlyForm division={4} routePath="/toxicologies/summary" />
+                            {isLoading ? (
+                                <div className="text-center"><Loading /></div>
+                            ) : (
+                                <MonthlyForm division={4} routePath="/toxicologies/summary" />
+                            )}
                         </div>
                     </div>
                 </div>
