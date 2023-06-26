@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { GlobalContext } from '../../../context/globalContext';
 import MonthlyForm from '../../../components/Summary/MonthlyForm';
 import Loading from '../../../components/Loading';
-import { getMonthly } from '../../../store/slices/monthly';
+import { getMonthliesByMonth } from '../../../store/slices/monthly';
 
 const EditToxicologyMonthly = () => {
-    const { id } = useParams();
+    const { month, year } = useParams();
     const dispatch = useDispatch();
-    const { monthly, isLoading } = useSelector(state => state.monthly);
-    const { setGlobal } = useContext(GlobalContext)
+    const { monthlies, isLoading } = useSelector(state => state.monthly);
+    const { setGlobal } = useContext(GlobalContext);
+    const division = 4;
 
     useEffect(() => {
         setGlobal((prev) => ({
@@ -21,14 +22,13 @@ const EditToxicologyMonthly = () => {
                 { id: 'toxicologies', name: 'งานพิษวิทยาและเวชศาสตร์สิ่งแวดล้อม', path: null, active: true },
                 { id: 'summary', name: 'สรุปผลงาน', path: 'toxicologies/summary' },
                 { id: 'edit', name: 'แก้ไขสรุปผลงาน', path: null, active: true },
-                { id: 'id', name: id, path: null, active: true }
             ]
         }))
     }, [])
 
     useEffect(() => {
-        if (id) dispatch(getMonthly({ id }));
-    }, [id]);
+        if (month, year) dispatch(getMonthliesByMonth({ division, month, queryStr: `?year=${year}` }));
+    }, [month, year]);
 
     return (
         <section className="section">
@@ -36,14 +36,14 @@ const EditToxicologyMonthly = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">แก้ไขสรุปผลงาน (งานพิษวิทยาและเวชศาสตร์สิ่งแวดล้อม) : {id}</h5>
+                            <h5 className="card-title">แก้ไขสรุปผลงาน (งานพิษวิทยาและเวชศาสตร์สิ่งแวดล้อม)</h5>
 
                             {isLoading ? (
                                 <div className="text-center"><Loading /></div>
                             ) : (
                                 <MonthlyForm
-                                    monthly={monthly}
-                                    division={4}
+                                    monthlies={monthlies}
+                                    division={division}
                                     routePath="/toxicologies/summary"
                                 />
                             )}

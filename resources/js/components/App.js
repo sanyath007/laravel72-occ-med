@@ -102,7 +102,7 @@ export default function App() {
                         {/* Toxicologies routes */}
                         <Route path="/toxicologies/summary" element={<ToxicologyMonthly />} />
                         <Route path="/toxicologies/summary/add" element={<AddToxicologyMonthly />} />
-                        <Route path="/toxicologies/summary/:id/edit" element={<EditToxicologyMonthly />} />
+                        <Route path="/toxicologies/summary/:month/:year/edit" element={<EditToxicologyMonthly />} />
                         <Route path="/toxicologies/summary-year" element={<ToxicologySummaryYear />} />
                         <Route path="/toxicologies/pollution-sources" element={<PollutionSources />} />
                         {/* Occupations routes */}

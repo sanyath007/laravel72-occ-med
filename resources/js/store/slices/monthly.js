@@ -10,6 +10,16 @@ const initialState = {
     error: null,
 };
 
+export const getMonthlies = createAsyncThunk("monthly/getMonthlies", async ({ division, queryStr }, { rejectWithValue }) => {
+    try {
+        const res = await api.get(`/api/monthlies/division/${division}${queryStr}`);
+
+        return res.data;
+    } catch (error) {
+        rejectWithValue(error);
+    }
+});
+
 export const getMonthly = createAsyncThunk("monthly/getMonthly", async ({ id }, { rejectWithValue }) => {
     try {
         const res = await api.get(`/api/monthlies/${id}`);
@@ -20,9 +30,9 @@ export const getMonthly = createAsyncThunk("monthly/getMonthly", async ({ id }, 
     }
 });
 
-export const getMonthliesByDivision = createAsyncThunk("monthly/getMonthliesByDivision", async ({ division, queryStr }, { rejectWithValue }) => {
+export const getMonthliesByMonth = createAsyncThunk("monthly/getMonthliesByMonth", async ({ division, month, queryStr }, { rejectWithValue }) => {
     try {
-        const res = await api.get(`/api/monthlies/division/${division}${queryStr}`);
+        const res = await api.get(`/api/monthlies/${division}/month/${month}${queryStr}`);
 
         return res.data;
     } catch (error) {
@@ -49,6 +59,19 @@ export const monthlySlice = createSlice({
         },
     },
     extraReducers: {
+        [getMonthlies.pending]: (state) => {
+            state.monthlies = null;
+            state.isLoading = true;
+            state.error = null;
+        },
+        [getMonthlies.fulfilled]: (state, { payload }) => {
+            state.isLoading = false;
+            state.monthlies = payload;
+        },
+        [getMonthlies.rejected]: (state, { payload }) => {
+            state.isLoading = false;
+            state.error = payload;
+        },
         [getMonthly.pending]: (state) => {
             state.monthly = null;
             state.isLoading = true;
@@ -62,16 +85,16 @@ export const monthlySlice = createSlice({
             state.isLoading = false;
             state.error = payload;
         },
-        [getMonthliesByDivision.pending]: (state) => {
+        [getMonthliesByMonth.pending]: (state) => {
             state.monthlies = null;
             state.isLoading = true;
             state.error = null;
         },
-        [getMonthliesByDivision.fulfilled]: (state, { payload }) => {
+        [getMonthliesByMonth.fulfilled]: (state, { payload }) => {
             state.isLoading = false;
             state.monthlies = payload;
         },
-        [getMonthliesByDivision.rejected]: (state, { payload }) => {
+        [getMonthliesByMonth.rejected]: (state, { payload }) => {
             state.isLoading = false;
             state.error = payload;
         },

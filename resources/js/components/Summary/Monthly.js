@@ -22,7 +22,7 @@ const Monthly = ({ division, routePath }) => {
     }, [])
 
     const getMonthlies = async (year) => {
-        const res = await api.get(`/api/monthlies/division/${division}?year=${year}`)
+        const res = await api.get(`/api/monthlies/${division}?year=${year}`)
 
         setMonthlies(res.data.monthlies)
     }
@@ -34,10 +34,6 @@ const Monthly = ({ division, routePath }) => {
 
     const getMonthly = (month, bullet) => {
         return monthlies.find(item => item.month === month && item.report_bullet_id === bullet);
-    }
-
-    const getMonthlyByMonth = (month) => {
-        return monthlies.find(item => item.month === month);
     }
 
     return (
@@ -72,7 +68,7 @@ const Monthly = ({ division, routePath }) => {
                         <tr>
                             {budgetMonths.map(month => (
                                 <th key={month.id} style={{ width: '5%', textAlign: 'center' }}>
-                                    <Link to={`${routePath}/summary/${getMonthlyByMonth(month.id)?.id}/edit`}>
+                                    <Link to={`${routePath}/summary/${month.id}/${filter}/edit`}>
                                         {month.sname}
                                     </Link>
                                 </th>

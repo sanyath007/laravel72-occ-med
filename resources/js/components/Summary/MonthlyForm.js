@@ -16,7 +16,7 @@ const summarySchema = Yup.object().shape({
     division_id: Yup.string().required(),
 })
 
-const MonthlyForm = ({ monthly, division, routePath }) => {
+const MonthlyForm = ({ monthlies, division, routePath }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { bullets } = useSelector(state => state.reportBullet);
@@ -56,7 +56,11 @@ const MonthlyForm = ({ monthly, division, routePath }) => {
     const handleSubmit = async (values, props) => {
         const { id, month, year, division_id } = values
 
-            dispatch(store({ id, month, year, division_id, results }));
+        dispatch(store({ id, month, year, division_id, results }));
+    }
+
+    const getMonthlyByBullet = (bullet) => {
+        return monthlies.find(item => item.report_bullet_id === bullet);
     }
 
     return (
@@ -64,10 +68,9 @@ const MonthlyForm = ({ monthly, division, routePath }) => {
             <Formik
                 enableReinitialize
                 initialValues={{
-                    id: monthly ? monthly.id : '',
-                    year: monthly ? monthly.year : moment().year() + 543,
-                    month: monthly ? monthly.month : '',
-                    division_id: monthly ? monthly.division_id : division,
+                    year: monthlies.length > 0 ? monthlies[0].year : moment().year() + 543,
+                    month: monthlies.length > 0 ? monthlies[0].month : '',
+                    division_id: monthlies.length > 0 ? monthlies[0].division_id : division,
                     results: [],
                 }}
                 validationSchema={summarySchema}
@@ -138,6 +141,7 @@ const MonthlyForm = ({ monthly, division, routePath }) => {
                                                 <input
                                                     type="text"
                                                     name={bullet.id}
+                                                    value={getMonthlyByBullet(bullet.id)?.result}
                                                     onChange={handleResultChange}
                                                     className="form-control text-center h-25"
                                                 />
@@ -148,9 +152,9 @@ const MonthlyForm = ({ monthly, division, routePath }) => {
                             </table>
                         </div>
                         <div className="col-md-12 text-center">
-                            <button type="submit" className={`btn ${monthly ? 'btn-warning' : 'btn-primary'}`}>
+                            <button type="submit" className={`btn ${monthlies ? 'btn-warning' : 'btn-primary'}`}>
                                 <FaSave className="me-1" />
-                                {monthly ? 'บันทึก' : 'บันทึกการแก้ไข'}
+                                {monthlies ? 'บันทึกการแก้ไข' : 'บันทึก'}
                             </button>
                         </div>
                     </Form>

@@ -8,38 +8,8 @@ use App\Models\ReportBullet;
 
 class MonthlyController extends Controller
 {
-    public function getMonthlies(Request $request)
-    {
-        $year = $request->get('year');
-
-        $monthlies = Monthly::where('year', $year)->get();
-        $bullets = ReportBullet::all();
-
-        return response()->json([
-            "monthlies" => $monthlies,
-            "bullets"   => $bullets
-        ]);
-    }
-
-    public function getMonthly($id)
-    {
-        $monthly = Monthly::find($id);
-
-        return response()->json($monthly);
-    }
-
-    public function getMonthliesByMonth(Request $request, $month)
-    {
-        $year = $request->get('year');
-
-        $monthly = Monthly::where('month', $month)
-                        ->where('year', $year)
-                        ->get();
-
-        return response()->json($monthly);
-    }
-
-    public function getMonthliesByDivision(Request $request, $division)
+    
+    public function getMonthlies(Request $request, $division)
     {
         $year = $request->get('year');
 
@@ -55,7 +25,26 @@ class MonthlyController extends Controller
         ]);
     }
 
-    public function getMonthlySummaryByDivision(Request $request, $division, $year)
+    public function getMonthly($id)
+    {
+        $monthly = Monthly::find($id);
+
+        return response()->json($monthly);
+    }
+
+    public function getMonthliesByMonth(Request $request, $division, $month)
+    {
+        $year = $request->get('year');
+
+        $monthly = Monthly::where('division_id', $division)
+                        ->where('month', $month)
+                        ->where('year', $year)
+                        ->get();
+
+        return response()->json($monthly);
+    }
+
+    public function getMonthlySummary(Request $request, $division, $year)
     {
         $monthlies = \DB::table('monthlies')
                         ->select(
