@@ -1,19 +1,17 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react'
 import { GlobalContext } from '../../../context/globalContext';
 import Monthly from '../../../components/Summary/Monthly'
 
-const OccupationSummary = () => {
+const PreventionMonthly = () => {
     const { setGlobal } = useContext(GlobalContext)
 
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'สรุปผลงาน (งานอาชีวอนามันใน รพ.)',
+            title: 'สรุปผลงาน (งานป้องกันและควบคุมโรค)',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'occupations', name: 'งานอาชีวอนามันใน รพ.', path: '/occupations' },
+                { id: 'preventions', name: 'งานป้องกันและควบคุมโรค', path: '/preventions' },
                 { id: 'summary', name: 'สรุปผลงาน', path: null, active: true }
             ]
         }))
@@ -25,9 +23,9 @@ const OccupationSummary = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">สรุปผลงาน (งานอาชีวอนามันใน รพ.)</h5>
+                            <h5 className="card-title">สรุปผลงาน (งานป้องกันและควบคุมโรค)</h5>
                             
-                            <Monthly division={5} routePath={'/occupations'} />
+                            <Monthly division={2} routePath={"/preventions"} />
                         </div>
                     </div>
                 </div>
@@ -36,4 +34,4 @@ const OccupationSummary = () => {
     )
 }
 
-export default OccupationSummary
+export default PreventionMonthly

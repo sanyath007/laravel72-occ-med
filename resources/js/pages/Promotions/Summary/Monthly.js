@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { GlobalContext } from '../../../context/globalContext';
 import Monthly from '../../../components/Summary/Monthly'
 
-const PromotionSummary = () => {
+const PromotionMonthly = () => {
     const { setGlobal } = useContext(GlobalContext)
 
     useEffect(() => {
@@ -34,4 +34,4 @@ const PromotionSummary = () => {
     )
 }
 
-export default PromotionSummary
+export default PromotionMonthly
