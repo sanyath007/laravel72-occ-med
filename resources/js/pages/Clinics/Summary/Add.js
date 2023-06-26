@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { GlobalContext } from '../../../context/globalContext'
 import MonthlyForm from '../../../components/Summary/MonthlyForm'
 
-const ClinicSummaryForm = () => {
+const AddClinicMonthly = () => {
     const { setGlobal } = useContext(GlobalContext)
 
     useEffect(() => {
@@ -35,4 +35,4 @@ const ClinicSummaryForm = () => {
     )
 }
 
-export default ClinicSummaryForm
+export default AddClinicMonthly

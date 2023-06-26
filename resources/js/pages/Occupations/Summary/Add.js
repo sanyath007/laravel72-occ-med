@@ -2,17 +2,17 @@ import React, { useContext, useEffect } from 'react'
 import { GlobalContext } from '../../../context/globalContext';
 import MonthlyForm from '../../../components/Summary/MonthlyForm';
 
-const PreventionSummaryForm = () => {
+const AddOccupationMonthly = () => {
     const { setGlobal } = useContext(GlobalContext)
 
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'บันทึกสรุปผลงาน (งานป้องกันและควบคุมโรค)',
+            title: 'บันทึกสรุปผลงาน (งานอาชีวอนามันใน รพ.)',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'preventions', name: 'งานป้องกันและควบคุมโรค', path: '/preventions' },
-                { id: 'summary', name: 'สรุปผลงาน', path: 'preventions/summary' },
+                { id: 'occupations', name: 'งานอาชีวอนามันใน รพ.', path: '/occupations' },
+                { id: 'summary', name: 'สรุปผลงาน', path: '/occupations/summary' },
                 { id: 'new', name: 'บันทึกสรุปผลงาน', path: null, active: true }
             ]
         }))
@@ -24,9 +24,9 @@ const PreventionSummaryForm = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">บันทึกสรุปผลงาน (งานป้องกันและควบคุมโรค)</h5>
+                            <h5 className="card-title">บันทึกสรุปผลงาน (งานอาชีวอนามันใน รพ.)</h5>
 
-                            <MonthlyForm division={2} routePath="/preventions/summary" />
+                            <MonthlyForm division={5} routePath="/occupations/summary" />
                         </div>
                     </div>
                 </div>
@@ -35,4 +35,4 @@ const PreventionSummaryForm = () => {
     )
 }
 
-export default PreventionSummaryForm
+export default AddOccupationMonthly
