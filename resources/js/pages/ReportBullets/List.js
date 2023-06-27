@@ -23,7 +23,7 @@ const ReportBulletList = () => {
         dispatch(getReportBullets({ path: `${path}&division=${division}&name=${name}` }))
     }
 
-    const handlePageBtnClicked = (path) => {
+    const handlePageClick = (path) => {
         fetchBullets(path)
     }
 
@@ -100,7 +100,7 @@ const ReportBulletList = () => {
 
                                     <Pagination
                                         pager={pager}
-                                        handlePageBtnClicked={handlePageBtnClicked}
+                                        onPageClick={handlePageClick}
                                     />
 
                                 </div>
