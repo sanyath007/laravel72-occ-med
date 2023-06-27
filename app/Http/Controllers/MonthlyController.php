@@ -70,24 +70,81 @@ class MonthlyController extends Controller
         try {
             $monthlies = [];
 
-            foreach($request['results'] as $result) {
-                $monthly = new Monthly;
-                $monthly->month         = $request['month'];
-                $monthly->year          = $request['year'];
-                $monthly->division_id   = $request['division_id'];
-                $monthly->report_bullet_id  = $result['id'];
-                $monthly->unit_text     = $result['unit'];
-                $monthly->result        = $result['value'];
-                $monthly->save();
+            $monthly = new Monthly;
+            $monthly->month         = $request['month'];
+            $monthly->year          = $request['year'];
+            $monthly->division_id   = $request['division_id'];
 
-                array_push($monthlies, $monthly);
+            if ($monthly->save()) {
+                foreach($request['results'] as $result) {
+                    $monthly->report_bullet_id  = $result['id'];
+                    $monthly->unit_text     = $result['unit'];
+                    $monthly->result        = $result['value'];
+                    $monthly->save();
+    
+                    array_push($monthlies, $monthly);
+                }
+    
+                return response()->json([
+                    "status"    => 1,
+                    "message"   => "Insertion successfully",
+                    "monthlies" => $monthlies
+                ]);
             }
-
+        } catch (\Exception $ex) {
             return response()->json([
-                "status"    => 1,
-                "message"   => "Insertion successfully",
-                "monthlies" => $monthlies
+                "status"    => 0,
+                "message"   => $ex->getMessage()
             ]);
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $monthlies = [];
+
+        try {
+            $monthly = Monthly::find($id);
+            $monthly->month         = $request['month'];
+            $monthly->year          = $request['year'];
+            $monthly->division_id   = $request['division_id'];
+            if ($monthly->save()) {
+                foreach($request['results'] as $result) {
+                    $monthly->monthly_id    = $monthly->monthly_id;
+                    $monthly->report_bullet_id  = $result['id'];
+                    $monthly->unit_text     = $result['unit'];
+                    $monthly->result        = $result['value'];
+                    $monthly->save();
+    
+                    array_push($monthlies, $monthly);
+                }
+    
+                return response()->json([
+                    "status"    => 1,
+                    "message"   => "Updating successfully",
+                    "monthlies" => $monthlies
+                ]);
+            }
+        } catch (\Exception $ex) {
+            return response()->json([
+                "status"    => 0,
+                "message"   => $ex->getMessage()
+            ]);
+        }
+    }
+
+    public function delete(Request $request, $id)
+    {
+        try {
+            $monthly = Monthly::find($id);
+
+            if ($monthly->delete()) {
+                return response()->json([
+                    "status"    => 1,
+                    "message"   => "Deleting successfully",
+                    "monthlies" => $monthlies
+                ]);
+            }
         } catch (\Exception $ex) {
             return response()->json([
                 "status"    => 0,
