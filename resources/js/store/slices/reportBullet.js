@@ -4,8 +4,8 @@ import api from "../../api";
 const initialState = {
     bullets: [],
     pager: null,
-    loading: false,
-    success: false,
+    isLoading: false,
+    isSuccess: false,
     error: null
 };
 
@@ -42,67 +42,129 @@ export const store = createAsyncThunk('reportBullet/store', async ({ data }, { r
     }
 });
 
+export const update = createAsyncThunk('reportBullet/update', async ({ id, data }, { rejectWithValue }) => {
+    try {
+        const res = await api.put(`/api/report-bullets/${id}`, data);
+
+        return res.data;
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error)
+    }
+});
+
+export const destroy = createAsyncThunk('reportBullet/destroy', async ({ id }, { rejectWithValue }) => {
+    try {
+        const res = await api.delete(`/api/report-bullets/${id}`);
+
+        return res.data;
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error)
+    }
+});
+
 export const reportBulletSlice = createSlice({
     name: 'reportBullet',
     initialState,
     reducers: {
         resetSuccess(state) {
-            state.success = false
+            state.isSuccess = false
         }
     },
     extraReducers: {
         [getReportBullets.pending]: (state) => {
             state.bullets = [];
             state.pager = null;
-            state.loading = true;
+            state.isLoading = true;
         },
         [getReportBullets.fulfilled]: (state, { payload }) => {
             const { data, ...pager } = payload;
 
             state.bullets = data;
             state.pager = pager;
-            state.loading = false
+            state.isLoading = false
         },
         [getReportBullets.rejected]: (state, { payload }) => {
             state.error = payload;
-            state.loading = false
+            state.isLoading = false
         },
         [getReportBulletsByDivision.pending]: (state) => {
             state.bullets = [];
-            state.loading = true;
+            state.isLoading = true;
         },
         [getReportBulletsByDivision.fulfilled]: (state, { payload }) => {
             state.bullets = payload;
-            state.loading = false
+            state.isLoading = false
         },
         [getReportBulletsByDivision.rejected]: (state, { payload }) => {
             state.error = payload;
-            state.loading = false
+            state.isLoading = false
         },
         [store.pending]: (state) => {
-            state.loading = true;
+            state.isLoading = true;
         },
         [store.fulfilled]: (state, { payload }) => {
             const { status, message, bullet } = payload
             let newBullet = []
 
             if (status === 1) {
-                state.success = true
+                state.isSuccess = true
                 newBullet = [ ...state.bullets, bullet]
             } else {
                 state.error = message
             }
 
             // state.bullets = newBullet;
-            state.loading = false;
+            state.isLoading = false;
         },
         [store.rejected]: (state, { payload }) => {
             state.error = payload;
-            state.loading = false
+            state.isLoading = false
+        },
+        [update.pending]: (state) => {
+            state.isLoading = true;
+            state.isSuccess = false;
+            state.error     = null;
+        },
+        [update.fulfilled]: (state, { payload }) => {
+            const { status, message } = payload
+
+            if (status === 1) {
+                state.isSuccess = true;
+            } else {
+                state.error = message;
+            }
+
+            state.isLoading = false;
+        },
+        [update.rejected]: (state, { payload }) => {
+            state.error = payload;
+            state.isLoading = false
+        },
+        [destroy.pending]: (state) => {
+            state.isLoading = true;
+            state.isSuccess = false;
+            state.error     = null;
+        },
+        [destroy.fulfilled]: (state, { payload }) => {
+            const { status, message } = payload;
+
+            if (status === 1) {
+                state.isSuccess = true;
+            } else {
+                state.error = message;
+            }
+
+            state.isLoading = false;
+        },
+        [destroy.rejected]: (state, { payload }) => {
+            state.error = payload;
+            state.isLoading = false
         },
     }
 });
 
-export const { resetSuccess } = reportBulletSlice.actions
+export const { resetisSuccess } = reportBulletSlice.actions
 
 export default reportBulletSlice.reducer
