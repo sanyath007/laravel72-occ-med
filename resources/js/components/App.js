@@ -51,7 +51,7 @@ import OccupationMonthly from "../pages/Occupations/Summary/Monthly";
 import AddOccupationMonthly from "../pages/Occupations/Summary/Add";
 import EditOccupationMonthly from "../pages/Occupations/Summary/Edit";
 import OccupationYearly from "../pages/Occupations/Summary/Yearly";
-import ReportBullets from "../pages/ReportBullets/List";
+import ReportBulletList from "../pages/ReportBullets/List";
 import AddReportBullet from "../pages/ReportBullets/Add";
 import EditReportBullet from "../pages/ReportBullets/Edit";
 import { useAuth } from "../hooks/useAuth"
@@ -125,7 +125,7 @@ export default function App() {
                         <Route path="/companies/new" element={<CompanyNew />} />
                         <Route path="/companies/:id/edit" element={<CompanyEdit />} />
                         {/* Report Bullets */}
-                        <Route path="/report-bullets" element={<ReportBullets />} />
+                        <Route path="/report-bullets" element={<ReportBulletList />} />
                         <Route path="/report-bullets/new" element={<AddReportBullet />} />
                         <Route path="/report-bullets/:id/edit" element={<EditReportBullet />} />
                     </Route>

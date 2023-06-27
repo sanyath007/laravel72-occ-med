@@ -6,7 +6,7 @@ import { getReportBullets } from '../../store/slices/reportBullet'
 import Pagination from '../../components/Pagination'
 import ReportBulletFillter from '../../components/ReportBullet/Fillter'
 
-const ReportBullets = () => {
+const ReportBulletList = () => {
     const dispatch = useDispatch();
     const { bullets, pager, loading } = useSelector(state => state.reportBullet);
     const [filterings, setFilterings] = useState({ name: '', division: '' });
@@ -76,7 +76,7 @@ const ReportBullets = () => {
                                                     <td>{bullet.bullet_no && <span>{bullet.bullet_no} </span>}{bullet.name}</td>
                                                     <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
                                                     <td style={{ textAlign: 'center' }}>
-                                                        ระดับ {bullet.bullet_type_id - 1}
+                                                        ระดับ {bullet.bullet_type_id}
                                                     </td>
                                                     <td style={{ textAlign: 'center' }}>{bullet.division?.name}</td>
                                                     <td style={{ textAlign: 'center' }}>
@@ -113,4 +113,4 @@ const ReportBullets = () => {
     )
 }
 
-export default ReportBullets
+export default ReportBulletList
