@@ -33,8 +33,8 @@ const Monthly = ({ division, routePath }) => {
         getMonthlies(e.target.value)
     }
 
-    const getMonthly = (month, bullet) => {
-        return monthlies.find(item => item.month === month && item.report_bullet_id === bullet);
+    const getMonthly = (month) => {
+        return monthlies.find(item => item.month === month);
     }
 
     return (
@@ -69,9 +69,11 @@ const Monthly = ({ division, routePath }) => {
                         <tr>
                             {budgetMonths.map(month => (
                                 <th key={month.id} style={{ width: '5%', textAlign: 'center' }}>
-                                    <Link to={`${routePath}/summary/${month.id}/${filter}/edit`}>
-                                        {month.sname}
-                                    </Link>
+                                    {getMonthly(month.id) ? (
+                                        <Link to={`${routePath}/summary/${month.id}/${filter}/edit`}>
+                                            {month.sname}
+                                        </Link>
+                                    ) : month.sname}
                                 </th>
                             ))}
                             <th style={{ width: '5%', textAlign: 'center' }}>2566</th>
@@ -84,12 +86,12 @@ const Monthly = ({ division, routePath }) => {
                                 <td>{bullet.name}</td>
                                 <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
                                 {budgetMonths.map(month => {
-                                    const monthly = getMonthly(month.id, bullet.id);
+                                    const monthly = getMonthly(month.id);
 
                                     return (
                                         <td key={month.id+bullet.id} style={{ textAlign: 'center', fontSize: '12px' }}>
                                             <Link to={`${routePath}/summary/${monthly?.id}/edit`}>
-                                                {monthly?.result}
+                                                {monthly?.bullets.find(mb => mb.id === bullet.id)?.result}
                                             </Link>
                                         </td>
                                     )
@@ -99,18 +101,26 @@ const Monthly = ({ division, routePath }) => {
                         ))}
                         <tr>
                             <td colSpan={3}></td>
-                            {budgetMonths.map(month => (
-                                <td key={month.id} style={{ textAlign: 'center', fontSize: '12px' }}>
-                                    <Link to={`${routePath}/summary/${''}/delete`}>
-                                        <OverlayTrigger
-                                            placement="top"
-                                            overlay={<Tooltip id="tooltip">ลบรายการ</Tooltip>}
-                                        >
-                                            <i className="bi bi-trash"></i>
-                                        </OverlayTrigger>
-                                    </Link>
-                                </td>
-                            ))}
+                            {budgetMonths.map(month => {
+                                const monthly = getMonthly(month.id);
+
+                                return (
+                                    <td key={month.id} style={{ textAlign: 'center', fontSize: '12px' }}>
+                                        {monthly ? (
+                                            <button
+                                                type="button" onClick={() => console.log(monthly.id)}
+                                                className="btn btn-danger"
+                                            >
+                                                <OverlayTrigger
+                                                    placement="top"
+                                                    overlay={<Tooltip id="tooltip">ลบรายการ</Tooltip>}
+                                                >
+                                                    <i className="bi bi-trash"></i>
+                                                </OverlayTrigger>
+                                            </button>
+                                        ) : ''}
+                                    </td>
+                            )})}
                         </tr>
                     </tbody>
                 </table>
