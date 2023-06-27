@@ -84,9 +84,13 @@ const ReportBullets = () => {
                                                             <Link to={`/report-bullets/${bullet.id}/edit`} className="btn btn-warning btn-sm">
                                                                 <i className="bi bi-pencil-square"></i>
                                                             </Link>
-                                                            <a href="#" className="btn btn-danger btn-sm" onClick={(e) => console.log('Deleting report bullet data!!')}>
+                                                            <button
+                                                                type="button"
+                                                                className="btn btn-danger btn-sm"
+                                                                onClick={(e) => console.log('Deleting report bullet data!!')}
+                                                            >
                                                                 <i className="bi bi-trash"></i>
-                                                            </a>
+                                                            </button>
                                                         </div>
                                                     </td>
                                                 </tr>

@@ -52,7 +52,8 @@ import AddOccupationMonthly from "../pages/Occupations/Summary/Add";
 import EditOccupationMonthly from "../pages/Occupations/Summary/Edit";
 import OccupationYearly from "../pages/Occupations/Summary/Yearly";
 import ReportBullets from "../pages/ReportBullets/List";
-import ReportBulletForm from "../pages/ReportBullets/Form";
+import AddReportBullet from "../pages/ReportBullets/Add";
+import EditReportBullet from "../pages/ReportBullets/Edit";
 import { useAuth } from "../hooks/useAuth"
 import AuthContext from "../context/authContext";
 import { GlobalProvider } from '../context/globalContext'
@@ -125,7 +126,8 @@ export default function App() {
                         <Route path="/companies/:id/edit" element={<CompanyEdit />} />
                         {/* Report Bullets */}
                         <Route path="/report-bullets" element={<ReportBullets />} />
-                        <Route path="/report-bullets/new" element={<ReportBulletForm />} />
+                        <Route path="/report-bullets/new" element={<AddReportBullet />} />
+                        <Route path="/report-bullets/:id/edit" element={<EditReportBullet />} />
                     </Route>
                     {/* ============================= Public routes ============================= */}
                     <Route path="/signin" element={<Signin />} />
