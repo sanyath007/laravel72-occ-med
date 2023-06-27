@@ -92,9 +92,16 @@ const Monthly = ({ division, routePath }) => {
                                 return (
                                     <th key={month.id} style={{ width: '5%', textAlign: 'center' }}>
                                         {monthly ? (
-                                            <Link to={`${routePath}/summary/${monthly.id}/edit`}>
-                                                {month.sname}
-                                            </Link>
+                                            <OverlayTrigger
+                                                placement="top"
+                                                overlay={<Tooltip id="tooltip">แก้ไขรายการ</Tooltip>}
+                                            >
+
+                                                <Link to={`${routePath}/summary/${monthly.id}/edit`}>
+                                                    {month.sname}
+                                                    <i className="bi bi-pencil-square"></i>
+                                                </Link>
+                                            </OverlayTrigger>
                                         ) : month.sname}
                                     </th>
                                 )
@@ -113,9 +120,9 @@ const Monthly = ({ division, routePath }) => {
 
                                     return (
                                         <td key={month.id+bullet.id} style={{ textAlign: 'center', fontSize: '12px' }}>
-                                            <Link to={`${routePath}/summary/${monthly?.id}/edit`}>
+                                            {/* <Link to={`${routePath}/summary/${monthly?.id}/edit`}> */}
                                                 {monthly?.bullets.find(mb => mb.bullet_id === bullet.id)?.result}
-                                            </Link>
+                                            {/* </Link> */}
                                         </td>
                                     )
                                 })}
