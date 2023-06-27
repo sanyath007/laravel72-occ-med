@@ -58,7 +58,8 @@ class MonthlyController extends Controller
                         ->groupBy('monthlies.year')
                         ->groupBy('monthly_bullets.bullet_id')
                         ->get();
-        $bullets = ReportBullet::all();
+
+        $bullets = ReportBullet::where('division_id', $division)->get();
 
 
         return response()->json([
