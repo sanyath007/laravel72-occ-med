@@ -34,9 +34,18 @@ const MonthlyForm = ({ monthly, division, routePath }) => {
                 const monthlyBullet = monthly ? monthly.bullets.find(mb => mb.bullet_id === bullet.id) : null;
 
                 if (monthlyBullet) {
-                    return { _id: monthlyBullet.id,id: bullet.id, unit: bullet.unit_text, value: monthlyBullet.result };
+                    return {
+                        id: monthlyBullet.id,
+                        bullet_id: bullet.id,
+                        unit: bullet.unit_text,
+                        value: monthlyBullet.result ? monthlyBullet.result : ''
+                    };
                 } else {
-                    return { id: bullet.id, unit: bullet.unit_text, value: '' };
+                    return {
+                        bullet_id: bullet.id,
+                        unit: bullet.unit_text,
+                        value: ''
+                    };
                 }
             });
 
@@ -56,7 +65,7 @@ const MonthlyForm = ({ monthly, division, routePath }) => {
         const { name, value } = e.target
 
         const updatedResults = results.map(result => {
-            if (result.id == name) result.value = value
+            if (result.bullet_id == name) result.value = value
 
             return result
         })
@@ -67,8 +76,16 @@ const MonthlyForm = ({ monthly, division, routePath }) => {
     const handleSubmit = async (values, props) => {
         const { id, month, year, division_id } = values
 
-        dispatch(store({ id, month, year, division_id, results }));
+        if (monthly) {
+            console.log({ id, month, year, division_id, results });
+        } else {
+            dispatch(store({ id, month, year, division_id, results }));
+        }
     }
+
+    const getResultByBullet = (bulletId) => {
+        return results.find(res => res.bullet_id === bulletId);
+    } 
 
     return (
         <div className="row">
@@ -139,22 +156,26 @@ const MonthlyForm = ({ monthly, division, routePath }) => {
                                             )}
                                         </td>
                                     </tr>
-                                    {bullets && bullets.map(bullet => (
-                                        <tr key={bullet.id}>
-                                            <td style={{ textAlign: 'center' }}>{bullet.bullet_no}</td>
-                                            <td>{bullet.name}</td>
-                                            <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
-                                            <td style={{ textAlign: 'center' }}>
-                                                <input
-                                                    type="text"
-                                                    name={bullet.id}
-                                                    value={results.find(res => res.id === bullet.id)?.value}
-                                                    onChange={handleResultChange}
-                                                    className="form-control text-center h-25"
-                                                />
-                                            </td>
-                                        </tr>
-                                    ))}
+                                    {bullets && bullets.map(bullet => {
+                                        const result = getResultByBullet(bullet.id);
+
+                                        return (
+                                            <tr key={bullet.id}>
+                                                <td style={{ textAlign: 'center' }}>{bullet.bullet_no}</td>
+                                                <td>{bullet.name}</td>
+                                                <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
+                                                <td style={{ textAlign: 'center' }}>
+                                                    <input
+                                                        type="text"
+                                                        name={bullet.id}
+                                                        value={result ? result.value : ''}
+                                                        onChange={handleResultChange}
+                                                        className="form-control text-center h-25"
+                                                    />
+                                                </td>
+                                            </tr>
+                                        )
+                                    })}
                                 </tbody>
                             </table>
                         </div>

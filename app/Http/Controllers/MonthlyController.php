@@ -80,7 +80,7 @@ class MonthlyController extends Controller
                 foreach($request['results'] as $result) {
                     $monthlyBullet = new MonthlyBullet;
                     $monthlyBullet->monthly_id  = $monthly->id;
-                    $monthlyBullet->bullet_id   = $result['id'];
+                    $monthlyBullet->bullet_id   = $result['bullet_id'];
                     $monthlyBullet->unit_text   = $result['unit'];
                     $monthlyBullet->result      = $result['value'];
                     $monthlyBullet->save();
@@ -112,9 +112,9 @@ class MonthlyController extends Controller
 
             if ($monthly->save()) {
                 foreach($request['results'] as $result) {
-                    $monthlyBullet = MonthlyBullet::find($result['_id']);
+                    $monthlyBullet = MonthlyBullet::find($result['id']);
                     // $monthlyBullet->monthly_id  = $monthly->id;
-                    // $monthlyBullet->bullet_id   = $result['id'];
+                    // $monthlyBullet->bullet_id   = $result['bullet_id'];
                     // $monthlyBullet->unit_text   = $result['unit'];
                     $monthlyBullet->result      = $result['value'];
                     $monthlyBullet->save();
