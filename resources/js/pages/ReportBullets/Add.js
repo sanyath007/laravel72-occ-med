@@ -1,8 +1,15 @@
 import React, { useContext, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 import { GlobalContext } from '../../context/globalContext'
+import { resetSuccess } from '../../store/slices/reportBullet'
 import ReportBulletForm from './Form'
 
 const AddReportBullet = () => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const { isSuccess } = useSelector(state => state.reportBullet)
     const { setGlobal } = useContext(GlobalContext);
 
     useEffect(() => {
@@ -16,6 +23,14 @@ const AddReportBullet = () => {
             ]
         }))
     }, []);
+
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success('บันทึกข้อมูลเรียบร้อย !!!', { autoClose: 1000, hideProgressBar: true })
+            dispatch(resetSuccess())
+            navigate('/report-bullets')
+        }
+    }, [isSuccess]);
 
     return (
         <section className="section">
