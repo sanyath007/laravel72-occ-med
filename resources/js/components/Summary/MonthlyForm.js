@@ -29,7 +29,7 @@ const MonthlyForm = ({ monthlies, division, routePath }) => {
 
     useEffect(() => {
         if (bullets) {
-            setResults(bullets.map(bullet => ({ id: bullet.id, unit: bullet.unit_text, value: 0 })))
+            setResults(bullets.map(bullet => ({ id: bullet.id, unit: bullet.unit_text, value: '' })))
         }
     }, [bullets])
 
@@ -52,6 +52,8 @@ const MonthlyForm = ({ monthlies, division, routePath }) => {
 
         setResults(updatedResults)
     }
+
+    console.log(results);
 
     const handleSubmit = async (values, props) => {
         const { id, month, year, division_id } = values
@@ -141,7 +143,7 @@ const MonthlyForm = ({ monthlies, division, routePath }) => {
                                                 <input
                                                     type="text"
                                                     name={bullet.id}
-                                                    value={monthlies ? getMonthlyByBullet(bullet.id)?.result : ''}
+                                                    value={results.find(res => res.id === bullet.id)?.value}
                                                     onChange={handleResultChange}
                                                     className="form-control text-center h-25"
                                                 />

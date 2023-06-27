@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Monthly;
+use App\Models\MonthlyBullet;
 use App\Models\ReportBullet;
 
 class MonthlyController extends Controller
@@ -77,14 +78,14 @@ class MonthlyController extends Controller
 
             if ($monthly->save()) {
                 foreach($request['results'] as $result) {
-                    $monthly->report_bullet_id  = $result['id'];
-                    $monthly->unit_text     = $result['unit'];
-                    $monthly->result        = $result['value'];
-                    $monthly->save();
-    
-                    array_push($monthlies, $monthly);
+                    $monthlyBullet = new MonthlyBullet;
+                    $monthlyBullet->monthly_id  = $monthly->id;
+                    $monthlyBullet->bullet_id   = $result['id'];
+                    $monthlyBullet->unit_text   = $result['unit'];
+                    $monthlyBullet->result      = $result['value'];
+                    $monthlyBullet->save();
                 }
-    
+
                 return response()->json([
                     "status"    => 1,
                     "message"   => "Insertion successfully",
