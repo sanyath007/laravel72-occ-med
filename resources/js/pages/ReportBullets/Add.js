@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { GlobalContext } from '../../context/globalContext'
 
-const ReportBulletForm = () => {
+const AddReportBullet = () => {
     const { setGlobal } = useContext(GlobalContext);
 
     useEffect(() => {
@@ -33,4 +33,4 @@ const ReportBulletForm = () => {
     )
 }
 
-export default ReportBulletForm
+export default AddReportBullet
