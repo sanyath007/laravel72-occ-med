@@ -1,13 +1,19 @@
 import React, { useContext, useEffect } from 'react'
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 import { GlobalContext } from '../../context/globalContext'
 import ReportBulletForm from './Form'
 import Loading from '../../components/Loading'
 import { useGetReportBulletQuery } from '../../store/services/reportBulletApi';
+import { resetSuccess } from '../../store/slices/reportBullet'
 
 const EditReportBullet = () => {
     const { id } = useParams();
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     const { setGlobal } = useContext(GlobalContext);
+    const { isSuccess } = useSelector(state => state.reportBullet)
     const { data, isLoading } = useGetReportBulletQuery(id);
 
     useEffect(() => {
@@ -21,6 +27,14 @@ const EditReportBullet = () => {
             ]
         }))
     }, []);
+
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success('แก้ไขข้อมูลเรียบร้อย !!!', { autoClose: 1000, hideProgressBar: true })
+            dispatch(resetSuccess())
+            navigate('/report-bullets')
+        }
+    }, [isSuccess])
 
     return (
         <section className="section">

@@ -89,6 +89,7 @@ export const reportBulletSlice = createSlice({
             state.bullets = [];
             state.pager = null;
             state.isLoading = true;
+            state.error = null;
         },
         [getReportBullets.fulfilled]: (state, { payload }) => {
             const { data, ...pager } = payload;
@@ -103,13 +104,16 @@ export const reportBulletSlice = createSlice({
         },
         [getReportBullet.pending]: (state) => {
             state.bullet = null;
-            state.error = null
+            state.error = null;
+            state.isLoading = true;
         },
         [getReportBullet.fulfilled]: (state, { payload }) => {
             state.bullet = payload;
+            state.isLoading = false
         },
         [getReportBullet.rejected]: (state, { payload }) => {
             state.error = payload;
+            state.isLoading = false
         },
         [getReportBulletsByDivision.pending]: (state) => {
             state.bullets = [];
@@ -187,6 +191,6 @@ export const reportBulletSlice = createSlice({
     }
 });
 
-export const { resetisSuccess } = reportBulletSlice.actions
+export const { resetSuccess } = reportBulletSlice.actions
 
 export default reportBulletSlice.reducer

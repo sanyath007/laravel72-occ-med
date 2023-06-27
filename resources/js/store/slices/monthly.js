@@ -74,7 +74,7 @@ export const monthlySlice = createSlice({
     name: 'monthly',
     initialState,
     reducers: {
-        resetSuccess: (state) => {
+        resetSuccess(state) {
             state.isSuccess = false;
         },
     },

@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import * as Yup from 'yup'
 import { Formik, Form, Field } from 'formik'
-import { toast } from 'react-toastify'
 import { FaSearch, FaSave } from 'react-icons/fa'
-import { store, resetSuccess } from '../../../store/slices/reportBullet'
-import api from '../../../api'
 import ModalReportBullets from '../../../components/Modals/ModalReportBullets'
+import { store, update } from '../../../store/slices/reportBullet'
+import api from '../../../api'
 
 const bulletSchema = Yup.object().shape({
     name: Yup.string().required(),
@@ -16,9 +14,7 @@ const bulletSchema = Yup.object().shape({
 });
 
 const ReportBulletForm = ({ reportBullet }) => {
-    const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { isSuccess } = useSelector(state => state.reportBullet)
     const [divisions, setDivisions] = useState([])
     const [showReportBullets, setShowReportBullets] = useState(false)
     const [selectedSubitemOf, setSelectedSubitemOf] = useState(null)
@@ -26,14 +22,6 @@ const ReportBulletForm = ({ reportBullet }) => {
     useEffect(() => {
         if (reportBullet) setSelectedSubitemOf(reportBullet.parent)
     }, [reportBullet])
-
-    useEffect(() => {
-        if (isSuccess) {
-            toast.success('บันทึกข้อมูลเรียบร้อย !!!', { autoClose: 1000, hideProgressBar: true })
-            dispatch(resetSuccess())
-            navigate('/report-bullets')
-        }
-    }, [isSuccess])
 
     useEffect(() => {
         getDivisions();
@@ -73,7 +61,11 @@ const ReportBulletForm = ({ reportBullet }) => {
     }
 
     const handleSubmit = (values, props) => {
-        dispatch(store({ data: values }));
+        if (reportBullet) {
+            dispatch(update({ id: reportBullet.id, data: values }));
+        } else {
+            dispatch(store({ data: values }));
+        }
     }
 
     return (
@@ -88,7 +80,7 @@ const ReportBulletForm = ({ reportBullet }) => {
                     unit_text: reportBullet && reportBullet.unit_text ? reportBullet.unit_text : '',
                     subitem_of: reportBullet && reportBullet.subitem_of ? reportBullet.subitem_of : '',
                     division_id: reportBullet ? reportBullet.division_id : '',
-                    has_result: reportBullet && reportBullet.has_result ? reportBullet.has_result : true,
+                    has_result: reportBullet && reportBullet.has_result ? reportBullet.has_result : 1,
                     calc_formula: reportBullet && reportBullet.calc_formula ? reportBullet.calc_formula : 1,
                     status: reportBullet && reportBullet.status ? reportBullet.status : 1,
                 }}
@@ -166,13 +158,21 @@ const ReportBulletForm = ({ reportBullet }) => {
                                     <label htmlFor="">มีช่องกรอกผลงานหรือไม่</label>
                                     <Field component="div" name="has_result" className="form-control">
                                         <input
-                                            type="checkbox"
+                                            type="radio"
                                             id="chkHasResult"
-                                            defaultChecked={formProps.values.has_result === "one"}
+                                            defaultChecked={formProps.values.has_result === 1}
                                             name="has_result"
                                             value="1"
                                         />
-                                        <label htmlFor="male" className="ms-2">มี</label>
+                                        <label htmlFor="male" className="ms-2 me-4">มี</label>
+                                        <input
+                                            type="radio"
+                                            id="notHasResult"
+                                            defaultChecked={formProps.values.has_result === 2}
+                                            name="has_result"
+                                            value="2"
+                                        />
+                                        <label htmlFor="male" className="ms-2">ไม่มี</label>
                                     </Field>
                                 </div>
                                 <div className="col-md-4 form-group mb-2">
@@ -199,7 +199,7 @@ const ReportBulletForm = ({ reportBullet }) => {
                                     <label htmlFor="">เป็นหัวข้อย่อยของ (ถ้ามี) :</label>
                                     <div className="input-group">
                                         <div className="form-control">
-                                            {selectedSubitemOf && `${selectedSubitemOf.bullet_no} ${selectedSubitemOf.name}`}
+                                            {selectedSubitemOf && `${selectedSubitemOf.bullet_no || ''} ${selectedSubitemOf.name}`}
                                         </div>
                                         <input
                                             type="hidden"
@@ -238,9 +238,9 @@ const ReportBulletForm = ({ reportBullet }) => {
                                         <input
                                             type="radio"
                                             id="radioTwo"
-                                            defaultChecked={formProps.values.status === 0}
+                                            defaultChecked={formProps.values.status === 2}
                                             name="status"
-                                            value="0"
+                                            value="2"
                                         />
                                         <label htmlFor="male" className="ms-2">ไม่ใช้งาน</label>
                                     </Field>
@@ -259,6 +259,7 @@ const ReportBulletForm = ({ reportBullet }) => {
                                         className={`form-control ${formProps.errors.calc_formula && formProps.touched.calc_formula ? 'is-invalid' : ''}`}
                                     >
                                         <option value="">-- กรุณาเลือก --</option>
+                                        <option value="9">ไม่มี</option>
                                         <option value="1">SUM</option>
                                         <option value="2">AVG</option>
                                         <option value="3">COUNT</option>
@@ -271,9 +272,9 @@ const ReportBulletForm = ({ reportBullet }) => {
                                 </div>
                             </div>
                             <div className="text-center">
-                                <button type="submit" className="btn btn-primary">
+                                <button type="submit" className={`btn ${reportBullet ? 'btn-warning' : 'btn-primary'}`}>
                                     <FaSave className="me-1" />
-                                    บันทึก
+                                    {reportBullet ? 'บันทึกการแก้ไข' : 'บันทึก'}
                                 </button>
                             </div>
                         </Form>
