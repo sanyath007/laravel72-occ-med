@@ -10,7 +10,8 @@ import api from '../../../api'
 const bulletSchema = Yup.object().shape({
     name: Yup.string().required(),
     division_id: Yup.string().required(),
-    bullet_type_id: Yup.string().required()
+    bullet_type_id: Yup.string().required(),
+    calc_formula: Yup.string().required()
 });
 
 const ReportBulletForm = ({ reportBullet }) => {
@@ -88,6 +89,7 @@ const ReportBulletForm = ({ reportBullet }) => {
                 onSubmit={handleSubmit}
             >
                 {(formProps) => {
+                    console.log(formProps.errors);
                     return (
                         <Form>
                             <ModalReportBullets
