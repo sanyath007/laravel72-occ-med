@@ -85,6 +85,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
 
     /** ReportBullets */
     Route::get('/report-bullets', 'ReportBulletController@getReportBullets');
+    Route::get('/report-bullets/{id}', 'ReportBulletController@getReportBullet');
     Route::get('/report-bullets/division/{divId}', 'ReportBulletController@getReportBulletsByDivision');
     Route::post('/report-bullets', 'ReportBulletController@store');
 

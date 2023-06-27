@@ -33,6 +33,13 @@ class ReportBulletController extends Controller
 
         return response()->json($bullets);
     }
+    
+    public function getReportBullet(Request $request, $id)
+    {
+        $bullet = ReportBullet::with('division')->find($id);
+
+        return response()->json($bullet);
+    }
 
     public function getReportBulletsByDivision(Request $request, $divId)
     {

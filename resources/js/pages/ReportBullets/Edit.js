@@ -9,7 +9,7 @@ import { getReportBullet } from '../../store/slices/reportBullet';
 const EditReportBullet = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const { reportBullet, isLoading } = useSelector(state => state.reportBullet);
+    const { bullet, isLoading } = useSelector(state => state.reportBullet);
     const { setGlobal } = useContext(GlobalContext);
 
     useEffect(() => {
@@ -40,7 +40,7 @@ const EditReportBullet = () => {
                                 <div className="text-center">
                                     <Loading />
                                 </div>
-                            ) : <ReportBulletForm bullet={reportBullet} />}
+                            ) : <ReportBulletForm bullet={bullet} />}
                         </div>
                     </div>
                 </div>
