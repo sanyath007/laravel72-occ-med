@@ -51,8 +51,8 @@ import OccupationMonthly from "../pages/Occupations/Summary/Monthly";
 import AddOccupationMonthly from "../pages/Occupations/Summary/Add";
 import EditOccupationMonthly from "../pages/Occupations/Summary/Edit";
 import OccupationYearly from "../pages/Occupations/Summary/Yearly";
-import ReportBullets from "../pages/ReportBullets/ReportBullets";
-import ReportBulletForm from "../pages/ReportBullets/Form/ReportBulletForm";
+import ReportBullets from "../pages/ReportBullets/List";
+import ReportBulletForm from "../pages/ReportBullets/Form";
 import { useAuth } from "../hooks/useAuth"
 import AuthContext from "../context/authContext";
 import { GlobalProvider } from '../context/globalContext'

@@ -1,16 +1,17 @@
 import React, { useContext, useEffect } from 'react'
 import { GlobalContext } from '../../context/globalContext'
 
-const Clinics = () => {
+const ReportBulletForm = () => {
     const { setGlobal } = useContext(GlobalContext);
 
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'งานคลินิกบริการ',
+            title: 'บันทึกหัวข้อรายงาน',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'clinics', name: 'งานคลินิกบริการ', path: null, active: true }
+                { id: 'report-bullets', name: 'หัวข้อรายงาน', path: '/report-bullets' },
+                { id: 'add', name: 'บันทึกหัวข้อรายงาน', path: null, active: true }
             ]
         }))
     }, []);
@@ -21,8 +22,9 @@ const Clinics = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">รายการคลินิกบริการ</h5>
+                            <h5 className="card-title">บันทึกหัวข้อรายงาน</h5>
 
+                            <ReportBulletForm />
                         </div>
                     </div>
                 </div>
@@ -31,4 +33,4 @@ const Clinics = () => {
     )
 }
 
-export default Clinics
+export default ReportBulletForm
