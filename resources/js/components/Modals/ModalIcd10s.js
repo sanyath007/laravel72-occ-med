@@ -22,7 +22,7 @@ const ModalIcd10s = ({ isOpen, hideModal, onSelected, ...props }) => {
         dispatch(getIcd10s({ path: `${path}&code=${code}&name=${name}` }))
     }
 
-    const handlePageBtnClicked = (path) => {
+    const handlePageClick = (path) => {
         fetchIcd10s(path)
     }
 
@@ -111,7 +111,7 @@ const ModalIcd10s = ({ isOpen, hideModal, onSelected, ...props }) => {
             <Modal.Footer>
                 <Pagination
                     pager={pager}
-                    handlePageBtnClicked={handlePageBtnClicked}
+                    onPageClick={handlePageClick}
                 />
             </Modal.Footer>
         </Modal>

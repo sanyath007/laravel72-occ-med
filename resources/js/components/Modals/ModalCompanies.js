@@ -20,7 +20,7 @@ const ModalCompanies = ({ isOpen, hideModal, onSelected, ...props }) => {
         dispatch(getCompanies({ path: `${path}${queryStrings}` }))
     }
 
-    const handlePageBtnClicked = (path) => {
+    const handlePageClick = (path) => {
         fetchCompanies(path)
     }
 
@@ -85,7 +85,10 @@ const ModalCompanies = ({ isOpen, hideModal, onSelected, ...props }) => {
                 </table>
             </Modal.Body>
             <Modal.Footer>
-                <Pagination pager={pager} handlePageBtnClicked={handlePageBtnClicked} />
+                <Pagination
+                    pager={pager}
+                    onPageClick={handlePageClick}
+                />
             </Modal.Footer>
         </Modal>
     )

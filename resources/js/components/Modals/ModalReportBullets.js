@@ -27,7 +27,7 @@ const ModalReportBullets = ({ isOpen, hideModal, onSelected, ...props }) => {
         dispatch(getReportBullets({ path: `${path}&division=${division}&name=${name}&type=1,2,3` }))
     }
 
-    const handlePageBtnClicked = (path) => {
+    const handlePageClick = (path) => {
         fetchBullets(path)
     }
 
@@ -93,7 +93,7 @@ const ModalReportBullets = ({ isOpen, hideModal, onSelected, ...props }) => {
             <Modal.Footer>
                 <Pagination
                     pager={pager}
-                    handlePageBtnClicked={handlePageBtnClicked}
+                    onPageClick={handlePageClick}
                 />
             </Modal.Footer>
         </Modal>

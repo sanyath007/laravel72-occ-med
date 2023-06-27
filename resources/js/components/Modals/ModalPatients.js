@@ -22,7 +22,7 @@ const ModalPatients = ({ isOpen, hideModal, onSelected, ...props }) => {
         dispatch(getPatients({ path: `${path}${queryStrings}` }))
     }
 
-    const handlePageBtnClicked = (path) => {
+    const handlePageClick = (path) => {
         fetchPatients(path)
     }
 
@@ -101,7 +101,7 @@ const ModalPatients = ({ isOpen, hideModal, onSelected, ...props }) => {
             <Modal.Footer>
                 <Pagination
                     pager={pager}
-                    handlePageBtnClicked={handlePageBtnClicked}
+                    onPageClick={handlePageClick}
                 />
             </Modal.Footer>
         </Modal>
