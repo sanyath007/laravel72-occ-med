@@ -8,13 +8,13 @@ class Monthly extends Model
 {
     protected $table = "monthlies";
 
-    public function bullet()
-    {
-        return $this->belongsTo(ReportBullet::class, 'report_bullet_id', 'id');
-    }
-
     public function division()
     {
         return $this->belongsTo(Division::class, 'division_id', 'id');
+    }
+
+    public function bullets()
+    {
+        return $this->hasMany(MonthlyBullet::class, 'monthly_id', 'id');
     }
 }
