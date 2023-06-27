@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { FaPlus } from 'react-icons/fa'
-import { getReportBullets } from '../../store/slices/reportBullet'
+import { destroy, getReportBullets, resetSuccess } from '../../store/slices/reportBullet'
+import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
 import ReportBulletFillter from '../../components/ReportBullet/Fillter'
 
 const ReportBulletList = () => {
     const dispatch = useDispatch();
-    const { bullets, pager, loading } = useSelector(state => state.reportBullet);
+    const { bullets, pager, isLoading, isSuccess } = useSelector(state => state.reportBullet);
     const [filterings, setFilterings] = useState({ name: '', division: '' });
+
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success('ลบข้อมูลเรียบร้อย !!!', { autoClose: 1000, hideProgressBar: true })
+            dispatch(resetSuccess())
+            fetchBullets()
+        }
+    }, [isSuccess]);
 
     useEffect(() => {
         fetchBullets()
@@ -25,6 +35,10 @@ const ReportBulletList = () => {
 
     const handlePageClick = (path) => {
         fetchBullets(path)
+    }
+
+    const handleDelete = (id) => {
+        dispatch(destroy({ id }));
     }
 
     return (
@@ -61,16 +75,14 @@ const ReportBulletList = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {loading && (
+                                            {isLoading && (
                                                 <tr>
                                                     <td colSpan="11" style={{ textAlign: 'center' }}>
-                                                        <div className="spinner-border text-secondary" role="status">
-                                                            <span className="visually-hidden">Loading...</span>
-                                                        </div>
+                                                        <Loading />
                                                     </td>
                                                 </tr>
                                             )}
-                                            {!loading && bullets && bullets.map((bullet, index) => (
+                                            {!isLoading && bullets && bullets.map((bullet, index) => (
                                                 <tr key={bullet.id}>
                                                     <td style={{ textAlign: 'center' }}>{pager.from+index}</td>
                                                     <td>{bullet.bullet_no && <span>{bullet.bullet_no} </span>}{bullet.name}</td>
@@ -87,7 +99,7 @@ const ReportBulletList = () => {
                                                             <button
                                                                 type="button"
                                                                 className="btn btn-danger btn-sm"
-                                                                onClick={(e) => console.log('Deleting report bullet data!!')}
+                                                                onClick={() => handleDelete(bullet.id)}
                                                             >
                                                                 <i className="bi bi-trash"></i>
                                                             </button>
