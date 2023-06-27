@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Modal } from 'react-bootstrap'
 import { getReportBullets } from '../../store/slices/reportBullet'
 import Pagination from '../Pagination'
 import ReportBulletFillter from '../ReportBullet/Fillter'
+import Loading from '../Loading'
 
 const ModalReportBullets = ({ isOpen, hideModal, onSelected, ...props }) => {
     const dispatch = useDispatch()
-    const { bullets, pager, loading } = useSelector(state => state.reportBullet)
+    const { bullets, pager, isLoading } = useSelector(state => state.reportBullet)
     const [filterings, setFilterings] = useState({ name: '', division: '' })
 
     useEffect(() => {
@@ -57,17 +57,15 @@ const ModalReportBullets = ({ isOpen, hideModal, onSelected, ...props }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {loading && (
+                        {isLoading && (
                             <tr>
                                 <td colSpan="6" style={{ textAlign: 'center' }}>
-                                    <div className="spinner-border text-secondary" role="status">
-                                        <span className="visually-hidden">Loading...</span>
-                                    </div>
+                                    <Loading />
                                 </td>
                             </tr>
                         )}
 
-                        {(!loading && bullets) && bullets.map((bullet, row) => (
+                        {(!isLoading && bullets) && bullets.map((bullet, row) => (
                             <tr key={bullet.id}>
                                 <th scope="row" style={{ textAlign: 'center' }}>{pager?.from+row}</th>
                                 <td style={{ textAlign: 'center' }}>{bullet.bullet_no}</td>

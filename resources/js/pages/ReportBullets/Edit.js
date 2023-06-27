@@ -36,11 +36,12 @@ const EditReportBullet = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขหัวข้อรายงาน</h5>
 
-                            {isLoading ? (
+                            {/* {isLoading ? (
                                 <div className="text-center">
                                     <Loading />
                                 </div>
-                            ) : <ReportBulletForm bullet={bullet} />}
+                            ) : <ReportBulletForm reportBullet={bullet} />} */}
+                            <ReportBulletForm reportBullet={bullet} />
                         </div>
                     </div>
                 </div>

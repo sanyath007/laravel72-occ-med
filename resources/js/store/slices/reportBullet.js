@@ -103,16 +103,13 @@ export const reportBulletSlice = createSlice({
         },
         [getReportBullet.pending]: (state) => {
             state.bullet = null;
-            state.isLoading = true;
             state.error = null
         },
         [getReportBullet.fulfilled]: (state, { payload }) => {
             state.bullet = payload;
-            state.isLoading = false
         },
         [getReportBullet.rejected]: (state, { payload }) => {
             state.error = payload;
-            state.isLoading = false
         },
         [getReportBulletsByDivision.pending]: (state) => {
             state.bullets = [];
