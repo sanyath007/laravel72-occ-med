@@ -2,19 +2,32 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import { getReportBulletsByDivision } from '../../store/slices/reportBullet';
+import { resetSuccess, destroy } from '../../store/slices/monthly';
 import { budgetMonths } from '../../utils/constraints';
 import api from '../../api';
 
 const Monthly = ({ division, routePath }) => {
     const dispatch = useDispatch();
     const { bullets } = useSelector(state => state.reportBullet);
+    const { isSuccess } = useSelector(state => state.monthly);
     const [monthlies, setMonthlies] = useState([])
     const [filter, setFilter] = useState(2566)
 
     useEffect(() => {
         dispatch(getReportBulletsByDivision({ path: `/api/report-bullets/division/${division}` }))
     }, [])
+
+    useEffect(() => {
+        if (isSuccess) {
+            if (isSuccess) {
+                toast.success('ลบข้อมูลเรียบร้อย !!!', { autoClose: 1000, hideProgressBar: true })
+                dispatch(resetSuccess());
+                getMonthlies(2566);
+            }
+        }
+    }, [isSuccess]);
 
     useEffect(() => {
         getMonthlies(2566);
@@ -36,6 +49,12 @@ const Monthly = ({ division, routePath }) => {
     const getMonthly = (month) => {
         return monthlies.find(item => item.month === month);
     }
+
+    const handleDelete = (id) => {
+        if (confirm("คุณต้องการลบรายการใช่หรือไม่?")) {
+            dispatch(destroy({ id }));
+        }
+    };
 
     return (
         <div className="row">
@@ -112,8 +131,8 @@ const Monthly = ({ division, routePath }) => {
                                     <td key={month.id} style={{ textAlign: 'center', fontSize: '12px' }}>
                                         {monthly ? (
                                             <button
-                                                type="button" onClick={() => console.log(monthly.id)}
-                                                className="btn btn-danger"
+                                                type="button" onClick={() => handleDelete(monthly.id)}
+                                                className="btn btn-danger btn-sm"
                                             >
                                                 <OverlayTrigger
                                                     placement="top"
