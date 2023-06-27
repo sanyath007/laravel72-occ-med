@@ -85,39 +85,39 @@ export default function App() {
                         <Route path="/clinics" element={<Clinics />} />
                         <Route path="/clinics/summary" element={<ClinicMonthly />} />
                         <Route path="/clinics/summary/add" element={<AddClinicMonthly />} />
-                        <Route path="/clinics/summary/:month/:year/edit" element={<EditClinicMonthly />} />
+                        <Route path="/clinics/summary/:id/edit" element={<EditClinicMonthly />} />
                         <Route path="/clinics/summary-year" element={<ClinicSummaryYear />} />
                         {/* Preventions routes */}
                         <Route path="/preventions" element={<Preventions />} />
                         <Route path="/preventions/new" element={<PreventionForm />} />
                         <Route path="/preventions/summary" element={<PreventionMonthly />} />
                         <Route path="/preventions/summary/add" element={<AddPreventionMonthly />} />
-                        <Route path="/preventions/summary/:month/:year/edit" element={<EditPreventionMonthly />} />
+                        <Route path="/preventions/summary/:id/edit" element={<EditPreventionMonthly />} />
                         <Route path="/preventions/summary-year" element={<PreventionSummaryYear />} />
                         {/* Promotions routes */}
                         <Route path="/promotions" element={<Promotions />} />
                         <Route path="/promotions/new" element={<PromotionForm />} />
                         <Route path="/promotions/summary" element={<PromotionMonthly />} />
                         <Route path="/promotions/summary/add" element={<AddPromotionMonthly />} />
-                        <Route path="/promotions/summary/:month/:year/edit" element={<EditPromotionMonthly />} />
+                        <Route path="/promotions/summary/:id/edit" element={<EditPromotionMonthly />} />
                         <Route path="/promotions/summary-year" element={<PromotionSummaryYear />} />
                         {/* Toxicologies routes */}
                         <Route path="/toxicologies/summary" element={<ToxicologyMonthly />} />
                         <Route path="/toxicologies/summary/add" element={<AddToxicologyMonthly />} />
-                        <Route path="/toxicologies/summary/:month/:year/edit" element={<EditToxicologyMonthly />} />
+                        <Route path="/toxicologies/summary/:id/edit" element={<EditToxicologyMonthly />} />
                         <Route path="/toxicologies/summary-year" element={<ToxicologySummaryYear />} />
                         <Route path="/toxicologies/pollution-sources" element={<PollutionSources />} />
                         {/* Occupations routes */}
                         <Route path="/occupations/summary" element={<OccupationMonthly />} />
                         <Route path="/occupations/summary/add" element={<AddOccupationMonthly />} />
-                        <Route path="/occupations/summary/:month/:year/edit" element={<EditOccupationMonthly />} />
+                        <Route path="/occupations/summary/:id/edit" element={<EditOccupationMonthly />} />
                         <Route path="/occupations/summary-year" element={<OccupationSummaryYear />} />
                         {/* Checkups routes */}
                         <Route path="/checkups" element={<Checkups />} />
                         <Route path="/checkups/new" element={<CheckupForm />} />
                         <Route path="/checkups/summary" element={<CheckupMonthly />} />
                         <Route path="/checkups/summary/add" element={<AddCheckupMonthly />} />
-                        <Route path="/checkups/summary/:month/:year/edit" element={<EditCheckupMonthly />} />
+                        <Route path="/checkups/summary/:id/edit" element={<EditCheckupMonthly />} />
                         <Route path="/checkups/summary-year" element={<CheckupSummaryYear />} />
                         {/* Companies routes */}
                         <Route path="/companies" element={<Companies />} />

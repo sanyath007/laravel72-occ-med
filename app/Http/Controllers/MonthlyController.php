@@ -28,7 +28,7 @@ class MonthlyController extends Controller
 
     public function getMonthly($id)
     {
-        $monthly = Monthly::find($id);
+        $monthly = Monthly::with('division','bullets')->find($id);
 
         return response()->json($monthly);
     }
@@ -112,13 +112,12 @@ class MonthlyController extends Controller
 
             if ($monthly->save()) {
                 foreach($request['results'] as $result) {
-                    $monthly->monthly_id    = $monthly->monthly_id;
-                    $monthly->report_bullet_id  = $result['id'];
-                    $monthly->unit_text     = $result['unit'];
-                    $monthly->result        = $result['value'];
-                    $monthly->save();
-    
-                    array_push($monthlies, $monthly);
+                    $monthlyBullet = MonthlyBullet::find($result['_id']);
+                    // $monthlyBullet->monthly_id  = $monthly->id;
+                    // $monthlyBullet->bullet_id   = $result['id'];
+                    // $monthlyBullet->unit_text   = $result['unit'];
+                    $monthlyBullet->result      = $result['value'];
+                    $monthlyBullet->save();
                 }
     
                 return response()->json([

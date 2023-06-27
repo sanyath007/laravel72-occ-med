@@ -23,7 +23,7 @@ const Monthly = ({ division, routePath }) => {
     }, [])
 
     const getMonthlies = async (year) => {
-        const res = await api.get(`/api/monthlies/${division}?year=${year}`)
+        const res = await api.get(`/api/monthlies/division/${division}?year=${year}`)
 
         setMonthlies(res.data.monthlies)
     }
@@ -67,15 +67,19 @@ const Monthly = ({ division, routePath }) => {
                             <th colSpan="13" style={{ textAlign: 'center' }}>ผลงาน</th>
                         </tr>
                         <tr>
-                            {budgetMonths.map(month => (
-                                <th key={month.id} style={{ width: '5%', textAlign: 'center' }}>
-                                    {getMonthly(month.id) ? (
-                                        <Link to={`${routePath}/summary/${month.id}/${filter}/edit`}>
-                                            {month.sname}
-                                        </Link>
-                                    ) : month.sname}
-                                </th>
-                            ))}
+                            {budgetMonths.map(month => {
+                                const monthly = getMonthly(month.id);
+
+                                return (
+                                    <th key={month.id} style={{ width: '5%', textAlign: 'center' }}>
+                                        {monthly ? (
+                                            <Link to={`${routePath}/summary/${monthly.id}/edit`}>
+                                                {month.sname}
+                                            </Link>
+                                        ) : month.sname}
+                                    </th>
+                                )
+                            })}
                             <th style={{ width: '5%', textAlign: 'center' }}>2566</th>
                         </tr>
                     </thead>

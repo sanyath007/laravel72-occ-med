@@ -47,13 +47,13 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::delete('/patients/{id}', 'PatientController@delete');
 
     /** Monthlies */
-    Route::get('/monthlies/{division}', 'MonthlyController@getMonthlies');
+    Route::get('/monthlies/division/{division}', 'MonthlyController@getMonthlies');
     Route::get('/monthlies/{division}/month/{month}', 'MonthlyController@getMonthliesByMonth');
     Route::get('/monthlies/{division}/year/{year}', 'MonthlyController@getMonthlySummary');
     Route::get('/monthlies/{id}', 'MonthlyController@getMonthly');
     Route::post('/monthlies', 'MonthlyController@store');
-    Route::put('/monthlies/{division}/{year}/{month}', 'MonthlyController@update');
-    Route::delete('/monthlies/{division}/{year}/{month}', 'MonthlyController@delete');
+    Route::put('/monthlies/{id}', 'MonthlyController@update');
+    Route::delete('/monthlies/{id}', 'MonthlyController@delete');
 
     /** Checkups */
     Route::get('/checkups', 'CheckupController@getCheckups');

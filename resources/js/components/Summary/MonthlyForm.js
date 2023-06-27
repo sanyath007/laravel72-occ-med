@@ -16,7 +16,7 @@ const summarySchema = Yup.object().shape({
     division_id: Yup.string().required(),
 })
 
-const MonthlyForm = ({ monthlies, division, routePath }) => {
+const MonthlyForm = ({ monthly, division, routePath }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { bullets } = useSelector(state => state.reportBullet);
@@ -27,11 +27,22 @@ const MonthlyForm = ({ monthlies, division, routePath }) => {
         dispatch(getReportBulletsByDivision({ path: `/api/report-bullets/division/${division}` }))
     }, [])
 
+    /** Initialize results value */
     useEffect(() => {
         if (bullets) {
-            setResults(bullets.map(bullet => ({ id: bullet.id, unit: bullet.unit_text, value: '' })))
+            const newResults = bullets.map(bullet => {
+                const monthlyBullet = monthly ? monthly.bullets.find(mb => mb.bullet_id === bullet.id) : null;
+
+                if (monthlyBullet) {
+                    return { _id: monthlyBullet.id,id: bullet.id, unit: bullet.unit_text, value: monthlyBullet.result };
+                } else {
+                    return { id: bullet.id, unit: bullet.unit_text, value: '' };
+                }
+            });
+
+            setResults(newResults);
         }
-    }, [bullets])
+    }, [bullets, monthly])
 
     useEffect(() => {
         if (isSuccess) {
@@ -53,16 +64,10 @@ const MonthlyForm = ({ monthlies, division, routePath }) => {
         setResults(updatedResults)
     }
 
-    console.log(results);
-
     const handleSubmit = async (values, props) => {
         const { id, month, year, division_id } = values
 
         dispatch(store({ id, month, year, division_id, results }));
-    }
-
-    const getMonthlyByBullet = (bullet) => {
-        return monthlies.find(item => item.report_bullet_id === bullet);
     }
 
     return (
@@ -70,9 +75,9 @@ const MonthlyForm = ({ monthlies, division, routePath }) => {
             <Formik
                 enableReinitialize
                 initialValues={{
-                    year: monthlies && monthlies.length > 0 ? monthlies[0].year : moment().year() + 543,
-                    month: monthlies && monthlies.length > 0 ? monthlies[0].month : '',
-                    division_id: monthlies && monthlies.length > 0 ? monthlies[0].division_id : division,
+                    year: monthly ? monthly.year : moment().year() + 543,
+                    month: monthly ? monthly.month : '',
+                    division_id: monthly ? monthly.division_id : division,
                     results: [],
                 }}
                 validationSchema={summarySchema}
@@ -154,9 +159,9 @@ const MonthlyForm = ({ monthlies, division, routePath }) => {
                             </table>
                         </div>
                         <div className="col-md-12 text-center">
-                            <button type="submit" className={`btn ${monthlies ? 'btn-warning' : 'btn-primary'}`}>
+                            <button type="submit" className={`btn ${monthly ? 'btn-warning' : 'btn-primary'}`}>
                                 <FaSave className="me-1" />
-                                {monthlies ? 'บันทึกการแก้ไข' : 'บันทึก'}
+                                {monthly ? 'บันทึกการแก้ไข' : 'บันทึก'}
                             </button>
                         </div>
                     </Form>
