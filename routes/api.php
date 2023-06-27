@@ -53,7 +53,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/monthlies/{id}', 'MonthlyController@getMonthly');
     Route::post('/monthlies', 'MonthlyController@store');
     Route::put('/monthlies/{id}', 'MonthlyController@update');
-    Route::delete('/monthlies/{id}', 'MonthlyController@delete');
+    Route::delete('/monthlies/{id}', 'MonthlyController@destroy');
 
     /** Checkups */
     Route::get('/checkups', 'CheckupController@getCheckups');

@@ -134,16 +134,17 @@ class MonthlyController extends Controller
         }
     }
 
-    public function delete(Request $request, $id)
+    public function destroy(Request $request, $id)
     {
         try {
             $monthly = Monthly::find($id);
 
             if ($monthly->delete()) {
+                $monthlyBullet = MonthlyBullet::where('monthly_id', $id)->delete();
+
                 return response()->json([
                     "status"    => 1,
-                    "message"   => "Deleting successfully",
-                    "monthlies" => $monthlies
+                    "message"   => "Deleting successfully"
                 ]);
             }
         } catch (\Exception $ex) {
