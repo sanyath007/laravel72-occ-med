@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { getReportBulletsByDivision } from '../../store/slices/reportBullet';
-import api from '../../api';
 import { budgetMonths } from '../../utils/constraints';
+import api from '../../api';
 
 const Monthly = ({ division, routePath }) => {
     const dispatch = useDispatch();
@@ -96,6 +97,21 @@ const Monthly = ({ division, routePath }) => {
                                 <td></td>
                             </tr>
                         ))}
+                        <tr>
+                            <td colSpan={3}></td>
+                            {budgetMonths.map(month => (
+                                <td key={month.id} style={{ textAlign: 'center', fontSize: '12px' }}>
+                                    <Link to={`${routePath}/summary/${''}/delete`}>
+                                        <OverlayTrigger
+                                            placement="top"
+                                            overlay={<Tooltip id="tooltip">ลบรายการ</Tooltip>}
+                                        >
+                                            <i className="bi bi-trash"></i>
+                                        </OverlayTrigger>
+                                    </Link>
+                                </td>
+                            ))}
+                        </tr>
                     </tbody>
                 </table>
             </div>

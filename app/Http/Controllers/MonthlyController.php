@@ -13,11 +13,11 @@ class MonthlyController extends Controller
     {
         $year = $request->get('year');
 
-        $monthlies = Monthly::where('division_id', $division)
+        $monthlies = Monthly::with('division','bullets')
+                        ->where('division_id', $division)
                         ->where('year', $year)
                         ->get();
         $bullets = ReportBullet::where('division_id', $division)->get();
-
 
         return response()->json([
             "monthlies" => $monthlies,
@@ -108,6 +108,7 @@ class MonthlyController extends Controller
             $monthly->month         = $request['month'];
             $monthly->year          = $request['year'];
             $monthly->division_id   = $request['division_id'];
+
             if ($monthly->save()) {
                 foreach($request['results'] as $result) {
                     $monthly->monthly_id    = $monthly->monthly_id;
