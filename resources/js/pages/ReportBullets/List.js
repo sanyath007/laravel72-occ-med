@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { FaPlus } from 'react-icons/fa'
+import { GlobalContext } from '../../context/globalContext'
 import { destroy, getReportBullets, resetSuccess } from '../../store/slices/reportBullet'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
@@ -12,6 +13,18 @@ const ReportBulletList = () => {
     const dispatch = useDispatch();
     const { bullets, pager, isLoading, isSuccess } = useSelector(state => state.reportBullet);
     const [filterings, setFilterings] = useState({ name: '', division: '' });
+    const { setGlobal } = useContext(GlobalContext);
+
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'หัวข้อรายงาน',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'report-bullets', name: 'หัวข้อรายงาน', path: null, active: true }
+            ]
+        }))
+    }, []);
 
     useEffect(() => {
         if (isSuccess) {

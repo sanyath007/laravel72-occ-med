@@ -89,7 +89,6 @@ const ReportBulletForm = ({ reportBullet }) => {
                 onSubmit={handleSubmit}
             >
                 {(formProps) => {
-                    console.log(formProps.errors);
                     return (
                         <Form>
                             <ModalReportBullets
