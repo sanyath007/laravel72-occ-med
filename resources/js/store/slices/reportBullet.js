@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../api";
 
 const initialState = {
+    bullet: null,
     bullets: [],
     pager: null,
     isLoading: false,
@@ -12,6 +13,17 @@ const initialState = {
 export const getReportBullets = createAsyncThunk('reportBullet/getReportBullets', async ({ path }, { rejectWithValue }) => {
     try {
         const res = await api.get(path);
+
+        return res.data;
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error)
+    }
+});
+
+export const getReportBullet = createAsyncThunk('reportBullet/getReportBullet', async ({ id }, { rejectWithValue }) => {
+    try {
+        const res = await api.get(`/api/report-bullets/${id}`);
 
         return res.data;
     } catch (error) {
@@ -86,6 +98,19 @@ export const reportBulletSlice = createSlice({
             state.isLoading = false
         },
         [getReportBullets.rejected]: (state, { payload }) => {
+            state.error = payload;
+            state.isLoading = false
+        },
+        [getReportBullet.pending]: (state) => {
+            state.bullet = null;
+            state.isLoading = true;
+            state.error = null
+        },
+        [getReportBullet.fulfilled]: (state, { payload }) => {
+            state.bullet = payload;
+            state.isLoading = false
+        },
+        [getReportBullet.rejected]: (state, { payload }) => {
             state.error = payload;
             state.isLoading = false
         },
