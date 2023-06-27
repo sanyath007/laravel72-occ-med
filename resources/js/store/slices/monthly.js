@@ -50,6 +50,26 @@ export const store = createAsyncThunk("monthly/store", async (data, { rejectWith
     }
 });
 
+export const update = createAsyncThunk("monthly/update", async ({ id, data }, { rejectWithValue }) => {
+    try {
+        const res = await api.put(`/api/monthlies/${id}`, data);
+
+        return res.data;
+    } catch (error) {
+        rejectWithValue(error)
+    }
+});
+
+export const destroy = createAsyncThunk("monthly/destroy", async ({ id }, { rejectWithValue }) => {
+    try {
+        const res = await api.delete(`/api/monthlies/${id}`);
+
+        return res.data;
+    } catch (error) {
+        rejectWithValue(error)
+    }
+});
+
 export const monthlySlice = createSlice({
     name: 'monthly',
     initialState,
@@ -115,6 +135,46 @@ export const monthlySlice = createSlice({
             state.isLoading = false;
         },
         [store.rejected]: (state, { payload }) => {
+            state.isLoading = false;
+            state.error = payload;
+        },
+        [update.pending]: (state) => {
+            state.isLoading = true;
+            state.isSuccess = false;
+            state.error = null;
+        },
+        [update.fulfilled]: (state, { payload }) => {
+            const { status, message } = payload;
+
+            if (status === 1) {
+                state.isSuccess = true;
+            } else {
+                state.error = message;
+            }
+
+            state.isLoading = false;
+        },
+        [update.rejected]: (state, { payload }) => {
+            state.isLoading = false;
+            state.error = payload;
+        },
+        [destroy.pending]: (state) => {
+            state.isLoading = true;
+            state.isSuccess = false;
+            state.error = null;
+        },
+        [destroy.fulfilled]: (state, { payload }) => {
+            const { status, message } = payload;
+
+            if (status === 1) {
+                state.isSuccess = true;
+            } else {
+                state.error = message;
+            }
+
+            state.isLoading = false;
+        },
+        [destroy.rejected]: (state, { payload }) => {
             state.isLoading = false;
             state.error = payload;
         },
