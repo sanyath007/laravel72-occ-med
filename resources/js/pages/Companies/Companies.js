@@ -26,7 +26,7 @@ const Companies = () => {
     useEffect(() => {
         fetchCompanies()
 
-        return () => fetchCompanies
+        return () => fetchCompanies()
     }, [])
 
     const fetchCompanies = (path='/api/companies') => {
@@ -35,6 +35,10 @@ const Companies = () => {
         /** Filtering logic */
 
         dispatch(getCompanies({ path }))
+    }
+
+    const handlePageClick = (path) => {
+        fetchCompanies(path)
     }
 
     return (
@@ -90,7 +94,7 @@ const Companies = () => {
 
                             <Pagination
                                 pager={pager}
-                                handlePageBtnClicked={(e) => console.log(e)}
+                                onPageClick={handlePageClick}
                             />
 
                         </div>
