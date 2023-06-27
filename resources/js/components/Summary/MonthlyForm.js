@@ -161,8 +161,8 @@ const MonthlyForm = ({ monthly, division, routePath }) => {
 
                                         return (
                                             <tr key={bullet.id}>
-                                                <td style={{ textAlign: 'center' }}>{bullet.bullet_no}</td>
-                                                <td>{bullet.name}</td>
+                                                <td style={{ textAlign: 'center' }}>{bullet.bullet_type_id === 2 && bullet.bullet_no}</td>
+                                                <td>{bullet.bullet_type_id === 3 && bullet.bullet_no} {bullet.name}</td>
                                                 <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
                                                 <td style={{ textAlign: 'center' }}>
                                                     <input
