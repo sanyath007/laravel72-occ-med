@@ -97,7 +97,7 @@ const ReportBulletList = () => {
                                             )}
                                             {!isLoading && bullets && bullets.map((bullet, index) => (
                                                 <tr key={bullet.id}>
-                                                    <td style={{ textAlign: 'center' }}>{pager.from+index}</td>
+                                                    <td style={{ textAlign: 'center' }}>{pager && pager.from+index}</td>
                                                     <td>{bullet.bullet_no && <span>{bullet.bullet_no} </span>}{bullet.name}</td>
                                                     <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
                                                     <td style={{ textAlign: 'center' }}>
@@ -123,10 +123,12 @@ const ReportBulletList = () => {
                                         </tbody>
                                     </table>
 
-                                    <Pagination
-                                        pager={pager}
-                                        onPageClick={handlePageClick}
-                                    />
+                                    {pager && (
+                                        <Pagination
+                                            pager={pager}
+                                            onPageClick={handlePageClick}
+                                        />
+                                    )}
 
                                 </div>
                             </div>
