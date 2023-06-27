@@ -95,7 +95,7 @@ const Monthly = ({ division, routePath }) => {
                                     return (
                                         <td key={month.id+bullet.id} style={{ textAlign: 'center', fontSize: '12px' }}>
                                             <Link to={`${routePath}/summary/${monthly?.id}/edit`}>
-                                                {monthly?.bullets.find(mb => mb.id === bullet.id)?.result}
+                                                {monthly?.bullets.find(mb => mb.bullet_id === bullet.id)?.result}
                                             </Link>
                                         </td>
                                     )
@@ -125,6 +125,7 @@ const Monthly = ({ division, routePath }) => {
                                         ) : ''}
                                     </td>
                             )})}
+                            <td></td>
                         </tr>
                     </tbody>
                 </table>
