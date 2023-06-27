@@ -12,6 +12,7 @@ import employeeReducer from './slices/employee'
 import reportBulletReducer from './slices/reportBullet'
 import monthlyReducer from './slices/monthly'
 import { patientsApi } from './services/patientsApi'
+import { reportBulletApi } from './services/reportBulletApi'
 
 export default configureStore({
     reducer: {
@@ -27,8 +28,9 @@ export default configureStore({
         employee: employeeReducer,
         reportBullet: reportBulletReducer,
         monthly: monthlyReducer,
-        [patientsApi.reducerPath]: patientsApi.reducer
+        [patientsApi.reducerPath]: patientsApi.reducer,
+        [reportBulletApi.reducerPath]: reportBulletApi.reducer,
     },
     middleware: (getDefaultMiddleware) => 
-        getDefaultMiddleware().concat(patientsApi.middleware),
+        getDefaultMiddleware().concat(patientsApi.middleware, reportBulletApi.middleware),
 })
