@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
-import { Formik, Form } from 'formik'
+import { Formik, Form, Field } from 'formik'
 import { toast } from 'react-toastify'
 import { FaSearch, FaSave } from 'react-icons/fa'
 import { store, resetSuccess } from '../../../store/slices/reportBullet'
@@ -88,8 +88,9 @@ const ReportBulletForm = ({ reportBullet }) => {
                     unit_text: reportBullet && reportBullet.unit_text ? reportBullet.unit_text : '',
                     subitem_of: reportBullet && reportBullet.subitem_of ? reportBullet.subitem_of : '',
                     division_id: reportBullet ? reportBullet.division_id : '',
-                    has_result: reportBullet && reportBullet.has_result ? reportBullet.has_result : '',
-                    calc_formula: reportBullet && reportBullet.calc_formula ? reportBullet.calc_formula : '',
+                    has_result: reportBullet && reportBullet.has_result ? reportBullet.has_result : true,
+                    calc_formula: reportBullet && reportBullet.calc_formula ? reportBullet.calc_formula : 1,
+                    status: reportBullet && reportBullet.status ? reportBullet.status : 1,
                 }}
                 validationSchema={bulletSchema}
                 onSubmit={handleSubmit}
@@ -151,27 +152,7 @@ const ReportBulletForm = ({ reportBullet }) => {
                                         </div>
                                     ) : null}
                                 </div>
-                                <div className="col-md-9 form-group mb-2">
-                                    <label htmlFor="">ประเภท :</label>
-                                    <select
-                                        name="bullet_type_id"
-                                        value={formProps.values.bullet_type_id}
-                                        onChange={formProps.handleChange}
-                                        className={`form-control ${formProps.errors.bullet_type_id && formProps.touched.bullet_type_id ? 'is-invalid' : ''}`}
-                                    >
-                                        <option value="">-- กรุณาเลือก --</option>
-                                        <option value="1">ระดับ 0</option>
-                                        <option value="2">ระดับ 1</option>
-                                        <option value="3">ระดับ 2</option>
-                                        <option value="4">ระดับ 3</option>
-                                    </select>
-                                    {formProps.errors.bullet_type_id && formProps.touched.bullet_type_id ? (
-                                        <div className="invalid-feedback">
-                                            {formProps.errors.bullet_type_id}
-                                        </div>
-                                    ) : null}
-                                </div>
-                                <div className="col-md-3 form-group">
+                                <div className="col-md-4 form-group">
                                     <label htmlFor="">เป้าหมาย :</label>
                                     <input
                                         type="text"
@@ -180,6 +161,39 @@ const ReportBulletForm = ({ reportBullet }) => {
                                         onChange={formProps.handleChange}
                                         className={`form-control ${formProps.errors.unit_text && formProps.touched.unit_text ? 'is-invalid' : ''}`}
                                     />
+                                </div>
+                                <div className="col-md-4 form-group">
+                                    <label htmlFor="">มีช่องกรอกผลงานหรือไม่</label>
+                                    <Field component="div" name="has_result" className="form-control">
+                                        <input
+                                            type="checkbox"
+                                            id="chkHasResult"
+                                            defaultChecked={formProps.values.has_result === "one"}
+                                            name="has_result"
+                                            value="1"
+                                        />
+                                        <label htmlFor="male" className="ms-2">มี</label>
+                                    </Field>
+                                </div>
+                                <div className="col-md-4 form-group mb-2">
+                                    <label htmlFor="">ประเภท :</label>
+                                    <select
+                                        name="bullet_type_id"
+                                        value={formProps.values.bullet_type_id}
+                                        onChange={formProps.handleChange}
+                                        className={`form-control ${formProps.errors.bullet_type_id && formProps.touched.bullet_type_id ? 'is-invalid' : ''}`}
+                                    >
+                                        <option value="">-- กรุณาเลือก --</option>
+                                        <option value="1">ระดับ 1</option>
+                                        <option value="2">ระดับ 2</option>
+                                        <option value="3">ระดับ 3</option>
+                                        <option value="4">ระดับ 4</option>
+                                    </select>
+                                    {formProps.errors.bullet_type_id && formProps.touched.bullet_type_id ? (
+                                        <div className="invalid-feedback">
+                                            {formProps.errors.bullet_type_id}
+                                        </div>
+                                    ) : null}
                                 </div>
                                 <div className="col-md-12 form-group mb-2">
                                     <label htmlFor="">เป็นหัวข้อย่อยของ (ถ้ามี) :</label>
@@ -209,6 +223,51 @@ const ReportBulletForm = ({ reportBullet }) => {
                                             เคลียร์
                                         </button>
                                     </div>
+                                </div>
+                                <div className="col-md-6 form-group mb-2">
+                                    <label htmlFor="">สถานะ :</label>
+                                    <Field component="div" name="status" className="form-control">
+                                        <input
+                                            type="radio"
+                                            id="radioOne"
+                                            defaultChecked={formProps.values.status === 1}
+                                            name="status"
+                                            value="1"
+                                        />
+                                        <label htmlFor="male" className="ms-2 me-4">ใช้งาน</label>
+                                        <input
+                                            type="radio"
+                                            id="radioTwo"
+                                            defaultChecked={formProps.values.status === 0}
+                                            name="status"
+                                            value="0"
+                                        />
+                                        <label htmlFor="male" className="ms-2">ไม่ใช้งาน</label>
+                                    </Field>
+                                    {formProps.errors.status && formProps.touched.status ? (
+                                        <div className="invalid-feedback">
+                                            {formProps.errors.status}
+                                        </div>
+                                    ) : null}
+                                </div>
+                                <div className="col-md-6 form-group mb-2">
+                                    <label htmlFor="">สูตรคำนวณผลรวม :</label>
+                                    <select
+                                        name="calc_formula"
+                                        value={formProps.values.calc_formula}
+                                        onChange={formProps.handleChange}
+                                        className={`form-control ${formProps.errors.calc_formula && formProps.touched.calc_formula ? 'is-invalid' : ''}`}
+                                    >
+                                        <option value="">-- กรุณาเลือก --</option>
+                                        <option value="1">SUM</option>
+                                        <option value="2">AVG</option>
+                                        <option value="3">COUNT</option>
+                                    </select>
+                                    {formProps.errors.calc_formula && formProps.touched.calc_formula ? (
+                                        <div className="invalid-feedback">
+                                            {formProps.errors.calc_formula}
+                                        </div>
+                                    ) : null}
                                 </div>
                             </div>
                             <div className="text-center">
