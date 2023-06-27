@@ -22,17 +22,14 @@ const Yearly= ({ division }) => {
     const getSummary = async (year) => {
         const res = await api.get(`/api/monthlies/division/${division}/year/${year}`)
 
-        const newBullets = res.data.bullets
-                                .filter(bullet => bullet.division_id === 6)
-                                .map(bullet => {
-                                    const summary = res.data.monthlies.find(monthly => monthly.bullet_id === bullet.id)
-                                    
-                                    if (summary) {
-                                        return { ...bullet, sum: summary.sum_result }
-                                    }
+        const newBullets =  res.data.bullets.map(bullet => {
+                                const summary = res.data.monthlies.find(monthly => monthly.bullet_id === bullet.id)
 
-                                    return { ...bullet, sum: 0 }
-                                })
+                                if (summary) return { ...bullet, sum: summary.sum_result };
+
+                                return { ...bullet, sum: 0 }
+                            });
+
         setBullets(newBullets)
     }
 
