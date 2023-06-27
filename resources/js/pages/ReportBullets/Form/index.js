@@ -121,7 +121,7 @@ const ReportBulletForm = ({ reportBullet }) => {
                                     ) : null}
                                 </div>
                                 <div className="col-md-2 form-group mb-2">
-                                    <label htmlFor="">ลำดับที่ :</label>
+                                    <label htmlFor="">ข้อที่ :</label>
                                     <input
                                         type="text"
                                         name="bullet_no"
