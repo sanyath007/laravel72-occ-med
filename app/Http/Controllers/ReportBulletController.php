@@ -15,7 +15,7 @@ class ReportBulletController extends Controller
                     ? explode(',', $request->get('type'))
                     : $request->get('type');
 
-        $bullets = ReportBullet::with('division')
+        $bullets = ReportBullet::with('division','parent')
                         ->when(!empty($division), function($query) use ($division) {
                             $query->where('division_id', $division);
                         })
@@ -36,14 +36,16 @@ class ReportBulletController extends Controller
     
     public function getReportBullet(Request $request, $id)
     {
-        $bullet = ReportBullet::with('division')->find($id);
+        $bullet = ReportBullet::with('division','parent')->find($id);
 
         return response()->json($bullet);
     }
 
     public function getReportBulletsByDivision(Request $request, $divId)
     {
-        $bullets = ReportBullet::where('division_id', $divId)->get();
+        $bullets = ReportBullet::with('division','parent')
+                        ->where('division_id', $divId)
+                        ->get();
 
         return response()->json($bullets);
     }

@@ -12,4 +12,9 @@ class ReportBullet extends Model
     {
         return $this->belongsTo(Division::class, 'division_id', 'id');
     }
+
+    public function parent()
+    {
+        return $this->belongsTo(ReportBullet::class, 'subitem_of', 'id');
+    }
 }

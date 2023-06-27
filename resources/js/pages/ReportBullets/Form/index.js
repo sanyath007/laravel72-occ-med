@@ -21,13 +21,11 @@ const ReportBulletForm = ({ reportBullet }) => {
     const { isSuccess } = useSelector(state => state.reportBullet)
     const [divisions, setDivisions] = useState([])
     const [showReportBullets, setShowReportBullets] = useState(false)
-    const [selectedReportBullet, setSelectedReportBullet] = useState(null)
+    const [selectedSubitemOf, setSelectedSubitemOf] = useState(null)
 
     useEffect(() => {
-        getDivisions();
-
-        return () => getDivisions();
-    }, [])
+        if (reportBullet) setSelectedSubitemOf(reportBullet.parent)
+    }, [reportBullet])
 
     useEffect(() => {
         if (isSuccess) {
@@ -37,20 +35,22 @@ const ReportBulletForm = ({ reportBullet }) => {
         }
     }, [isSuccess])
 
+    useEffect(() => {
+        getDivisions();
+
+        return () => getDivisions();
+    }, [])
+
     const getDivisions = async () => {
         const res = await api.get('/api/divisions');
 
         setDivisions(res.data)
     }
 
-    const handleSubmit = (values, props) => {
-        dispatch(store({ data: values }));
-    }
-
-    const handleSelectedReportBullet = (bullet, formik) => {
+    const handleSelectedSubitemOf = (bullet, formik) => {
         if (bullet) {
             /** Set state's value */
-            setSelectedReportBullet(bullet)
+            setSelectedSubitemOf(bullet)
     
             /** Set formik field's value */
             formik.setFieldValue('bullet_id', bullet.id);
@@ -62,9 +62,9 @@ const ReportBulletForm = ({ reportBullet }) => {
         setShowReportBullets(false)
     }
 
-    const handleClearSelectedReportBullet = (formik) => {
+    const handleClearSelectedSubitemOf = (formik) => {
         /** Clear state's value */
-        setSelectedReportBullet(null)
+        setSelectedSubitemOf(null)
 
         /** Clear formik field's value */
         formik.setFieldValue('bullet_id', '');
@@ -72,17 +72,24 @@ const ReportBulletForm = ({ reportBullet }) => {
         setTimeout(() => formik.setFieldTouched('bullet_id', false));
     }
 
+    const handleSubmit = (values, props) => {
+        dispatch(store({ data: values }));
+    }
+
     return (
         <>
             <Formik
+                enableReinitialize
                 initialValues={{
-                    id: '',
-                    name: '',
-                    bullet_no: '',
-                    bullet_type_id: '',
-                    bullet_id: '',
-                    unit_text: '',
-                    division_id: '',
+                    id: reportBullet ? reportBullet.id : '',
+                    name: reportBullet ? reportBullet.name : '',
+                    bullet_no: reportBullet && reportBullet.bullet_no ? reportBullet.bullet_no : '',
+                    bullet_type_id: reportBullet ? reportBullet.bullet_type_id : '',
+                    unit_text: reportBullet && reportBullet.unit_text ? reportBullet.unit_text : '',
+                    subitem_of: reportBullet && reportBullet.subitem_of ? reportBullet.subitem_of : '',
+                    division_id: reportBullet ? reportBullet.division_id : '',
+                    has_result: reportBullet && reportBullet.has_result ? reportBullet.has_result : '',
+                    calc_formula: reportBullet && reportBullet.calc_formula ? reportBullet.calc_formula : '',
                 }}
                 validationSchema={bulletSchema}
                 onSubmit={handleSubmit}
@@ -93,7 +100,7 @@ const ReportBulletForm = ({ reportBullet }) => {
                             <ModalReportBullets
                                 isOpen={showReportBullets}
                                 hideModal={() => setShowReportBullets(false)}
-                                onSelected={(bullet) => handleSelectedReportBullet(bullet, formProps)}
+                                onSelected={(bullet) => handleSelectedSubitemOf(bullet, formProps)}
                                 division={formProps.values.division_id}
                             />
 
@@ -178,7 +185,7 @@ const ReportBulletForm = ({ reportBullet }) => {
                                     <label htmlFor="">เป็นหัวข้อย่อยของ (ถ้ามี) :</label>
                                     <div className="input-group">
                                         <div className="form-control">
-                                            {selectedReportBullet && selectedReportBullet.name}
+                                            {selectedSubitemOf && `${selectedSubitemOf.bullet_no} ${selectedSubitemOf.name}`}
                                         </div>
                                         <input
                                             type="hidden"
@@ -197,7 +204,7 @@ const ReportBulletForm = ({ reportBullet }) => {
                                         <button
                                             type="button"
                                             className="btn btn-danger"
-                                            onClick={() => handleClearSelectedReportBullet(formProps)}
+                                            onClick={() => handleClearSelectedSubitemOf(formProps)}
                                         >
                                             เคลียร์
                                         </button>
