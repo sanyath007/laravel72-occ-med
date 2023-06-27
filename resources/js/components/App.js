@@ -29,28 +29,28 @@ import Clinics from "../pages/Clinics/Clinics";
 import ClinicMonthly from "../pages/Clinics/Summary/Monthly";
 import AddClinicMonthly from "../pages/Clinics/Summary/Add";
 import EditClinicMonthly from "../pages/Clinics/Summary/Edit";
-import ClinicSummaryYear from "../pages/Clinics/Summary/SummaryYear";
+import ClinicYearly from "../pages/Clinics/Summary/Yearly";
 import Preventions from "../pages/Preventions/Preventions";
 import PreventionForm from "../pages/Preventions/Form/PreventionForm";
 import PreventionMonthly from "../pages/Preventions/Summary/Monthly";
 import AddPreventionMonthly from "../pages/Preventions/Summary/Add";
 import EditPreventionMonthly from "../pages/Preventions/Summary/Edit";
-import PreventionSummaryYear from "../pages/Preventions/Summary/SummaryYear";
+import PreventionYearly from "../pages/Preventions/Summary/Yearly";
 import Promotions from "../pages/Promotions/Promotions";
 import PromotionForm from "../pages/Promotions/Form/PromotionForm";
 import PromotionMonthly from "../pages/Promotions/Summary/Monthly";
 import AddPromotionMonthly from "../pages/Promotions/Summary/Add";
 import EditPromotionMonthly from "../pages/Promotions/Summary/Edit";
-import PromotionSummaryYear from "../pages/Promotions/Summary/SummaryYear";
+import PromotionYearly from "../pages/Promotions/Summary/Yearly";
 import ToxicologyMonthly from "../pages/Toxicologies/Summary/Monthly";
 import AddToxicologyMonthly from "../pages/Toxicologies/Summary/Add";
 import EditToxicologyMonthly from "../pages/Toxicologies/Summary/Edit";
-import ToxicologySummaryYear from "../pages/Toxicologies/Summary/SummaryYear";
+import ToxicologyYearly from "../pages/Toxicologies/Summary/Yearly";
 import PollutionSources from "../pages/Toxicologies/PollutionSources";
 import OccupationMonthly from "../pages/Occupations/Summary/Monthly";
 import AddOccupationMonthly from "../pages/Occupations/Summary/Add";
 import EditOccupationMonthly from "../pages/Occupations/Summary/Edit";
-import OccupationSummaryYear from "../pages/Occupations/Summary/SummaryYear";
+import OccupationYearly from "../pages/Occupations/Summary/Yearly";
 import ReportBullets from "../pages/ReportBullets/ReportBullets";
 import ReportBulletForm from "../pages/ReportBullets/Form/ReportBulletForm";
 import { useAuth } from "../hooks/useAuth"
@@ -86,32 +86,32 @@ export default function App() {
                         <Route path="/clinics/summary" element={<ClinicMonthly />} />
                         <Route path="/clinics/summary/add" element={<AddClinicMonthly />} />
                         <Route path="/clinics/summary/:id/edit" element={<EditClinicMonthly />} />
-                        <Route path="/clinics/summary-year" element={<ClinicSummaryYear />} />
+                        <Route path="/clinics/summary-year" element={<ClinicYearly />} />
                         {/* Preventions routes */}
                         <Route path="/preventions" element={<Preventions />} />
                         <Route path="/preventions/new" element={<PreventionForm />} />
                         <Route path="/preventions/summary" element={<PreventionMonthly />} />
                         <Route path="/preventions/summary/add" element={<AddPreventionMonthly />} />
                         <Route path="/preventions/summary/:id/edit" element={<EditPreventionMonthly />} />
-                        <Route path="/preventions/summary-year" element={<PreventionSummaryYear />} />
+                        <Route path="/preventions/summary-year" element={<PreventionYearly />} />
                         {/* Promotions routes */}
                         <Route path="/promotions" element={<Promotions />} />
                         <Route path="/promotions/new" element={<PromotionForm />} />
                         <Route path="/promotions/summary" element={<PromotionMonthly />} />
                         <Route path="/promotions/summary/add" element={<AddPromotionMonthly />} />
                         <Route path="/promotions/summary/:id/edit" element={<EditPromotionMonthly />} />
-                        <Route path="/promotions/summary-year" element={<PromotionSummaryYear />} />
+                        <Route path="/promotions/summary-year" element={<PromotionYearly />} />
                         {/* Toxicologies routes */}
                         <Route path="/toxicologies/summary" element={<ToxicologyMonthly />} />
                         <Route path="/toxicologies/summary/add" element={<AddToxicologyMonthly />} />
                         <Route path="/toxicologies/summary/:id/edit" element={<EditToxicologyMonthly />} />
-                        <Route path="/toxicologies/summary-year" element={<ToxicologySummaryYear />} />
+                        <Route path="/toxicologies/summary-year" element={<ToxicologyYearly />} />
                         <Route path="/toxicologies/pollution-sources" element={<PollutionSources />} />
                         {/* Occupations routes */}
                         <Route path="/occupations/summary" element={<OccupationMonthly />} />
                         <Route path="/occupations/summary/add" element={<AddOccupationMonthly />} />
                         <Route path="/occupations/summary/:id/edit" element={<EditOccupationMonthly />} />
-                        <Route path="/occupations/summary-year" element={<OccupationSummaryYear />} />
+                        <Route path="/occupations/summary-year" element={<OccupationYearly />} />
                         {/* Checkups routes */}
                         <Route path="/checkups" element={<Checkups />} />
                         <Route path="/checkups/new" element={<CheckupForm />} />

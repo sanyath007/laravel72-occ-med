@@ -1,19 +1,19 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react';
 import { GlobalContext } from '../../../context/globalContext';
 import Yearly from '../../../components/Summary/Yearly';
 
-const CheckupYearly= () => {
+const OccupationSummaryYear = () => {
     const { setGlobal } = useContext(GlobalContext);
-    const division = 6;
+    const division = 5;
 
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'สรุปผลงานรายปี (งานตรวจสุขภาพ)',
+            title: 'สรุปผลงานรายปี (งานอาชีวอนามันใน รพ.)',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'checkups', name: 'งานตรวจสุขภาพ', path: null, active: true },
-                { id: 'summary', name: 'สรุปผลงาน', path: '/checkups/summary' },
+                { id: 'occupations', name: 'งานอาชีวอนามันใน รพ.', path: null, active: true },
+                { id: 'summary', name: 'สรุปผลงาน', path: '/occupations/summary' },
                 { id: 'year', name: 'สรุปผลงานรายปี', path: null, active: true }
             ]
         }))
@@ -25,7 +25,7 @@ const CheckupYearly= () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">สรุปผลงานรายปี (งานตรวจสุขภาพ)</h5>
+                            <h5 className="card-title">สรุปผลงานรายปี (งานอาชีวอนามันใน รพ.)</h5>
 
                             <Yearly division={division} />
                         </div>
@@ -36,4 +36,4 @@ const CheckupYearly= () => {
     )
 }
 
-export default CheckupYearly
+export default OccupationSummaryYear

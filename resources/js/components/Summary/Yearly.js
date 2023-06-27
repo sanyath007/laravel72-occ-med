@@ -42,61 +42,50 @@ const Yearly= ({ division }) => {
     }
 
     return (
-        <section className="section">
-            <div className="row">
-                <div className="col-lg-12">
-                    <div className="card">
-                        <div className="card-body">
-                            <h5 className="card-title">บันทึกสรุปผลงาน (งานตรวจสุขภาพ)</h5>
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <table className="table table-striped table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th style={{ width: '3%', textAlign: 'center' }}>ลำดับ</th>
-                                                <th style={{ textAlign: 'center' }}>กิจกรรม</th>
-                                                <th style={{ width: '10%', textAlign: 'center' }}>เป้าหมาย</th>
-                                                <th style={{ width: '10%', textAlign: 'center' }}>ผลงาน</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td style={{ textAlign: 'center' }}></td>
-                                                <td>ปีงบประมาณ</td>
-                                                <td style={{ textAlign: 'center' }}></td>
-                                                <td style={{ textAlign: 'center' }}>
-                                                    <select
-                                                        name="filter"
-                                                        value={filter}
-                                                        onChange={handleFilterChange}
-                                                        className="form-control"
-                                                    >
-                                                        <option value="2563">2563</option>
-                                                        <option value="2564">2564</option>
-                                                        <option value="2565">2565</option>
-                                                        <option value="2566">2566</option>
-                                                    </select>
-                                                </td>
-                                            </tr>
-                                            {bullets && bullets.map(bullet => (
-                                                <tr key={bullet.id}>
-                                                    <td style={{ textAlign: 'center' }}>{bullet.bullet_no}</td>
-                                                    <td>{bullet.name}</td>
-                                                    <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
-                                                    <td style={{ textAlign: 'center' }}>
-                                                        {bullet.sum}
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div className="row">
+            <div className="col-md-12">
+                <table className="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th style={{ width: '3%', textAlign: 'center' }}>ลำดับ</th>
+                            <th style={{ textAlign: 'center' }}>กิจกรรม</th>
+                            <th style={{ width: '10%', textAlign: 'center' }}>เป้าหมาย</th>
+                            <th style={{ width: '10%', textAlign: 'center' }}>ผลงาน</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style={{ textAlign: 'center' }}></td>
+                            <td>ปีงบประมาณ</td>
+                            <td style={{ textAlign: 'center' }}></td>
+                            <td style={{ textAlign: 'center' }}>
+                                <select
+                                    name="filter"
+                                    value={filter}
+                                    onChange={handleFilterChange}
+                                    className="form-control"
+                                >
+                                    <option value="2563">2563</option>
+                                    <option value="2564">2564</option>
+                                    <option value="2565">2565</option>
+                                    <option value="2566">2566</option>
+                                </select>
+                            </td>
+                        </tr>
+                        {bullets && bullets.map(bullet => (
+                            <tr key={bullet.id}>
+                                <td style={{ textAlign: 'center' }}>{bullet.bullet_no}</td>
+                                <td>{bullet.name}</td>
+                                <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
+                                <td style={{ textAlign: 'center' }}>
+                                    {bullet.sum}
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
-        </section>
+        </div>
     )
 }
 
