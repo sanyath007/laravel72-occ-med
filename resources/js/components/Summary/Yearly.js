@@ -1,37 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Formik, Form } from 'formik'
-import * as Yup from 'yup'
-import { FaSave } from 'react-icons/fa'
-import { GlobalContext } from '../../../context/globalContext';
-import { getReportBulletsByDivision } from '../../../store/slices/reportBullet';
-import { monthNames } from '../../../utils/constraints'
-import api from '../../../api'
+import { getReportBulletsByDivision } from '../../store/slices/reportBullet';
+import api from '../../api';
 
-const summarySchema = Yup.object().shape({
-    // year: Yup.string().required(),
-    // month: Yup.string().required()
-})
-
-const CheckupSummaryYear= () => {
+const Yearly= ({ division }) => {
     const dispatch = useDispatch();
     // const { bullets } = useSelector(state => state.reportBullet);
-    const { setGlobal } = useContext(GlobalContext)
     const [filter, setFilter] = useState(2566)
     const [bullets, setBullets] = useState([])
-
-    useEffect(() => {
-        setGlobal((prev) => ({
-            ...prev,
-            title: 'สรุปผลงานรายปี (งานตรวจสุขภาพ)',
-            breadcrumbs: [
-                { id: 'home', name: 'Home', path: '/' },
-                { id: 'checkups', name: 'งานตรวจสุขภาพ', path: '/checkups' },
-                { id: 'summary', name: 'สรุปผลงาน', path: '/checkups/summary' },
-                { id: 'summary-year', name: 'สรุปผลงานรายปี', path: null, active: true }
-            ]
-        }))
-    }, [])
 
     // useEffect(() => {
     //     dispatch(getReportBulletsByDivision({ path: '/api/report-bullets/division/6' }))
@@ -44,18 +20,18 @@ const CheckupSummaryYear= () => {
     }, [filter])
 
     const getSummary = async (year) => {
-        const res = await api.get(`/api/checkup-monthlies/${year}`)
+        const res = await api.get(`/api/monthlies/division/${division}/year/${year}`)
 
         const newBullets = res.data.bullets
                                 .filter(bullet => bullet.division_id === 6)
                                 .map(bullet => {
-                                    const summary = res.data.monthlies.find(monthly => monthly.report_bullet_id === bullet.id)
+                                    const summary = res.data.monthlies.find(monthly => monthly.bullet_id === bullet.id)
                                     
                                     if (summary) {
                                         return { ...bullet, sum: summary.sum_result }
                                     }
 
-                                    return bullet
+                                    return { ...bullet, sum: 0 }
                                 })
         setBullets(newBullets)
     }
@@ -124,4 +100,4 @@ const CheckupSummaryYear= () => {
     )
 }
 
-export default CheckupSummaryYear
+export default Yearly

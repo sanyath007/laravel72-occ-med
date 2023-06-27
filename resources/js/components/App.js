@@ -24,7 +24,7 @@ import CheckupForm from "../pages/Checkups/Form/CheckupForm";
 import CheckupMonthly from "../pages/Checkups/Summary/Monthly";
 import AddCheckupMonthly from "../pages/Checkups/Summary/Add";
 import EditCheckupMonthly from "../pages/Checkups/Summary/Edit";
-import CheckupSummaryYear from "../pages/Checkups/Summary/SummaryYear";
+import CheckupYearly from "../pages/Checkups/Summary/Yearly";
 import Clinics from "../pages/Clinics/Clinics";
 import ClinicMonthly from "../pages/Clinics/Summary/Monthly";
 import AddClinicMonthly from "../pages/Clinics/Summary/Add";
@@ -118,7 +118,7 @@ export default function App() {
                         <Route path="/checkups/summary" element={<CheckupMonthly />} />
                         <Route path="/checkups/summary/add" element={<AddCheckupMonthly />} />
                         <Route path="/checkups/summary/:id/edit" element={<EditCheckupMonthly />} />
-                        <Route path="/checkups/summary-year" element={<CheckupSummaryYear />} />
+                        <Route path="/checkups/summary-year" element={<CheckupYearly />} />
                         {/* Companies routes */}
                         <Route path="/companies" element={<Companies />} />
                         <Route path="/companies/new" element={<CompanyNew />} />

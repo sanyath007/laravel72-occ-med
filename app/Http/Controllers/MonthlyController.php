@@ -49,13 +49,14 @@ class MonthlyController extends Controller
     {
         $monthlies = \DB::table('monthlies')
                         ->select(
-                            'monthlies.year', 'monthlies.report_bullet_id',
-                            \DB::raw('SUM(monthlies.result) as sum_result')
+                            'monthlies.year', 'monthly_bullets.bullet_id',
+                            \DB::raw('SUM(monthly_bullets.result) as sum_result')
                         )
+                        ->leftJoin('monthly_bullets', 'monthly_bullets.monthly_id', '=', 'monthlies.id')
                         ->where('division_id', $division)
                         ->where('year', $year)
                         ->groupBy('monthlies.year')
-                        ->groupBy('monthlies.report_bullet_id')
+                        ->groupBy('monthly_bullets.bullet_id')
                         ->get();
         $bullets = ReportBullet::all();
 
