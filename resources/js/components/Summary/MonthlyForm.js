@@ -6,7 +6,7 @@ import * as Yup from 'yup'
 import { toast } from 'react-toastify'
 import { FaSave } from 'react-icons/fa'
 import { getReportBulletsByDivision } from '../../store/slices/reportBullet';
-import { resetSuccess, store } from '../../store/slices/monthly';
+import { resetSuccess, store, update } from '../../store/slices/monthly';
 import { monthNames } from '../../utils/constraints';
 import moment from 'moment'
 
@@ -74,10 +74,10 @@ const MonthlyForm = ({ monthly, division, routePath }) => {
     }
 
     const handleSubmit = async (values, props) => {
-        const { id, month, year, division_id } = values
+        const { id, month, year, division_id } = values;
 
         if (monthly) {
-            console.log({ id, month, year, division_id, results });
+            dispatch(update({ id: monthly.id, data: { id, month, year, division_id, results } }));
         } else {
             dispatch(store({ id, month, year, division_id, results }));
         }
