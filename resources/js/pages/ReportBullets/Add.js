@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { GlobalContext } from '../../context/globalContext'
+import ReportBulletForm from './Form'
 
 const AddReportBullet = () => {
     const { setGlobal } = useContext(GlobalContext);

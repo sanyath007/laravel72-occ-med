@@ -1,13 +1,21 @@
 import React, { useContext, useEffect } from 'react'
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { GlobalContext } from '../../context/globalContext'
+import ReportBulletForm from './Form'
+import Loading from '../../components/Loading'
+import { getReportBullet } from '../../store/slices/reportBullet';
 
 const EditReportBullet = () => {
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const { reportBullet, isLoading } = useSelector(state => state.reportBullet);
     const { setGlobal } = useContext(GlobalContext);
 
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'หัวข้อรายงาน',
+            title: 'แก้ไขหัวข้อรายงาน',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'report-bullets', name: 'หัวข้อรายงาน', path: '/report-bullets' },
@@ -15,6 +23,10 @@ const EditReportBullet = () => {
             ]
         }))
     }, []);
+
+    useEffect(() => {
+        if (id) dispatch(getReportBullet({ id }));
+    }, [id]);
 
     return (
         <section className="section">
@@ -24,7 +36,11 @@ const EditReportBullet = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขหัวข้อรายงาน</h5>
 
-                            <ReportBulletForm />
+                            {isLoading ? (
+                                <div className="text-center">
+                                    <Loading />
+                                </div>
+                            ) : <ReportBulletForm bullet={reportBullet} />}
                         </div>
                     </div>
                 </div>

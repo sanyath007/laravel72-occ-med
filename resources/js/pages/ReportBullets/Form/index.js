@@ -15,7 +15,7 @@ const bulletSchema = Yup.object().shape({
     bullet_type_id: Yup.string().required()
 });
 
-const ReportBulletForm = () => {
+const ReportBulletForm = ({ bullet }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { success } = useSelector(state => state.reportBullet)
