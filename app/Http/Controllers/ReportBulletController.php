@@ -61,6 +61,7 @@ class ReportBulletController extends Controller
             $bullet->subitem_of     = $request['subitem_of'];
             $bullet->division_id    = $request['division_id'];
             $bullet->has_result     = $request['has_result'];
+            $bullet->result_count   = $request['result_count'];
             $bullet->calc_formula   = $request['calc_formula'];
             $bullet->status         = $request['status'];
 
@@ -95,6 +96,7 @@ class ReportBulletController extends Controller
             $bullet->subitem_of     = $request['subitem_of'];
             $bullet->division_id    = $request['division_id'];
             $bullet->has_result     = $request['has_result'];
+            $bullet->result_count   = $request['result_count'];
             $bullet->calc_formula   = $request['calc_formula'];
             $bullet->status         = $request['status'];
 
