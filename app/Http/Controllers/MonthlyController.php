@@ -50,7 +50,8 @@ class MonthlyController extends Controller
         $monthlies = \DB::table('monthlies')
                         ->select(
                             'monthlies.year', 'monthly_bullets.bullet_id',
-                            \DB::raw('SUM(monthly_bullets.result) as sum_result')
+                            \DB::raw('SUM(monthly_bullets.result1) as sum_result1'),
+                            \DB::raw('SUM(monthly_bullets.result2) as sum_result2')
                         )
                         ->leftJoin('monthly_bullets', 'monthly_bullets.monthly_id', '=', 'monthlies.id')
                         ->where('division_id', $division)
@@ -84,7 +85,8 @@ class MonthlyController extends Controller
                     $monthlyBullet->monthly_id  = $monthly->id;
                     $monthlyBullet->bullet_id   = $result['bullet_id'];
                     $monthlyBullet->unit_text   = $result['unit'];
-                    $monthlyBullet->result      = $result['value'];
+                    $monthlyBullet->result1     = $result['value1'];
+                    $monthlyBullet->result2     = $result['value2'];
                     $monthlyBullet->save();
                 }
 
@@ -118,7 +120,8 @@ class MonthlyController extends Controller
                     // $monthlyBullet->monthly_id  = $monthly->id;
                     // $monthlyBullet->bullet_id   = $result['bullet_id'];
                     // $monthlyBullet->unit_text   = $result['unit'];
-                    $monthlyBullet->result      = $result['value'];
+                    $monthlyBullet->result1 = $result['value1'];
+                    $monthlyBullet->result2 = $result['value2'];
                     $monthlyBullet->save();
                 }
     
