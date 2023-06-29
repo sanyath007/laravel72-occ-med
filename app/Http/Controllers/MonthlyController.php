@@ -18,12 +18,8 @@ class MonthlyController extends Controller
                         ->where('division_id', $division)
                         ->where('year', $year)
                         ->get();
-        $bullets = ReportBullet::where('division_id', $division)->get();
 
-        return response()->json([
-            "monthlies" => $monthlies,
-            "bullets"   => $bullets
-        ]);
+        return response()->json($monthlies);
     }
 
     public function getMonthly($id)
@@ -60,7 +56,9 @@ class MonthlyController extends Controller
                         ->groupBy('monthly_bullets.bullet_id')
                         ->get();
 
-        $bullets = ReportBullet::where('division_id', $division)->get();
+        $bullets = ReportBullet::where('division_id', $division)
+                        ->where('status', 1)
+                        ->get();
 
 
         return response()->json([

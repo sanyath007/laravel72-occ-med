@@ -16,6 +16,7 @@ class ReportBulletController extends Controller
                     : $request->get('type');
 
         $bullets = ReportBullet::with('division','parent')
+                        ->where('status', 1)
                         ->when(!empty($division), function($query) use ($division) {
                             $query->where('division_id', $division);
                         })
@@ -44,6 +45,7 @@ class ReportBulletController extends Controller
     public function getReportBulletsByDivision(Request $request, $divId)
     {
         $bullets = ReportBullet::with('division','parent')
+                        ->where('status', 1)
                         ->where('division_id', $divId)
                         ->get();
 
