@@ -38,13 +38,15 @@ const MonthlyForm = ({ monthly, division, routePath }) => {
                         id: monthlyBullet.id,
                         bullet_id: bullet.id,
                         unit: bullet.unit_text,
-                        value: monthlyBullet.result ? monthlyBullet.result : ''
+                        value1: monthlyBullet.result1 ? monthlyBullet.result1 : '',
+                        value2: monthlyBullet.result2 ? monthlyBullet.result2 : ''
                     };
                 } else {
                     return {
                         bullet_id: bullet.id,
                         unit: bullet.unit_text,
-                        value: ''
+                        value1: '',
+                        value2: ''
                     };
                 }
             });
@@ -62,10 +64,11 @@ const MonthlyForm = ({ monthly, division, routePath }) => {
     }, [isSuccess]);
 
     const handleResultChange = (e) => {
-        const { name, value } = e.target
+        const { name, value } = e.target;
+        const [id, seq] = name.split('_');
 
         const updatedResults = results.map(result => {
-            if (result.bullet_id == name) result.value = value
+            if (result.bullet_id == id) result[`value${seq}`] = value
 
             return result
         })
@@ -109,7 +112,7 @@ const MonthlyForm = ({ monthly, division, routePath }) => {
                                         <th style={{ width: '3%', textAlign: 'center' }}>ลำดับ</th>
                                         <th style={{ textAlign: 'center' }}>กิจกรรม</th>
                                         <th style={{ width: '10%', textAlign: 'center' }}>เป้าหมาย</th>
-                                        <th style={{ width: '12%', textAlign: 'center' }}>ผลงาน</th>
+                                        <th style={{ width: '15%', textAlign: 'center' }}>ผลงาน</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -165,13 +168,26 @@ const MonthlyForm = ({ monthly, division, routePath }) => {
                                                 <td>{bullet.bullet_type_id === 3 && bullet.bullet_no} {bullet.name}</td>
                                                 <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
                                                 <td style={{ textAlign: 'center' }}>
-                                                    <input
-                                                        type="text"
-                                                        name={bullet.id}
-                                                        value={result ? result.value : ''}
-                                                        onChange={handleResultChange}
-                                                        className="form-control text-center h-25"
-                                                    />
+                                                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                                                        <input
+                                                            type="text"
+                                                            name={`${bullet.id}_1`}
+                                                            value={result ? result.value1 : ''}
+                                                            onChange={handleResultChange}
+                                                            className="form-control text-center h-25 w-50 me-1"
+                                                        />
+                                                        {bullet.result_count > 1 && (
+                                                            <>
+                                                                / <input
+                                                                    type="text"
+                                                                    name={`${bullet.id}_2`}
+                                                                    value={result ? result.value2 : ''}
+                                                                    onChange={handleResultChange}
+                                                                    className="form-control text-center h-25 w-50 ms-1"
+                                                                />
+                                                            </>
+                                                        )}
+                                                    </div>
                                                 </td>
                                             </tr>
                                         )

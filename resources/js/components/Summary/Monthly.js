@@ -117,11 +117,13 @@ const Monthly = ({ division, routePath }) => {
                                 <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
                                 {budgetMonths.map(month => {
                                     const monthly = getMonthly(month.id);
+                                    const monthlyBullet = monthly?.bullets.find(mb => mb.bullet_id === bullet.id);
 
                                     return (
                                         <td key={month.id+bullet.id} style={{ textAlign: 'center', fontSize: '12px' }}>
                                             {/* <Link to={`${routePath}/summary/${monthly?.id}/edit`}> */}
-                                                {monthly?.bullets.find(mb => mb.bullet_id === bullet.id)?.result}
+                                                {monthlyBullet?.result1}
+                                                {(bullet.result_count > 1 && monthlyBullet?.result2) && '/'+monthlyBullet?.result2}
                                             {/* </Link> */}
                                         </td>
                                     )
