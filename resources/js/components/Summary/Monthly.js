@@ -29,6 +29,7 @@ const Monthly = ({ division, routePath }) => {
         }
     }, [isSuccess]);
 
+    // TODO: Should move this process to store
     useEffect(() => {
         getMonthlies(2566);
 

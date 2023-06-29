@@ -29,18 +29,6 @@ class MonthlyController extends Controller
         return response()->json($monthly);
     }
 
-    public function getMonthliesByMonth(Request $request, $division, $month)
-    {
-        $year = $request->get('year');
-
-        $monthly = Monthly::where('division_id', $division)
-                        ->where('month', $month)
-                        ->where('year', $year)
-                        ->get();
-
-        return response()->json($monthly);
-    }
-
     public function getMonthlySummary(Request $request, $division, $year)
     {
         $monthlies = \DB::table('monthlies')

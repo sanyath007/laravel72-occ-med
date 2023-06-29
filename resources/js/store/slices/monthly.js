@@ -30,16 +30,6 @@ export const getMonthly = createAsyncThunk("monthly/getMonthly", async ({ id }, 
     }
 });
 
-export const getMonthliesByMonth = createAsyncThunk("monthly/getMonthliesByMonth", async ({ division, month, queryStr }, { rejectWithValue }) => {
-    try {
-        const res = await api.get(`/api/monthlies/${division}/month/${month}${queryStr}`);
-
-        return res.data;
-    } catch (error) {
-        rejectWithValue(error);
-    }
-});
-
 export const store = createAsyncThunk("monthly/store", async (data, { rejectWithValue }) => {
     try {
         const res = await api.post('/api/monthlies', data);
@@ -102,19 +92,6 @@ export const monthlySlice = createSlice({
             state.monthly = payload;
         },
         [getMonthly.rejected]: (state, { payload }) => {
-            state.isLoading = false;
-            state.error = payload;
-        },
-        [getMonthliesByMonth.pending]: (state) => {
-            state.monthlies = null;
-            state.isLoading = true;
-            state.error = null;
-        },
-        [getMonthliesByMonth.fulfilled]: (state, { payload }) => {
-            state.isLoading = false;
-            state.monthlies = payload;
-        },
-        [getMonthliesByMonth.rejected]: (state, { payload }) => {
             state.isLoading = false;
             state.error = payload;
         },
