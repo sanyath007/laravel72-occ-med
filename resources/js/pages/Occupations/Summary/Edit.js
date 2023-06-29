@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { GlobalContext } from '../../../context/globalContext';
 import MonthlyForm from '../../../components/Summary/MonthlyForm';
 import Loading from '../../../components/Loading';
-import { getMonthliesByMonth } from '../../../store/slices/monthly';
+import { getMonthly } from '../../../store/slices/monthly';
 
 const EditOccupationMonthly = () => {
-    const { month, year } = useParams();
+    const { id } = useParams();
     const dispatch = useDispatch();
-    const { monthlies, isLoading } = useSelector(state => state.monthly);
+    const { monthly, isLoading } = useSelector(state => state.monthly);
     const { setGlobal } = useContext(GlobalContext);
     const division = 5;
 
@@ -27,8 +27,8 @@ const EditOccupationMonthly = () => {
     }, [])
 
     useEffect(() => {
-        if (month, year) dispatch(getMonthliesByMonth({ division, month, queryStr: `?year=${year}` }));
-    }, [month, year]);
+        if (id) dispatch(getMonthly({ id }));
+    }, [id]);
 
     return (
         <section className="section">
@@ -42,7 +42,7 @@ const EditOccupationMonthly = () => {
                                 <div className="text-center"><Loading /></div>
                             ) : (
                                 <MonthlyForm
-                                    monthlies={monthlies}
+                                    monthly={monthly}
                                     division={division}
                                     routePath="/occupations/summary"
                                 />

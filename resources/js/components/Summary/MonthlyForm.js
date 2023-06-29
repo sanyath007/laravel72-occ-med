@@ -88,7 +88,7 @@ const MonthlyForm = ({ monthly, division, routePath }) => {
 
     const getResultByBullet = (bulletId) => {
         return results.find(res => res.bullet_id === bulletId);
-    } 
+    }
 
     return (
         <div className="row">
