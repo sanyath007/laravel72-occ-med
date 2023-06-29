@@ -4,19 +4,19 @@ import { Link } from 'react-router-dom';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { getReportBulletsByDivision } from '../../store/slices/reportBullet';
-import { resetSuccess, destroy } from '../../store/slices/monthly';
+import { resetSuccess, getMonthlies, destroy } from '../../store/slices/monthly';
 import { budgetMonths } from '../../utils/constraints';
 import api from '../../api';
 
 const Monthly = ({ division, routePath }) => {
     const dispatch = useDispatch();
     const { bullets } = useSelector(state => state.reportBullet);
-    const { isSuccess } = useSelector(state => state.monthly);
-    const [monthlies, setMonthlies] = useState([])
+    const { monthlies, isSuccess } = useSelector(state => state.monthly);
     const [filter, setFilter] = useState(2566)
 
     useEffect(() => {
         dispatch(getReportBulletsByDivision({ path: `/api/report-bullets/division/${division}` }))
+        dispatch(getMonthlies({ division, queryStr: `?year=${filter}` }))
     }, [])
 
     useEffect(() => {
@@ -29,26 +29,13 @@ const Monthly = ({ division, routePath }) => {
         }
     }, [isSuccess]);
 
-    // TODO: Should move this process to store
-    useEffect(() => {
-        getMonthlies(2566);
-
-        return () => getMonthlies(2566);
-    }, [])
-
-    const getMonthlies = async (year) => {
-        const res = await api.get(`/api/monthlies/division/${division}?year=${year}`)
-
-        setMonthlies(res.data.monthlies)
-    }
-
     const handleFilterChange = (e) => {
         setFilter(e.target.value)
         getMonthlies(e.target.value)
     }
 
-    const getMonthly = (month) => {
-        return monthlies.find(item => item.month === month);
+    const getMonthlyByMonth = (month) => {
+        return monthlies?.find(item => item.month === month);
     }
 
     const handleDelete = (id) => {
@@ -88,7 +75,7 @@ const Monthly = ({ division, routePath }) => {
                         </tr>
                         <tr>
                             {budgetMonths.map(month => {
-                                const monthly = getMonthly(month.id);
+                                const monthly = getMonthlyByMonth(month.id);
 
                                 return (
                                     <th key={month.id} style={{ width: '5%', textAlign: 'center' }}>
@@ -117,7 +104,7 @@ const Monthly = ({ division, routePath }) => {
                                 <td>{bullet.bullet_type_id === 3 && bullet.bullet_no} {bullet.name}</td>
                                 <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
                                 {budgetMonths.map(month => {
-                                    const monthly = getMonthly(month.id);
+                                    const monthly = getMonthlyByMonth(month.id);
                                     const monthlyBullet = monthly?.bullets.find(mb => mb.bullet_id === bullet.id);
 
                                     return (
@@ -135,7 +122,7 @@ const Monthly = ({ division, routePath }) => {
                         <tr>
                             <td colSpan={3}></td>
                             {budgetMonths.map(month => {
-                                const monthly = getMonthly(month.id);
+                                const monthly = getMonthlyByMonth(month.id);
 
                                 return (
                                     <td key={month.id} style={{ textAlign: 'center', fontSize: '12px' }}>
