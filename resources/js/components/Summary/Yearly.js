@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { getReportBulletsByDivision } from '../../store/slices/reportBullet';
+// import { getReportBulletsByDivision } from '../../store/slices/reportBullet';
 import api from '../../api';
 
 const Yearly= ({ division }) => {
@@ -47,7 +47,7 @@ const Yearly= ({ division }) => {
                             <th style={{ width: '3%', textAlign: 'center' }}>ลำดับ</th>
                             <th style={{ textAlign: 'center' }}>กิจกรรม</th>
                             <th style={{ width: '10%', textAlign: 'center' }}>เป้าหมาย</th>
-                            <th style={{ width: '10%', textAlign: 'center' }}>ผลงาน</th>
+                            <th style={{ width: '15%', textAlign: 'center' }}>ผลงาน</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,7 +60,7 @@ const Yearly= ({ division }) => {
                                     name="filter"
                                     value={filter}
                                     onChange={handleFilterChange}
-                                    className="form-control"
+                                    className="form-control text-center"
                                 >
                                     <option value="2563">2563</option>
                                     <option value="2564">2564</option>
