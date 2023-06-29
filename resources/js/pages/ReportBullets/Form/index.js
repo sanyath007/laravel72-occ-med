@@ -82,6 +82,7 @@ const ReportBulletForm = ({ reportBullet }) => {
                     subitem_of: reportBullet && reportBullet.subitem_of ? reportBullet.subitem_of : '',
                     division_id: reportBullet ? reportBullet.division_id : '',
                     has_result: reportBullet && reportBullet.has_result ? reportBullet.has_result : 1,
+                    result_count: reportBullet && reportBullet.result_count ? reportBullet.result_count : '',
                     calc_formula: reportBullet && reportBullet.calc_formula ? reportBullet.calc_formula : 1,
                     status: reportBullet && reportBullet.status ? reportBullet.status : 1,
                 }}
@@ -99,7 +100,7 @@ const ReportBulletForm = ({ reportBullet }) => {
                             />
 
                             <div className="row mb-2">
-                                <div className="col-md-12 form-group mb-2">
+                                <div className="col-md-6 form-group mb-2">
                                     <label htmlFor="">หน่วยงาน :</label>
                                     <select
                                         name="division_id"
@@ -117,6 +118,26 @@ const ReportBulletForm = ({ reportBullet }) => {
                                     {formProps.errors.division_id && formProps.touched.division_id ? (
                                         <div className="invalid-feedback">
                                             {formProps.errors.division_id}
+                                        </div>
+                                    ) : null}
+                                </div>
+                                <div className="col-md-6 form-group mb-2">
+                                    <label htmlFor="">ประเภท :</label>
+                                    <select
+                                        name="bullet_type_id"
+                                        value={formProps.values.bullet_type_id}
+                                        onChange={formProps.handleChange}
+                                        className={`form-control ${formProps.errors.bullet_type_id && formProps.touched.bullet_type_id ? 'is-invalid' : ''}`}
+                                    >
+                                        <option value="">-- กรุณาเลือก --</option>
+                                        <option value="1">ระดับ 1</option>
+                                        <option value="2">ระดับ 2</option>
+                                        <option value="3">ระดับ 3</option>
+                                        <option value="4">ระดับ 4</option>
+                                    </select>
+                                    {formProps.errors.bullet_type_id && formProps.touched.bullet_type_id ? (
+                                        <div className="invalid-feedback">
+                                            {formProps.errors.bullet_type_id}
                                         </div>
                                     ) : null}
                                 </div>
@@ -177,22 +198,21 @@ const ReportBulletForm = ({ reportBullet }) => {
                                     </Field>
                                 </div>
                                 <div className="col-md-4 form-group mb-2">
-                                    <label htmlFor="">ประเภท :</label>
+                                    <label htmlFor="">จำนวนช่องกรอกผลงาน :</label>
                                     <select
-                                        name="bullet_type_id"
-                                        value={formProps.values.bullet_type_id}
+                                        name="result_count"
+                                        value={formProps.values.result_count}
                                         onChange={formProps.handleChange}
-                                        className={`form-control ${formProps.errors.bullet_type_id && formProps.touched.bullet_type_id ? 'is-invalid' : ''}`}
+                                        className={`form-control ${formProps.errors.result_count && formProps.touched.result_count ? 'is-invalid' : ''}`}
+                                        disabled={formProps.values.has_result === 2}
                                     >
-                                        <option value="">-- กรุณาเลือก --</option>
-                                        <option value="1">ระดับ 1</option>
-                                        <option value="2">ระดับ 2</option>
-                                        <option value="3">ระดับ 3</option>
-                                        <option value="4">ระดับ 4</option>
+                                        <option value="">-- ไม่มี --</option>
+                                        <option value="1">1 ช่อง</option>
+                                        <option value="2">2 ช่อง</option>
                                     </select>
-                                    {formProps.errors.bullet_type_id && formProps.touched.bullet_type_id ? (
+                                    {formProps.errors.result_count && formProps.touched.result_count ? (
                                         <div className="invalid-feedback">
-                                            {formProps.errors.bullet_type_id}
+                                            {formProps.errors.result_count}
                                         </div>
                                     ) : null}
                                 </div>
