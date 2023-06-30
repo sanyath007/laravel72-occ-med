@@ -98,27 +98,40 @@ const Monthly = ({ division, routePath }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {bullets && bullets.map(bullet => (
-                            <tr key={bullet.id}>
-                                <td style={{ textAlign: 'center' }}>{bullet.bullet_type_id === 2 && bullet.bullet_no}</td>
-                                <td>{bullet.bullet_type_id === 3 && bullet.bullet_no} {bullet.name}</td>
-                                <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
-                                {budgetMonths.map(month => {
-                                    const monthly = getMonthlyByMonth(month.id);
-                                    const monthlyBullet = monthly?.bullets.find(mb => mb.bullet_id === bullet.id);
+                        {bullets && bullets.map(bullet => {
+                            let totalResult1OfBullet = 0;
+                            let totalResult2OfBullet = 0;
+                            let totalCountOfBullet = 0;
 
-                                    return (
-                                        <td key={month.id+bullet.id} style={{ textAlign: 'center', fontSize: '12px' }}>
-                                            {/* <Link to={`${routePath}/summary/${monthly?.id}/edit`}> */}
-                                                {monthlyBullet?.result1}
-                                                {(bullet.result_count > 1 && monthlyBullet?.result2) && '/'+monthlyBullet?.result2}
-                                            {/* </Link> */}
-                                        </td>
-                                    )
-                                })}
-                                <td></td>
-                            </tr>
-                        ))}
+                            return (
+                                <tr key={bullet.id}>
+                                    <td style={{ textAlign: 'center' }}>{bullet.bullet_type_id === 2 && bullet.bullet_no}</td>
+                                    <td>{bullet.bullet_type_id === 3 && bullet.bullet_no} {bullet.name}</td>
+                                    <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
+                                    {budgetMonths.map(month => {
+                                        const monthly = getMonthlyByMonth(month.id);
+                                        const monthlyBullet = monthly?.bullets.find(mb => mb.bullet_id === bullet.id);
+
+                                        totalResult1OfBullet += monthlyBullet?.result1 || 0;
+                                        totalResult2OfBullet += (bullet.result_count > 1 && monthlyBullet?.result2) && monthlyBullet?.result || 0;
+                                        totalCountOfBullet += monthlyBullet ? 1 : 0;
+
+                                        return (
+                                            <td key={month.id+bullet.id} style={{ textAlign: 'center', fontSize: '12px' }}>
+                                                {/* <Link to={`${routePath}/summary/${monthly?.id}/edit`}> */}
+                                                    {monthlyBullet?.result1}
+                                                    {(bullet.result_count > 1 && monthlyBullet?.result2) && '/' +monthlyBullet?.result2}
+                                                {/* </Link> */}
+                                            </td>
+                                        )
+                                    })}
+                                    <td className="text-center">
+                                        {(bullet.has_result === 1 && bullet.calc_formula === 2) ? totalResult1OfBullet/totalCountOfBullet : totalResult1OfBullet}
+                                        {(bullet.has_result === 1 && bullet.result_count > 1) && '/' +totalResult2OfBullet}
+                                    </td>
+                                </tr>
+                            )
+                        })}
                         <tr>
                             <td colSpan={3}></td>
                             {budgetMonths.map(month => {
