@@ -174,7 +174,7 @@ const MonthlyForm = ({ monthly, division, routePath }) => {
                                                             name={`${bullet.id}_1`}
                                                             value={result ? result.value1 : ''}
                                                             onChange={handleResultChange}
-                                                            className="form-control text-center h-25 w-50 me-1"
+                                                            className={`form-control text-center me-1 h-25 ${bullet.result_count > 1 ? 'w-50' : ''}`}
                                                         />
                                                         {bullet.result_count > 1 && (
                                                             <>
@@ -183,7 +183,7 @@ const MonthlyForm = ({ monthly, division, routePath }) => {
                                                                     name={`${bullet.id}_2`}
                                                                     value={result ? result.value2 : ''}
                                                                     onChange={handleResultChange}
-                                                                    className="form-control text-center h-25 w-50 ms-1"
+                                                                    className="form-control text-center ms-1 h-25 w-50"
                                                                 />
                                                             </>
                                                         )}
