@@ -40,6 +40,6 @@ class User extends Authenticatable
 
     public function permissions()
     {
-        return $this->hasMany(App\Models\UserPermission::class, 'user_id', 'id');
+        return $this->hasMany(Models\UserPermission::class, 'user_id', 'id');
     }
 }

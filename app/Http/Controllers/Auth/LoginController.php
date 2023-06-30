@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -21,7 +21,7 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
     
         if(auth()->attempt($credentials, $request->filled('remember'))) {
-            return response()->json(['status' => true, 'user' => auth()->user()]);
+            return response()->json(['status' => true, 'user' => auth()->user()->load('permissions')]);
         }
     
         return response()->json(['status' => false, 'message' => 'invalid username or password'], 500);
