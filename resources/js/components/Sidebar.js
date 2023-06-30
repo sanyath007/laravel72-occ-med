@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { GlobalContext } from '../context/globalContext'
+import AuthContext from '../context/authContext'
 
 const Sidebar = () => {
     const { setGlobal } = useContext(GlobalContext)
     const [screenWidth, setScreenWidth] = useState(window.innerWidth)
+    const { authData } = useContext(AuthContext)
 
     useEffect(() => {
         function handleResize() {
@@ -208,48 +210,53 @@ const Sidebar = () => {
                         <span>หัวข้อรายงาน</span>
                     </Link>
                 </li>
-                <li className="nav-item">
-                    <Link className="nav-link collapsed" to="/users" onClick={handleMenuClicked}>
-                        <i className="bi bi-people"></i>
-                        <span>ผู้ใช้งาน</span>
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link className="nav-link collapsed" to="/users/profile" onClick={handleMenuClicked}>
-                        <i className="bi bi-person-circle"></i>
-                        <span>ข้อมูลส่วนตัว</span>
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link className="nav-link collapsed" to="/about" onClick={handleMenuClicked}>
-                        <i className="bi bi-question-circle"></i>
-                        <span>เกี่ยวกับเรา</span>
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link className="nav-link collapsed" to="/contact" onClick={handleMenuClicked}>
-                        <i className="bi bi-envelope"></i>
-                        <span>ติดต่อเรา</span>
-                    </Link>
-                </li>
-                {/* <li className="nav-item">
-                    <a className="nav-link collapsed" href="pages-login.html" onClick={handleMenuClicked}>
-                        <i className="bi bi-box-arrow-in-right"></i>
-                        <span>Login</span>
-                    </a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link collapsed" href="pages-error-404.html" onClick={handleMenuClicked}>
-                        <i className="bi bi-dash-circle"></i>
-                        <span>Error 404</span>
-                    </a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link collapsed" href="pages-blank.html" onClick={handleMenuClicked}>
-                        <i className="bi bi-file-earmark"></i>
-                        <span>Blank</span>
-                    </a>
-                </li> */}
+
+                {authData.user?.permissions[0].role_id === 1 && (
+                    <>
+                        <li className="nav-item">
+                            <Link className="nav-link collapsed" to="/users/profile" onClick={handleMenuClicked}>
+                                <i className="bi bi-person-circle"></i>
+                                <span>ข้อมูลส่วนตัว</span>
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link collapsed" to="/users" onClick={handleMenuClicked}>
+                                <i className="bi bi-people"></i>
+                                <span>ผู้ใช้งาน</span>
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link collapsed" to="/about" onClick={handleMenuClicked}>
+                                <i className="bi bi-question-circle"></i>
+                                <span>เกี่ยวกับเรา</span>
+                            </Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link collapsed" to="/contact" onClick={handleMenuClicked}>
+                                <i className="bi bi-envelope"></i>
+                                <span>ติดต่อเรา</span>
+                            </Link>
+                        </li>
+                        {/* <li className="nav-item">
+                            <a className="nav-link collapsed" href="pages-login.html" onClick={handleMenuClicked}>
+                                <i className="bi bi-box-arrow-in-right"></i>
+                                <span>Login</span>
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link collapsed" href="pages-error-404.html" onClick={handleMenuClicked}>
+                                <i className="bi bi-dash-circle"></i>
+                                <span>Error 404</span>
+                            </a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link collapsed" href="pages-blank.html" onClick={handleMenuClicked}>
+                                <i className="bi bi-file-earmark"></i>
+                                <span>Blank</span>
+                            </a>
+                        </li> */}
+                    </>
+                )}
             </ul>
         </aside>
     )
