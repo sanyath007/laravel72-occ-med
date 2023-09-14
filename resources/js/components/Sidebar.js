@@ -105,11 +105,11 @@ const Sidebar = () => {
                         <i className="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="toxicologies-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
-                        {/* <li>
+                        <li>
                             <Link to="/toxicologies" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>การให้บริการ</span>
                             </Link>
-                        </li> */}
+                        </li>
                         <li>
                             <Link to="/toxicologies/summary" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>สรุปผลงาน</span>
@@ -150,11 +150,11 @@ const Sidebar = () => {
                         <i className="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="checkup-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
-                        {/* <li>
+                        <li>
                             <Link to="/checkups" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>การให้บริการ</span>
                             </Link>
-                        </li> */}
+                        </li>
                         <li>
                             <Link to="/checkups/summary" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>สรุปผลงาน</span>

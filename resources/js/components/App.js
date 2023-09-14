@@ -103,6 +103,7 @@ export default function App() {
                         <Route path="/promotions/summary/:id/edit" element={<EditPromotionMonthly />} />
                         <Route path="/promotions/summary-year" element={<PromotionYearly />} />
                         {/* Toxicologies routes */}
+                        <Route path="/toxicologies" element={<ToxicologyMonthly />} />
                         <Route path="/toxicologies/summary" element={<ToxicologyMonthly />} />
                         <Route path="/toxicologies/summary/add" element={<AddToxicologyMonthly />} />
                         <Route path="/toxicologies/summary/:id/edit" element={<EditToxicologyMonthly />} />

@@ -58,6 +58,11 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/checkups', 'CheckupController@getCheckups');
     Route::get('/checkups/{id}', 'CheckupController@getCheckup');
     Route::post('/checkups', 'CheckupController@store');
+    
+    /** Toxicologies */
+    Route::get('/toxicologies', 'ToxicologyController@getToxicologies');
+    Route::get('/toxicologies/{id}', 'ToxicologyController@getToxicology');
+    Route::post('/toxicologies', 'ToxicologyController@store');
 
     /** ICD-10 */
     Route::get('/icd10s', 'Icd10Controller@getIcd10s');
