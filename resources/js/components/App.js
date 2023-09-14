@@ -42,6 +42,8 @@ import PromotionMonthly from "../pages/Promotions/Summary/Monthly";
 import AddPromotionMonthly from "../pages/Promotions/Summary/Add";
 import EditPromotionMonthly from "../pages/Promotions/Summary/Edit";
 import PromotionYearly from "../pages/Promotions/Summary/Yearly";
+import Toxicologies from "../pages/Toxicologies/Toxicologies";
+import ToxicologyForm from "../pages/Toxicologies/Form";
 import ToxicologyMonthly from "../pages/Toxicologies/Summary/Monthly";
 import AddToxicologyMonthly from "../pages/Toxicologies/Summary/Add";
 import EditToxicologyMonthly from "../pages/Toxicologies/Summary/Edit";
@@ -103,7 +105,8 @@ export default function App() {
                         <Route path="/promotions/summary/:id/edit" element={<EditPromotionMonthly />} />
                         <Route path="/promotions/summary-year" element={<PromotionYearly />} />
                         {/* Toxicologies routes */}
-                        <Route path="/toxicologies" element={<ToxicologyMonthly />} />
+                        <Route path="/toxicologies" element={<Toxicologies />} />
+                        <Route path="/toxicologies/new" element={<ToxicologyForm />} />
                         <Route path="/toxicologies/summary" element={<ToxicologyMonthly />} />
                         <Route path="/toxicologies/summary/add" element={<AddToxicologyMonthly />} />
                         <Route path="/toxicologies/summary/:id/edit" element={<EditToxicologyMonthly />} />

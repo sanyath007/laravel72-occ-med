@@ -20,8 +20,8 @@ class ToxicologyController extends Controller
         } else {
             $patientsList = Patient::where('hn', $hn)->pluck('id');
 
-            $checkups = Service::with('patient','company','right','diag')
-                            ->leftJoin('checkup_services', 'services.id', '=', 'checkup_services.service_id')
+            $toxicologies = Service::with('patient','company','right','diag')
+                            ->leftJoin('toxicology_services', 'services.id', '=', 'toxicology_services.service_id')
                             ->when(!empty($hn), function($query) use ($patientsList) {
                                 $query->where('patient_id', $patientsList);
                             })
@@ -32,14 +32,14 @@ class ToxicologyController extends Controller
                             ->paginate(10);
         }
 
-        return response()->json($checkups);
+        return response()->json($toxicologies);
     }
 
     public function getToxicology($id)
     {
-        $checkups = Service::find($id)->with('patient','company','right','diag');
+        $toxicology = Service::find($id)->with('patient','company','right','diag');
 
-        return response()->json($checkups);
+        return response()->json($toxicology);
     }
 
     public function store(Request $request)
@@ -80,22 +80,28 @@ class ToxicologyController extends Controller
 
             if ($service->save()) {
                 /** Checkuo data */
-                $checkup = new CheckupService;
-                $checkup->service_id    = $service->id;
-                $checkup->lab_result    = $request['lab_result'];
-                $checkup->equip_result  = $request['equip_result'];
-                $checkup->xray_result   = $request['xray_result'];
-                $checkup->screening     = $request['screening'];
-                $checkup->health_edu    = $request['health_edu'];
-                $checkup->reported      = $request['reported'];
-                $checkup->specialist    = $request['specialist'];
-                $checkup->summary_result = $request['summary_result'];
-                $checkup->save();
+                $toxicology = new ToxicologyService;
+                $toxicology->service_id            = $service->id;
+                $toxicology->working_process       = $request['working_process'];
+                $toxicology->working_behavior      = $request['working_behavior'];
+                $toxicology->person_behavior       = $request['person_behavior'];
+                $toxicology->working_limitation    = $request['working_limitation'];
+                $toxicology->abnormal              = $request['abnormal'];
+                $toxicology->other                 = $request['other'];
+                $toxicology->advice                = $request['advice'];
+                $toxicology->health_edu            = $request['health_edu'];
+                $toxicology->equipment             = $request['equipment'];
+                $toxicology->teaching              = $request['teaching'];
+                $toxicology->consulting            = $request['consulting'];
+                $toxicology->counseling            = $request['counseling'];
+                $toxicology->document              = $request['document'];
+                $toxicology->body_checking         = $request['body_checking'];
+                $toxicology->save();
 
                 return [
                     'status'    => 1,
                     'message'   => 'Insertion successfully!!',
-                    "checkup"   => $checkup
+                    "toxicology"   => $toxicology
                 ];
             } else {
                 return [
@@ -149,21 +155,27 @@ class ToxicologyController extends Controller
 
             if ($checkup->save()) {
                 /** Checkup data */
-                $checkup = CheckupService::where('service_id', $id)->first();
-                $checkup->lab_result = $request['lab_result'];
-                $checkup->equip_result = $request['equip_result'];
-                $checkup->xray_result = $request['xray_result'];
-                $checkup->screening = $request['screening'];
-                $checkup->health_edu = $request['health_edu'];
-                $checkup->reported = $request['reported'];
-                $checkup->specialist = $request['specialist'];
-                $checkup->summary_result = $request['summary_result'];
-                $checkup->save();
+                $toxicology = ToxicologyService::where('service_id', $id)->first();
+                $toxicology->working_process       = $request['working_process'];
+                $toxicology->working_behavior      = $request['working_behavior'];
+                $toxicology->person_behavior       = $request['person_behavior'];
+                $toxicology->working_limitation    = $request['working_limitation'];
+                $toxicology->abnormal              = $request['abnormal'];
+                $toxicology->other                 = $request['other'];
+                $toxicology->advice                = $request['advice'];
+                $toxicology->health_edu            = $request['health_edu'];
+                $toxicology->equipment             = $request['equipment'];
+                $toxicology->teaching              = $request['teaching'];
+                $toxicology->consulting            = $request['consulting'];
+                $toxicology->counseling            = $request['counseling'];
+                $toxicology->document              = $request['document'];
+                $toxicology->body_checking         = $request['body_checking'];
+                $toxicology->save();
 
                 return [
-                    'status'    => 1,
-                    'message'   => 'Updation successfully!!',
-                    "checkup"   => $checkup
+                    'status'        => 1,
+                    'message'       => 'Updation successfully!!',
+                    "toxicology"    => $toxicology
                 ];
             } else {
                 return [
