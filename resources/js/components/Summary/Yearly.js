@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 // import { getReportBulletsByDivision } from '../../store/slices/reportBullet';
 import api from '../../api';
+import { currencyFormat } from '../../utils/formatter';
 
 const Yearly= ({ division }) => {
     const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const Yearly= ({ division }) => {
         const newBullets =  res.data.bullets.map(bullet => {
                                 const summary = res.data.monthlies.find(monthly => monthly.bullet_id === bullet.id)
 
-                                if (summary) return { ...bullet, sum: summary.sum_result };
+                                if (summary) return { ...bullet, sum1: summary.sum_result1, sum2: summary.sum_result2 };
 
                                 return { ...bullet, sum: 0 }
                             });
@@ -75,7 +76,7 @@ const Yearly= ({ division }) => {
                                 <td>{bullet.bullet_type_id === 3 && bullet.bullet_no } {bullet.name}</td>
                                 <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
                                 <td style={{ textAlign: 'center' }}>
-                                    {bullet.sum}
+                                    {currencyFormat(bullet.sum1)} {bullet.sum2 && <span>/ {currencyFormat(bullet.sum2)}</span>}
                                 </td>
                             </tr>
                         ))}
