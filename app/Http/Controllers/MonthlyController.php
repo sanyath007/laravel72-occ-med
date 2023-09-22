@@ -102,10 +102,15 @@ class MonthlyController extends Controller
 
             if ($monthly->save()) {
                 foreach($request['results'] as $result) {
-                    $monthlyBullet = MonthlyBullet::find($result['id']);
-                    // $monthlyBullet->monthly_id  = $monthly->id;
-                    // $monthlyBullet->bullet_id   = $result['bullet_id'];
-                    // $monthlyBullet->unit_text   = $result['unit'];
+                    if (array_key_exists('id', $result)) {
+                        $monthlyBullet = MonthlyBullet::find($result['id']);
+                    } else {
+                        $monthlyBullet = new MonthlyBullet;
+                        $monthlyBullet->monthly_id  = $monthly->id;
+                        $monthlyBullet->bullet_id   = $result['bullet_id'];
+                        $monthlyBullet->unit_text   = $result['unit'];
+                    }
+
                     $monthlyBullet->result1 = $result['value1'];
                     $monthlyBullet->result2 = $result['value2'];
                     $monthlyBullet->save();
