@@ -110,10 +110,10 @@ const Monthly = ({ division, routePath }) => {
                                     <td style={{ textAlign: 'center' }}>{bullet.unit_text}</td>
                                     {budgetMonths.map(month => {
                                         const monthly = getMonthlyByMonth(month.id);
-                                        const monthlyBullet = monthly?.bullets.find(mb => mb.bullet_id === bullet.id);
+                                        const monthlyBullet = monthly && monthly?.bullets.find(mb => mb.bullet_id === bullet.id);
 
                                         totalResult1OfBullet += monthlyBullet?.result1 || 0;
-                                        totalResult2OfBullet += (bullet.result_count > 1 && monthlyBullet?.result2) && monthlyBullet?.result || 0;
+                                        totalResult2OfBullet += (bullet.result_count > 1 && monthlyBullet?.result2) ? monthlyBullet?.result2 : 0;
                                         totalCountOfBullet += monthlyBullet ? 1 : 0;
 
                                         return (
