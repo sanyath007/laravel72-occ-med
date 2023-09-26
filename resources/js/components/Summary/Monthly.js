@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { getReportBulletsByDivision } from '../../store/slices/reportBullet';
 import { resetSuccess, getMonthlies, destroy } from '../../store/slices/monthly';
 import { budgetMonths } from '../../utils/constraints';
+import { currencyFormat } from '../../utils/formatter';
 import api from '../../api';
 
 const Monthly = ({ division, routePath }) => {
@@ -119,15 +120,15 @@ const Monthly = ({ division, routePath }) => {
                                         return (
                                             <td key={month.id+bullet.id} style={{ textAlign: 'center', fontSize: '12px' }}>
                                                 {/* <Link to={`${routePath}/summary/${monthly?.id}/edit`}> */}
-                                                    {monthlyBullet?.result1}
-                                                    {(bullet.result_count > 1 && monthlyBullet?.result2) && '/' +monthlyBullet?.result2}
+                                                    {currencyFormat(monthlyBullet?.result1)}
+                                                    {(bullet.result_count > 1 && currencyFormat(monthlyBullet?.result2)) && '/' +currencyFormat(monthlyBullet?.result2)}
                                                 {/* </Link> */}
                                             </td>
                                         )
                                     })}
-                                    <td className="text-center">
-                                        {(bullet.has_result === 1 && bullet.calc_formula === 2) ? totalResult1OfBullet/totalCountOfBullet : totalResult1OfBullet}
-                                        {(bullet.has_result === 1 && bullet.result_count > 1) && '/' +totalResult2OfBullet}
+                                    <td className="text-center" style={{ fontSize: '12px' }}>
+                                        {(bullet.has_result === 1 && bullet.calc_formula === 2) ? currencyFormat(totalResult1OfBullet/totalCountOfBullet) : currencyFormat(totalResult1OfBullet)}
+                                        {(bullet.has_result === 1 && bullet.result_count > 1) && '/' +currencyFormat(totalResult2OfBullet)}
                                     </td>
                                 </tr>
                             )
