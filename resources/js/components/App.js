@@ -56,6 +56,24 @@ import OccupationYearly from "../pages/Occupations/Summary/Yearly";
 import ReportBulletList from "../pages/ReportBullets/List";
 import AddReportBullet from "../pages/ReportBullets/Add";
 import EditReportBullet from "../pages/ReportBullets/Edit";
+import WalkThroughSurveyList from "../pages/WalkThroughSurvey/List";
+import AddWalkThroughSurvey from "../pages/WalkThroughSurvey/Add";
+import InvestigationList from "../pages/Investigations/List";
+import AddInvestigation from "../pages/Investigations/Add";
+import ScreeningList from "../pages/Screenings/List"
+import AddScreening from "../pages/Screenings/Add"
+import VisitHomeList from "../pages/VisitHomes/List"
+import AddVisitHome from "../pages/VisitHomes/Add"
+import NetworkMeetingList from "../pages/NetworkMeetings/List"
+import AddNetworkMeeting from "../pages/NetworkMeetings/Add"
+import TrainingList from "../pages/Trainings/List"
+import AddTraining from "../pages/Trainings/Add"
+import VaccinationList from "../pages/Vaccinations/List"
+import AddVaccination from "../pages/Vaccinations/Add"
+import SupervisionList from "../pages/Supervisions/List"
+import AddSupervision from "../pages/Supervisions/Add"
+import GuidelineList from "../pages/Guidelines/List"
+import AddGuideline from "../pages/Guidelines/Add"
 import { useAuth } from "../hooks/useAuth"
 import AuthContext from "../context/authContext";
 import { GlobalProvider } from '../context/globalContext'
@@ -132,6 +150,33 @@ export default function App() {
                         <Route path="/report-bullets" element={<ReportBulletList />} />
                         <Route path="/report-bullets/new" element={<AddReportBullet />} />
                         <Route path="/report-bullets/:id/edit" element={<EditReportBullet />} />
+                        {/* WTS */}
+                        <Route path="/walk-through-surveys" element={<WalkThroughSurveyList />} />
+                        <Route path="/walk-through-surveys/new" element={<AddWalkThroughSurvey />} />
+                        {/* Investigations */}
+                        <Route path="/investigations" element={<InvestigationList />} />
+                        <Route path="/investigations/new" element={<AddInvestigation />} />
+                        {/* Screenings */}
+                        <Route path="/screenings" element={<ScreeningList />} />
+                        <Route path="/screenings/new" element={<AddScreening />} />
+                        {/* VisitHomes */}
+                        <Route path="/visit-homes" element={<VisitHomeList />} />
+                        <Route path="/visit-homes/new" element={<AddVisitHome />} />
+                        {/* NetworkMeetings */}
+                        <Route path="/network-meetings" element={<NetworkMeetingList />} />
+                        <Route path="/network-meetings/new" element={<AddNetworkMeeting />} />
+                        {/* Trainings */}
+                        <Route path="/trainings" element={<TrainingList />} />
+                        <Route path="/trainings/new" element={<AddTraining />} />
+                        {/* Vaccinations */}
+                        <Route path="/vaccinations" element={<VaccinationList />} />
+                        <Route path="/vaccinations/new" element={<AddVaccination />} />
+                        {/* Supervisions */}
+                        <Route path="/supervisions" element={<SupervisionList />} />
+                        <Route path="/supervisions/new" element={<AddSupervision />} />
+                        {/* Guidelines */}
+                        <Route path="/guidelines" element={<GuidelineList />} />
+                        <Route path="/guidelines/new" element={<AddGuideline />} />
                     </Route>
                     {/* ============================= Public routes ============================= */}
                     <Route path="/signin" element={<Signin />} />
