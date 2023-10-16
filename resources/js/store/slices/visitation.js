@@ -23,7 +23,9 @@ export const getVisitations = createAsyncThunk('visitation/getVisitations', asyn
 
 export const store = createAsyncThunk('visitation/store', async (data, { rejectWithValue }) => {
     try {
-        const res = await api.post('/api/visitations', data)
+        const res = await api.post('/api/visitations', data , {
+            headers: { "Content-Type": "multipart/form-data" }
+        })
 
         return res.data
     } catch (error) {

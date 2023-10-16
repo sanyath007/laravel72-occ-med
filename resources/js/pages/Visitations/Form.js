@@ -38,7 +38,11 @@ const VisitationForm = () => {
         data.append('file_attachment', selecedFile);
 
         for(const [key, val] of Object.entries(values)) {
-            data.append(key, val);
+            if (key === 'visitors') {
+                data.append(key, JSON.stringify(val));
+            } else {
+                data.append(key, val);
+            }
         }
 
         /** Dispatch redux action to storing or updating data */
@@ -131,10 +135,10 @@ const VisitationForm = () => {
                                             className="form-control w-25 me-1"
                                         >
                                             <option value="">-- เลือกตำแหน่ง --</option>
-                                            <option value="1">แพทย์</option>
-                                            <option value="2">พยาบาล</option>
-                                            <option value="6">นักวิชาการสาธารณสุข</option>
-                                            <option value="7">ผู้ช่วยเหลือคนไข้</option>
+                                            <option value="แพทย์">แพทย์</option>
+                                            <option value="พยาบาล">พยาบาล</option>
+                                            <option value="นักวิชาการสาธารณสุข">นักวิชาการสาธารณสุข</option>
+                                            <option value="ผู้ช่วยเหลือคนไข้">ผู้ช่วยเหลือคนไข้</option>
                                         </select>
                                         <button type="button" className="btn btn-secondary" onClick={() => addVisior(formik)}>
                                             <FaPlus />

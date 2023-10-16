@@ -22,6 +22,6 @@ class Visitation extends Model
 
     public function visitors()
     {
-        return $this->hasMany(VisitionVisitor:class, 'visitation_id', 'id');
+        return $this->hasMany(VisitionVisitor::class, 'visitation_id', 'id');
     }
 }

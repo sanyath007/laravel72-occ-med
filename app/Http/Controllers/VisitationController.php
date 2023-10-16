@@ -23,12 +23,15 @@ class VisitationController extends Controller
     }
 
     public function store(Request $request) {
+        $visitors = json_decode($request['visitors']);
+
         try {
             $visitation = new Visitation;
             $visitation->visit_date = $request['visit_date'];
             $visitation->visit_objective = $request['visit_objective'];
             $visitation->division_id = $request['division_id'];
             $visitation->company_id = $request['company_id'];
+            $visitation->visitors = count($visitors);
             $visitation->num_of_patients = $request['num_of_patients'];
             $visitation->is_return_data = $request['is_return_data'];
             // $visitation->remark = $request['remark'];
@@ -37,7 +40,7 @@ class VisitationController extends Controller
             if ($request->file('file_attachment')) {
                 $file = $request->file('file_attachment');
                 $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-                $destinationPath = 'uploads/visitaions/';
+                $destinationPath = 'uploads/visitaion/';
 
                 if ($file->move($destinationPath, $fileName)) {
                     $visitation->file_attachment = $fileName;
@@ -45,13 +48,13 @@ class VisitationController extends Controller
             }
 
             if ($visitation->save()) {
-                if (count($request['visitors']) > 0) {
-                    foreach($request['visitors'] as $visitor) {
+                if (count($visitors) > 0) {
+                    foreach($visitors as $visitor) {
                         $newVisitor = new VisitationVisitor;
                         $newVisitor->visitation_id = $visitation->id;
-                        $newVisitor->fullname = $visitor['fullname'];
-                        $newVisitor->position = $visitor['position'];
-                        $newVisitor-save();
+                        $newVisitor->fullname = $visitor->fullname;
+                        $newVisitor->position = $visitor->position;
+                        $newVisitor->save();
                     }
                 }
 
