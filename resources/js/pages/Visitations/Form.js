@@ -4,9 +4,9 @@ import * as Yup from 'yup'
 import { Col, Row } from 'react-bootstrap'
 import { FaSave, FaSearch } from 'react-icons/fa'
 
-const visitHomeSchema = Yup.object().shape({});
+const visitationSchema = Yup.object().shape({});
 
-const VisitHomeForm = () => {
+const VisitationForm = () => {
 
     const handleSubmit = (values, formik) => {
 
@@ -17,7 +17,7 @@ const VisitHomeForm = () => {
             initialValues={{
 
             }}
-            validationSchema={visitHomeSchema}
+            validationSchema={visitationSchema}
             onSubmit={handleSubmit}
         >
             {(formik) => {
@@ -111,4 +111,4 @@ const VisitHomeForm = () => {
     )
 }
 
-export default VisitHomeForm
+export default VisitationForm

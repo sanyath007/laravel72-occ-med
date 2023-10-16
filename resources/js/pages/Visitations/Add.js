@@ -1,7 +1,7 @@
 import React from 'react'
-import VisitHomeForm from './Form'
+import VisitationForm from './Form'
 
-const AddVisitHome = () => {
+const AddVisitation = () => {
     return (
         <section className="section">
             <div className="row">
@@ -10,7 +10,7 @@ const AddVisitHome = () => {
                         <div className="card-body">
                             <h5 className="card-title">บันทึกการติดตามเยี่ยมบ้าน</h5>
 
-                            <VisitHomeForm />
+                            <VisitationForm />
                         </div>
                     </div>
                 </div>
@@ -19,4 +19,4 @@ const AddVisitHome = () => {
     )
 }
 
-export default AddVisitHome
+export default AddVisitation

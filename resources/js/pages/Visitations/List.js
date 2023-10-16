@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const VisitHomeList = () => {
+const VisitationList = () => {
     return (
         <section className="section">
             <div className="row">
@@ -45,4 +45,4 @@ const VisitHomeList = () => {
     )
 }
 
-export default VisitHomeList
+export default VisitationList

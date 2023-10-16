@@ -86,6 +86,14 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::put('/network-meetings/{id}', 'NetworkMeetingController@update');
     Route::delete('/network-meetings/{id}', 'NetworkMeetingController@delete');
 
+    /** Visitations */
+    Route::get('/visitations', 'VisitationController@getAll');
+    Route::get('/visitations/search', 'VisitationController@search');
+    Route::get('/visitations/{id}', 'VisitationController@getById');
+    Route::post('/visitations', 'VisitationController@store');
+    Route::put('/visitations/{id}', 'VisitationController@update');
+    Route::delete('/visitations/{id}', 'VisitationController@delete');
+
     /** ICD-10 */
     Route::get('/icd10s', 'Icd10Controller@getIcd10s');
 

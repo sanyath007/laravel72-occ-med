@@ -62,8 +62,8 @@ import InvestigationList from "../pages/Investigations/List";
 import AddInvestigation from "../pages/Investigations/Add";
 import ScreeningList from "../pages/Screenings/List"
 import AddScreening from "../pages/Screenings/Add"
-import VisitHomeList from "../pages/VisitHomes/List"
-import AddVisitHome from "../pages/VisitHomes/Add"
+import VisitationList from "../pages/Visitations/List"
+import AddVisitation from "../pages/Visitations/Add"
 import NetworkMeetingList from "../pages/NetworkMeetings/List"
 import AddNetworkMeeting from "../pages/NetworkMeetings/Add"
 import TrainingList from "../pages/Trainings/List"
@@ -162,8 +162,8 @@ export default function App() {
                         <Route path="/screenings" element={<ScreeningList />} />
                         <Route path="/screenings/new" element={<AddScreening />} />
                         {/* VisitHomes */}
-                        <Route path="/visit-homes" element={<VisitHomeList />} />
-                        <Route path="/visit-homes/new" element={<AddVisitHome />} />
+                        <Route path="/visitations" element={<VisitationList />} />
+                        <Route path="/visitations/new" element={<AddVisitation />} />
                         {/* NetworkMeetings */}
                         <Route path="/network-meetings" element={<NetworkMeetingList />} />
                         <Route path="/network-meetings/new" element={<AddNetworkMeeting />} />
