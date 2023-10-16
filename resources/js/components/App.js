@@ -74,6 +74,7 @@ import SupervisionList from "../pages/Supervisions/List"
 import AddSupervision from "../pages/Supervisions/Add"
 import GuidelineList from "../pages/Guidelines/List"
 import AddGuideline from "../pages/Guidelines/Add"
+import Services from "../pages/Services";
 import { useAuth } from "../hooks/useAuth"
 import AuthContext from "../context/authContext";
 import { GlobalProvider } from '../context/globalContext'
@@ -94,6 +95,7 @@ export default function App() {
                         <Route path="" element={<Dashboard />} />
                         <Route path="/about" element={<About />} />
                         <Route path="/contact" element={<Contact />} />
+                        <Route path="/services" element={<Services />} />
                         {/* Users routes */}
                         <Route path="/users" element={<Users />} />
                         <Route path="/users/profile" element={<Profile />} />

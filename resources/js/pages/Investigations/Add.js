@@ -8,7 +8,7 @@ const AddInvestigation = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">บันทึกข้อมูลการสอบสวนโรค/อุบัติเหตุจากงานและสิ่งแวดล้อม</h5>
+                            <h5 className="card-title">บันทึกการสอบสวนโรค/อุบัติเหตุจากงานและสิ่งแวดล้อม</h5>
 
                             <InvestigationForm />
                         </div>

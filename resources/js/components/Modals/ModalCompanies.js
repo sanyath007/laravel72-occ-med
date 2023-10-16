@@ -73,7 +73,10 @@ const ModalCompanies = ({ isOpen, hideModal, onSelected, ...props }) => {
                                         <button
                                             type="button"
                                             className="btn btn-primary btn-sm"
-                                            onClick={() => onSelected(company)}
+                                            onClick={() => {
+                                                onSelected(company);
+                                                hideModal();
+                                            }}
                                         >
                                             <i className="bi bi-download"></i>
                                         </button>

@@ -1,11 +1,25 @@
 import React from 'react'
 import { Formik, Form, Field } from 'formik'
+import * as Yup from 'yup'
 import { Col, Row } from 'react-bootstrap'
 import { FaSave } from 'react-icons/fa'
 
+const supervisionSchema = Yup.object().shape({});
+
 const SupervisionForm = () => {
+
+    const handleSubmit = (values, formik) => {
+
+    };
+
     return (
-        <Formik>
+        <Formik
+            initialValues={{
+
+            }}
+            validationSchema={supervisionSchema}
+            onSubmit={handleSubmit}
+        >
             {(formik) => {
                 return (
                     <Form>

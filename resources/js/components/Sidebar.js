@@ -37,6 +37,13 @@ const Sidebar = () => {
                         <span>Dashboard</span>
                     </Link>
                 </li>
+                {/* งานบริการ */}
+                <li className="nav-item">
+                    <Link className="nav-link collapsed" to="/services" onClick={handleMenuClicked}>
+                        <i className="bi bi-hdd-stack"></i>
+                        <span>งานบริการ</span>
+                    </Link>
+                </li>
                 {/* คลินิกบริการ */}
                 <li className="nav-item">
                     <a className="nav-link collapsed" data-bs-target="#clinic-nav" data-bs-toggle="collapse" href="#">

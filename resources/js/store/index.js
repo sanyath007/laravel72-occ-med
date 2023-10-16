@@ -11,6 +11,8 @@ import doctorReducer from './slices/doctor'
 import employeeReducer from './slices/employee'
 import reportBulletReducer from './slices/reportBullet'
 import monthlyReducer from './slices/monthly'
+import investigationReducer from './slices/investigation'
+import guidelineReducer from './slices/guideline'
 import { patientsApi } from './services/patientsApi'
 import { reportBulletApi } from './services/reportBulletApi'
 
@@ -28,6 +30,8 @@ export default configureStore({
         employee: employeeReducer,
         reportBullet: reportBulletReducer,
         monthly: monthlyReducer,
+        investigation: investigationReducer,
+        guideline: guidelineReducer,
         [patientsApi.reducerPath]: patientsApi.reducer,
         [reportBulletApi.reducerPath]: reportBulletApi.reducer,
     },

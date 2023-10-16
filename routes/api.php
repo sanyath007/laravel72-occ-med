@@ -64,6 +64,20 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/toxicologies/{id}', 'ToxicologyController@getToxicology');
     Route::post('/toxicologies', 'ToxicologyController@store');
 
+    /** Investigations */
+    Route::get('/investigations', 'InvestigationController@search');
+    Route::get('/investigations/{id}', 'InvestigationController@getById');
+    Route::post('/investigations', 'InvestigationController@store');
+    Route::put('/investigations/{id}', 'InvestigationController@update');
+    Route::delete('/investigations/{id}', 'InvestigationController@delete');
+
+    /** Guildelines */
+    Route::get('/guidelines', 'GuidelineController@search');
+    Route::get('/guidelines/{id}', 'GuidelineController@getById');
+    Route::post('/guidelines', 'GuidelineController@store');
+    Route::put('/guidelines/{id}', 'GuidelineController@update');
+    Route::delete('/guidelines/{id}', 'GuidelineController@delete');
+
     /** ICD-10 */
     Route::get('/icd10s', 'Icd10Controller@getIcd10s');
 
