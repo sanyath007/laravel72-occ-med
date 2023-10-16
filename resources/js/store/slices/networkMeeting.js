@@ -23,7 +23,7 @@ export const getNetworkMeetings = createAsyncThunk('network-meeting/getNetworkMe
 
 export const store = createAsyncThunk('network-meeting/store', async (data, { rejectWithValue }) => {
     try {
-        const res = await api.post('/api/networkMeetings', data)
+        const res = await api.post('/api/network-meetings', data)
 
         return res.data
     } catch (error) {

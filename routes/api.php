@@ -78,6 +78,13 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::put('/guidelines/{id}', 'GuidelineController@update');
     Route::delete('/guidelines/{id}', 'GuidelineController@delete');
 
+    /** NetworkMeetings */
+    Route::get('/network-meeting', 'NetworkMeetingController@search');
+    Route::get('/network-meeting/{id}', 'NetworkMeetingController@getById');
+    Route::post('/network-meeting', 'NetworkMeetingController@store');
+    Route::put('/network-meeting/{id}', 'NetworkMeetingController@update');
+    Route::delete('/network-meeting/{id}', 'NetworkMeetingController@delete');
+
     /** ICD-10 */
     Route::get('/icd10s', 'Icd10Controller@getIcd10s');
 

@@ -1,15 +1,19 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row } from 'react-bootstrap'
 import { FaSave } from 'react-icons/fa'
+import { store } from '../../store/slices/networkMeeting'
 
 const networkMeetingSchema = Yup.object().shape({});
 
 const NetworkMeetingForm = () => {
+    const dispatch = useDispatch();
 
     const handleSubmit = (values, formik) => {
         console.log(values);
+        dispatch(store(values));
     };
 
     return (
@@ -19,6 +23,7 @@ const NetworkMeetingForm = () => {
                 meeting_objective: '',
                 division_id: '',
                 meeting_type_id: '',
+                meeting_type_text: '',
                 target_group_id: '',
                 attendee: '',
                 period: '',

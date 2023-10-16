@@ -25,17 +25,15 @@ class NetworkMeetingController extends Controller
     public function store(Request $request) {
         try {
             $meeting = new NetworkMeeting;
-            $meeting->investigate_date = $request['investigate_date'];
-            $meeting->investigate_objective = $request['investigate_objective'];
-            $meeting->investigate_type_id = $request['investigate_type_id'];
-            $meeting->is_working_disease = $request['is_working_disease'];
-            $meeting->is_investigate = $request['is_investigate'];
+            $meeting->meeting_date = $request['meeting_date'];
+            $meeting->meeting_objective = $request['meeting_objective'];
             $meeting->division_id = $request['division_id'];
-            $meeting->investigate_place = $request['investigate_place'];
-            $meeting->num_of_people = $request['num_of_people'];
-            $meeting->file_attachment = $request['file_attachment'];
-            $meeting->pic_attachment = $request['pic_attachment'];
-            $meeting->is_return_data = $request['is_return_data'];
+            $meeting->meeting_type_id = $request['meeting_type_id'];
+            $meeting->meeting_type_text = $request['meeting_type_text'];
+            $meeting->target_group_id = $request['target_group_id'];
+            $meeting->attendee = $request['attendee'];
+            $meeting->period = $request['period'];
+            $meeting->period_unit = $request['period_unit'];
             // $meeting->remark = $request['remark'];
 
             if ($meeting->save()) {
