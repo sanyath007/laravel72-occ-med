@@ -22,7 +22,7 @@ const InvestigationForm = () => {
         <Formik
             initialValues={{
                 investigate_date: '',
-                investigate_object: '',
+                investigate_objective: '',
                 investigate_type_id: '',
                 is_working_disease: '',
                 is_investigate: '',
@@ -54,8 +54,8 @@ const InvestigationForm = () => {
                                 <label htmlFor="">วัตถุประสงค์</label>
                                 <input
                                     type="text"
-                                    name="investigate_object"
-                                    value={formik.values.investigate_object}
+                                    name="investigate_objective"
+                                    value={formik.values.investigate_objective}
                                     onChange={formik.handleChange}
                                     className="form-control"
                                 />

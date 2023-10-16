@@ -26,7 +26,7 @@ class InvestigationController extends Controller
         try {
             $investigation = new Investigation;
             $investigation->investigate_date = $request['investigate_date'];
-            $investigation->investigate_object = $request['investigate_object'];
+            $investigation->investigate_objective = $request['investigate_objective'];
             $investigation->investigate_type_id = $request['investigate_type_id'];
             $investigation->is_working_disease = $request['is_working_disease'];
             $investigation->is_investigate = $request['is_investigate'];
