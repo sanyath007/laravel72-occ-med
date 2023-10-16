@@ -14,6 +14,7 @@ import monthlyReducer from './slices/monthly'
 import investigationReducer from './slices/investigation'
 import guidelineReducer from './slices/guideline'
 import networkMeetingReducer from './slices/networkMeeting'
+import visitationReducer from './slices/visitation'
 import { patientsApi } from './services/patientsApi'
 import { reportBulletApi } from './services/reportBulletApi'
 
@@ -34,6 +35,7 @@ export default configureStore({
         investigation: investigationReducer,
         guideline: guidelineReducer,
         networkMeeting: networkMeetingReducer,
+        visitation: visitationReducer,
         [patientsApi.reducerPath]: patientsApi.reducer,
         [reportBulletApi.reducerPath]: reportBulletApi.reducer,
     },
