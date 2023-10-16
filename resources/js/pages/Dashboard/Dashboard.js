@@ -24,7 +24,7 @@ const Dashboard = () => {
                 <div className="col-lg-12">
                     <div className="row">
                         {/* =================================== Stat Cards =================================== */}
-                        <div className="col-xxl-4 col-md-6">
+                        <div className="col-xxl-4 col-md-4">
                             <div className="card info-card sales-card">
                                 <div className="filter">
                                     <a className="icon" href="#" data-bs-toggle="dropdown">
@@ -57,7 +57,7 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-xxl-4 col-md-6">
+                        <div className="col-xxl-4 col-md-4">
                             <div className="card info-card revenue-card">
                                 <div className="filter">
                                     <a className="icon" href="#" data-bs-toggle="dropdown">
@@ -90,7 +90,7 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-xxl-4 col-xl-12">
+                        <div className="col-xxl-4 col-md-4">
                             <div className="card info-card customers-card">
                                 <div className="filter">
                                     <a className="icon" href="#" data-bs-toggle="dropdown"><i className="bi bi-three-dots"></i></a>
@@ -121,7 +121,7 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-xxl-4 col-xl-12">
+                        <div className="col-xxl-4 col-md-4">
                             <div className="card info-card sales-card">
                                 <div className="filter">
                                     <a className="icon" href="#" data-bs-toggle="dropdown"><i className="bi bi-three-dots"></i></a>
@@ -152,7 +152,7 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-xxl-4 col-xl-12">
+                        <div className="col-xxl-4 col-md-4">
                             <div className="card info-card revenue-card">
                                 <div className="filter">
                                     <a className="icon" href="#" data-bs-toggle="dropdown"><i className="bi bi-three-dots"></i></a>
@@ -183,7 +183,7 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-xxl-4 col-xl-12">
+                        <div className="col-xxl-4 col-md-4">
                             <div className="card info-card customers-card">
                                 <div className="filter">
                                     <a className="icon" href="#" data-bs-toggle="dropdown"><i className="bi bi-three-dots"></i></a>
