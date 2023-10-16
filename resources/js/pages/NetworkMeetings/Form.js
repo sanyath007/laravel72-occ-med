@@ -129,7 +129,7 @@ const NetworkMeetingForm = () => {
                                         name="period_unit"
                                         value={formik.values.period_unit}
                                         onChange={formik.handleChange}
-                                        className="form-control w-25 text-center"
+                                        className="form-control w-25 text-center ms-1"
                                     >
                                         <option value="1">วัน</option>
                                         <option value="2">ชั่วโมง</option>
