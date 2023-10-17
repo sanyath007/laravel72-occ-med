@@ -17,7 +17,7 @@ mix.extend("addWebpackLoaders", (webpackConfig, loaderRules) => {
     });
 });
 
-mix.js('resources/js/app.js', 'public/js').react()
+mix.react('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .addWebpackLoaders([
         {
