@@ -30,8 +30,13 @@
         "vue-template-compiler": "^2.7.14"
     },
     "dependencies": {
+        "@emotion/react": "^11.11.1",
+        "@emotion/styled": "^11.11.0",
+        "@mui/material": "^5.14.15",
+        "@mui/x-date-pickers": "^6.16.3",
         "@reduxjs/toolkit": "^1.9.1",
         "bootstrap-icons": "^1.10.2",
+        "dayjs": "^1.11.10",
         "formik": "^2.2.9",
         "google-map-react": "^2.2.0",
         "moment": "^2.29.4",
