@@ -25,8 +25,16 @@ class VaccinationController extends Controller
 
     public function getInitialFormData()
     {
+        $targets = [
+            ['id' => 1, 'name' => 'พนักงาน'],
+            ['id' => 2, 'name' => 'ประชาชนทั่วไป'],
+            ['id' => 3, 'name' => 'เจ้าหน้าที่'],
+            ['id' => 4, 'name' => 'นักเรียน/นักศึกษา'],
+        ];
+
         return [
-            
+            'vaccines'  => Vaccine::where('is_active', 1)->get(),
+            'targets'   => $targets
         ];
     }
 
