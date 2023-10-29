@@ -3,29 +3,35 @@ import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row } from 'react-bootstrap'
 import { FaSave, FaSearch } from 'react-icons/fa'
-import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers'
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
+import { DatePicker } from '@mui/x-date-pickers'
 import moment from 'moment'
-import "moment/locale/th";
+import ModalCompanies from '../../components/Modals/ModalCompanies'
 
-const vaccinationSchema = Yup.object().shape({});
+const vaccinationSchema = Yup.object().shape({
+
+});
 
 const VaccinationForm = () => {
     const [selectedVaccineDate, setSelectedVaccineDate] = useState(moment());
+    const [showModalCompanies, setShowModalCompanies] = useState(false);
+    const [selectedCompany, setSelectedCompany] = useState(null);
 
     const handleSubmit = (values, formik) => {
-
+        console.log(values);
     };
 
     return (
         <Formik
             initialValues={{
                 vaccine_date: '',
-                place_id: '',
+                place: '',
+                company_id: '',
                 vaccine_type_id: '',
+                vaccine_text: '',
                 target_group_id: '',
                 num_of_vaccinated: '',
                 num_of_side_effected: '',
+                remark: ''
             }}
             validationSchema={vaccinationSchema}
             onSubmit={handleSubmit}
@@ -33,53 +39,152 @@ const VaccinationForm = () => {
             {(formik) => {
                 return (
                     <Form>
+                        <ModalCompanies
+                            isOpen={showModalCompanies}
+                            hideModal={() => setShowModalCompanies(false)}
+                            onSelected={(company) => console.log(company)}
+                        />
+
                         <Row className="mb-2">
                             <Col md={3}>
                                 <label htmlFor="">วันที่เดินสำรวจ</label>
-                                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale="th">
-                                    <DatePicker
-                                        format="DD/MM/YYYY"
-                                        value={selectedVaccineDate}
-                                        onChange={(date) => {
-                                            console.log(date);
-                                            setSelectedVaccineDate(date);
-                                            formik.setFieldValue('vaccine_date', date.format('YYYY-MM-DD'));
-                                        }}
-                                    />
-                                </LocalizationProvider>
+                                <DatePicker
+                                    format="DD/MM/YYYY"
+                                    value={selectedVaccineDate}
+                                    onChange={(date) => {
+                                        console.log(date);
+                                        setSelectedVaccineDate(date);
+                                        formik.setFieldValue('vaccine_date', date.format('YYYY-MM-DD'));
+                                    }}
+                                />
+                                {(formik.errors.vaccine_date && formik.touched.vaccine_date) && (
+                                    <span className="text-red-500 text-sm">{formik.errors.vaccine_date}</span>
+                                )}
                             </Col>
                             <Col>
                                 <label htmlFor="">สถานที่ให้วัคซีน</label>
+                                <input
+                                    name="place"
+                                    value={formik.values.place}
+                                    onChange={formik.handleChange}
+                                    className="form-control"
+                                />
+                                {(formik.errors.place && formik.touched.place) && (
+                                    <span className="text-red-500 text-sm">{formik.errors.place}</span>
+                                )}
+                            </Col>
+                        </Row>
+                        <Row className="mb-2">
+                            <Col>
+                                <label htmlFor="">สถานประกอบการ</label>
                                 <div className="input-group">
-                                    <input type="text" className="form-control" />
-                                    <button className="btn btn-secondary">
+                                    <div className="form-control">
+                                        {selectedCompany && selectedCompany.name}
+                                    </div>
+                                    <button className="btn btn-secondary" onClick={() => setShowModalCompanies(true)}>
                                         <FaSearch />
                                     </button>
                                 </div>
+                                {(formik.errors.company_id && formik.touched.company_id) && (
+                                    <span className="text-red-500 text-sm">{formik.errors.company_id}</span>
+                                )}
+                            </Col>
+                        </Row>
+                        <Row className="mb-2">
+                            <Col>
+                                <label htmlFor="">ประเภทวัคซีน</label>
+                                <div className="d-flex flex-row">
+                                    <select
+                                        name="vaccine_type_id"
+                                        value={formik.values.vaccine_type_id}
+                                        onChange={formik.handleChange}
+                                        className="form-control"
+                                        style={{ width: '40%' }}
+                                    >
+                                        <option value="">-- เลือก --</option>
+                                        <option value="1">วัคซีนไข้หวัดใหญ่</option>
+                                        <option value="2">วัคซีนโควิด</option>
+                                        <option value="3">วัคซีน HBV</option>
+                                        <option value="4">วัคซีน MMR</option>
+                                        <option value="5">วัคซีน Tdep, dT</option>
+                                        <option value="99">วัคซีน Tdep, dT</option>
+                                    </select>
+                                    <input
+                                        type="text"
+                                        name="vaccine_text"
+                                        value={formik.values.vaccine_text}
+                                        onChange={formik.handleChange}
+                                        className="form-control ms-1"
+                                        placeholder="ระบุ (ถ้ามี)"
+                                    />
+                                </div>
+                                {(formik.errors.vaccine_type_id && formik.touched.vaccine_type_id) && (
+                                    <span className="text-red-500 text-sm">{formik.errors.vaccine_type_id}</span>
+                                )}
                             </Col>
                         </Row>
                         <Row className="mb-2">
                             <Col>
                                 <label htmlFor="">กลุ่มเป้าหมาย</label>
-                                <select className="form-control">
+                                <select
+                                    name="target_group_id"
+                                    value={formik.values.target_group_id}
+                                    onChange={formik.handleChange}
+                                    className="form-control"
+                                >
                                     <option value="">-- เลือก --</option>
+                                    <option value="1">พนักงาน</option>
+                                    <option value="2">ประชาชนทั่วไป</option>
+                                    <option value="3">เจ้าหน้าที่</option>
+                                    <option value="4">นักเรียน/นักศึกษา</option>
                                 </select>
+                                {(formik.errors.target_group_id && formik.touched.target_group_id) && (
+                                    <span className="text-red-500 text-sm">{formik.errors.target_group_id}</span>
+                                )}
                             </Col>
                             <Col>
-                                <label htmlFor="">ประเภทวัคซีน</label>
-                                <select className="form-control">
-                                    <option value="">-- เลือก --</option>
-                                </select>
+                                <label htmlFor="">จำนวนผู้รับวัคซีน</label>
+                                <div className="input-group">
+                                    <input
+                                        type="text"
+                                        name="num_of_vaccinated"
+                                        value={formik.values.num_of_vaccinated}
+                                        onChange={formik.handleChange}
+                                        className="form-control"
+                                    />
+                                    <span className="input-group-text">คน</span>
+                                </div>
+                                {(formik.errors.num_of_vaccinated && formik.touched.num_of_vaccinated) && (
+                                    <span className="text-red-500 text-sm">{formik.errors.num_of_vaccinated}</span>
+                                )}
+                            </Col>
+                            <Col>
+                                <label htmlFor="">จำนวนผู้ได้รับผลข้างเคียง</label>
+                                <div className="input-group">
+                                    <input
+                                        type="text"
+                                        name="num_of_side_effected"
+                                        value={formik.values.num_of_side_effected}
+                                        onChange={formik.handleChange}
+                                        className="form-control"
+                                    />
+                                    <span className="input-group-text">คน</span>
+                                </div>
+                                {(formik.errors.num_of_side_effected && formik.touched.num_of_side_effected) && (
+                                    <span className="text-red-500 text-sm">{formik.errors.num_of_side_effected}</span>
+                                )}
                             </Col>
                         </Row>
                         <Row className="mb-2">
                             <Col>
-                                <label htmlFor="">จำนวนผู้รับวัคซีน</label>
-                                <input type="text" className="form-control" />
-                            </Col>
-                            <Col>
                                 <label htmlFor="">จำนวนผู้ได้รับผลข้างเคียง</label>
-                                <input type="text" className="form-control" />
+                                <textarea
+                                    rows="3"
+                                    name="remark"
+                                    value={formik.values.remark}
+                                    onChange={formik.handleChange}
+                                    className="form-control"
+                                ></textarea>
                             </Col>
                         </Row>
                         <div className="text-center">

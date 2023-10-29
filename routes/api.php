@@ -94,6 +94,15 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::put('/visitations/{id}', 'VisitationController@update');
     Route::delete('/visitations/{id}', 'VisitationController@delete');
 
+    /** Vaccinations */
+    Route::get('/vaccinations', 'VaccinationController@getAll');
+    Route::get('/vaccinations/search', 'VaccinationController@search');
+    Route::get('/vaccinations/{id}', 'VaccinationController@getById');
+    Route::get('/vaccinations/init/form', 'VaccinationController@getInitialFormData');
+    Route::post('/vaccinations', 'VaccinationController@store');
+    Route::put('/vaccinations/{id}', 'VaccinationController@update');
+    Route::delete('/vaccinations/{id}', 'VaccinationController@delete');
+
     /** ICD-10 */
     Route::get('/icd10s', 'Icd10Controller@getIcd10s');
 

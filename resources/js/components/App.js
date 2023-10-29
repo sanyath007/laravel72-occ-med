@@ -79,7 +79,10 @@ import { useAuth } from "../hooks/useAuth"
 import AuthContext from "../context/authContext";
 import { GlobalProvider } from '../context/globalContext'
 import store from "../store";
+import { LocalizationProvider } from '@mui/x-date-pickers'
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import 'react-toastify/dist/ReactToastify.css';
+import "moment/locale/th";
 
 export default function App() {
     const { userData } = useAuth()
@@ -194,7 +197,9 @@ if (document.getElementById('root')) {
     ReactDOM.render(
         <Provider store={store}>
             <HashRouter>
-                <App />
+                <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale="th">
+                    <App />
+                </LocalizationProvider>
             </HashRouter>
             <ToastContainer />
         </Provider>,
