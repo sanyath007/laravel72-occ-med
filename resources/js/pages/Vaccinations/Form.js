@@ -189,7 +189,7 @@ const VaccinationForm = () => {
                         </Row>
                         <Row className="mb-2">
                             <Col>
-                                <label htmlFor="">จำนวนผู้ได้รับผลข้างเคียง</label>
+                                <label htmlFor="">หมายเหตุ/เพิ่มเติม</label>
                                 <textarea
                                     rows="3"
                                     name="remark"

@@ -53,7 +53,7 @@ const VisitationList = () => {
                                     <tbody>
                                         {loading && (
                                             <tr>
-                                                <td colSpan={6} className="text-center"><Loading /></td>
+                                                <td colSpan={5} className="text-center"><Loading /></td>
                                             </tr>
                                         )}
 

@@ -22,6 +22,6 @@ class Vaccination extends Model
 
     public function vaccine()
     {
-        return $this->belongsTo(Vaccination::class, 'vaccination_id', 'id');
+        return $this->belongsTo(Vaccine::class, 'vaccine_id', 'id');
     }
 }
