@@ -41,15 +41,15 @@ class VaccinationController extends Controller
     public function store(Request $request) {
         try {
             $vaccination = new Vaccination;
-            $vaccination->vaccine_date = $request['visit_date'];
-            $vaccination->place = $request['place'];
-            $vaccination->company_id = $request['company_id'];
-            $vaccination->vaccine_type_id = $request['vaccine_type_id'];
-            $vaccination->vaccine_text = $request['vaccine_text'];
-            $vaccination->target_group_id = $request['target_group_id'];
-            $vaccination->num_of_vaccinated = $request['num_of_vaccinated'];
-            $vaccination->num_of_side_effected = $request['num_of_side_effected'];
-            $vaccination->remark = $request['remark'];
+            $vaccination->vaccine_date          = $request['vaccine_date'];
+            $vaccination->place                 = $request['place'];
+            $vaccination->company_id            = $request['company_id'];
+            $vaccination->vaccine_type_id       = $request['vaccine_type_id'];
+            $vaccination->vaccine_text          = $request['vaccine_text'];
+            $vaccination->target_group_id       = $request['target_group_id'];
+            $vaccination->num_of_vaccinated     = $request['num_of_vaccinated'];
+            $vaccination->num_of_side_effected  = $request['num_of_side_effected'];
+            $vaccination->remark                = $request['remark'];
 
             if ($vaccination->save()) {
                 return [

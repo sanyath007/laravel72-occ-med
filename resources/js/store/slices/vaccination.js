@@ -32,9 +32,9 @@ export const getVaccination = createAsyncThunk('vaccination/getVaccination', asy
     }
 })
 
-export const store = createAsyncThunk('visitation/store', async (data, { rejectWithValue }) => {
+export const store = createAsyncThunk('vaccination/store', async (data, { rejectWithValue }) => {
     try {
-        const res = await api.post('/api/visitations', data , {
+        const res = await api.post('/api/vaccinations', data , {
             headers: { "Content-Type": "multipart/form-data" }
         })
 
@@ -45,8 +45,8 @@ export const store = createAsyncThunk('visitation/store', async (data, { rejectW
     }
 })
 
-export const visitationSlice = createSlice({
-    name: 'visitation',
+export const vaccinationSlice = createSlice({
+    name: 'vaccination',
     initialState,
     reducers: {
         resetSuccess(state) {

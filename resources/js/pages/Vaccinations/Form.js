@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
-import { Formik, Form, Field } from 'formik'
+import { useDispatch } from 'react-redux'
+import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row } from 'react-bootstrap'
 import { FaSave, FaSearch } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
 import moment from 'moment'
+import { store } from '../../store/slices/vaccination'
+import { useGetInitialFormDataQuery } from '../../store/services/vaccinationApi'
+import Loading from '../../components/Loading'
 import ModalCompanies from '../../components/Modals/ModalCompanies'
 
 const vaccinationSchema = Yup.object().shape({
@@ -12,12 +16,14 @@ const vaccinationSchema = Yup.object().shape({
 });
 
 const VaccinationForm = () => {
+    const dispatch = useDispatch();
+    const { data: formData, isLoading } = useGetInitialFormDataQuery();
     const [selectedVaccineDate, setSelectedVaccineDate] = useState(moment());
     const [showModalCompanies, setShowModalCompanies] = useState(false);
     const [selectedCompany, setSelectedCompany] = useState(null);
 
     const handleSubmit = (values, formik) => {
-        console.log(values);
+        dispatch(store(values));
     };
 
     return (
@@ -42,7 +48,12 @@ const VaccinationForm = () => {
                         <ModalCompanies
                             isOpen={showModalCompanies}
                             hideModal={() => setShowModalCompanies(false)}
-                            onSelected={(company) => console.log(company)}
+                            onSelected={(company) => {
+                                setSelectedCompany(company);
+
+                                formik.setFieldValue('company_id', company.id);
+                                formik.setFieldTouched('company_id', true);
+                            }}
                         />
 
                         <Row className="mb-2">
@@ -52,7 +63,6 @@ const VaccinationForm = () => {
                                     format="DD/MM/YYYY"
                                     value={selectedVaccineDate}
                                     onChange={(date) => {
-                                        console.log(date);
                                         setSelectedVaccineDate(date);
                                         formik.setFieldValue('vaccine_date', date.format('YYYY-MM-DD'));
                                     }}
@@ -94,7 +104,8 @@ const VaccinationForm = () => {
                             <Col>
                                 <label htmlFor="">ประเภทวัคซีน</label>
                                 <div className="d-flex flex-row">
-                                    <select
+                                    {isLoading && <div className="form-control" style={{ width: '40%' }}><Loading /></div>}
+                                    {!isLoading && <select
                                         name="vaccine_type_id"
                                         value={formik.values.vaccine_type_id}
                                         onChange={formik.handleChange}
@@ -108,7 +119,7 @@ const VaccinationForm = () => {
                                         <option value="4">วัคซีน MMR</option>
                                         <option value="5">วัคซีน Tdep, dT</option>
                                         <option value="99">วัคซีน Tdep, dT</option>
-                                    </select>
+                                    </select>}
                                     <input
                                         type="text"
                                         name="vaccine_text"
@@ -126,7 +137,8 @@ const VaccinationForm = () => {
                         <Row className="mb-2">
                             <Col>
                                 <label htmlFor="">กลุ่มเป้าหมาย</label>
-                                <select
+                                {isLoading && <div className="form-control"><Loading /></div>}
+                                {!isLoading && <select
                                     name="target_group_id"
                                     value={formik.values.target_group_id}
                                     onChange={formik.handleChange}
@@ -137,7 +149,7 @@ const VaccinationForm = () => {
                                     <option value="2">ประชาชนทั่วไป</option>
                                     <option value="3">เจ้าหน้าที่</option>
                                     <option value="4">นักเรียน/นักศึกษา</option>
-                                </select>
+                                </select>}
                                 {(formik.errors.target_group_id && formik.touched.target_group_id) && (
                                     <span className="text-red-500 text-sm">{formik.errors.target_group_id}</span>
                                 )}
