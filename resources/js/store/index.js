@@ -15,8 +15,10 @@ import investigationReducer from './slices/investigation'
 import guidelineReducer from './slices/guideline'
 import networkMeetingReducer from './slices/networkMeeting'
 import visitationReducer from './slices/visitation'
+import vaccinationReducer from './slices/vaccination'
 import { patientsApi } from './services/patientsApi'
 import { reportBulletApi } from './services/reportBulletApi'
+import { vaccinationApi } from './services/vaccinationApi'
 
 export default configureStore({
     reducer: {
@@ -36,9 +38,15 @@ export default configureStore({
         guideline: guidelineReducer,
         networkMeeting: networkMeetingReducer,
         visitation: visitationReducer,
+        vaccination: vaccinationReducer,
         [patientsApi.reducerPath]: patientsApi.reducer,
         [reportBulletApi.reducerPath]: reportBulletApi.reducer,
+        [vaccinationApi.reducerPath]: vaccinationApi.reducer,
     },
     middleware: (getDefaultMiddleware) => 
-        getDefaultMiddleware().concat(patientsApi.middleware, reportBulletApi.middleware),
+        getDefaultMiddleware().concat(
+            patientsApi.middleware,
+            reportBulletApi.middleware,
+            vaccinationApi.middleware
+        ),
 })
