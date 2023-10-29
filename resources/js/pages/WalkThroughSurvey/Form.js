@@ -3,6 +3,7 @@ import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row } from 'react-bootstrap'
 import { FaSave, FaSearch } from 'react-icons/fa'
+import moment from 'moment'
 import ModalCompanies from '../../components/Modals/ModalCompanies'
 
 const walkThroughSurveySchema = Yup.object().shape({});
@@ -10,31 +11,31 @@ const walkThroughSurveySchema = Yup.object().shape({});
 const WalkThroughSurveyForm = () => {
     const [showCompanyModal, setShowCompanyModal] = useState(false);
     const [selectedCompany, setSelectedCompany] = useState(null);
+    const [selectedSurveyDate, setSelectedSurveyDate] = useState(moment());
 
     const handleSubmit = (values, formik) => {
-
+        console.log(values);
     };
 
     return (
         <Formik
             initialValues={{
-                wts_date: '',
+                survey_date: '',
                 object_id: '',
                 division_id: '',
                 surveyors: [],
                 company_id: '',
-                company_type_id: '',
                 num_of_departs: '',
                 num_of_employees: '',
-                threats: [],
+                is_found_threat: '',
                 hra_assessment: '',
-                report: '',
+                health_list: '',
                 file_attachment: '',
                 pic_attachment: '',
                 report_status: '',
                 is_adviced: '',
-                is_return_data: '',
-                wts_guideline: ''
+                is_returned_data: '',
+                guidelines: ''
             }}
             validationSchema={walkThroughSurveySchema}
             onSubmit={handleSubmit}
@@ -51,7 +52,17 @@ const WalkThroughSurveyForm = () => {
                         <Row className="mb-2">
                             <Col>
                                 <label htmlFor="">วันที่เดินสำรวจ</label>
-                                <input type="date" className="form-control" />
+                                <DatePicker
+                                    format="DD/MM/YYYY"
+                                    value={selectedSurveyDate}
+                                    onChange={(date) => {
+                                        setSelectedSurveyDate(date);
+                                        formik.setFieldValue('survey_date', date.format('YYYY-MM-DD'));
+                                    }}
+                                />
+                                {(formik.errors.survey_date && formik.touched.survey_date) && (
+                                    <span className="text-red-500 text-sm">{formik.errors.survey_date}</span>
+                                )}
                             </Col>
                             <Col>
                                 <label htmlFor="">วัตถุประสงค์</label>
@@ -209,17 +220,17 @@ const WalkThroughSurveyForm = () => {
                                 <label htmlFor="" className="form-control" style={{ display: 'flex' }}>
                                     <Field
                                         type="radio"
-                                        name="is_return_data"
+                                        name="is_returned_data"
                                         value="1"
-                                        defaultChecked={formik.values.is_return_data === "1"}
+                                        defaultChecked={formik.values.is_returned_data === "1"}
                                     />
                                     <span className="ms-1 me-2">คืนแล้ว</span>
 
                                     <Field
                                         type="radio"
-                                        name="is_return_data"
+                                        name="is_returned_data"
                                         value="2"
-                                        defaultChecked={formik.values.is_return_data === "2"}
+                                        defaultChecked={formik.values.is_returned_data === "2"}
                                     />
                                     <span className="ms-1">ยังไม่คืน</span>
                                 </label>
