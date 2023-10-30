@@ -38,7 +38,8 @@ class VaccinationController extends Controller
         ];
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         try {
             $vaccination = new Vaccination;
             $vaccination->vaccine_date          = $request['vaccine_date'];

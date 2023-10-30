@@ -22,10 +22,11 @@ class VisitationController extends Controller
         return response()->json($visitation);
     }
 
-    public function store(Request $request) {
-        $visitors = json_decode($request['visitors']);
-
+    public function store(Request $request)
+    {
         try {
+            $visitors = json_decode($request['visitors']);
+
             $visitation = new Visitation;
             $visitation->visit_date = $request['visit_date'];
             $visitation->visit_objective = $request['visit_objective'];

@@ -21,10 +21,7 @@ const walkThroughSurveySchema = Yup.object().shape({
     objective_id: Yup.string().required(),
     division_id: Yup.string().required(),
     company_id: Yup.string().required(),
-    surveyors: Yup.mixed().test('Surveyors length', 'Surveyors is not 0', (val) => {
-        console.log('surveyors', val);
-        return val.length > 0;
-    }),
+    surveyors: Yup.mixed().test('Surveyors length', 'Surveyors is not 0', (val) => val.length > 0),
     num_of_departs: Yup.string().required(),
     num_of_employees: Yup.string().required(),
     file_attachment: Yup.mixed().test('File type', 'คุณเลือกประเภทไฟล์ไม่ถูกต้อง!!' , (file) => validateFile(file, ACCEPT_FILE_TYPE)),
@@ -40,9 +37,17 @@ const WalkThroughSurveyForm = () => {
     const [selectedPic, setSelectedPic] = useState(null);
 
     const handleSubmit = (values, formik) => {
-        console.log(values);
+        let data = new FormData();
 
+        for(const [key, val] of Object.entries(values)) {
+            if (key === 'surveyors' || key === 'guidelines') {
+                data.append(key, JSON.stringify(val));
+            } else {
+                data.append(key, val);
+            }
+        }
 
+        dispatch(store(data));
     };
 
     const handleAddSurveyor = (formik, surveyor) => {
@@ -69,11 +74,12 @@ const WalkThroughSurveyForm = () => {
                 is_found_threat: '',
                 have_hra: '',
                 have_report: '',
-                file_attachment: null,
-                pic_attachment: null,
                 is_adviced: '',
                 is_returned_data: '',
-                guidelines: []
+                guidelines: [],
+                remark: '',
+                file_attachment: null,
+                pic_attachment: null
             }}
             validationSchema={walkThroughSurveySchema}
             onSubmit={handleSubmit}
@@ -149,7 +155,7 @@ const WalkThroughSurveyForm = () => {
                         </Row>
                         <Row className="mb-2">
                             <Col>
-                                <div>
+                                <div className="border rounded-1 p-2 pb-3">
                                     <SurveyorForm onAdd={(surveyor) => handleAddSurveyor(formik, surveyor)} />
 
                                     <SurveyorList surveyors={formik.values.surveyors} />

@@ -10,7 +10,7 @@ const initialState = {
     error: null
 }
 
-export const getSurveyings = createAsyncThunk('vaccination/getSurveyings', async ({ url }, { rejectWithValue }) => {
+export const getSurveyings = createAsyncThunk('surveying/getSurveyings', async ({ url }, { rejectWithValue }) => {
     try {
         const res = await api.get(url)
 
@@ -21,9 +21,9 @@ export const getSurveyings = createAsyncThunk('vaccination/getSurveyings', async
     }
 })
 
-export const getSurveying = createAsyncThunk('vaccination/getSurveying', async (id, { rejectWithValue }) => {
+export const getSurveying = createAsyncThunk('surveying/getSurveying', async (id, { rejectWithValue }) => {
     try {
-        const res = await api.get(`/api/surveying/${id}`)
+        const res = await api.get(`/api/surveyings/${id}`)
 
         return res.data
     } catch (error) {
@@ -32,9 +32,9 @@ export const getSurveying = createAsyncThunk('vaccination/getSurveying', async (
     }
 })
 
-export const store = createAsyncThunk('vaccination/store', async (data, { rejectWithValue }) => {
+export const store = createAsyncThunk('surveying/store', async (data, { rejectWithValue }) => {
     try {
-        const res = await api.post('/api/surveying', data , {
+        const res = await api.post('/api/surveyings', data , {
             headers: { "Content-Type": "multipart/form-data" }
         })
 

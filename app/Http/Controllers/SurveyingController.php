@@ -10,16 +10,16 @@ class SurveyingController extends Controller
 {
     public function search(Request $request)
     {
-        $vaccinations = Surveying::with('vaccine','company')->paginate(10);
+        $surveyings = Surveying::with('vaccine','company')->paginate(10);
 
-        return response()->json($vaccinations);
+        return response()->json($surveyings);
     }
 
     public function getById($id)
     {
-        $vaccination = Surveying::find($id)->with('vaccine','company');
+        $surveying = Surveying::find($id)->with('vaccine','company');
 
-        return response()->json($vaccination);
+        return response()->json($surveying);
     }
 
     public function getInitialFormData()
@@ -36,24 +36,54 @@ class SurveyingController extends Controller
         ];
     }
 
-    public function store(Request $request) {
+    public function store(Request $request) 
+    {
         try {
-            $vaccination = new Surveying;
-            $vaccination->vaccine_date          = $request['vaccine_date'];
-            $vaccination->place                 = $request['place'];
-            $vaccination->company_id            = $request['company_id'];
-            $vaccination->vaccine_type_id       = $request['vaccine_type_id'];
-            $vaccination->vaccine_text          = $request['vaccine_text'];
-            $vaccination->target_group_id       = $request['target_group_id'];
-            $vaccination->num_of_vaccinated     = $request['num_of_vaccinated'];
-            $vaccination->num_of_side_effected  = $request['num_of_side_effected'];
-            $vaccination->remark                = $request['remark'];
+            $surveyors = json_decode($request['surveyors']);
+            $guidelines = json_decode($request['guidelines']);
 
-            if ($vaccination->save()) {
+            $surveying = new Surveying;
+            $surveying->survey_date         = $request['survey_date'];
+            $surveying->objective_id        = $request['objective_id'];
+            $surveying->division_id         = $request['division_id'];
+            $surveying->surveyors           = count($surveyors);
+            $surveying->company_id          = $request['company_id'];
+            $surveying->num_of_departs      = $request['num_of_departs'];
+            $surveying->num_of_employees    = $request['num_of_employees'];
+            $surveying->num_of_health_items = $request['num_of_health_items'];
+            $surveying->is_found_threat     = $request['is_found_threat'];
+            $surveying->have_hra            = $request['have_hra'];
+            $surveying->have_report         = $request['have_report'];
+            $surveying->is_adviced          = $request['is_adviced'];
+            $surveying->is_returned_data    = $request['is_returned_data'];
+            $surveying->guidelines          = count($guidelines);
+            $surveying->remark              = $request['remark'];
+
+            if ($request->file('file_attachment')) {
+                $file = $request->file('file_attachment');
+                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
+                $destinationPath = 'uploads/surveying/file/';
+
+                if ($file->move($destinationPath, $fileName)) {
+                    $surveying->file_attachment = $fileName;
+                }
+            }
+
+            if ($request->file('pic_attachment')) {
+                $file = $request->file('pic_attachment');
+                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
+                $destinationPath = 'uploads/surveying/pic/';
+
+                if ($file->move($destinationPath, $fileName)) {
+                    $surveying->pic_attachment = $fileName;
+                }
+            }
+
+            if ($surveying->save()) {
                 return [
                     'status'        => 1,
                     'message'       => 'Insertion successfully!!',
-                    "vaccination"   => $vaccination
+                    "surveying"     => $surveying
                 ];
             } else {
                 return [
