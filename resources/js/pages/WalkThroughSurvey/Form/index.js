@@ -12,6 +12,8 @@ import { validateFile, isExistedItem } from '../../../utils'
 import ModalCompanies from '../../../components/Modals/ModalCompanies'
 import SurveyorForm from './SurveyorForm'
 import SurveyorList from './SurveyorList'
+import GuidelineForm from './GuidelineForm'
+import GuidelineList from './GuidelineList'
 
 const ACCEPT_FILE_TYPE = ['pdf', 'word'];
 const ACCEPT_PIC_TYPE = ['jpg','jpeg','png'];
@@ -58,7 +60,21 @@ const WalkThroughSurveyForm = () => {
 
         const newSurveyors = [ ...formik.values.surveyors, surveyor];
         formik.setFieldValue('surveyors', newSurveyors);
-    }
+    };
+
+    const handleDeleteSurveyor = (formik, id) => {
+
+    };
+    
+    const handleAddGuideline = (formik, guideline) => {
+        formik.setFieldValue('guidelines', [...formik.values.guidelines, guideline]);
+    };
+
+    const handleDeleteGuideline = (formik, index) => {
+        const newGuideline = formik.values.guidelines.filter((gl, i) => i !== index);
+
+        formik.setFieldValue('guidelines', newGuideline);
+    };
 
     return (
         <Formik
@@ -367,6 +383,21 @@ const WalkThroughSurveyForm = () => {
                                 </label>
                                 {(formik.errors.is_returned_data && formik.touched.is_returned_data) && (
                                     <span className="text-danger text-sm">{formik.errors.is_returned_data}</span>
+                                )}
+                            </Col>
+                        </Row>
+                        <Row className="mb-2">
+                            <Col>
+                                <div className="border rounded-1 p-2 pb-3">
+                                    <GuidelineForm onAdd={(guideline) => handleAddGuideline(formik, guideline)} />
+
+                                    <GuidelineList
+                                        guidelines={formik.values.guidelines}
+                                        onDelete={(index) => handleDeleteGuideline(formik, index)}
+                                    />
+                                </div>
+                                {(formik.errors.surveyors && formik.touched.surveyors) && (
+                                    <span className="text-danger text-sm">{formik.errors.surveyors}</span>
                                 )}
                             </Col>
                         </Row>
