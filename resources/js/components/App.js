@@ -74,6 +74,8 @@ import SupervisionList from "../pages/Supervisions/List"
 import AddSupervision from "../pages/Supervisions/Add"
 import GuidelineList from "../pages/Guidelines/List"
 import AddGuideline from "../pages/Guidelines/Add"
+import ERPlanList from "../pages/ERPlan/List";
+import AddERPlan from "../pages/ERPlan/Add";
 import Services from "../pages/Services";
 import { useAuth } from "../hooks/useAuth"
 import AuthContext from "../context/authContext";
@@ -182,6 +184,9 @@ export default function App() {
                         {/* Guidelines */}
                         <Route path="/guidelines" element={<GuidelineList />} />
                         <Route path="/guidelines/new" element={<AddGuideline />} />
+                        {/* Emergency Response Plans */}
+                        <Route path="/er-plans" element={<ERPlanList />} />
+                        <Route path="/er-plans/new" element={<AddERPlan />} />
                     </Route>
                     {/* ============================= Public routes ============================= */}
                     <Route path="/signin" element={<Signin />} />
