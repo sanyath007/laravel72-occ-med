@@ -11,14 +11,20 @@ class SurveyingController extends Controller
 {
     public function search(Request $request)
     {
-        $surveyings = Surveying::with('vaccine','company')->paginate(10);
+        $date = $request->get('date');
+
+        $surveyings = Surveying::with('vaccine','company','surveyors')
+                        // ->when(!empty($date), function($q) use ($date) {
+                        //     $q->where('surver_date', $date);
+                        // })
+                        ->paginate(10);
 
         return response()->json($surveyings);
     }
 
     public function getById($id)
     {
-        $surveying = Surveying::find($id)->with('vaccine','company');
+        $surveying = Surveying::find($id)->with('vaccine','company','surveyors');
 
         return response()->json($surveying);
     }
