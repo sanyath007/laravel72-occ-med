@@ -1,15 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row } from 'react-bootstrap'
 import { FaSave } from 'react-icons/fa'
+import { DatePicker } from '@mui/x-date-pickers'
+import moment from 'moment'
 import { store } from '../../store/slices/networkMeeting'
 
-const networkMeetingSchema = Yup.object().shape({});
+const networkMeetingSchema = Yup.object().shape({
+    meeting_date: Yup.string().required(),
+});
 
 const NetworkMeetingForm = () => {
     const dispatch = useDispatch();
+    const [selectedMeetingeDate, setSelectedMeetingeDate] = useState(moment());
 
     const handleSubmit = (values, formik) => {
         console.log(values);
@@ -38,13 +43,22 @@ const NetworkMeetingForm = () => {
                         <Row className="mb-2">
                             <Col md={3}>
                                 <label htmlFor="">วันที่</label>
-                                <input
-                                    type="date"
-                                    name="meeting_date"
-                                    value={formik.values.meeting_date}
-                                    onChange={formik.handleChange}
-                                    className="form-control"
+                                <DatePicker
+                                    format="DD/MM/YYYY"
+                                    value={selectedMeetingeDate}
+                                    onChange={(date) => {
+                                        setSelectedMeetingeDate(date);
+                                        formik.setFieldValue('meeting_date', date.format('YYYY-MM-DD'));
+                                    }}
+                                    sx={{
+                                        '& .MuiInputBase-root.MuiOutlinedInput-root': {
+                                            border: `${(formik.errors.meeting_date && formik.touched.meeting_date) ? '1px solid red' : 'inherit'}`
+                                        }
+                                    }}
                                 />
+                                {(formik.errors.meeting_date && formik.touched.meeting_date) && (
+                                    <span className="text-danger text-sm">{formik.errors.meeting_date}</span>
+                                )}
                             </Col>
                             <Col>
                                 <label htmlFor="">วัตถุประสงค์</label>
