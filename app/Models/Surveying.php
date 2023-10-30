@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class surveying extends Model
+class Surveying extends Model
 {
     protected $table = "surveyings";
 
@@ -14,6 +14,11 @@ class surveying extends Model
     // {
     //     return $this->belongsTo(InvestigationType::class, 'investigation_type_id', 'id');
     // }
+
+    public function division()
+    {
+        return $this->belongsTo(Division::class, 'division_id', 'id');
+    }
 
     public function company()
     {

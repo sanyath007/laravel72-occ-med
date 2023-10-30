@@ -55,13 +55,13 @@ export const surveyingSlice = createSlice({
     },
     extraReducers: {
         [getSurveyings.pending]: (state) => {
-            state.surveying = []
+            state.surveyings = []
             state.loading = true
         },
         [getSurveyings.fulfilled]: (state, { payload }) => {
             const { data, ...pager } = payload
 
-            state.surveying = data
+            state.surveyings = data
             state.pager = pager
             state.loading = false
         },
@@ -69,19 +69,19 @@ export const surveyingSlice = createSlice({
             state.loading = false
         },
         [getSurveying.pending]: (state) => {
-            state.vaccination = null
+            state.surveying = null
             state.loading = true
         },
         [getSurveying.fulfilled]: (state, { payload }) => {
-            state.vaccination = payload
+            state.surveying = payload
             state.loading = false
         },
         [getSurveying.rejected]: (state) => {
             state.loading = false
         },
         [store.pending]: (state) => {
-            state.surveying = []
-            state.loading = true
+            state.success = true
+            state.error = null
         },
         [store.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
@@ -94,7 +94,7 @@ export const surveyingSlice = createSlice({
             }
         },
         [store.rejected]: (state, { payload }) => {
-            state.loading = false
+            state.success = false
             state.error = payload
         }
     }
