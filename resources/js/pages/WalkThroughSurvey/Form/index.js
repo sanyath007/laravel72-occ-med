@@ -125,7 +125,7 @@ const WalkThroughSurveyForm = () => {
                                         formik.setFieldValue('survey_date', date.format('YYYY-MM-DD'));
                                     }}
                                     sx={{
-                                        '& .MuiInputBase-input.MuiOutlinedInput-input': {
+                                        '& .MuiInputBase-root.MuiOutlinedInput-root': {
                                             borderColor: `${(formik.errors.survey_date && formik.touched.survey_date) ? 'red' : 'inherit'}`
                                         }
                                     }}

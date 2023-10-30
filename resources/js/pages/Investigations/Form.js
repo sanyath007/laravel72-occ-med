@@ -1,20 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row } from 'react-bootstrap'
 import { FaSave } from 'react-icons/fa'
+import { DatePicker } from '@mui/x-date-pickers'
 import { store } from '../../store/slices/investigation'
+import moment from 'moment'
 
 const investigationSchema = Yup.object().shape({
-
+    investigate_date: Yup.string().required()
 });
 
 const InvestigationForm = () => {
     const dispatch = useDispatch();
+    const [selectedInvestigateDate, setSelectedInvestigateDate] = useState(moment())
 
     const handleSubmit = (values, formik) => {
-        console.log(values);
         dispatch(store(values));
     };
 
@@ -42,13 +44,22 @@ const InvestigationForm = () => {
                         <Row className="mb-2">
                             <Col md={3}>
                                 <label htmlFor="">วันที่เดินสำรวจ</label>
-                                <input
-                                    type="date"
-                                    name="investigate_date"
-                                    value={formik.values.investigate_date}
-                                    onChange={formik.handleChange}
-                                    className="form-control"
+                                <DatePicker
+                                    format="DD/MM/YYYY"
+                                    value={selectedInvestigateDate}
+                                    onChange={(date) => {
+                                        setSelectedInvestigateDate(date);
+                                        formik.setFieldValue('investigate_date', date.format('YYYY-MM-DD'));
+                                    }}
+                                    sx={{
+                                        '& .MuiInputBase-root.MuiOutlinedInput-root': {
+                                            border: `${(formik.errors.investigate_date && formik.touched.investigate_date) ? '1px solid red' : 'inherit'}`
+                                        }
+                                    }}
                                 />
+                                {(formik.errors.investigate_date && formik.touched.investigate_date) && (
+                                    <span className="text-danger text-sm">{formik.errors.investigate_date}</span>
+                                )}
                             </Col>
                             <Col>
                                 <label htmlFor="">วัตถุประสงค์</label>
@@ -99,7 +110,6 @@ const InvestigationForm = () => {
                                         type="radio"
                                         name="is_working_disease"
                                         value="1"
-                                        defaultChecked={formik.values.is_working_disease === "1"}
                                     />
                                     <span className="ms-1 me-2">เข้า</span>
 
@@ -107,7 +117,6 @@ const InvestigationForm = () => {
                                         type="radio"
                                         name="is_working_disease"
                                         value="2"
-                                        defaultChecked={formik.values.is_working_disease === "1"}
                                     />
                                     <span className="ms-1">ไม่เข้า</span>
                                 </label>
@@ -119,7 +128,6 @@ const InvestigationForm = () => {
                                         type="radio"
                                         name="is_investigate"
                                         value="1"
-                                        defaultChecked={formik.values.is_investigate === "1"}
                                     />
                                     <span className="ms-1 me-2">เข้า</span>
 
@@ -127,7 +135,6 @@ const InvestigationForm = () => {
                                         type="radio"
                                         name="is_investigate"
                                         value="2"
-                                        defaultChecked={formik.values.is_investigate === "2"}
                                     />
                                     <span className="ms-1">ไม่เข้า</span>
                                 </label>
@@ -177,7 +184,6 @@ const InvestigationForm = () => {
                                         type="radio"
                                         name="is_return_data"
                                         value="1"
-                                        defaultChecked={formik.values.is_return_data === "1"}
                                     />
                                     <span className="ms-1 me-2">คืนแล้ว</span>
 
@@ -185,7 +191,6 @@ const InvestigationForm = () => {
                                         type="radio"
                                         name="is_return_data"
                                         value="2"
-                                        defaultChecked={formik.values.is_return_data === "2"}
                                     />
                                     <span className="ms-1">ยังไม่คืน</span>
                                 </label>
