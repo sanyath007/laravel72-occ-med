@@ -130,7 +130,9 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/doctors', 'DoctorController@getDoctors');
 
     /** Employees */
-    Route::get('/employees', 'EmployeeController@getEmployees');
+    Route::get('/employees', 'EmployeeController@getAll');
+    Route::get('/employees/search', 'EmployeeController@search');
+    Route::get('/employees/{id}', 'EmployeeController@getById');
 
     /** Divisions */
     Route::get('/divisions', 'DivisionController@getDivisions');

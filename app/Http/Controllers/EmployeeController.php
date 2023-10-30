@@ -7,10 +7,25 @@ use App\Models\Employee;
 
 class EmployeeController extends Controller
 {
-    public function getEmployees(Request $request)
+    public function search(Request $request)
     {
-        $employees = Employee::whereNotIn('position_id', [1])->paginate(20);
+        $employees = Employee::whereNotIn('position_id', [1])
+                        ->paginate(20);
 
         return response()->json($employees);
+    }
+
+    public function getAll(Request $request)
+    {
+        $employees = Employee::whereNotIn('position_id', [1])->get();
+
+        return response()->json($employees);
+    }
+
+    public function getById(Request $request, $id)
+    {
+        $employee = Employee::find($id);
+
+        return response()->json($employee);
     }
 }
