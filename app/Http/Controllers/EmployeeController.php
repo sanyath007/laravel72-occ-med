@@ -9,7 +9,8 @@ class EmployeeController extends Controller
 {
     public function search(Request $request)
     {
-        $employees = Employee::whereNotIn('position_id', [1])
+        $employees = Employee::with('position','class','type')
+                        ->whereNotIn('position_id', [1])
                         ->paginate(20);
 
         return response()->json($employees);
@@ -17,7 +18,9 @@ class EmployeeController extends Controller
 
     public function getAll(Request $request)
     {
-        $employees = Employee::whereNotIn('position_id', [1])->get();
+        $employees = Employee::with('position', 'class', 'type')
+                        ->whereNotIn('position_id', [1])
+                        ->get();
 
         return response()->json($employees);
     }

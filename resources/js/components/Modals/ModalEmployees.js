@@ -4,26 +4,27 @@ import { Link } from 'react-router-dom'
 import { Modal } from 'react-bootstrap'
 import { AiOutlineMan, AiOutlineWoman } from 'react-icons/ai'
 import * as moment from 'moment'
-import { getPatients } from '../../store/slices/patient'
+import { getEmployees } from '../../store/slices/employee'
 import { calcAgeY } from '../../utils/calculator'
 import Pagination from '../Pagination'
 import PatientFilter from '../Patient/PatientFilter'
 
-const ModalPatients = ({ isOpen, hideModal, onSelected, ...props }) => {
+const ModalEmployees = ({ isOpen, hideModal, onSelected, ...props }) => {
     const dispatch = useDispatch()
-    const { patients, pager, loading } = useSelector(state => state.patient)
-    const [queryStrings, setQueryStrings] = useState('')
+    const { employees, pager, loading } = useSelector(state => state.employee)
+    const [endpoint, setEndpoint] = useState('')
+    const [params, setParams] = useState('')
 
     useEffect(() => {
-        fetchPatients()
-    }, [queryStrings])
+        if (endpoint === '') {
+            dispatch(getEmployees({ url: `/api/employees/search` }));
+        } else {
+            dispatch(getEmployees({ url: `${endpoint}${params}` }));
+        }
+    }, [dispatch, endpoint, params])
 
-    const fetchPatients = (path='/api/patients?page=') => {
-        dispatch(getPatients({ path: `${path}${queryStrings}` }))
-    }
-
-    const handlePageClick = (path) => {
-        fetchPatients(path)
+    const handlePageClick = (url) => {
+        setEndpoint(url)
     }
 
     return (
@@ -35,20 +36,19 @@ const ModalPatients = ({ isOpen, hideModal, onSelected, ...props }) => {
             <Modal.Header closeButton>รายการผู้ป่วยทั้งหมด</Modal.Header>
             <Modal.Body>
                 <div className="alert border-dark alert-dismissible fade show" role="alert">
-                    <PatientFilter setQueryStrings={setQueryStrings} />
+                    {/* <PatientFilter setQueryStrings={setQueryStrings} /> */}
                 </div>
 
                 <table className="table table-striped table-bordered mb-0">
                     <thead>
                         <tr>
                             <th scope="col" style={{ width: '3%', textAlign: 'center' }}>#</th>
-                            <th scope="col" style={{ width: '6%', textAlign: 'center' }}>HN</th>
-                            <th scope="col" style={{ width: '20%' }}>ชื่อ-สกุล</th>
+                            <th scope="col">ชื่อ-สกุล</th>
                             <th scope="col" style={{ width: '10%', textAlign: 'center' }}>CID</th>
                             <th scope="col" style={{ width: '8%', textAlign: 'center' }}>วันเกิด</th>
                             <th scope="col" style={{ width: '6%', textAlign: 'center' }}>อายุ</th>
                             <th scope="col" style={{ width: '6%', textAlign: 'center' }}>เพศ</th>
-                            <th scope="col">ที่อยู่</th>
+                            <th scope="col" style={{ width: '20%' }}>ตำแหน่ง</th>
                             <th scope="col" style={{ width: '6%', textAlign: 'center' }}>Actions</th>
                         </tr>
                     </thead>
@@ -62,33 +62,26 @@ const ModalPatients = ({ isOpen, hideModal, onSelected, ...props }) => {
                                 </td>
                             </tr>
                         )}
-                        {(!loading && patients) && patients.map((patient, row) => (
-                            <tr key={patient.hn}>
+                        {(!loading && employees) && employees.map((employee, row) => (
+                            <tr key={employee.id}>
                                 <th scope="row" style={{ textAlign: 'center' }}>{pager?.from+row}</th>
-                                <td style={{ textAlign: 'center' }}>{patient.hn}</td>
-                                <td>{patient.pname+patient.fname+ ' ' +patient.lname}</td>
-                                <td style={{ textAlign: 'center' }}>{patient.cid}</td>
-                                <td style={{ textAlign: 'center' }}>{moment(patient.birthdate).format('DD/MM/YYYY')}</td>
-                                <td style={{ textAlign: 'center' }}>{calcAgeY(patient.birthdate)}ปี</td>
+                                <td>{employee.prefix+employee.fname+ ' ' +employee.lname}</td>
+                                <td style={{ textAlign: 'center' }}>{employee.cid}</td>
+                                <td style={{ textAlign: 'center' }}>{moment(employee.birthdate).format('DD/MM/YYYY')}</td>
+                                <td style={{ textAlign: 'center' }}>{calcAgeY(employee.birthdate)}ปี</td>
                                 <td style={{ textAlign: 'center', fontSize: '18px' }}>
-                                    {patient.sex == 1
+                                    {employee.sex == 1
                                         ? <AiOutlineMan className="text-danger m-0 p-0" />
                                         : <AiOutlineWoman className="text-success m-0 p-0" />}
                                 </td>
                                 <td>
-                                    {`${patient.address ? patient.address : '-'} 
-                                        หมู่ ${patient.moo ? patient.moo : '-'} 
-                                        ถนน${patient.road ? patient.road : '-'} 
-                                        ต.${patient.tambon ? patient.tambon?.tambon : '-'} 
-                                        อ.${patient.amphur ? patient.amphur?.amphur : '-'} 
-                                        จ.${patient.changwat ? patient.changwat?.changwat : '-'} 
-                                        ${patient.zipcode ? patient.zipcode : '-'}`}
+                                    {employee.position?.name}{employee.class && employee.class?.name}
                                 </td>
                                 <td style={{ textAlign: 'center' }}>
                                     <button
                                         type="button"
                                         className="btn btn-primary btn-sm"
-                                        onClick={() => onSelected(patient)}
+                                        onClick={() => onSelected(employee)}
                                     >
                                         <i className="bi bi-download"></i>
                                     </button>
@@ -108,4 +101,4 @@ const ModalPatients = ({ isOpen, hideModal, onSelected, ...props }) => {
     )
 }
 
-export default ModalPatients
+export default ModalEmployees

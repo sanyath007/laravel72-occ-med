@@ -28,14 +28,14 @@ const SurveyorForm = ({ onAdd }) => {
             <div className="d-flex flex-row">
                 <div className="input-group w-25 me-2">
                     <div className="form-control">
-                        {/* {surveyor?.name} */}
+                        {surveyor?.cid}
                     </div>
                     <button type="button" className="btn btn-secondary" onClick={() => setShowModal(true)}>
                         <FaSearch />
                     </button>
                 </div>
                 <div className="form-control w-75 me-2">
-                    {/* {surveyor?.name} */}
+                    {surveyor?.fname} {surveyor?.lname} ตำแหน่ง {surveyor?.position?.name}
                 </div>
                 <button type="button" className="btn btn-primary" onClick={() => handleAdd()}>
                     เพิ่ม
