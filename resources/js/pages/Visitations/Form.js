@@ -3,11 +3,15 @@ import { useDispatch } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row } from 'react-bootstrap'
+import { DatePicker } from '@mui/x-date-pickers'
 import { FaPencilAlt, FaPlus, FaSave, FaSearch, FaTrash } from 'react-icons/fa'
+import moment from 'moment'
 import { store } from '../../store/slices/visitation'
 import ModalCompanies from '../../components/Modals/ModalCompanies'
 
-const visitationSchema = Yup.object().shape({});
+const visitationSchema = Yup.object().shape({
+    visit_date: Yup.string().required()
+});
 
 const initialEmployee = {
     fullname: '',
@@ -20,6 +24,7 @@ const VisitationForm = () => {
     const [selecedCompany, setSelectedCompany] = useState(null);
     const [selecedFile, setSelectedFile] = useState(null);
     const [selecedEmployee, setSelectedEmployee] = useState(initialEmployee);
+    const [selectedVisitDate, setSelectedVisitDate] = useState(moment())
 
     const handleEmployeeInputChange = (event) => {
         const { name, value } = event.target;
@@ -79,13 +84,22 @@ const VisitationForm = () => {
                         <Row className="mb-2">
                             <Col>
                                 <label htmlFor="">วันที่เยี่ยม</label>
-                                <input
-                                    type="date"
-                                    name="visit_date"
-                                    value={formik.values.visit_date}
-                                    onChange={formik.handleChange}
-                                    className="form-control"
+                                <DatePicker
+                                    format="DD/MM/YYYY"
+                                    value={selectedVisitDate}
+                                    onChange={(date) => {
+                                        setSelectedVisitDate(date);
+                                        formik.setFieldValue('visit_date', date.format('YYYY-MM-DD'));
+                                    }}
+                                    sx={{
+                                        '& .MuiInputBase-root.MuiOutlinedInput-root': {
+                                            border: `${(formik.errors.visit_date && formik.touched.visit_date) ? '1px solid red' : 'inherit'}`
+                                        }
+                                    }}
                                 />
+                                {(formik.errors.visit_date && formik.touched.visit_date) && (
+                                    <span className="text-danger text-sm">{formik.errors.visit_date}</span>
+                                )}
                             </Col>
                             <Col>
                                 <label htmlFor="">ผู้ดำเนินการ</label>
@@ -219,7 +233,6 @@ const VisitationForm = () => {
                                         type="radio"
                                         name="is_return_data"
                                         value="1"
-                                        defaultChecked={formik.values.is_return_data === "1"}
                                     />
                                     <span className="ms-1 me-2">คืนแล้ว</span>
 
@@ -227,7 +240,6 @@ const VisitationForm = () => {
                                         type="radio"
                                         name="is_return_data"
                                         value="2"
-                                        defaultChecked={formik.values.is_return_data === "2"}
                                     />
                                     <span className="ms-1">ยังไม่คืน</span>
                                 </label>

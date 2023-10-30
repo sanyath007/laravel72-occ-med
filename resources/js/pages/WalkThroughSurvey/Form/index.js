@@ -126,7 +126,7 @@ const WalkThroughSurveyForm = () => {
                                     }}
                                     sx={{
                                         '& .MuiInputBase-root.MuiOutlinedInput-root': {
-                                            borderColor: `${(formik.errors.survey_date && formik.touched.survey_date) ? 'red' : 'inherit'}`
+                                            border: `${(formik.errors.survey_date && formik.touched.survey_date) ? '1px solid red' : 'inherit'}`
                                         }
                                     }}
                                 />
