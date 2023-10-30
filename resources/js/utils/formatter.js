@@ -12,6 +12,22 @@ export const thdateFormat = (date) => {
     return moment(date).format('DD/MM/YYYY')
 }
 
+export const toShortTHDate = (dateStr) => {
+    if (!dateStr || dateStr === '') return '';
+
+    const [year, month, day] = dateStr.split('-');
+
+    return `${day}/${month}/${parseInt(year, 10) + 543}`;
+}
+
+export const toLongTHDate = (date) => {
+    return date.toLocaleDateString('th-TH', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
+}
+
 export const thdateBEFormat = (dateStr) => {
     if (!dateStr || dateStr === undefined) return ''
 
