@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Surveying;
+use App\Models\SurveyingSurveyor;
 use App\Models\Company;
 
 class SurveyingController extends Controller
@@ -80,6 +81,15 @@ class SurveyingController extends Controller
             }
 
             if ($surveying->save()) {
+                if (count($surveyors) > 0) {
+                    foreach($surveyors as $surveyor) {
+                        $newSurveyor = new SurveyingSurveyor;
+                        $newSurveyor->survey_id     = $surveying->id;
+                        $newSurveyor->employee_id   = $surveyor->id;
+                        $newSurveyor->save();
+                    }
+                }
+
                 return [
                     'status'        => 1,
                     'message'       => 'Insertion successfully!!',
