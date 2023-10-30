@@ -5,9 +5,10 @@ import * as Yup from 'yup'
 import { Col, Row } from 'react-bootstrap'
 import { FaSave, FaSearch } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
+import { toast } from 'react-toastify'
 import moment from 'moment'
 import { store } from '../../../store/slices/surveying'
-import { validateFile } from '../../../utils'
+import { validateFile, isExistedItem } from '../../../utils'
 import ModalCompanies from '../../../components/Modals/ModalCompanies'
 import SurveyorForm from './SurveyorForm'
 import SurveyorList from './SurveyorList'
@@ -44,8 +45,14 @@ const WalkThroughSurveyForm = () => {
 
     };
 
-    const handleAddSurveyor = (surveyor) => {
-        console.log(surveyor);
+    const handleAddSurveyor = (formik, surveyor) => {
+        if (isExistedItem(formik.values.surveyors, surveyor.id)) {
+            toast.error('คุณเลือกรายการซ้ำ!!');
+            return;
+        }
+
+        const newSurveyors = [ ...formik.values.surveyors, surveyor];
+        formik.setFieldValue('surveyors', newSurveyors);
     }
 
     return (
@@ -54,7 +61,7 @@ const WalkThroughSurveyForm = () => {
                 survey_date: '',
                 objective_id: '',
                 division_id: '',
-                surveyors: [{id: 1, name: 'Test'}],
+                surveyors: [],
                 company_id: '',
                 num_of_departs: '',
                 num_of_employees: '',
@@ -143,7 +150,7 @@ const WalkThroughSurveyForm = () => {
                         <Row className="mb-2">
                             <Col>
                                 <div>
-                                    <SurveyorForm onAdd={handleAddSurveyor} />
+                                    <SurveyorForm onAdd={(surveyor) => handleAddSurveyor(formik, surveyor)} />
 
                                     <SurveyorList surveyors={formik.values.surveyors} />
                                 </div>
