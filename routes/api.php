@@ -112,6 +112,15 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::put('/surveyings/{id}', 'SurveyingController@update');
     Route::delete('/surveyings/{id}', 'SurveyingController@delete');
 
+    /** Emergency Response Plans */
+    Route::get('/er-plans', 'ERPlanController@getAll');
+    Route::get('/er-plans/search', 'ERPlanController@search');
+    Route::get('/er-plans/{id}', 'ERPlanController@getById');
+    Route::get('/er-plans/init/form', 'ERPlanController@getInitialFormData');
+    Route::post('/er-plans', 'ERPlanController@store');
+    Route::put('/er-plans/{id}', 'ERPlanController@update');
+    Route::delete('/er-plans/{id}', 'ERPlanController@delete');
+
     /** ICD-10 */
     Route::get('/icd10s', 'Icd10Controller@getIcd10s');
 

@@ -69,7 +69,7 @@ class SurveyingController extends Controller
             if ($request->file('file_attachment')) {
                 $file = $request->file('file_attachment');
                 $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-                $destinationPath = 'uploads/surveying/file/';
+                $destinationPath = 'uploads/wts/file/';
 
                 if ($file->move($destinationPath, $fileName)) {
                     $surveying->file_attachment = $fileName;
@@ -79,7 +79,7 @@ class SurveyingController extends Controller
             if ($request->file('pic_attachment')) {
                 $file = $request->file('pic_attachment');
                 $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-                $destinationPath = 'uploads/surveying/pic/';
+                $destinationPath = 'uploads/wts/pic/';
 
                 if ($file->move($destinationPath, $fileName)) {
                     $surveying->pic_attachment = $fileName;
