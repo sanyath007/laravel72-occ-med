@@ -47,53 +47,81 @@ class ERPlanController extends Controller
     public function store(Request $request) 
     {
         try {
-            $persons = json_decode($request['persons']);
-            $experts = json_decode($request['experts']);
-
             $plan = new ERPlan;
-            $plan->plan_date            = $request['survey_date'];
+            $plan->plan_date            = $request['plan_date'];
             $plan->plan_type_id         = $request['plan_type_id'];
             $plan->incident_id          = $request['incident_id'];
             $plan->division_id          = $request['division_id'];
             $plan->company_id           = $request['company_id'];
-            $plan->background           = $request['background'];
             $plan->topic                = $request['topic'];
+            $plan->background           = $request['background'];
             $plan->drill_hour           = $request['drill_hour'];
             $plan->target_group_id      = $request['target_group_id'];
             $plan->num_of_participants  = $request['num_of_participants'];
-            $plan->equipments           = $request['equipments'];
+            $plan->equipment_eye        = $request['equipment_eye'];
+            $plan->equipment_face       = $request['equipment_face'];
+            $plan->equipment_hand       = $request['equipment_hand'];
+            $plan->equipment_foot       = $request['equipment_foot'];
+            $plan->equipment_ear        = $request['equipment_ear'];
             $plan->chemical_source      = $request['chemical_source'];
             $plan->remark               = $request['remark'];
 
             if ($request->file('file_attachment')) {
                 $file = $request->file('file_attachment');
                 $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-                $destinationPath = 'uploads/wts/file/';
+                $destinationPath = 'uploads/erp/file/';
 
                 if ($file->move($destinationPath, $fileName)) {
                     $plan->file_attachment = $fileName;
                 }
             }
 
-            if ($request->file('pic_attachment')) {
-                $file = $request->file('pic_attachment');
-                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-                $destinationPath = 'uploads/wts/pic/';
+            if ($request->file('pic_attachments')) {
+                $index = 0;
+                $picNames = '';
+                $destinationPath = 'uploads/erp/pic/';
 
-                if ($file->move($destinationPath, $fileName)) {
-                    $plan->pic_attachment = $fileName;
+                foreach($request->file('pic_attachments') as $file) {
+                    $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
+
+                    if ($file->move($destinationPath, $fileName)) {
+                        if ($index < count($request->file('pic_attachments'))) {
+                            $picNames .= $fileName.',';
+                        } else {
+                            $picNames .= $fileName;
+                        }
+                    }
+
+                    $index++;
                 }
+
+                $plan->pic_attachments = $picNames;
             }
 
             if ($plan->save()) {
-                // if (count($surveyors) > 0) {
-                //     foreach($surveyors as $surveyor) {
-                //         $newSurveyor = new SurveyingSurveyor;
-                //         $newSurveyor->survey_id     = $surveying->id;
-                //         $newSurveyor->employee_id   = $surveyor->id;
-                //         $newSurveyor->save();
-                //     }
-                // }
+                /** ผู้จัดกิจกรรม */
+                if (count($request['persons']) > 0) {
+                    foreach($request['persons'] as $person) {
+                        $newPerson = new ERPlanPerson;
+                        $newPerson->plan_id   = $plan->id;
+                        $newPerson->name      = $person['name'];
+                        $newPerson->position  = $person['position'];
+                        $newPerson->company   = $person['company'];
+                        $newPerson->save();
+                    }
+                }
+
+                /** ผู้เชี่ยวชาญ */
+                if (count($request['experts']) > 0) {
+                    foreach($request['experts'] as $expert) {
+                        $newExpert = new ERPlanExpert;
+                        $newExpert->plan_id   = $plan->id;
+                        $newExpert->name      = $expert['name'];
+                        $newExpert->position  = $expert['position'];
+                        $newExpert->company   = $expert['company'];
+                        $newExpert->save();
+                    }
+                }
 
                 return [
                     'status'    => 1,

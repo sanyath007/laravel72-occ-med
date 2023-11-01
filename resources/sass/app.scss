@@ -45,3 +45,20 @@ a {
     }
 }
 /** ==================== End Material UI ==================== */
+
+.text-sm {
+    font-size: 0.875em;
+}
+
+.upload__image-close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 2px 4px 0 0;
+    cursor: pointer;
+    color: var(--bg-light);
+
+    &:hover {
+        color: var(--bs-danger);
+    }
+}

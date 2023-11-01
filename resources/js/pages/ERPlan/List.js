@@ -31,7 +31,7 @@ const EmergencyPlanList = () => {
                                 <h5 className="card-title p-0">รายการแผนตอบโต้เหตุฉุกเฉิน</h5>
 
                                 <div>
-                                    <Link to="/emergency-plans/new" className="btn btn-primary">เพิ่มรายการ</Link>
+                                    <Link to="/er-plans/new" className="btn btn-primary">เพิ่มรายการ</Link>
                                 </div>
                             </div>
 

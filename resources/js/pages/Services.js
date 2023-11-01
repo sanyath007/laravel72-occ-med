@@ -47,7 +47,7 @@ const Services = () => {
                                 </Row>
                                 <Row className="mb-3">
                                     <Col className="text-start">
-                                        <Link to="/emergency-plans" className="btn btn-primary w-100">จัดทำแผนตอบโต้เหตุฉุกเฉิน</Link>
+                                        <Link to="/er-plans" className="btn btn-primary w-100">จัดทำแผนตอบโต้เหตุฉุกเฉิน</Link>
                                     </Col>
                                     <Col className="text-start"></Col>
                                     <Col className="text-start"></Col>
