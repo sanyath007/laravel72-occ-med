@@ -18,11 +18,13 @@ import visitationReducer from './slices/visitation'
 import vaccinationReducer from './slices/vaccination'
 import surveyingReducer from './slices/surveying'
 import erplanReducer from './slices/erplan'
+import trainingReducer from './slices/training'
 import { patientsApi } from './services/patientsApi'
 import { reportBulletApi } from './services/reportBulletApi'
 import { vaccinationApi } from './services/vaccinationApi'
 import { surveyingApi } from './services/surveyingApi'
 import { erplanApi } from './services/erplanApi'
+import { trainingApi } from './services/trainingApi'
 
 export default configureStore({
     reducer: {
@@ -45,11 +47,13 @@ export default configureStore({
         vaccination: vaccinationReducer,
         surveying: surveyingReducer,
         erplan: erplanReducer,
+        training: trainingReducer,
         [patientsApi.reducerPath]: patientsApi.reducer,
         [reportBulletApi.reducerPath]: reportBulletApi.reducer,
         [vaccinationApi.reducerPath]: vaccinationApi.reducer,
         [surveyingApi.reducerPath]: surveyingApi.reducer,
         [erplanApi.reducerPath]: erplanApi.reducer,
+        [trainingApi.reducerPath]: trainingApi.reducer,
     },
     middleware: (getDefaultMiddleware) => 
         getDefaultMiddleware().concat(
@@ -58,5 +62,6 @@ export default configureStore({
             vaccinationApi.middleware,
             surveyingApi.middleware,
             erplanApi.middleware,
+            trainingApi.middleware,
         ),
 })
