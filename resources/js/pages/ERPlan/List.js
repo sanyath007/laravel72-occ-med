@@ -1,17 +1,40 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getSurveyings } from '../../store/slices/surveying'
+import { getErplans } from '../../store/slices/erplan'
 import { toShortTHDate } from '../../utils/formatter'
+import Loading from '../../components/Loading'
+import Pagination from '../../components/Pagination'
 
-const EmergencyPlanList = () => {
+const PLAN_TYPES = [
+    'การฝึกซ้อมแผนบนโต๊ะ (Table-top exercise)',
+    'การฝึกซ้อมเฉพาะหน้าที่ (Functional exercise)',
+    'การฝึกซ้อมเต็มรูปแบบ (Full-scale/Full-field exercise)',
+];
+
+const INCIDENTS = [
+    'อัคคีภัย',
+    'ปัญหาหมอกควัน',
+    'สารเคมีรั่วไหล'
+];
+
+const ERPlanList = () => {
     const dispatch = useDispatch();
-    const { surveyings, pager, loading } = useSelector(state => state.surveying);
+    const { erplans, pager, loading } = useSelector(state => state.erplan);
+    const [endpoint, setEndpoint] = useState('');
+    const [params, setParams] = useState('');
 
     useEffect(() => {
-        dispatch(getSurveyings({ url: '/api/surveyings/search' }));
-    }, []);
-    console.log(surveyings);
+        if (endpoint === '') {
+            dispatch(getErplans({ url: '/api/er-plans/search' }));
+        } else {
+            dispatch(getErplans({ url: `${endpoint}${params}` }))
+        }
+    }, [endpoint, params]);
+
+    const handlePageClick = (url) => {
+        setEndpoint(url);
+    };
 
     return (
         <section className="section">
@@ -41,38 +64,41 @@ const EmergencyPlanList = () => {
                                         <tr>
                                             <th style={{ width: '5%', textAlign: 'center' }}>#</th>
                                             <th style={{ width: '10%', textAlign: 'center' }}>วันที่สำรวจ</th>
-                                            <th>สถานประกอบการ</th>
+                                            <th>หัวข้อการซ่อม/ประเภทแผน</th>
+                                            <th style={{ width: '25%' }}>สถานประกอบการ</th>
                                             <th style={{ width: '20%', textAlign: 'center' }}>ผู้ดำเนินการ</th>
-                                            <th style={{ width: '8%', textAlign: 'center' }}>สถานะ</th>
                                             <th style={{ width: '10%', textAlign: 'center' }}>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {surveyings?.map((surveying, index) => (
-                                            <tr key={surveying.id}>
+                                        {loading && (
+                                            <tr>
+                                                <td colSpan={6} className="text-center"><Loading /></td>
+                                            </tr>
+                                        )}
+                                        {!loading && erplans?.map((plan, index) => (
+                                            <tr key={plan.id}>
                                                 <td className="text-center">{pager?.from+index}</td>
-                                                <td className="text-center">{toShortTHDate(surveying.survey_date)}</td>
+                                                <td className="text-center">{toShortTHDate(plan.plan_date)}</td>
                                                 <td>
-                                                    {surveying.company?.name}
-                                                    <p className="m-0">
-                                                        <b>จำนวนแผนกที่สำรวจ</b> {surveying.num_of_departs} แผนก
-                                                        <b>จำนวนพนักงาน/ประชาชน</b> {surveying.num_of_employees} ราย
-                                                    </p>
-                                                    <p className="m-0"><b>ผู้เดินสำรวจ</b> {surveying.surveyors?.length} ราย</p>
+                                                    <p className="m-0"><b>ภาวะฉุกเฉิน:</b> {INCIDENTS[plan.incident_id-1]}</p>
+                                                    <p className="m-0"><b>หัวข้อ:</b> {plan.topic}</p>
+                                                    <p className="m-0"><b>ประเภท:</b> {PLAN_TYPES[plan.plan_type_id-1]}</p>
+                                                </td>
+                                                <td>
+                                                    {plan.company_id}
+                                                    <p className="m-0"><b>จำนวนผู้เข้าร่วม</b> {plan.num_of_participants} ราย</p>
+                                                    <p className="m-0"><b>ผู้จัดกิจกรรม</b> {plan.persons?.length} ราย</p>
                                                 </td>
                                                 <td className="text-center">
-                                                    {surveying.division?.name}
-                                                </td>
-                                                <td className="text-center">
-                                                    {surveying.is_returned_data !== 1 && <span className="badge rounded-pill bg-dark">ยังไม่คืนข้อมูล</span>}
-                                                    {surveying.is_returned_data === 1 && <span className="badge rounded-pill bg-success">คืนข้อมูลแล้ว</span>}
+                                                    {plan.division?.name}
                                                 </td>
                                                 <td className="text-center">
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                        <Link to={`/surveyings/${surveying.id}/detail`} className="btn btn-primary btn-sm">
+                                                        <Link to={`/er-plans/${plan.id}/detail`} className="btn btn-primary btn-sm">
                                                             <i className="bi bi-search"></i>
                                                         </Link>
-                                                        <Link to={`/surveyings/${surveying.id}/edit`} className="btn btn-warning btn-sm">
+                                                        <Link to={`/er-plans/${plan.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
                                                         <a href="#" className="btn btn-danger btn-sm" onClick={(e) => {}}>
@@ -84,6 +110,11 @@ const EmergencyPlanList = () => {
                                         ))}
                                     </tbody>
                                 </table>
+
+                                <Pagination
+                                    pager={pager}
+                                    onPageClick={handlePageClick}
+                                />
                             </div>
                         </div>
                     </div>
@@ -93,4 +124,4 @@ const EmergencyPlanList = () => {
     )
 }
 
-export default EmergencyPlanList
+export default ERPlanList
