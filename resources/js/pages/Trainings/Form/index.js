@@ -63,7 +63,7 @@ const TrainingForm = () => {
                 demonstration_name: '',
                 demonstration_num: '',
                 consultation: '',
-                vh_education: '',
+                education: '',
                 brochure: '',
                 campaign: '',
                 campaign_name: '',
