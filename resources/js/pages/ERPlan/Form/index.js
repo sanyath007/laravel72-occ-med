@@ -11,7 +11,7 @@ import PersonForm from './PersonForm'
 import PersonList from './PersonList'
 import ExpertForm from './ExpertForm'
 import ExpertList from './ExpertList'
-import Gallery from './Gallery'
+import UploadGallery from '../../../components/UploadGallery'
 
 const erplanSchema = Yup.object().shape({
     plan_date: Yup.string().required(),
@@ -501,7 +501,7 @@ const ERPlanForm = () => {
                                             className="form-control"
                                         />
 
-                                        <Gallery
+                                        <UploadGallery
                                             images={formik.values.pic_attachments}
                                             onDelete={(index) => {
                                                 const updatedPics = formik.values.pic_attachments.filter((pic, i) => i !== index);

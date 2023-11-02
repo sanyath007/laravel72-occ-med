@@ -1,7 +1,7 @@
 import React from 'react'
 import { Col, Row } from 'react-bootstrap'
 
-const Gallery = ({ images = [], onDelete }) => {
+const UploadGallery = ({ images = [], onDelete }) => {
 
     const handleDelete = (index) => {
         onDelete(index);
@@ -40,4 +40,4 @@ const Gallery = ({ images = [], onDelete }) => {
     )
 }
 
-export default Gallery
+export default UploadGallery

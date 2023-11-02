@@ -35,6 +35,11 @@ const TrainingList = () => {
                                             <th style={{ width: '10%', textAlign: 'center' }}>Actions</th>
                                         </tr>
                                     </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
