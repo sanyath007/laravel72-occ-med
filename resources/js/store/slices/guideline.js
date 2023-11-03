@@ -23,7 +23,9 @@ export const getGuidelines = createAsyncThunk('guideline/getGuidelines', async (
 
 export const store = createAsyncThunk('guideline/store', async (data, { rejectWithValue }) => {
     try {
-        const res = await api.post('/api/guidelines', data)
+        const res = await api.post('/api/guidelines', data, {
+            headers: { "Content-Type": "multipart/form-data" }
+        });
 
         return res.data
     } catch (error) {

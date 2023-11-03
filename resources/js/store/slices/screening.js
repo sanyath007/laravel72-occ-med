@@ -23,7 +23,7 @@ export const getScreenings = createAsyncThunk('screening/getScreenings', async (
 
 export const store = createAsyncThunk('screening/store', async (data, { rejectWithValue }) => {
     try {
-        const res = await api.post('/api/screenings', data , {
+        const res = await api.post('/api/screenings', data, {
             headers: { "Content-Type": "multipart/form-data" }
         })
 
