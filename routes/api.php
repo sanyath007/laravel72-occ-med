@@ -130,6 +130,15 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::put('/trainings/{id}', 'TrainingController@update');
     Route::delete('/trainings/{id}', 'TrainingController@delete');
 
+    /** Screenings */
+    Route::get('/screenings', 'ProactiveScreeningController@getAll');
+    Route::get('/screenings/search', 'ProactiveScreeningController@search');
+    Route::get('/screenings/{id}', 'ProactiveScreeningController@getById');
+    Route::get('/screenings/init/form', 'ProactiveScreeningController@getInitialFormData');
+    Route::post('/screenings', 'ProactiveScreeningController@store');
+    Route::put('/screenings/{id}', 'ProactiveScreeningController@update');
+    Route::delete('/screenings/{id}', 'ProactiveScreeningController@delete');
+
     /** ICD-10 */
     Route::get('/icd10s', 'Icd10Controller@getIcd10s');
 
