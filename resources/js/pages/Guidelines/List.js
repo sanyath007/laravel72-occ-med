@@ -1,8 +1,12 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { FaFilePdf } from 'react-icons/fa'
+import moment from 'moment'
 import { getGuidelines } from '../../store/slices/guideline'
+import { toShortTHDate } from '../../utils/formatter'
 import Pagination from '../../components/Pagination'
+import Loading from '../../components/Loading'
 
 const GuidelineList = () => {
     const dispatch = useDispatch();
@@ -43,19 +47,34 @@ const GuidelineList = () => {
                                     <thead>
                                         <tr>
                                             <th style={{ width: '5%', textAlign: 'center' }}>#</th>
+                                            <th style={{ width: '12%', textAlign: 'center' }}>วันที่อัพโหลด</th>
                                             <th>ชื่อเอกสาร</th>
-                                            <th style={{ width: '20%', textAlign: 'center' }}>ผู้ดำเนินการ</th>
+                                            <th style={{ width: '5%', textAlign: 'center' }}>ไฟล์</th>
+                                            <th style={{ width: '25%', textAlign: 'center' }}>ผู้ดำเนินการ</th>
                                             <th style={{ width: '10%', textAlign: 'center' }}>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {guidelines && guidelines.map((guideline, index) => (
+                                        {loading && (
+                                            <tr>
+                                                <td colSpan={6} className="text-center"><Loading /></td>
+                                            </tr>
+                                        )}
+                                        {!loading && guidelines?.map((guideline, index) => (
                                             <tr key={guideline.id}>
                                                 <td style={{ textAlign: 'center' }}>{pager && pager.from+index}</td>
+                                                <td style={{ textAlign: 'center' }}>
+                                                    {toShortTHDate(moment(guideline.created_at).format('YYYY-MM-DD'))}
+                                                </td>
                                                 <td>
                                                     {guideline.topic}
-                                                    <i className="fas fa-paperclip ms-1"></i>
-                                                    <p style={{ fontSize: '12px', color: 'gray' }}>{guideline.created_at}</p>
+                                                </td>
+                                                <td style={{ textAlign: 'center' }}>
+                                                    {guideline.file_attachment && (
+                                                        <a href={`${process.env.MIX_APP_URL}/uploads/guideline/${guideline.file_attachment}`} target="_blank" className="text-danger">
+                                                            <FaFilePdf size={"20px"} />
+                                                        </a>
+                                                    )}
                                                 </td>
                                                 <td>{guideline.division?.name}</td>
                                                 <td style={{ textAlign: 'center' }}>
