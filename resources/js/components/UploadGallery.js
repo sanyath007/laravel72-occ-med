@@ -1,14 +1,14 @@
 import React from 'react'
 import { Col, Row } from 'react-bootstrap'
 
-const UploadGallery = ({ images = [], onDelete }) => {
+const UploadGallery = ({ images = [], onDelete, minHeight }) => {
 
     const handleDelete = (index) => {
         onDelete(index);
     };
 
     return (
-        <Row className="my-3">
+        <Row className="my-3" style={{ minHeight: minHeight }}>
             {images.map((pic, index) => {
                 return (
                     <Col md={3} key={index}>

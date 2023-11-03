@@ -71,7 +71,7 @@ class TrainingController extends Controller
             $training->campaign         = $request['campaign'];
             $training->campaign_num     = $request['campaign_num'];
             $training->campaign_num     = $request['campaign_num'];
-            $training->remark           = $request['remark'];
+            // $training->remark           = $request['remark'];
 
             if ($request->file('training_pictures')) {
                 $index = 0;
@@ -92,7 +92,7 @@ class TrainingController extends Controller
                     $index++;
                 }
 
-                $plan->training_pictures = $picNames;
+                $training->training_pictures = $picNames;
             }
 
             if ($request->file('pr_pictures')) {

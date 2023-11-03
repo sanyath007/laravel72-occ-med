@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row, Tab, Tabs } from 'react-bootstrap'
 import { FaSave } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
-import UploadGallery from '../../../components/UploadGallery'
+import moment from 'moment'
+import { store } from '../../../store/slices/training'
 import PersonList from './PersonList'
 import PersonForm from './PersonForm'
-import moment from 'moment'
+import UploadGallery from '../../../components/UploadGallery'
 
 const trainingSchema = Yup.object().shape({
     train_date: Yup.string().required(),
@@ -34,10 +36,25 @@ const trainingSchema = Yup.object().shape({
 });
 
 const TrainingForm = () => {
+    const dispatch = useDispatch();
     const [selectedDate, setSelectedDate] = useState(moment());
 
     const handleSubmit = (values, formik) => {
+        const data = new FormData();
 
+        for(const [key, val] of Object.entries(values)) {
+            if (key === 'training_pictures' || key === 'pr_pictures') {
+                [...val].forEach((file, i) => {
+                    data.append(key, file[0]);
+                })
+            } else {
+                data.append(key, val);
+            }
+        }
+
+        dispatch(store(values));
+
+        formik.resetForm();
     };
 
     return (
@@ -75,12 +92,13 @@ const TrainingForm = () => {
             onSubmit={handleSubmit}
         >
             {(formik) => {
+                console.log(formik.errors);
                 return (
                     <Form>
                         <Tabs defaultActiveKey="home">
                             <Tab
                                 eventKey="home"
-                                title="กิจกรรมการอบรมให้ความรู้"
+                                title="กิจกรรมอบรมให้ความรู้"
                                 className="border border-top-0 p-4 mb-3"
                             >
                                 <Row className="mb-2">
@@ -322,80 +340,200 @@ const TrainingForm = () => {
                                 }}
                             >
                                 <Row className="mb-2">
-                                    <Col>
+                                    <Col md={3}>
                                         <label htmlFor="">จัดนิทรรศการ</label>
                                         <label htmlFor="" className="form-control" style={{ display: 'flex' }}>
                                             <Field
                                                 type="radio"
-                                                name="priority_id"
+                                                name="exhibition"
                                                 value="1"
                                             />
                                             <span className="ms-1 me-2">มี</span>
 
                                             <Field
                                                 type="radio"
-                                                name="priority_id"
+                                                name="exhibition"
                                                 value="2"
                                             />
                                             <span className="ms-1">ไม่มี</span>
                                         </label>
                                     </Col>
                                     <Col>
+                                        <label htmlFor="">ชื่องาน</label>
+                                        <input
+                                            type="text"
+                                            name="exhibition_name"
+                                            value={formik.values.exhibition_name}
+                                            onChange={formik.handleChange}
+                                            className={`form-control ${(formik.errors.exhibition_name && formik.touched.exhibition_name) ? 'is-invalid' : ''}`}
+                                        />
+                                        {(formik.errors.exhibition_name && formik.touched.exhibition_name) && (
+                                            <span className="invalid-feedback">{formik.errors.exhibition_name}</span>
+                                        )}
+                                    </Col>
+                                    <Col md={3}>
+                                        <label htmlFor="">จำนวนผู้ชม</label>
+                                        <div className="input-group">
+                                            <input
+                                                type="number"
+                                                name="exhibition_num"
+                                                value={formik.values.exhibition_num}
+                                                onChange={formik.handleChange}
+                                                className={`form-control ${(formik.errors.exhibition_num && formik.touched.exhibition_num) ? 'is-invalid' : ''}`}
+                                            />
+                                            <span className="input-group-text">ราย</span>
+                                        </div>
+                                        {(formik.errors.exhibition_num && formik.touched.exhibition_num) && (
+                                            <span className="text-danger text-sm">{formik.errors.exhibition_num}</span>
+                                        )}
+                                    </Col>
+                                </Row>
+                                <Row className="mb-2">
+                                    <Col md={3}>
                                         <label htmlFor="">สอนสาธิต</label>
                                         <label htmlFor="" className="form-control" style={{ display: 'flex' }}>
                                             <Field
                                                 type="radio"
-                                                name="priority_id"
+                                                name="demonstration"
                                                 value="1"
                                             />
                                             <span className="ms-1 me-2">มี</span>
 
                                             <Field
                                                 type="radio"
-                                                name="priority_id"
+                                                name="demonstration"
                                                 value="2"
                                             />
                                             <span className="ms-1">ไม่มี</span>
                                         </label>
                                     </Col>
                                     <Col>
-                                        <label htmlFor="">ให้คำปรึกษา</label>
+                                        <label htmlFor="">ชื่องาน</label>
+                                        <input
+                                            type="text"
+                                            name="demonstration_name"
+                                            value={formik.values.demonstration_name}
+                                            onChange={formik.handleChange}
+                                            className={`form-control ${(formik.errors.demonstration_name && formik.touched.demonstration_name) ? 'is-invalid' : ''}`}
+                                        />
+                                        {(formik.errors.demonstration_name && formik.touched.demonstration_name) && (
+                                            <span className="invalid-feedback">{formik.errors.demonstration_name}</span>
+                                        )}
+                                    </Col>
+                                    <Col md={3}>
+                                        <label htmlFor="">จำนวนผู้ชม</label>
                                         <div className="input-group">
-                                            <input type="text" className="form-control" />
+                                            <input
+                                                type="number"
+                                                name="demonstration_num"
+                                                value={formik.values.demonstration_num}
+                                                onChange={formik.handleChange}
+                                                className={`form-control ${(formik.errors.demonstration_num && formik.touched.demonstration_num) ? 'is-invalid' : ''}`}
+                                            />
                                             <span className="input-group-text">ราย</span>
                                         </div>
+                                        {(formik.errors.demonstration_num && formik.touched.demonstration_num) && (
+                                            <span className="text-danger text-sm">{formik.errors.demonstration_num}</span>
+                                        )}
+                                    </Col>
+                                </Row>
+                                <Row className="mb-2">
+                                    <Col>
+                                        <label htmlFor="">ให้คำปรึกษา</label>
+                                        <div className="input-group">
+                                            <input
+                                                type="number"
+                                                name="consultation"
+                                                value={formik.values.consultation}
+                                                onChange={formik.handleChange}
+                                                className={`form-control ${(formik.errors.consultation && formik.touched.consultation) ? 'is-invalid' : ''}`}
+                                            />
+                                            <span className="input-group-text">ราย</span>
+                                        </div>
+                                        {(formik.errors.consultation && formik.touched.consultation) && (
+                                            <span className="text-danger text-sm">{formik.errors.consultation}</span>
+                                        )}
                                     </Col>
                                     <Col>
                                         <label htmlFor="">ให้อาชีวสุขศึกษา</label>
                                         <div className="input-group">
-                                            <input type="text" className="form-control" />
+                                            <input
+                                                type="number"
+                                                name="education"
+                                                value={formik.values.education}
+                                                onChange={formik.handleChange}
+                                                className={`form-control ${(formik.errors.education && formik.touched.education) ? 'is-invalid' : ''}`}
+                                            />
                                             <span className="input-group-text">ราย</span>
                                         </div>
+                                        {(formik.errors.education && formik.touched.education) && (
+                                            <span className="text-danger text-sm">{formik.errors.education}</span>
+                                        )}
                                     </Col>
                                     <Col>
                                         <label htmlFor="">แจกเอกสาร/แผ่นพับ</label>
                                         <div className="input-group">
-                                            <input type="text" className="form-control" />
+                                            <input
+                                                type="number"
+                                                name="brochure"
+                                                value={formik.values.brochure}
+                                                onChange={formik.handleChange}
+                                                className={`form-control ${(formik.errors.brochure && formik.touched.brochure) ? 'is-invalid' : ''}`}
+                                            />
                                             <span className="input-group-text">ราย</span>
                                         </div>
+                                        {(formik.errors.brochure && formik.touched.brochure) && (
+                                            <span className="text-danger text-sm">{formik.errors.brochure}</span>
+                                        )}
                                     </Col>
-                                    <Col>
+                                </Row>
+                                <Row className="mb-2">
+                                    <Col md={3}>
                                         <label htmlFor="">กิจกรรมรณรงค์</label>
                                         <label htmlFor="" className="form-control" style={{ display: 'flex' }}>
                                             <Field
                                                 type="radio"
-                                                name="priority_id"
+                                                name="campaign"
                                                 value="1"
                                             />
                                             <span className="ms-1 me-2">มี</span>
 
                                             <Field
                                                 type="radio"
-                                                name="priority_id"
+                                                name="campaign"
                                                 value="2"
                                             />
                                             <span className="ms-1">ไม่มี</span>
                                         </label>
+                                    </Col>
+                                    <Col>
+                                        <label htmlFor="">ชื่องาน</label>
+                                        <input
+                                            type="text"
+                                            name="campaign_name"
+                                            value={formik.values.campaign_name}
+                                            onChange={formik.handleChange}
+                                            className={`form-control ${(formik.errors.campaign_name && formik.touched.campaign_name) ? 'is-invalid' : ''}`}
+                                        />
+                                        {(formik.errors.campaign_name && formik.touched.campaign_name) && (
+                                            <span className="invalid-feedback">{formik.errors.campaign_name}</span>
+                                        )}
+                                    </Col>
+                                    <Col md={3}>
+                                        <label htmlFor="">จำนวนผู้ชม</label>
+                                        <div className="input-group">
+                                            <input
+                                                type="number"
+                                                name="campaign_num"
+                                                value={formik.values.campaign_num}
+                                                onChange={formik.handleChange}
+                                                className={`form-control ${(formik.errors.campaign_num && formik.touched.campaign_num) ? 'is-invalid' : ''}`}
+                                            />
+                                            <span className="input-group-text">ราย</span>
+                                        </div>
+                                        {(formik.errors.campaign_num && formik.touched.campaign_num) && (
+                                            <span className="text-danger text-sm">{formik.errors.campaign_num}</span>
+                                        )}
                                     </Col>
                                 </Row>
                             </Tab>
@@ -409,21 +547,43 @@ const TrainingForm = () => {
                             >
                                 <Row className="mb-2">
                                     <Col md={12}>
+                                        <label htmlFor="">กิจกรรมอบรมให้ความรู้</label>
                                         <input
                                             type="file"
                                             onChange={(e) => {
-                                                formik.setFieldValue('pic_attachments', [...formik.values.pic_attachments, e.target.files[0]])
+                                                formik.setFieldValue('training_pictures', [...formik.values.training_pictures, e.target.files[0]])
                                             }}
                                             className="form-control"
                                         />
 
                                         <UploadGallery
-                                            images={formik.values.pic_attachments}
+                                            images={formik.values.training_pictures}
                                             onDelete={(index) => {
-                                                const updatedPics = formik.values.pic_attachments.filter((pic, i) => i !== index);
+                                                const updatedPics = formik.values.training_pictures.filter((pic, i) => i !== index);
 
-                                                formik.setFieldValue('pic_attachments', updatedPics);
+                                                formik.setFieldValue('training_pictures', updatedPics);
                                             }}
+                                            minHeight={'200px'}
+                                        />
+                                    </Col>
+                                    <Col md={12}>
+                                        <label htmlFor="">กิจกรรมอบรมอื่นๆ</label>
+                                        <input
+                                            type="file"
+                                            onChange={(e) => {
+                                                formik.setFieldValue('pr_pictures', [...formik.values.pr_pictures, e.target.files[0]])
+                                            }}
+                                            className="form-control"
+                                        />
+
+                                        <UploadGallery
+                                            images={formik.values.pr_pictures}
+                                            onDelete={(index) => {
+                                                const updatedPics = formik.values.pr_pictures.filter((pic, i) => i !== index);
+
+                                                formik.setFieldValue('pr_pictures', updatedPics);
+                                            }}
+                                            minHeight={'200px'}
                                         />
                                     </Col>
                                 </Row>
