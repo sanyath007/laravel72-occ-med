@@ -5,7 +5,7 @@ import { getSurveyings } from '../../store/slices/surveying'
 import { toShortTHDate } from '../../utils/formatter'
 import Loading from '../../components/Loading'
 
-const WalkThroughSurveyList = () => {
+const SurveyingList = () => {
     const dispatch = useDispatch();
     const { surveyings, pager, loading } = useSelector(state => state.surveying);
 
@@ -98,4 +98,4 @@ const WalkThroughSurveyList = () => {
     )
 }
 
-export default WalkThroughSurveyList
+export default SurveyingList

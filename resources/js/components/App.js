@@ -56,8 +56,9 @@ import OccupationYearly from "../pages/Occupations/Summary/Yearly";
 import ReportBulletList from "../pages/ReportBullets/List";
 import AddReportBullet from "../pages/ReportBullets/Add";
 import EditReportBullet from "../pages/ReportBullets/Edit";
-import WalkThroughSurveyList from "../pages/WalkThroughSurvey/List";
-import AddWalkThroughSurvey from "../pages/WalkThroughSurvey/Add";
+import SurveyingList from "../pages/WalkThroughSurvey/List";
+import AddSurveying from "../pages/WalkThroughSurvey/Add";
+import SurveyDetail from "../pages/WalkThroughSurvey/Detail";
 import InvestigationList from "../pages/Investigations/List";
 import AddInvestigation from "../pages/Investigations/Add";
 import ScreeningList from "../pages/Screenings/List"
@@ -83,9 +84,8 @@ import { GlobalProvider } from '../context/globalContext'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import store from "../store";
-import 'react-toastify/dist/ReactToastify.css';
 import "moment/locale/th";
-import SurveyDetail from "../pages/WalkThroughSurvey/Detail";
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
     const { userData } = useAuth()
@@ -159,8 +159,8 @@ export default function App() {
                         <Route path="/report-bullets/new" element={<AddReportBullet />} />
                         <Route path="/report-bullets/:id/edit" element={<EditReportBullet />} />
                         {/* WTS */}
-                        <Route path="/surveyings" element={<WalkThroughSurveyList />} />
-                        <Route path="/surveyings/new" element={<AddWalkThroughSurvey />} />
+                        <Route path="/surveyings" element={<SurveyingList />} />
+                        <Route path="/surveyings/new" element={<AddSurveying />} />
                         <Route path="/surveyings/:id/detail" element={<SurveyDetail />} />
                         {/* Investigations */}
                         <Route path="/investigations" element={<InvestigationList />} />

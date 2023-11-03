@@ -33,7 +33,7 @@ const surveySchema = Yup.object().shape({
     // }),
 });
 
-const WalkThroughSurveyForm = () => {
+const SurveyingForm = () => {
     const dispatch = useDispatch();
     const [showCompanyModal, setShowCompanyModal] = useState(false);
     const [selectedCompany, setSelectedCompany] = useState(null);
@@ -466,4 +466,4 @@ const WalkThroughSurveyForm = () => {
     )
 }
 
-export default WalkThroughSurveyForm
+export default SurveyingForm

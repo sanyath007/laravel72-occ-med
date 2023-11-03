@@ -3,9 +3,9 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { resetSuccess } from '../../store/slices/surveying'
-import WalkThroughSurveyForm from './Form'
+import SurveyingForm from './Form'
 
-const AddWalkThroughSurvey = () => {
+const AddSurveying = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const { success } = useSelector(state => state.surveying);
@@ -28,7 +28,7 @@ const AddWalkThroughSurvey = () => {
                         <div className="card-body">
                             <h5 className="card-title">บันทึกการ Walk-through survey</h5>
 
-                            <WalkThroughSurveyForm />
+                            <SurveyingForm />
                         </div>
                     </div>
                 </div>
@@ -37,4 +37,4 @@ const AddWalkThroughSurvey = () => {
     )
 }
 
-export default AddWalkThroughSurvey
+export default AddSurveying
