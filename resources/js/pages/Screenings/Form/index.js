@@ -6,10 +6,7 @@ import { Col, Row, Tab, Tabs } from 'react-bootstrap'
 import { FaSave } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
 import moment from 'moment'
-import { store } from '../../../store/slices/training'
-import PersonList from './PersonList'
-import PersonForm from './PersonForm'
-import UploadGallery from '../../../components/UploadGallery'
+import { store } from '../../../store/slices/screening'
 
 const screeningSchema = Yup.object().shape({
     screen_date: Yup.string().required(),
@@ -112,6 +109,7 @@ const ScreeningForm = () => {
             onSubmit={handleSubmit}
         >
             {(formik) => {
+                console.log(formik.errors);
                 return (
                     <Form>
                         <Tabs defaultActiveKey="home">
@@ -229,6 +227,40 @@ const ScreeningForm = () => {
                                     </Col>
                                 </Row>
                                 <Row className="mb-2">
+                                    <Col>
+                                        <label htmlFor="">ส่งต่อเพื่อรักษา</label>
+                                        <div className="input-group">
+                                            <input
+                                                type="number"
+                                                name="referal"
+                                                value={formik.values.referal}
+                                                onChange={formik.handleChange}
+                                                className={`form-control ${(formik.errors.referal && formik.touched.referal) ? 'is-invalid' : ''}`}
+                                            />
+                                            <span className="input-group-text">ราย</span>
+                                        </div>
+                                        {(formik.errors.referal && formik.touched.referal) && (
+                                            <span className="text-danger text-sm">{formik.errors.referal}</span>
+                                        )}
+                                    </Col>
+                                    <Col>
+                                        <label htmlFor="">เฝ้าระวังต่อเนื่อง</label>
+                                        <div className="input-group">
+                                            <input
+                                                type="number"
+                                                name="surveillance"
+                                                value={formik.values.surveillance}
+                                                onChange={formik.handleChange}
+                                                className={`form-control ${(formik.errors.surveillance && formik.touched.surveillance) ? 'is-invalid' : ''}`}
+                                            />
+                                            <span className="input-group-text">ราย</span>
+                                        </div>
+                                        {(formik.errors.surveillance && formik.touched.surveillance) && (
+                                            <span className="text-danger text-sm">{formik.errors.surveillance}</span>
+                                        )}
+                                    </Col>
+                                </Row>
+                                <Row className="mb-2">
                                     <Col md={4}>
                                         <label htmlFor="">จัดทำแผน/การดำเนินการเฝ้าระวังสุขภาพ</label>
                                         <label htmlFor="" className="form-control" style={{ display: 'flex' }}>
@@ -271,14 +303,14 @@ const ScreeningForm = () => {
                                                 name="have_summary"
                                                 value="1"
                                             />
-                                            <span className="ms-1 me-2">สำเร็จ</span>
+                                            <span className="ms-1 me-2">มีรายงาน</span>
 
                                             <Field
                                                 type="radio"
                                                 name="have_summary"
                                                 value="2"
                                             />
-                                            <span className="ms-1">ไม่สำเร็จ</span>
+                                            <span className="ms-1">ไม่มีรายงาน</span>
                                         </label>
                                         {(formik.errors.have_summary && formik.touched.have_summary) && (
                                             <span className="text-danger text-sm">{formik.errors.have_summary}</span>
