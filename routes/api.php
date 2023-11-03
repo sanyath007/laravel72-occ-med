@@ -32,6 +32,9 @@ Route::post('/login', 'Auth\LoginController@login');
 // });
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
+    /** Dashboard */
+    Route::get('/dashboard/{year}/stat', 'DashboardController@getStats');
+
     /** Addresses */
     Route::get('/addresses', 'AddressController@getAddresses');
 

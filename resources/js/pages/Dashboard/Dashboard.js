@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { GlobalContext } from '../../context/globalContext'
 import api from '../../api'
@@ -7,7 +7,8 @@ import ScreeningPie from './ScreeningPie'
 import ToxicologyLine from './ToxicologyLine'
 
 const Dashboard = () => {
-    const { setGlobal } = useContext(GlobalContext)
+    const { setGlobal } = useContext(GlobalContext);
+    const [stats, setStats] = useState(null);
 
     useEffect(() => {
         setGlobal((prev) => ({
@@ -18,7 +19,19 @@ const Dashboard = () => {
                 { id: 'dashboard', name: 'Dashboard', path: null, active: true }
             ]
         }))
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        getStats();
+
+        return () => getStats();
+    }, []);
+
+    const getStats = async (year='2566') => {
+        const res = await api.get(`/api/dashboard/${year}/stat`);
+        
+        setStats(res.data);
+    }
 
     return (
         <section className="section dashboard">
@@ -52,7 +65,7 @@ const Dashboard = () => {
                                             <i className="bi bi-cart"></i>
                                         </div>
                                         <div className="ps-3">
-                                            <h6>145</h6>
+                                            <h6>{stats?.surveying}</h6>
                                             {/* <span className="text-success small pt-1 fw-bold">12%</span>
                                             <span className="text-muted small pt-2 ps-1">increase</span> */}
                                         </div>
@@ -77,7 +90,7 @@ const Dashboard = () => {
                                 </div>
                                 <div className="card-body">
                                     <h5 className="card-title">
-                                        จน.สถานประกอบการ 
+                                        จน.ติดตามเยี่ยมบ้าน 
                                         {/* <span>| This Month</span> */}
                                     </h5>
                                     <div className="d-flex align-items-center">
@@ -85,7 +98,7 @@ const Dashboard = () => {
                                             <i className="bi bi-currency-dollar"></i>
                                         </div>
                                         <div className="ps-3">
-                                            <h6>3,264</h6>
+                                            <h6>{stats?.visiting}</h6>
                                             {/* <span className="text-success small pt-1 fw-bold">8%</span>
                                             <span className="text-muted small pt-2 ps-1">increase</span> */}
                                         </div>
@@ -108,7 +121,7 @@ const Dashboard = () => {
                                 </div>
                                 <div className="card-body">
                                     <h5 className="card-title">
-                                        จน.คัดกรองสุขภาพ 
+                                        จน.คัดกรองสุขภาพเชิงรุก 
                                         {/* <span>| This Year</span> */}
                                     </h5>
                                     <div className="d-flex align-items-center">
@@ -116,7 +129,7 @@ const Dashboard = () => {
                                             <i className="bi bi-people"></i>
                                         </div>
                                         <div className="ps-3">
-                                            <h6>1244</h6>
+                                            <h6>{stats?.screening}</h6>
                                             {/* <span className="text-danger small pt-1 fw-bold">12%</span>
                                             <span className="text-muted small pt-2 ps-1">decrease</span> */}
                                         </div>
@@ -147,7 +160,7 @@ const Dashboard = () => {
                                             <i className="bi bi-bandaid"></i>
                                         </div>
                                         <div className="ps-3">
-                                            <h6>1244</h6>
+                                            <h6>{stats?.investigating}</h6>
                                             {/* <span className="text-danger small pt-1 fw-bold">12%</span>
                                             <span className="text-muted small pt-2 ps-1">decrease</span> */}
                                         </div>
@@ -178,7 +191,7 @@ const Dashboard = () => {
                                             <i className="bi bi-bag"></i>
                                         </div>
                                         <div className="ps-3">
-                                            <h6>1244</h6>
+                                            <h6>{stats?.training}</h6>
                                             {/* <span className="text-danger small pt-1 fw-bold">12%</span>
                                             <span className="text-muted small pt-2 ps-1">decrease</span> */}
                                         </div>
@@ -209,7 +222,7 @@ const Dashboard = () => {
                                             <i className="bi bi-bookmarks"></i>
                                         </div>
                                         <div className="ps-3">
-                                            <h6>1244</h6>
+                                            <h6>0</h6>
                                             {/* <span className="text-danger small pt-1 fw-bold">12%</span>
                                             <span className="text-muted small pt-2 ps-1">decrease</span> */}
                                         </div>
