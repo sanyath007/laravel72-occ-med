@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getTrainings } from '../../store/slices/training'
+import { getScreenings } from '../../store/slices/screening'
 import { toShortTHDate } from '../../utils/formatter'
 import Loading from '../../components/Loading'
 
+const SCREEN_TYPES =['คัดกรองโรคจากงาน','คัดกรองโรคจากสิ่งแวดล้อม','คัดกรองโรคทั่วไป','คัดกรองโรคติดต่อ'];
+
 const ScreeningList = () => {
     const dispatch = useDispatch();
-    const { trainings, pager, loading } = useSelector(state => state.training);
+    const { screenings, pager, loading } = useSelector(state => state.screening);
     const [endpoint, setEndpoint] = useState('');
     const [params, setParams] = useState('');
 
     useEffect(() => {
         if (endpoint === '') {
-            dispatch(getTrainings({ url: '/api/trainings/search' }));
+            dispatch(getScreenings({ url: '/api/screenings/search' }));
         } else {
-            dispatch(getTrainings({ url: `${endpoint}${params}` }));
+            dispatch(getScreenings({ url: `${endpoint}${params}` }));
         }
     }, [endpoint, params]);
 
@@ -62,27 +64,29 @@ const ScreeningList = () => {
                                                 <td colSpan={5} className="text-center"><Loading /></td>
                                             </tr>
                                         )}
-                                        {!loading && trainings?.map((training, index) => (
-                                            <tr key={training.id}>
+                                        {!loading && screenings?.map((screening, index) => (
+                                            <tr key={screening.id}>
                                                 <td className="text-center">{pager?.from+index}</td>
-                                                <td className="text-center">{toShortTHDate(training.train_date)}</td>
+                                                <td className="text-center">{toShortTHDate(screening.screen_date)}</td>
                                                 <td>
-                                                    <p className="m-0"><b>หัวข้อ:</b> {training.topic}</p>
-                                                    <p className="m-0"><b>สถานที่จัด:</b> {training.place}</p>
+                                                    <p className="m-0"><b>สถานที่จัด:</b> {screening.place}</p>
+                                                    <p className="m-0"><b>ประเภทการคัดกรอง:</b> {SCREEN_TYPES[screening.screen_type_id]}</p>
                                                     <p className="m-0">
-                                                        <b>จำนวนผู้เข้าร่วม</b> {training.num_of_participants} ราย
-                                                        <b className="ms-2">ผู้จัดกิจกรรม</b> {training.persons?.length} ราย
+                                                        <b>จำนวนผู้รับบริการทั้งหมด</b> {screening.total ? screening.total : '-'} ราย
+                                                        <b className="ms-2">ปกติ</b> {screening.total_normal ? screening.total_risk : '-'} ราย
+                                                        <b className="ms-2">เสี่ยง/ไม่ชัดเจน</b> {screening.total_risk ? screening.total_risk : '-'} ราย
+                                                        <b className="ms-2">ผิดปกติ</b> {screening.total_abnormal ? screening.total_abnormal : '-'} ราย
                                                     </p>
                                                 </td>
                                                 <td className="text-center">
-                                                    {training.division?.name}
+                                                    {screening.division?.name}
                                                 </td>
                                                 <td className="text-center">
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                        <Link to={`/trainings/${training.id}/detail`} className="btn btn-primary btn-sm">
+                                                        <Link to={`/screenings/${screening.id}/detail`} className="btn btn-primary btn-sm">
                                                             <i className="bi bi-search"></i>
                                                         </Link>
-                                                        <Link to={`/trainings/${training.id}/edit`} className="btn btn-warning btn-sm">
+                                                        <Link to={`/screenings/${screening.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
                                                         <a href="#" className="btn btn-danger btn-sm" onClick={(e) => {}}>
