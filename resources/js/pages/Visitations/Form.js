@@ -10,7 +10,11 @@ import { store } from '../../store/slices/visitation'
 import ModalCompanies from '../../components/Modals/ModalCompanies'
 
 const visitationSchema = Yup.object().shape({
-    visit_date: Yup.string().required()
+    visit_date: Yup.string().required(),
+    visit_objective: Yup.string().required(),
+    division_id: Yup.string().required(),
+    company_id: Yup.string().required(),
+    num_of_patients: Yup.string().required(),
 });
 
 const initialEmployee = {
@@ -51,7 +55,7 @@ const VisitationForm = () => {
         }
 
         /** Dispatch redux action to storing or updating data */
-        dispatch(store(data));
+        dispatch(store(values));
     };
 
     return (
@@ -63,6 +67,7 @@ const VisitationForm = () => {
                 company_id: '',
                 visitors: [],
                 num_of_patients: '',
+                file_attachment: '',
                 is_return_data: ''
             }}
             validationSchema={visitationSchema}
@@ -107,7 +112,7 @@ const VisitationForm = () => {
                                     name="division_id"
                                     value={formik.values.division_id}
                                     onChange={formik.handleChange}
-                                    className="form-control"
+                                    className={`form-control ${(formik.errors.division_id && formik.touched.division_id) ? 'is-invalid' : ''}`}
                                 >
                                     <option value="">-- เลือก --</option>
                                     <option value="2">งานป้องกันและควบคุมโรค</option>
@@ -115,6 +120,9 @@ const VisitationForm = () => {
                                     <option value="4">งานพิษวิทยาและสิ่งแวดล้อม</option>
                                     <option value="5">งานอาชีวอนามัยในโรงพยาบาล (SHE)</option>
                                 </select>
+                                {(formik.errors.division_id && formik.touched.division_id) && (
+                                    <span className="invalid-feedback">{formik.errors.division_id}</span>
+                                )}
                             </Col>
                         </Row>
                         <Row className="mb-3">
@@ -125,8 +133,11 @@ const VisitationForm = () => {
                                     name="visit_objective"
                                     value={formik.values.visit_objective}
                                     onChange={formik.handleChange}
-                                    className="form-control"
+                                    className={`form-control ${(formik.errors.visit_objective && formik.touched.visit_objective) ? 'is-invalid' : ''}`}
                                 />
+                                {(formik.errors.visit_objective && formik.touched.visit_objective) && (
+                                    <span className="invalid-feedback">{formik.errors.visit_objective}</span>
+                                )}
                             </Col>
                         </Row>
                         <Row className="mb-3">
@@ -146,7 +157,7 @@ const VisitationForm = () => {
                                             name="position"
                                             value={selecedEmployee.position}
                                             onChange={(e) => handleEmployeeInputChange(e)}
-                                            className="form-control w-25 me-1"
+                                            className={`form-control ${(formik.errors.campaign_name && formik.touched.campaign_name) ? 'is-invalid' : ''} w-25 me-1`}
                                         >
                                             <option value="">-- เลือกตำแหน่ง --</option>
                                             <option value="แพทย์">แพทย์</option>
@@ -197,23 +208,29 @@ const VisitationForm = () => {
                             <Col md={9}>
                                 <label htmlFor="">สถานประกอบการ/สถานที่ติดตาม</label>
                                 <div className="input-group">
-                                    <div className="form-control">
+                                    <div className={`form-control ${(formik.errors.company_id && formik.touched.company_id) ? 'is-invalid' : ''}`}>
                                         {selecedCompany && selecedCompany.name}
                                     </div>
                                     <button type="button" className="btn btn-secondary" onClick={() => setShowCompanyModal(true)}>
                                         <FaSearch />
                                     </button>
                                 </div>
+                                {(formik.errors.company_id && formik.touched.company_id) && (
+                                    <span className="text-danger text-sm">{formik.errors.company_id}</span>
+                                )}
                             </Col>
                             <Col>
                                 <label htmlFor="">จำนวนผู้ป่วย</label>
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="num_of_patients"
                                     value={formik.values.num_of_patients}
                                     onChange={formik.handleChange}
-                                    className="form-control"
+                                    className={`form-control ${(formik.errors.num_of_patients && formik.touched.num_of_patients) ? 'is-invalid' : ''}`}
                                 />
+                                {(formik.errors.num_of_patients && formik.touched.num_of_patients) && (
+                                    <span className="invalid-feedback">{formik.errors.num_of_patients}</span>
+                                )}
                             </Col>
                         </Row>
                         <Row className="mb-2">
@@ -221,9 +238,11 @@ const VisitationForm = () => {
                                 <label htmlFor="">แนบไฟล์รูปภาพกิจกรรม</label>
                                 <input
                                     type="file"
-                                    name="file_attachment"
                                     className="form-control"
-                                    onChange={(e) => setSelectedFile(e.target.files[0])}
+                                    onChange={(e) => {
+                                        setSelectedFile(e.target.files[0]);
+                                        formik.setFieldValue('file_attachment', e.target.files[0]);
+                                    }}
                                 />
                             </Col>
                             <Col>

@@ -10,14 +10,14 @@ class VisitationController extends Controller
 {
     public function search(Request $request)
     {
-        $visitations = Visitation::with('division','visitors')->paginate(10);
+        $visitations = Visitation::with('division','company','visitors')->paginate(10);
 
         return response()->json($visitations);
     }
 
     public function getById($id)
     {
-        $visitation = Visitation::find($id)->with('division','visitors');
+        $visitation = Visitation::find($id)->with('division','company','visitors');
 
         return response()->json($visitation);
     }
@@ -25,16 +25,13 @@ class VisitationController extends Controller
     public function store(Request $request)
     {
         try {
-            $visitors = json_decode($request['visitors']);
-
             $visitation = new Visitation;
-            $visitation->visit_date = $request['visit_date'];
-            $visitation->visit_objective = $request['visit_objective'];
-            $visitation->division_id = $request['division_id'];
-            $visitation->company_id = $request['company_id'];
-            $visitation->visitors = count($visitors);
-            $visitation->num_of_patients = $request['num_of_patients'];
-            $visitation->is_return_data = $request['is_return_data'];
+            $visitation->visit_date         = $request['visit_date'];
+            $visitation->visit_objective    = $request['visit_objective'];
+            $visitation->division_id        = $request['division_id'];
+            $visitation->company_id         = $request['company_id'];
+            $visitation->num_of_patients    = $request['num_of_patients'];
+            $visitation->is_return_data     = $request['is_return_data'];
             // $visitation->remark = $request['remark'];
 
             /** Upload file */
@@ -49,12 +46,12 @@ class VisitationController extends Controller
             }
 
             if ($visitation->save()) {
-                if (count($visitors) > 0) {
-                    foreach($visitors as $visitor) {
+                if (count($request['visitors']) > 0) {
+                    foreach($request['visitors'] as $visitor) {
                         $newVisitor = new VisitationVisitor;
                         $newVisitor->visitation_id = $visitation->id;
-                        $newVisitor->fullname = $visitor->fullname;
-                        $newVisitor->position = $visitor->position;
+                        $newVisitor->fullname = $visitor['fullname'];
+                        $newVisitor->position = $visitor['position'];
                         $newVisitor->save();
                     }
                 }

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getVisitations } from '../../store/slices/visitation'
+import { toShortTHDate } from '../../utils/formatter'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
 
@@ -60,8 +61,13 @@ const VisitationList = () => {
                                         {visitations && visitations.map((visit, index) => (
                                             <tr key={visit.id}>
                                                 <td style={{ textAlign: 'center' }}>{pager && pager.from+index}</td>
-                                                <td style={{ textAlign: 'center' }}>{visit.visit_date}</td>
-                                                <td></td>
+                                                <td style={{ textAlign: 'center' }}>{toShortTHDate(visit.visit_date)}</td>
+                                                <td>
+                                                    {visit.company?.name}
+                                                    <p className="m-0">
+                                                        <b>จำนวนผู้ป่วย</b> {visit.num_of_patients} ราย
+                                                    </p>
+                                                </td>
                                                 <td>{visit.division?.name}</td>
                                                 <td style={{ textAlign: 'center' }}>
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">

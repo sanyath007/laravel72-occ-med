@@ -20,6 +20,11 @@ class Visitation extends Model
         return $this->belongsTo(Division::class, 'division_id', 'id');
     }
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'id');
+    }
+
     public function visitors()
     {
         return $this->hasMany(VisitationVisitor::class, 'visitation_id', 'id');
