@@ -8,7 +8,7 @@ const AddScreening = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">บันทึกการคัดกรอง</h5>
+                            <h5 className="card-title">บันทึกการตรวจคัดกรองสุขภาพพนักงานเชิงรุก</h5>
 
                             <ScreeningForm />
                         </div>

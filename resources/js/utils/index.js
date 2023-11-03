@@ -16,7 +16,6 @@ export const getFileExtension = (file) => {
 
     const [name, extension] = file?.name?.split('.');
 
-    console.log(extension);
     return extension;
 };
 
