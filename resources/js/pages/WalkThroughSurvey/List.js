@@ -31,7 +31,7 @@ const WalkThroughSurveyList = () => {
                                 <h5 className="card-title p-0">รายการ Walk-through survey</h5>
 
                                 <div>
-                                    <Link to="/walk-through-surveys/new" className="btn btn-primary">เพิ่มรายการ</Link>
+                                    <Link to="/surveyings/new" className="btn btn-primary">เพิ่มรายการ</Link>
                                 </div>
                             </div>
 
@@ -74,10 +74,10 @@ const WalkThroughSurveyList = () => {
                                                 </td>
                                                 <td className="text-center">
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                        <Link to={`/walk-through-surveys/${surveying.id}/detail`} className="btn btn-primary btn-sm">
+                                                        <Link to={`/surveyings/${surveying.id}/detail`} className="btn btn-primary btn-sm">
                                                             <i className="bi bi-search"></i>
                                                         </Link>
-                                                        <Link to={`/walk-through-surveys/${surveying.id}/edit`} className="btn btn-warning btn-sm">
+                                                        <Link to={`/surveyings/${surveying.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
                                                         <a href="#" className="btn btn-danger btn-sm" onClick={(e) => {}}>

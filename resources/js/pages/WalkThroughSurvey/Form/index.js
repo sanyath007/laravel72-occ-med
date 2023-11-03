@@ -20,9 +20,9 @@ const ACCEPT_FILE_TYPE = ['pdf', 'word'];
 const ACCEPT_PIC_TYPE = ['jpg','jpeg','png'];
 
 const surveySchema = Yup.object().shape({
-    survey_date: Yup.string().required(),
-    objective_id: Yup.string().required(),
-    division_id: Yup.string().required(),
+    survey_date: Yup.string().required('กรุณาเลือกวันที่คัดกรองก่อน'),
+    objective_id: Yup.string().required('กรุณาเลือกวัตถุประสงค์ก่อน'),
+    division_id: Yup.string().required('กรุณาเลือกผู้ดำเนินการก่อน'),
     company_id: Yup.string().required(),
     surveyors: Yup.mixed().test('Surveyors length', 'Surveyors is not 0', (val) => val.length > 0),
     num_of_departs: Yup.string().required(),

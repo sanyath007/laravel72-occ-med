@@ -159,9 +159,9 @@ export default function App() {
                         <Route path="/report-bullets/new" element={<AddReportBullet />} />
                         <Route path="/report-bullets/:id/edit" element={<EditReportBullet />} />
                         {/* WTS */}
-                        <Route path="/walk-through-surveys" element={<WalkThroughSurveyList />} />
-                        <Route path="/walk-through-surveys/new" element={<AddWalkThroughSurvey />} />
-                        <Route path="/walk-through-surveys/:id/detail" element={<SurveyDetail />} />
+                        <Route path="/surveyings" element={<WalkThroughSurveyList />} />
+                        <Route path="/surveyings/new" element={<AddWalkThroughSurvey />} />
+                        <Route path="/surveyings/:id/detail" element={<SurveyDetail />} />
                         {/* Investigations */}
                         <Route path="/investigations" element={<InvestigationList />} />
                         <Route path="/investigations/new" element={<AddInvestigation />} />

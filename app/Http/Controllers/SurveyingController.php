@@ -24,7 +24,7 @@ class SurveyingController extends Controller
 
     public function getById($id)
     {
-        $surveying = Surveying::with('division','company','surveyors','surveyors.employee')->find($id);
+        $surveying = Surveying::with('division','company','company.type','surveyors','surveyors.employee')->find($id);
 
         return response()->json($surveying);
     }
@@ -54,12 +54,12 @@ class SurveyingController extends Controller
             $surveying->num_of_departs      = $request['num_of_departs'];
             $surveying->num_of_employees    = $request['num_of_employees'];
             $surveying->num_of_health_items = $request['num_of_health_items'];
-            $surveying->is_found_threat     = $request['is_found_threat'];
+            $surveying->is_found_threat     = $request['is_found_threat'] ? '1' : '0';
             $surveying->have_hra            = $request['have_hra'];
             $surveying->have_report         = $request['have_report'];
             $surveying->is_adviced          = $request['is_adviced'];
             $surveying->is_returned_data    = $request['is_returned_data'];
-            $surveying->guidelines          = $request['guidelines'];
+            $surveying->guidelines          = implode(',', $request['guidelines']);
             $surveying->remark              = $request['remark'];
 
             if ($request->file('file_attachment')) {

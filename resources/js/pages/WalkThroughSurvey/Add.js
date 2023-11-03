@@ -1,7 +1,25 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { resetSuccess } from '../../store/slices/surveying'
 import WalkThroughSurveyForm from './Form'
 
 const AddWalkThroughSurvey = () => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const { success } = useSelector(state => state.surveying);
+
+    useEffect(() => {
+        if (success) {
+            toast.success('บันทึกขอ้มูลเรียบร้อยแล้ว!!');
+
+            dispatch(resetSuccess());
+
+            navigate('/surveyings');
+        }
+    }, [success]);
+
     return (
         <section className="section">
             <div className="row">
