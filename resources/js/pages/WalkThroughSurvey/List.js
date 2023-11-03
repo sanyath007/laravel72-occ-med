@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getSurveyings } from '../../store/slices/surveying'
 import { toShortTHDate } from '../../utils/formatter'
+import Loading from '../../components/Loading'
 
 const WalkThroughSurveyList = () => {
     const dispatch = useDispatch();
@@ -47,7 +48,12 @@ const WalkThroughSurveyList = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {surveyings?.map((surveying, index) => (
+                                        {loading && (
+                                            <tr>
+                                                <td colSpan={6} className="text-center"><Loading /></td>
+                                            </tr>
+                                        )}
+                                        {!loading && surveyings?.map((surveying, index) => (
                                             <tr key={surveying.id}>
                                                 <td className="text-center">{pager?.from+index}</td>
                                                 <td className="text-center">{toShortTHDate(surveying.survey_date)}</td>
@@ -68,10 +74,10 @@ const WalkThroughSurveyList = () => {
                                                 </td>
                                                 <td className="text-center">
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                        <Link to={`/surveyings/${surveying.id}/detail`} className="btn btn-primary btn-sm">
+                                                        <Link to={`/walk-through-surveys/${surveying.id}/detail`} className="btn btn-primary btn-sm">
                                                             <i className="bi bi-search"></i>
                                                         </Link>
-                                                        <Link to={`/surveyings/${surveying.id}/edit`} className="btn btn-warning btn-sm">
+                                                        <Link to={`/walk-through-surveys/${surveying.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
                                                         <a href="#" className="btn btn-danger btn-sm" onClick={(e) => {}}>

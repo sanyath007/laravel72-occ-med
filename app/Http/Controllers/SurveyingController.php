@@ -24,7 +24,7 @@ class SurveyingController extends Controller
 
     public function getById($id)
     {
-        $surveying = Surveying::find($id)->with('division','company','surveyors','surveyors.employee');
+        $surveying = Surveying::with('division','company','surveyors','surveyors.employee')->find($id);
 
         return response()->json($surveying);
     }

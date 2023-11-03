@@ -85,6 +85,7 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import store from "../store";
 import 'react-toastify/dist/ReactToastify.css';
 import "moment/locale/th";
+import SurveyDetail from "../pages/WalkThroughSurvey/Detail";
 
 export default function App() {
     const { userData } = useAuth()
@@ -160,6 +161,7 @@ export default function App() {
                         {/* WTS */}
                         <Route path="/walk-through-surveys" element={<WalkThroughSurveyList />} />
                         <Route path="/walk-through-surveys/new" element={<AddWalkThroughSurvey />} />
+                        <Route path="/walk-through-surveys/:id/detail" element={<SurveyDetail />} />
                         {/* Investigations */}
                         <Route path="/investigations" element={<InvestigationList />} />
                         <Route path="/investigations/new" element={<AddInvestigation />} />
