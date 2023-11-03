@@ -39,19 +39,19 @@ const Services = () => {
                                         <Link to="/vaccinations" className="btn btn-primary w-100">สร้างเสริมภูมิคุ้มกันโรค</Link>
                                     </Col>
                                     <Col className="text-start">
-                                        <Link to="/supervisions" className="btn btn-primary w-100">นิเทศ-ติดตาม</Link>
-                                    </Col>
-                                    <Col className="text-start">
                                         <Link to="/guidelines" className="btn btn-primary w-100">จัดทำแนวทาง/ระบบงาน</Link>
                                     </Col>
-                                </Row>
-                                <Row className="mb-3">
                                     <Col className="text-start">
                                         <Link to="/er-plans" className="btn btn-primary w-100">จัดทำแผนตอบโต้เหตุฉุกเฉิน</Link>
                                     </Col>
-                                    <Col className="text-start"></Col>
-                                    <Col className="text-start"></Col>
                                 </Row>
+                                {/* <Row className="mb-3">
+                                    <Col className="text-start">
+                                        <Link to="/supervisions" className="btn btn-primary w-100">นิเทศ-ติดตาม</Link>
+                                    </Col>
+                                    <Col className="text-start"></Col>
+                                    <Col className="text-start"></Col>
+                                </Row> */}
                             </div>
                         </div>
                     </div>
