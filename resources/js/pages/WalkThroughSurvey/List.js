@@ -11,7 +11,6 @@ const WalkThroughSurveyList = () => {
     useEffect(() => {
         dispatch(getSurveyings({ url: '/api/surveyings/search' }));
     }, []);
-    console.log(surveyings);
 
     return (
         <section className="section">

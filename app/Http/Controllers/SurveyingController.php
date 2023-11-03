@@ -46,14 +46,10 @@ class SurveyingController extends Controller
     public function store(Request $request) 
     {
         try {
-            $surveyors = json_decode($request['surveyors']);
-            $guidelines = json_decode($request['guidelines']);
-
             $surveying = new Surveying;
             $surveying->survey_date         = $request['survey_date'];
             $surveying->objective_id        = $request['objective_id'];
             $surveying->division_id         = $request['division_id'];
-            $surveying->surveyors           = count($surveyors);
             $surveying->company_id          = $request['company_id'];
             $surveying->num_of_departs      = $request['num_of_departs'];
             $surveying->num_of_employees    = $request['num_of_employees'];
@@ -63,7 +59,7 @@ class SurveyingController extends Controller
             $surveying->have_report         = $request['have_report'];
             $surveying->is_adviced          = $request['is_adviced'];
             $surveying->is_returned_data    = $request['is_returned_data'];
-            $surveying->guidelines          = count($guidelines);
+            $surveying->guidelines          = $request['guidelines'];
             $surveying->remark              = $request['remark'];
 
             if ($request->file('file_attachment')) {
@@ -76,22 +72,34 @@ class SurveyingController extends Controller
                 }
             }
 
-            if ($request->file('pic_attachment')) {
-                $file = $request->file('pic_attachment');
-                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
+            if ($request->file('pic_attachments')) {
+                $index = 0;
+                $picNames = '';
                 $destinationPath = 'uploads/wts/pic/';
 
-                if ($file->move($destinationPath, $fileName)) {
-                    $surveying->pic_attachment = $fileName;
+                foreach($request->file('pic_attachments') as $file) {
+                    $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
+
+                    if ($file->move($destinationPath, $fileName)) {
+                        if ($index < count($request->file('pic_attachments'))) {
+                            $picNames .= $fileName.',';
+                        } else {
+                            $picNames .= $fileName;
+                        }
+                    }
+
+                    $index++;
                 }
+
+                $surveying->pic_attachments = $picNames;
             }
 
             if ($surveying->save()) {
-                if (count($surveyors) > 0) {
-                    foreach($surveyors as $surveyor) {
+                if (count($request['surveyors']) > 0) {
+                    foreach($request['surveyors'] as $surveyor) {
                         $newSurveyor = new SurveyingSurveyor;
                         $newSurveyor->survey_id     = $surveying->id;
-                        $newSurveyor->employee_id   = $surveyor->id;
+                        $newSurveyor->employee_id   = $surveyor['id'];
                         $newSurveyor->save();
                     }
                 }
