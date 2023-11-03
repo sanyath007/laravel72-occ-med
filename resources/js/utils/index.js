@@ -26,3 +26,16 @@ export const validateFile = (file, acceptedTypes = []) => {
 
     return isValid;
 };
+
+export const createFileFromUrl = async (url, filename, defaultType) => {
+    const res = await fetch(url);
+    let data = await res.blob();
+
+    return new File([data], filename, { type: 'image/jpeg' });
+}
+
+export const imageString2UrlArray = (str, path) => {
+    if (str === '') return [];
+
+    return str.split(',').map(filename => `${path}/${filename}`);
+};

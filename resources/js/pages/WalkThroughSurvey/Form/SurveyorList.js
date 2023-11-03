@@ -24,9 +24,9 @@ const SurveyorList = ({ surveyors = [] }) => {
                     {surveyors.map((surveyor, index) => (
                         <tr key={surveyor.id}>
                             <td className="text-center">{index+1}</td>
-                            <td>{surveyor.prefix}{surveyor.fname} {surveyor.lname}</td>
+                            <td>{surveyor.employee?.prefix}{surveyor.employee?.fname} {surveyor.employee?.lname}</td>
                             <td className="text-center">
-                                {surveyor.position?.name}{surveyor.class && surveyor.class?.name}
+                                {surveyor.employee?.position?.name}{surveyor.employee?.class && surveyor.employee?.class?.name}
                             </td>
                             <td className="text-center">
                                 <div className="btn-group" role="group" aria-label="Basic mixed styles example">

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const GuidelineList = ({ guidelines, onDelete }) => {
+const GuidelineList = ({ guidelines = [], onDelete }) => {
     return (
         <div className="mt-1">
             <table className="table table-bordered mb-0">

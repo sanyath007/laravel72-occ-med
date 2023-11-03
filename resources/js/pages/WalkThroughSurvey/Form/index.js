@@ -63,7 +63,7 @@ const WalkThroughSurveyForm = () => {
             return;
         }
 
-        const newSurveyors = [ ...formik.values.surveyors, surveyor];
+        const newSurveyors = [ ...formik.values.surveyors, { employee_id: surveyor.id, employee: surveyor }];
         formik.setFieldValue('surveyors', newSurveyors);
     };
 

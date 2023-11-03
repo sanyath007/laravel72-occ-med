@@ -9,33 +9,35 @@ const UploadGallery = ({ images = [], onDelete, minHeight }) => {
 
     return (
         <Row className="my-3" style={{ minHeight: minHeight }}>
-            {images.map((pic, index) => {
-                return (
-                    <Col md={3} key={index}>
-                        <div className="border rounded-2">
-                            <div
-                                style={{
-                                    position: 'relative',
-                                    height: '200px',
-                                    overflow: 'hidden',
-                                }}
-                            >
-                                <img src={URL.createObjectURL(pic)} alt="" style={{ width: '100%' }} />
-                            </div>
-                            <div className="d-flax flex-col p-1">
-                                <p className="text-sm m-0"><b>ชื่อไฟล์</b> {pic?.name}</p>
-                                <p className="text-sm m-0"><b>ขนาด</b> {Math.round(pic?.size/1024)} KB</p>
+            {images.map((pic, index) => (
+                <Col md={3} key={index}>
+                    <div className="border rounded-2">
+                        <div
+                            style={{
+                                position: 'relative',
+                                height: '200px',
+                                overflow: 'hidden',
+                            }}
+                        >
+                            <img
+                                src={typeof pic === 'object' ? URL.createObjectURL(pic) : pic}
+                                alt="uploaded_pic"
+                                style={{ width: '100%' }}
+                            />
+                        </div>
+                        <div className="d-flax flex-col p-1">
+                            <p className="text-sm m-0"><b>ชื่อไฟล์</b> {pic?.name}</p>
+                            <p className="text-sm m-0"><b>ขนาด</b> {Math.round(pic?.size/1024)} KB</p>
 
-                                <div className="text-end mt-1">
-                                    <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(index)}>
-                                        ลบ
-                                    </button>
-                                </div>
+                            <div className="text-end mt-1">
+                                <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(index)}>
+                                    ลบ
+                                </button>
                             </div>
                         </div>
-                    </Col>
-                )
-            })}
+                    </div>
+                </Col>
+            ))}
         </Row>
     )
 }
