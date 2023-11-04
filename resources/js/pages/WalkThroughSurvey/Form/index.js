@@ -23,10 +23,10 @@ const surveySchema = Yup.object().shape({
     survey_date: Yup.string().required('กรุณาเลือกวันที่คัดกรองก่อน'),
     objective_id: Yup.string().required('กรุณาเลือกวัตถุประสงค์ก่อน'),
     division_id: Yup.string().required('กรุณาเลือกผู้ดำเนินการก่อน'),
-    company_id: Yup.string().required(),
-    surveyors: Yup.mixed().test('Surveyors length', 'Surveyors is not 0', (val) => val.length > 0),
-    num_of_departs: Yup.string().required(),
-    num_of_employees: Yup.string().required(),
+    company_id: Yup.string().required('กรุณาเลือกสถานประกอบการ/สถานที่ก่อน'),
+    surveyors: Yup.mixed().test('surveyors-not-empty', 'กรุณาระบุผู้เดินสำรวจอย่างน้อย 1 ราย', (val) => val.length > 0),
+    num_of_departs: Yup.string().required('กรุณาระบุจำนวนแผนกที่สำรวจก่อน'),
+    num_of_employees: Yup.string().required('กรุณาระบุจำนวนพนักงาน/ประชาชนก่อน'),
     file_attachment: Yup.mixed().test('is-valid-file-type', 'คุณเลือกประเภทไฟล์ไม่ถูกต้อง!!' , (file) => {
         if (!file) return true;
 
@@ -44,8 +44,6 @@ const SurveyingForm = () => {
     const [showCompanyModal, setShowCompanyModal] = useState(false);
     const [selectedCompany, setSelectedCompany] = useState(null);
     const [selectedSurveyDate, setSelectedSurveyDate] = useState(moment());
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [selectedPic, setSelectedPic] = useState(null);
 
     const handleSubmit = (values, formik) => {
         let data = new FormData();
@@ -303,7 +301,6 @@ const SurveyingForm = () => {
                                         <input
                                             type="file"
                                             onChange={(e) => {
-                                                setSelectedFile(e.target.files[0]);
                                                 formik.setFieldValue('file_attachment', e.target.files[0]);
                                             }}
                                             className={`form-control ${(formik.errors.file_attachment && formik.touched.file_attachment) ? 'is-invalid' : ''}`}
