@@ -129,7 +129,7 @@ const SurveyingForm = () => {
                         <Tabs defaultActiveKey="home">
                             <Tab
                                 eventKey="home"
-                                title="กิจกรรมอบรมให้ความรู้"
+                                title="รายละเอียด WTS"
                                 className="border border-top-0 p-4 mb-3"
                             >
                                 <Row className="mb-2">
@@ -296,22 +296,7 @@ const SurveyingForm = () => {
                                     </Col>
                                 </Row>
                                 <Row className="mb-2">
-                                    <Col>
-                                        <label htmlFor="">แนบไฟล์รายงานเดินสำรวจ</label>
-                                        <input
-                                            type="file"
-                                            onChange={(e) => {
-                                                formik.setFieldValue('file_attachment', e.target.files[0]);
-                                            }}
-                                            className={`form-control ${(formik.errors.file_attachment && formik.touched.file_attachment) ? 'is-invalid' : ''}`}
-                                        />
-                                        {(formik.errors.file_attachment && formik.touched.file_attachment) && (
-                                            <span className="invalid-feedback">{formik.errors.file_attachment}</span>
-                                        )}
-                                    </Col>
-                                </Row>
-                                <Row className="mb-2">
-                                    <Col>
+                                    <Col md={4}>
                                         <label htmlFor="">สถานะการจัดทำรายงานสำรวจ/ประเมินความเสี่ยง</label>
                                         <label htmlFor="" className="form-control" style={{ display: 'flex' }}>
                                             <Field
@@ -333,6 +318,21 @@ const SurveyingForm = () => {
                                         )}
                                     </Col>
                                     <Col>
+                                        <label htmlFor="">แนบไฟล์รายงานเดินสำรวจ</label>
+                                        <input
+                                            type="file"
+                                            onChange={(e) => {
+                                                formik.setFieldValue('file_attachment', e.target.files[0]);
+                                            }}
+                                            className={`form-control ${(formik.errors.file_attachment && formik.touched.file_attachment) ? 'is-invalid' : ''}`}
+                                        />
+                                        {(formik.errors.file_attachment && formik.touched.file_attachment) && (
+                                            <span className="invalid-feedback">{formik.errors.file_attachment}</span>
+                                        )}
+                                    </Col>
+                                </Row>
+                                <Row className="mb-2">
+                                    <Col>
                                         <label htmlFor="">ระบุถึงการให้ข้อเสนอแนะในการบริหารจัดการความเสี่ยง</label>
                                         <label htmlFor="" className="form-control" style={{ display: 'flex' }}>
                                             <Field
@@ -353,9 +353,7 @@ const SurveyingForm = () => {
                                             <span className="text-danger text-sm">{formik.errors.is_adviced}</span>
                                         )}
                                     </Col>
-                                </Row>
-                                <Row className="mb-2">
-                                    <Col md={6}>
+                                    <Col>
                                         <label htmlFor="">สถานะการคืนข้อมูลแก่สถานประกอบการ</label>
                                         <label htmlFor="" className="form-control" style={{ display: 'flex' }}>
                                             <Field
