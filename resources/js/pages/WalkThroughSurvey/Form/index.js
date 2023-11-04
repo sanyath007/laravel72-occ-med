@@ -381,24 +381,22 @@ const SurveyingForm = () => {
                             <Tab
                                 eventKey="surveyors"
                                 title="ผู้เดินสำรวจ"
-                                className="border border-top-0 p-4 mb-3"
-                                style={{
-                                    minHeight: '50vh'
-                                }}
+                                className={`border border-top-0 p-4 mb-3`}
+                                style={{ minHeight: '50vh' }}
                             >
                                 <Row className="mb-2">
                                     <Col>
-                                        <div className="border rounded-1 p-2 pb-3">
+                                        <div className="p-2 pb-3">
                                             <SurveyorForm onAdd={(surveyor) => handleAddSurveyor(formik, surveyor)} />
 
                                             <SurveyorList
                                                 surveyors={formik.values.surveyors}
                                                 onDelete={(id) => handleDeleteSurveyor(formik, id)}
                                             />
+                                            {(formik.errors.surveyors && formik.touched.surveyors) && (
+                                                <span className="text-danger text-sm">{formik.errors.surveyors}</span>
+                                            )}
                                         </div>
-                                        {(formik.errors.surveyors && formik.touched.surveyors) && (
-                                            <span className="text-danger text-sm">{formik.errors.surveyors}</span>
-                                        )}
                                     </Col>
                                 </Row>
                             </Tab>
@@ -412,17 +410,17 @@ const SurveyingForm = () => {
                             >
                                 <Row className="mb-2">
                                     <Col>
-                                        <div className="border rounded-1 p-2 pb-3">
+                                        <div className="p-2 pb-3">
                                             <GuidelineForm onAdd={(guideline) => handleAddGuideline(formik, guideline)} />
 
                                             <GuidelineList
                                                 guidelines={formik.values.guidelines}
                                                 onDelete={(index) => handleDeleteGuideline(formik, index)}
                                             />
+                                            {(formik.errors.guidelines && formik.touched.guidelines) && (
+                                                <span className="text-danger text-sm">{formik.errors.guidelines}</span>
+                                            )}
                                         </div>
-                                        {(formik.errors.guidelines && formik.touched.guidelines) && (
-                                            <span className="text-danger text-sm">{formik.errors.guidelines}</span>
-                                        )}
                                     </Col>
                                 </Row>
                             </Tab>

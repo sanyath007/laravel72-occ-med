@@ -6,7 +6,6 @@ const GuidelineForm = ({ onAdd }) => {
 
     return (
         <>
-            <label htmlFor="">แนวทางการจัดกิจกรรมจากผลการ WTS</label>
             <div className="d-flex flex-row">
                 <input
                     type="text"

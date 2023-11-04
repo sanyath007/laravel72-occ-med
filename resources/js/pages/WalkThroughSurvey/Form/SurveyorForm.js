@@ -24,7 +24,6 @@ const SurveyorForm = ({ onAdd }) => {
                 }}
             />
 
-            <label htmlFor="">ผู้เดินสำรวจ</label>
             <div className="d-flex flex-row">
                 <div className="input-group w-25 me-2">
                     <div className="form-control">
