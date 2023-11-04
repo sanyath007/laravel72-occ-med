@@ -27,6 +27,7 @@ import { surveyingApi } from './services/surveyingApi'
 import { erplanApi } from './services/erplanApi'
 import { trainingApi } from './services/trainingApi'
 import { screeningApi } from './services/screeningApi'
+import { employeeApi } from './services/employeeApi'
 
 export default configureStore({
     reducer: {
@@ -58,6 +59,7 @@ export default configureStore({
         [erplanApi.reducerPath]: erplanApi.reducer,
         [trainingApi.reducerPath]: trainingApi.reducer,
         [screeningApi.reducerPath]: screeningApi.reducer,
+        [employeeApi.reducerPath]: employeeApi.reducer,
     },
     middleware: (getDefaultMiddleware) => 
         getDefaultMiddleware().concat(
@@ -68,5 +70,6 @@ export default configureStore({
             erplanApi.middleware,
             trainingApi.middleware,
             screeningApi.middleware,
+            employeeApi.middleware,
         ),
 })

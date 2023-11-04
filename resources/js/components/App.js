@@ -77,6 +77,9 @@ import GuidelineList from "../pages/Guidelines/List"
 import AddGuideline from "../pages/Guidelines/Add"
 import ERPlanList from "../pages/ERPlan/List";
 import AddERPlan from "../pages/ERPlan/Add";
+import EmployeeList from "../pages/Employees/List";
+import AddEmployee from "../pages/Employees/Add";
+import EditEmployee from "../pages/Employees/Edit";
 import Services from "../pages/Services";
 import { useAuth } from "../hooks/useAuth"
 import AuthContext from "../context/authContext";
@@ -110,6 +113,11 @@ export default function App() {
                         <Route path="/patients/new" element={<PatientNew />} />
                         <Route path="/patients/:id/edit" element={<PatientEdit />} />
                         <Route path="/patients/:id/detail" element={<PatientDetail />} />
+                        {/* Employees routes */}
+                        <Route path="/employees" element={<EmployeeList />} />
+                        <Route path="/employees/new" element={<AddEmployee />} />
+                        <Route path="/employees/:id/edit" element={<EditEmployee />} />
+                        {/* <Route path="/employees/:id/detail" element={<EmployeeDetail />} /> */}
                         {/* Clinics routes */}
                         <Route path="/clinics" element={<Clinics />} />
                         <Route path="/clinics/summary" element={<ClinicMonthly />} />

@@ -191,6 +191,25 @@ const Sidebar = () => {
                         </li>
                     </ul>
                 </li>
+                {/* เจ้าหน้าที่กลุ่มงาน */}
+                <li className="nav-item">
+                    <a className="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                        <i className="bi bi-person-workspace"></i><span>เจ้าหน้าที่กลุ่มงาน</span>
+                        <i className="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="icons-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <Link to="employees/new" onClick={handleMenuClicked}>
+                                <i className="bi bi-circle"></i><span>ลงทะเบียน</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="employees" onClick={handleMenuClicked}>
+                                <i className="bi bi-circle"></i><span>รายการ</span>
+                            </Link>
+                        </li>
+                    </ul>
+                </li>
                 {/* สถานประกอบการ */}
                 <li className="nav-item">
                     <a className="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
@@ -221,18 +240,18 @@ const Sidebar = () => {
                 {authData.user?.permissions[0].role_id === 1 && (
                     <>
                         <li className="nav-item">
-                            <Link className="nav-link collapsed" to="/users/profile" onClick={handleMenuClicked}>
-                                <i className="bi bi-person-circle"></i>
-                                <span>ข้อมูลส่วนตัว</span>
-                            </Link>
-                        </li>
-                        <li className="nav-item">
                             <Link className="nav-link collapsed" to="/users" onClick={handleMenuClicked}>
                                 <i className="bi bi-people"></i>
                                 <span>ผู้ใช้งาน</span>
                             </Link>
                         </li>
                         <li className="nav-item">
+                            <Link className="nav-link collapsed" to="/users/profile" onClick={handleMenuClicked}>
+                                <i className="bi bi-person-circle"></i>
+                                <span>ข้อมูลส่วนตัว</span>
+                            </Link>
+                        </li>
+                        {/* <li className="nav-item">
                             <Link className="nav-link collapsed" to="/about" onClick={handleMenuClicked}>
                                 <i className="bi bi-question-circle"></i>
                                 <span>เกี่ยวกับเรา</span>
@@ -243,7 +262,7 @@ const Sidebar = () => {
                                 <i className="bi bi-envelope"></i>
                                 <span>ติดต่อเรา</span>
                             </Link>
-                        </li>
+                        </li> */}
                         {/* <li className="nav-item">
                             <a className="nav-link collapsed" href="pages-login.html" onClick={handleMenuClicked}>
                                 <i className="bi bi-box-arrow-in-right"></i>

@@ -1,25 +1,25 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import CompanyForm from '../../components/Company/CompanyForm'
+import EmployeeForm from '../../components/Employee/Form'
 import { GlobalContext } from '../../context/globalContext'
-import { getCompany, update } from '../../store/slices/company'
+import { getCompany, update } from '../../store/slices/employee'
 
-const CompanyEdit = () => {
+const EditEmployee = () => {
     const { id } = useParams()
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch()
-    const { company } = useSelector(state => state.company)
+    const { employee } = useSelector(state => state.employee)
 
     /** Initial global states */
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'แก้ไขรายการสถานประกอบการ',
+            title: 'แก้ไขรายการเจ้าหน้าที่กลุ่มงาน',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'companies', name: 'รายการสถานประกอบการ', path: '/companies' },
-                { id: 'new', name: 'แก้ไขรายการสถานประกอบการ', path: null, active: true }
+                { id: 'companies', name: 'รายการเจ้าหน้าที่กลุ่มงาน', path: '/companies' },
+                { id: 'new', name: 'แก้ไขรายการเจ้าหน้าที่กลุ่มงาน', path: null, active: true }
             ]
         }))
     }, [])
@@ -41,9 +41,9 @@ const CompanyEdit = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">แก้ไขรายการสถานประกอบการ : ID {id}</h5>
+                            <h5 className="card-title">แก้ไขรายการเจ้าหน้าที่กลุ่มงาน : ID {id}</h5>
 
-                            <CompanyForm onSubmit={handleSubmit} company={company} />
+                            <EmployeeForm onSubmit={handleSubmit} employee={employee} />
                         </div>
                     </div>
                 </div>
@@ -52,4 +52,4 @@ const CompanyEdit = () => {
     )
 }
 
-export default CompanyEdit
+export default EditEmployee
