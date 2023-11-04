@@ -16,7 +16,7 @@ import GuidelineForm from './GuidelineForm'
 import GuidelineList from './GuidelineList'
 import UploadGallery from '../../../components/UploadGallery'
 
-const ACCEPT_FILE_TYPE = ['pdf', 'word'];
+const ACCEPT_FILE_TYPE = ['pdf', 'doc', 'docx'];
 const ACCEPT_PIC_TYPE = ['jpg','jpeg','png'];
 
 const surveySchema = Yup.object().shape({
@@ -27,10 +27,16 @@ const surveySchema = Yup.object().shape({
     surveyors: Yup.mixed().test('Surveyors length', 'Surveyors is not 0', (val) => val.length > 0),
     num_of_departs: Yup.string().required(),
     num_of_employees: Yup.string().required(),
-    file_attachment: Yup.mixed().test('File type', 'คุณเลือกประเภทไฟล์ไม่ถูกต้อง!!' , (file) => validateFile(file, ACCEPT_FILE_TYPE)),
-    // pic_attachments: Yup.mixed().test('Pic type', 'คุณเลือกประเภทไฟล์รูปภาพไม่ถูกต้อง!!', (files) => {
-    //     return files.some(file => validateFile(file, ACCEPT_PIC_TYPE));
-    // }),
+    file_attachment: Yup.mixed().test('is-valid-file-type', 'คุณเลือกประเภทไฟล์ไม่ถูกต้อง!!' , (file) => {
+        if (!file) return true;
+
+        return validateFile(file, ACCEPT_FILE_TYPE);
+    }),
+    pic_attachments: Yup.mixed().test('is-valid-pic-type', 'คุณเลือกประเภทไฟล์รูปภาพไม่ถูกต้อง!!', (pics) => {
+        if (pics.length === 0) return true;
+
+        return pics.every(pic => validateFile(pic, ACCEPT_PIC_TYPE));
+    }),
 });
 
 const SurveyingForm = () => {
@@ -64,11 +70,14 @@ const SurveyingForm = () => {
         }
 
         const newSurveyors = [ ...formik.values.surveyors, { employee_id: surveyor.id, employee: surveyor }];
+
         formik.setFieldValue('surveyors', newSurveyors);
     };
-
+    
     const handleDeleteSurveyor = (formik, id) => {
+        const updatedSurveyors = formik.values.surveyors.filter(surveyor => surveyor.employee_id !== id);
 
+        formik.setFieldValue('surveyors', updatedSurveyors);
     };
     
     const handleAddGuideline = (formik, guideline) => {
@@ -76,9 +85,9 @@ const SurveyingForm = () => {
     };
 
     const handleDeleteGuideline = (formik, index) => {
-        const newGuideline = formik.values.guidelines.filter((gl, i) => i !== index);
+        const updatedGuidelines = formik.values.guidelines.filter((gl, i) => i !== index);
 
-        formik.setFieldValue('guidelines', newGuideline);
+        formik.setFieldValue('guidelines', updatedGuidelines);
     };
 
     return (
@@ -385,7 +394,10 @@ const SurveyingForm = () => {
                                         <div className="border rounded-1 p-2 pb-3">
                                             <SurveyorForm onAdd={(surveyor) => handleAddSurveyor(formik, surveyor)} />
 
-                                            <SurveyorList surveyors={formik.values.surveyors} />
+                                            <SurveyorList
+                                                surveyors={formik.values.surveyors}
+                                                onDelete={(id) => handleDeleteSurveyor(formik, id)}
+                                            />
                                         </div>
                                         {(formik.errors.surveyors && formik.touched.surveyors) && (
                                             <span className="text-danger text-sm">{formik.errors.surveyors}</span>

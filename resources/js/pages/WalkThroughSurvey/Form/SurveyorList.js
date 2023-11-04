@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SurveyorList = ({ surveyors = [] }) => {
+const SurveyorList = ({ surveyors = [], onDelete }) => {
     return (
         <div className="mt-1">
             <table className="table table-bordered mb-0">
@@ -13,7 +13,7 @@ const SurveyorList = ({ surveyors = [] }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {surveyors.length === 0 && (
+                    {surveyors?.length === 0 && (
                         <tr>
                             <td colSpan={4} className="text-center text-sm">
                                 -- ไม่มีรายการ --
@@ -21,8 +21,8 @@ const SurveyorList = ({ surveyors = [] }) => {
                         </tr>
                     )}
 
-                    {surveyors.map((surveyor, index) => (
-                        <tr key={surveyor.id}>
+                    {surveyors?.map((surveyor, index) => (
+                        <tr key={surveyor.employee_id}>
                             <td className="text-center">{index+1}</td>
                             <td>{surveyor.employee?.prefix}{surveyor.employee?.fname} {surveyor.employee?.lname}</td>
                             <td className="text-center">
@@ -30,7 +30,7 @@ const SurveyorList = ({ surveyors = [] }) => {
                             </td>
                             <td className="text-center">
                                 <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                    <button type="button" className="btn btn-danger btn-sm" onClick={(e) => {}}>
+                                    <button type="button" className="btn btn-danger btn-sm" onClick={() => onDelete(surveyor.employee_id)}>
                                         <i className="bi bi-trash"></i>
                                     </button>
                                 </div>

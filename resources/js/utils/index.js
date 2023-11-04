@@ -20,8 +20,6 @@ export const getFileExtension = (file) => {
 };
 
 export const validateFile = (file, acceptedTypes = []) => {
-    if (!file) return true;
-
     const isValid = acceptedTypes.includes(getFileExtension(file));
 
     return isValid;
