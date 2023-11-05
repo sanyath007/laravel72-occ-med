@@ -2,14 +2,17 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { FaEnvelope, FaMobileAlt, FaUserAlt } from 'react-icons/fa'
-import Pagination from '../../components/Pagination'
 import { GlobalContext } from '../../context/globalContext'
-import { getCompanies } from '../../store/slices/company'
+import { getEmployees } from '../../store/slices/employee'
+import Pagination from '../../components/Pagination'
+import Loading from '../../components/Loading'
 
 const EmployeeList = () => {
     const dispatch = useDispatch()
     const { setGlobal } = useContext(GlobalContext)
-    const { companies, pager } = useSelector(state => state.company)
+    const { employees, pager, loading } = useSelector(state => state.employee)
+    const [endpoint, setEndpoint] = useState('')
+    const [params, setParams] = useState('')
 
     /** Initial global states */
     useEffect(() => {
@@ -18,27 +21,21 @@ const EmployeeList = () => {
             title: 'รายการเจ้าหน้าที่กลุ่มงาน',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'companies', name: 'รายการเจ้าหน้าที่กลุ่มงาน', path: null, active: true }
+                { id: 'employees', name: 'รายการเจ้าหน้าที่กลุ่มงาน', path: null, active: true }
             ]
         }))
     }, [])
 
     useEffect(() => {
-        fetchCompanies()
+        if (endpoint === '') {
+            dispatch(getEmployees({ url: '/api/employees/search' }))
+        } else {
+            dispatch(getEmployees({ url: `${endpoint}${params}` }))
+        }
+    }, [endpoint])
 
-        return () => fetchCompanies()
-    }, [])
-
-    const fetchCompanies = (path='/api/companies') => {
-        /** Filtering logic */
-
-        /** Filtering logic */
-
-        dispatch(getCompanies({ path }))
-    }
-
-    const handlePageClick = (path) => {
-        fetchCompanies(path)
+    const handlePageClick = (url) => {
+        setEndpoint(url)
     }
 
     return (
@@ -69,26 +66,40 @@ const EmployeeList = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {companies && companies.map((company, row) => (
-                                        <tr key={company.id}>
-                                            <th scope="row" style={{ textAlign: 'center' }}>{pager && pager?.from+row}</th>
-                                            <td>{company.name}</td>
-                                            <td>
-                                                {`${company.address} หมู่${company.moo ? company.moo : '-'} 
-                                                    ถนน${company.road ? company.road : '-'} 
-                                                    ต.${company.tambon.tambon} 
-                                                    อ.${company.amphur.amphur} 
-                                                    จ.${company.changwat.changwat} ${company.zipcode}`}
+                                    {loading && (
+                                        <tr>
+                                            <td colSpan={6} className="text-center"><Loading /></td>
+                                        </tr>
+                                    )}
+
+                                    {(!loading && employees?.length === 0) && (
+                                        <tr>
+                                            <td colSpan={6} className="text-center">
+                                                <span>ยังไม่มีรายการ</span>
                                             </td>
-                                            <td style={{ textAlign: 'center' }}>{company.type?.name}</td>
+                                        </tr>
+                                    )}
+
+                                    {(!loading && employees?.length > 0) && employees?.map((employee, row) => (
+                                        <tr key={employee.id}>
+                                            <th scope="row" style={{ textAlign: 'center' }}>{pager?.from+row}</th>
+                                            <td>{employee.pname}{employee.fname} {employee.lname}</td>
+                                            <td>
+                                                {/* {`${employee.address} หมู่${employee.moo ? employee.moo : '-'} 
+                                                    ถนน${employee.road ? employee.road : '-'} 
+                                                    ต.${employee.tambon.tambon} 
+                                                    อ.${employee.amphur.amphur} 
+                                                    จ.${employee.changwat.changwat} ${employee.zipcode}`} */}
+                                            </td>
+                                            <td style={{ textAlign: 'center' }}>{employee.type?.name}</td>
                                             <td style={{ fontSize: '12px' }}>
-                                                <p className="m-0"><FaUserAlt /> {company.contact_name}</p>
-                                                <p className="m-0"><FaMobileAlt /> {company.contact_tel}</p>
-                                                <p className="m-0"><FaEnvelope /> {company.contact_email}</p>
+                                                {/* <p className="m-0"><FaUserAlt /> {employee.contact_name}</p>
+                                                <p className="m-0"><FaMobileAlt /> {employee.contact_tel}</p>
+                                                <p className="m-0"><FaEnvelope /> {employee.contact_email}</p> */}
                                             </td>
                                             <td style={{ textAlign: 'center' }}>
                                                 <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                    <Link to={`/companies/${company.id}/edit`} className="btn btn-warning btn-sm">
+                                                    <Link to={`/employees/${employee.id}/edit`} className="btn btn-warning btn-sm">
                                                         <i className="bi bi-pencil-square"></i>
                                                     </Link>
                                                     <a href="#" className="btn btn-danger btn-sm" onClick={(e) => {}}>

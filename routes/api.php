@@ -163,6 +163,10 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/employees', 'EmployeeController@getAll');
     Route::get('/employees/search', 'EmployeeController@search');
     Route::get('/employees/{id}', 'EmployeeController@getById');
+    Route::get('/employees/init/form', 'EmployeeController@getInitialFormData');
+    Route::post('/employees', 'EmployeeController@store');
+    Route::put('/employees/{id}', 'EmployeeController@update');
+    Route::delete('/employees/{id}', 'EmployeeController@destroy');
 
     /** Divisions */
     Route::get('/divisions', 'DivisionController@getDivisions');

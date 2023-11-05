@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import EmployeeForm from '../../components/Employee/Form'
 import { GlobalContext } from '../../context/globalContext'
-import { getCompany, update } from '../../store/slices/employee'
+import { getEmployee, update } from '../../store/slices/employee'
+import EmployeeForm from '../../components/Employee/Form'
 
 const EditEmployee = () => {
     const { id } = useParams()
@@ -26,7 +26,7 @@ const EditEmployee = () => {
 
     useEffect(() => {
         if (id && id != '') {
-            dispatch(getCompany({ id }))
+            dispatch(getEmployee({ id }))
         }
     }, [id])
 

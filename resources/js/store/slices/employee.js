@@ -32,6 +32,39 @@ export const getEmployee = createAsyncThunk('employee/getEmployee', async (id, {
     }
 })
 
+export const store = createAsyncThunk('company/store', async (data, { rejectWithValue }) => {
+    try {
+        const res = await api.post('/api/companies', data)
+
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error.message)
+    }
+})
+
+export const update = createAsyncThunk('company/update', async ({ id, data }, { rejectWithValue }) => {
+    try {
+        const res = await api.put(`/api/companies/${id}`, data)
+
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error.message)
+    }
+})
+
+export const destroy = createAsyncThunk('company/destroy', async (id, { rejectWithValue }) => {
+    try {
+        const res = await api.delete(`/api/companies/${id}`)
+
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error.message)
+    }
+})
+
 export const employeeSlice = createSlice({
     name: 'employee',
     initialState,
@@ -64,6 +97,57 @@ export const employeeSlice = createSlice({
         [getEmployee.rejected]: (state, { payload }) => {
             state.error = payload
             state.loading = false
+        },
+        [store.pending]: (state) => {
+            state.success = false
+            state.error = null
+        },
+        [store.fulfilled]: (state, { payload }) => {
+            const { status, message } = payload
+
+            if (status === 1) {
+                state.success = true
+            } else {
+                state.error = { message }
+            }
+        },
+        [store.rejected]: (state, { payload }) => {
+            state.success = false
+            state.error = payload
+        },
+        [update.pending]: (state) => {
+            state.success = false
+            state.error = null
+        },
+        [update.fulfilled]: (state, { payload }) => {
+            const { status, message } = payload
+
+            if (status === 1) {
+                state.success = true
+            } else {
+                state.error = { message }
+            }
+        },
+        [update.rejected]: (state, { payload }) => {
+            state.success = false
+            state.error = payload
+        },
+        [destroy.pending]: (state) => {
+            state.success = false
+            state.error = null
+        },
+        [destroy.fulfilled]: (state, { payload }) => {
+            const { status, message } = payload
+
+            if (status === 1) {
+                state.success = true
+            } else {
+                state.error = { message }
+            }
+        },
+        [destroy.rejected]: (state, { payload }) => {
+            state.success = false
+            state.error = payload
         }
     }
 })
