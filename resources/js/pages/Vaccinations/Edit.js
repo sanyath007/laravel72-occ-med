@@ -2,18 +2,19 @@ import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { getGuideline, resetSuccess } from '../../store/slices/guideline'
+import { getVaccination, resetSuccess } from '../../store/slices/vaccination'
 import VaccinationForm from './Form'
+import Loading from '../../components/Loading'
 
 const EditVaccination = () => {
     const { id } = useParams();
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    const { guideline, loading, success } = useSelector(state => state.guideline);
+    const { vaccination, loading, success } = useSelector(state => state.vaccination);
 
     useEffect(() => {
         if (id) {
-            dispatch(getGuideline(id));
+            dispatch(getVaccination(id));
         }
     }, [id]);
 
@@ -23,7 +24,7 @@ const EditVaccination = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/guidelines');
+            navigate('/vaccinations');
         }
     }, [success]);
 
@@ -35,7 +36,11 @@ const EditVaccination = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขสร้างเสริมภูมิคุ้มกันโรค (Immunization)</h5>
 
-                            <VaccinationForm />
+                            {loading && <div className="text-center"><Loading /></div>}
+
+                            {(!loading && vaccination) && (
+                                <VaccinationForm />
+                            )}
                         </div>
                     </div>
                 </div>

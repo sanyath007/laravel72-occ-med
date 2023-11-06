@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getInvestigation, resetSuccess } from '../../store/slices/investigation'
 import InvestigationForm from './Form'
+import Loading from '../../components/Loading'
 
 const EditInvestigation = () => {
     const { id } = useParams();
@@ -23,7 +24,7 @@ const EditInvestigation = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/guidelines');
+            navigate('/investigations');
         }
     }, [success]);
 
@@ -35,7 +36,11 @@ const EditInvestigation = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขสอบสวนโรค/อุบัติเหตุจากงานและสิ่งแวดล้อม</h5>
 
-                            <InvestigationForm />
+                            {loading && <div className="text-center"><Loading /></div>}
+
+                            {(!loading && investigation) && (
+                                <InvestigationForm />
+                            )}
                         </div>
                     </div>
                 </div>

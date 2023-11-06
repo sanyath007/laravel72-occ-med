@@ -35,7 +35,11 @@ const EditSurveying = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไข Walk-through survey</h5>
 
-                            <SurveyingForm />
+                            {loading && <div className="text-center"><Loading /></div>}
+
+                            {(!loading && surveying) && (
+                                <SurveyingForm />
+                            )}
                         </div>
                     </div>
                 </div>

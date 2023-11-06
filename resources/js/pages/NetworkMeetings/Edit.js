@@ -36,9 +36,7 @@ const EditNetworkMeeting = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขจัดประชุม/อบรมความรู้เครือข่าย</h5>
 
-                            {loading && (
-                                <div className="text-center"><Loading /></div>
-                            )}
+                            {loading && <div className="text-center"><Loading /></div>}
 
                             {(!loading && meeting) && (
                                 <NetworkMeetingForm />

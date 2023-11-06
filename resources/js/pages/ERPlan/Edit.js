@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getErplan, resetSuccess } from '../../store/slices/erplan'
 import ERPlanForm from './Form'
+import Loading from '../../components/Loading'
 
 const EditERPlan = () => {
     const { id } = useParams();
@@ -35,7 +36,11 @@ const EditERPlan = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขจัดทำแผนตอบโต้เหตุฉุกเฉิน</h5>
 
-                            <ERPlanForm />
+                            {loading && <div className="text-center"><Loading /></div>}
+
+                            {(!loading && erplan) && (
+                                <ERPlanForm />
+                            )}
                         </div>
                     </div>
                 </div>

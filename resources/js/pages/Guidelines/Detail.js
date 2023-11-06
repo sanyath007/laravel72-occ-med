@@ -2,6 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { getGuideline } from '../../store/slices/guideline'
+import Loading from '../../components/Loading'
 
 const GuidelineDetail = () => {
     const { id } = useParams();
@@ -22,6 +23,11 @@ const GuidelineDetail = () => {
                         <div className="card-body">
                             <h5 className="card-title">รายละเอียดจัดทำแนวทาง/แบบฟอร์ม/ขั้นตอนการทำงาน</h5>
 
+                            {loading && <div className="text-center"><Loading /></div>}
+
+                            {(!loading && guideline) && (
+                                <></>
+                            )}
                         </div>
                     </div>
                 </div>

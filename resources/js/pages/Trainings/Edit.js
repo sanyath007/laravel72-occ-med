@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getTraining, resetSuccess } from '../../store/slices/training'
 import TrainingForm from './Form'
+import Loading from '../../components/Loading'
 
 const EditTraining = () => {
     const { id } = useParams();
@@ -23,7 +24,7 @@ const EditTraining = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/guidelines');
+            navigate('/trainings');
         }
     }, [success]);
 
@@ -35,7 +36,11 @@ const EditTraining = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขอบรมให้ความรู้</h5>
 
-                            <TrainingForm />
+                            {loading && <div className="text-center"><Loading /></div>}
+
+                            {(!loading && training) && (
+                                <TrainingForm />
+                            )}
                         </div>
                     </div>
                 </div>

@@ -2,6 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { getVaccination } from '../../store/slices/vaccination'
+import Loading from '../../components/Loading'
 
 const VaccinationDetail = () => {
     const { id } = useParams();
@@ -22,6 +23,11 @@ const VaccinationDetail = () => {
                         <div className="card-body">
                             <h5 className="card-title">รายละเอียดสร้างเสริมภูมิคุ้มกันโรค (Immunization)</h5>
 
+                            {loading && <div className="text-center"><Loading /></div>}
+
+                            {(!loading && vaccination) && (
+                                <></>
+                            )}
                         </div>
                     </div>
                 </div>

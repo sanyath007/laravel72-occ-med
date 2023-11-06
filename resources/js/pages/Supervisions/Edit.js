@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getSupervision, resetSuccess } from '../../store/slices/supervision'
 import SupervisionForm from './Form'
+import Loading from '../../components/Loading'
 
 const AddSupervision = () => {
     const { id } = useParams();
@@ -23,7 +24,7 @@ const AddSupervision = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/guidelines');
+            navigate('/supervisions');
         }
     }, [success]);
 
@@ -35,7 +36,11 @@ const AddSupervision = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขการนิเทศ</h5>
 
-                            <SupervisionForm />
+                            {loading && <div className="text-center"><Loading /></div>}
+
+                            {(!loading && supervision) && (
+                                <SupervisionForm />
+                            )}
                         </div>
                     </div>
                 </div>

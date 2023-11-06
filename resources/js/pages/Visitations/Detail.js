@@ -2,6 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { getVisitation } from '../../store/slices/visitation'
+import Loading from '../../components/Loading'
 
 const VisitationDetail = () => {
     const { id } = useParams();
@@ -22,7 +23,11 @@ const VisitationDetail = () => {
                         <div className="card-body">
                             <h5 className="card-title">รายละเอียดการติดตามเยี่ยมบ้าน</h5>
 
-                            
+                            {loading && <div className="text-center"><Loading /></div>}
+
+                            {(!loading && visitation) && (
+                                <></>
+                            )}
                         </div>
                     </div>
                 </div>

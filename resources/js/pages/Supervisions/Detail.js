@@ -2,6 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { getSupervision } from '../../store/slices/supervision'
+import Loading from '../../components/Loading'
 
 const SupervisionDetail = () => {
     const { id } = useParams();
@@ -22,6 +23,11 @@ const SupervisionDetail = () => {
                         <div className="card-body">
                             <h5 className="card-title">รายละเอียดการนิเทศ</h5>
 
+                            {loading && <div className="text-center"><Loading /></div>}
+
+                            {(!loading && supervision) && (
+                                <></>
+                            )}
                         </div>
                     </div>
                 </div>

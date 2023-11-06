@@ -2,18 +2,19 @@ import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { getGuideline, resetSuccess } from '../../store/slices/guideline'
+import { getVisitation, resetSuccess } from '../../store/slices/visitation'
 import VisitationForm from './Form'
+import Loading from '../../components/Loading'
 
 const EditVisitation = () => {
     const { id } = useParams();
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    const { guideline, loading, success } = useSelector(state => state.guideline);
+    const { visitation, loading, success } = useSelector(state => state.visitation);
 
     useEffect(() => {
         if (id) {
-            dispatch(getGuideline(id));
+            dispatch(getVisitation(id));
         }
     }, [id]);
 
@@ -23,7 +24,7 @@ const EditVisitation = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/guidelines');
+            navigate('/visitations');
         }
     }, [success]);
 
@@ -35,7 +36,11 @@ const EditVisitation = () => {
                         <div className="card-body">
                             <h5 className="card-title">บันทึกการติดตามเยี่ยมบ้าน</h5>
 
-                            <VisitationForm />
+                            {loading && <div className="text-center"><Loading /></div>}
+
+                            {(!loading && visitation) && (
+                                <VisitationForm />
+                            )}
                         </div>
                     </div>
                 </div>

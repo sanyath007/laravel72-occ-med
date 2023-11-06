@@ -1,16 +1,17 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { getGuideline } from '../../store/slices/guideline'
+import { getErplan } from '../../store/slices/erplan'
+import Loading from '../../components/Loading'
 
 const ERPlanDetail = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const { guideline, loading } = useSelector(state => state.guideline);
+    const { erplan, loading } = useSelector(state => state.erplan);
 
     useEffect(() => {
         if (id) {
-            dispatch(getGuideline(id));
+            dispatch(getErplan(id));
         }
     }, [id]);
 
@@ -22,6 +23,11 @@ const ERPlanDetail = () => {
                         <div className="card-body">
                             <h5 className="card-title">รายละเอียดจัดทำแผนตอบโต้เหตุฉุกเฉิน</h5>
 
+                            {loading && <div className="text-center"><Loading /></div>}
+
+                            {(!loading && erplan) && (
+                                <></>
+                            )}
                         </div>
                     </div>
                 </div>

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getScreening, resetSuccess } from '../../store/slices/screening'
 import ScreeningForm from './Form'
+import Loading from '../../components/Loading'
 
 const EditScreening = () => {
     const { id } = useParams();
@@ -23,7 +24,7 @@ const EditScreening = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/guidelines');
+            navigate('/screenings');
         }
     }, [success]);
 
@@ -35,7 +36,11 @@ const EditScreening = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขตรวจคัดกรองสุขภาพพนักงานเชิงรุก</h5>
 
-                            <ScreeningForm />
+                            {loading && <div className="text-center"><Loading /></div>}
+
+                            {(!loading && screening) && (
+                                <ScreeningForm />
+                            )}
                         </div>
                     </div>
                 </div>

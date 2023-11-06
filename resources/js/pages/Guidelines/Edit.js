@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getGuideline, resetSuccess } from '../../store/slices/guideline'
 import GuidelineForm from './Form'
+import Loading from '../../components/Loading'
 
 const EditGuideline = () => {
     const { id } = useParams();
@@ -35,7 +36,11 @@ const EditGuideline = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขจัดทำแนวทาง/แบบฟอร์ม/ขั้นตอนการทำงาน</h5>
 
-                            <GuidelineForm id={id} guideline={guideline} />
+                            {loading && <div className="text-center"><Loading /></div>}
+
+                            {(!loading && guideline) && (
+                                <GuidelineForm id={id} guideline={guideline} />
+                            )}
                         </div>
                     </div>
                 </div>
