@@ -17,7 +17,7 @@ class VisitationController extends Controller
 
     public function getById($id)
     {
-        $visitation = Visitation::find($id)->with('division','company','visitors');
+        $visitation = Visitation::with('division','company','visitors')->find($id);
 
         return response()->json($visitation);
     }

@@ -23,7 +23,7 @@ class ProactiveScreeningController extends Controller
 
     public function getById($id)
     {
-        $screening = ProactiveScreening::find($id)->with('division');
+        $screening = ProactiveScreening::with('division')->find($id);
 
         return response()->json($screening);
     }

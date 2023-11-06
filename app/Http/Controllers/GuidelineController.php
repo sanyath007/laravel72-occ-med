@@ -16,7 +16,7 @@ class GuidelineController extends Controller
 
     public function getById($id)
     {
-        $guideline = Guideline::find($id)->with('division');
+        $guideline = Guideline::with('division')->find($id);
 
         return response()->json($guideline);
     }

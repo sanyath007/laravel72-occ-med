@@ -25,7 +25,7 @@ class ERPlanController extends Controller
 
     public function getById($id)
     {
-        $plan = ERPlan::find($id)->with('division','company','persons','experts');
+        $plan = ERPlan::with('division','company','persons','experts')->find($id);
 
         return response()->json($plan);
     }

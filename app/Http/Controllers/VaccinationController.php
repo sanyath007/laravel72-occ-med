@@ -18,7 +18,7 @@ class VaccinationController extends Controller
 
     public function getById($id)
     {
-        $vaccination = Vaccination::find($id)->with('vaccine','company');
+        $vaccination = Vaccination::with('vaccine','company')->find($id);
 
         return response()->json($vaccination);
     }

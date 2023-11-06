@@ -17,7 +17,7 @@ class NetworkMeetingController extends Controller
 
     public function getById($id)
     {
-        $meeting = NetworkMeeting::find($id)->with('division');
+        $meeting = NetworkMeeting::with('division')->find($id);
 
         return response()->json($meeting);
     }

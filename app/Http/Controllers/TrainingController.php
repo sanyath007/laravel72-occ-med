@@ -24,7 +24,7 @@ class TrainingController extends Controller
 
     public function getById($id)
     {
-        $training = Training::find($id)->with('division','persons');
+        $training = Training::with('division','persons')->find($id);
 
         return response()->json($training);
     }

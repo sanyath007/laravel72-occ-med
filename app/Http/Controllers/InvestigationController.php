@@ -17,7 +17,7 @@ class InvestigationController extends Controller
 
     public function getById($id)
     {
-        $investigation = Investigation::find($id)->with('type','division');
+        $investigation = Investigation::with('type','division')->find($id);
 
         return response()->json($investigation);
     }
