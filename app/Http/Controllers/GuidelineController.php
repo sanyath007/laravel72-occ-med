@@ -57,4 +57,64 @@ class GuidelineController extends Controller
             ];
         }
     }
+
+    public function update(Request $request, $id) {
+        try {
+            $guideline = Guideline::find($id);
+            $guideline->topic = $request['topic'];
+            $guideline->division_id = $request['division_id'];
+            $guideline->remark = $request['remark'];
+
+            if ($request->file('file_attachment')) {
+                $file = $request->file('file_attachment');
+                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
+                $destinationPath = 'uploads/guideline/';
+
+                if ($file->move($destinationPath, $fileName)) {
+                    $guideline->file_attachment = $fileName;
+                }
+            }
+
+            if ($guideline->save()) {
+                return [
+                    'status'        => 1,
+                    'message'       => 'Updating successfully!!',
+                    "guideline"     => $guideline
+                ];
+            } else {
+                return [
+                    'status'    => 0,
+                    'message'   => 'Something went wrong!!'
+                ];
+            }
+        } catch (\Exception $ex) {
+            return [
+                'status'    => 0,
+                'message'   => $ex->getMessage()
+            ];
+        }
+    }
+
+    public function destroy($id) {
+        try {
+            $guideline = Guideline::find($id);
+
+            if ($guideline->delete()) {
+                return [
+                    'status'        => 1,
+                    'message'       => 'Deleting successfully!!',
+                ];
+            } else {
+                return [
+                    'status'    => 0,
+                    'message'   => 'Something went wrong!!'
+                ];
+            }
+        } catch (\Exception $ex) {
+            return [
+                'status'    => 0,
+                'message'   => $ex->getMessage()
+            ];
+        }
+    }
 }

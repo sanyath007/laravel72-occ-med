@@ -45,6 +45,30 @@ export const store = createAsyncThunk('guideline/store', async (data, { rejectWi
     }
 })
 
+export const update = createAsyncThunk('guideline/update', async ({ id, data }, { rejectWithValue }) => {
+    try {
+        const res = await api.post(`/api/guidelines/${id}`, data, {
+            headers: { "Content-Type": "multipart/form-data" }
+        });
+
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error)
+    }
+})
+
+export const destroy = createAsyncThunk('guideline/destroy', async (id, { rejectWithValue }) => {
+    try {
+        const res = await api.delete(`/api/guidelines/${id}`);
+
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error)
+    }
+})
+
 export const guidelineSlice = createSlice({
     name: 'guideline',
     initialState,
@@ -95,6 +119,42 @@ export const guidelineSlice = createSlice({
             }
         },
         [store.rejected]: (state, { payload }) => {
+            state.success = false
+            state.error = payload
+        },
+        [update.pending]: (state) => {
+            state.success = false
+            state.error = null
+        },
+        [update.fulfilled]: (state, { payload }) => {
+            const { status, message } = payload
+
+            if (status == 1) {
+                state.success = true
+            } else {
+                state.success = false
+                state.error = { message }
+            }
+        },
+        [update.rejected]: (state, { payload }) => {
+            state.success = false
+            state.error = payload
+        },
+        [destroy.pending]: (state) => {
+            state.success = false
+            state.error = null
+        },
+        [destroy.fulfilled]: (state, { payload }) => {
+            const { status, message } = payload
+
+            if (status == 1) {
+                state.success = true
+            } else {
+                state.success = false
+                state.error = { message }
+            }
+        },
+        [destroy.rejected]: (state, { payload }) => {
             state.success = false
             state.error = payload
         }

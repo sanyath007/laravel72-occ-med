@@ -127,7 +127,7 @@ class EmployeeController extends Controller
         }
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         try {
             $employee = Employee::find($id);

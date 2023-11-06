@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row } from 'react-bootstrap'
-import { FaSave } from 'react-icons/fa'
+import { FaSave, FaFilePdf } from 'react-icons/fa'
 import { store } from '../../store/slices/guideline'
 
 const guidelineSchema = Yup.object().shape({
@@ -14,12 +14,18 @@ const guidelineSchema = Yup.object().shape({
 
 const GuidelineForm = ({ id, guideline }) => {
     const dispatch = useDispatch();
+    const [fileAttachment, setFileAttachment] = useState('');
+
+    useEffect(() => {
+        if (guideline) setFileAttachment(guideline.file_attachment);
+    }, [guideline]);
+    console.log(fileAttachment);
 
     const handleSubmit = (values, formik) => {
         const data = new FormData();
 
         for(const [key, val] of Object.entries(values)) {
-            if (key === 'training_pictures' || key === 'pr_pictures') {
+            if (key === 'file_attachment') {
                 [...val].forEach((file, i) => {
                     data.append(key, file[0]);
                 })
@@ -35,10 +41,11 @@ const GuidelineForm = ({ id, guideline }) => {
 
     return (
         <Formik
+            enableReinitialize
             initialValues={{
-                topic: '',
-                division_id: '',
-                remark:'',
+                topic: guideline ? guideline.topic : '',
+                division_id: guideline ? guideline.division_id : '',
+                remark: (guideline && guideline.remark) ? guideline.remark : '',
                 file_attachment: ''
             }}
             validationSchema={guidelineSchema}
@@ -109,9 +116,9 @@ const GuidelineForm = ({ id, guideline }) => {
                                 </Col>
                             </Row>
                             <div className="text-end mb-2">
-                                <button type="submit" className={`btn ${false ? 'btn-warning' : 'btn-primary'}`}>
+                                <button type="submit" className={`btn ${guideline ? 'btn-warning' : 'btn-primary'}`}>
                                     <FaSave className="me-1" />
-                                    {false ? 'บันทึกการแก้ไข' : 'บันทึก'}
+                                    {guideline ? 'บันทึกการแก้ไข' : 'บันทึก'}
                                 </button>
                             </div>
                         </div>
