@@ -45,6 +45,30 @@ export const store = createAsyncThunk('er-plan/store', async (data, { rejectWith
     }
 })
 
+export const update = createAsyncThunk('er-plan/update', async ({ id, data }, { rejectWithValue }) => {
+    try {
+        const res = await api.post(`/api/er-plans/${id}`, data , {
+            headers: { "Content-Type": "multipart/form-data" }
+        })
+
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error)
+    }
+})
+
+export const destroy = createAsyncThunk('er-plan/destroy', async (id, { rejectWithValue }) => {
+    try {
+        const res = await api.delete(`/api/er-plans/${id}`)
+
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error)
+    }
+})
+
 export const erplanSlice = createSlice({
     name: 'erplan',
     initialState,
@@ -98,7 +122,43 @@ export const erplanSlice = createSlice({
         [store.rejected]: (state, { payload }) => {
             state.success = false
             state.error = payload
-        }
+        },
+        [update.pending]: (state) => {
+            state.success = false
+            state.error = null
+        },
+        [update.fulfilled]: (state, { payload }) => {
+            const { status, message } = payload
+
+            if (status == 1) {
+                state.success = true
+            } else {
+                state.success = false
+                state.error = { message }
+            }
+        },
+        [update.rejected]: (state, { payload }) => {
+            state.success = false
+            state.error = payload
+        },
+        [destroy.pending]: (state) => {
+            state.success = false
+            state.error = null
+        },
+        [destroy.fulfilled]: (state, { payload }) => {
+            const { status, message } = payload
+
+            if (status == 1) {
+                state.success = true
+            } else {
+                state.success = false
+                state.error = { message }
+            }
+        },
+        [destroy.rejected]: (state, { payload }) => {
+            state.success = false
+            state.error = payload
+        },
     }
 })
 

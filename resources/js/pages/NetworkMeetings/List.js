@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getNetworkMeetings } from '../../store/slices/networkMeeting'
+import { getNetworkMeetings, destroy } from '../../store/slices/networkMeeting'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
 
@@ -72,7 +72,7 @@ const NetworkMeetingList = () => {
                                         )}
 
                                         {meetings && meetings.map((meeting, index) => (
-                                            <tr>
+                                            <tr key={meeting.id}>
                                                 <td style={{ textAlign: 'center' }}>{pager && pager.from+index}</td>
                                                 <td style={{ textAlign: 'center' }}>{meeting.meeting_date}</td>
                                                 <td>
@@ -92,7 +92,7 @@ const NetworkMeetingList = () => {
                                                         <Link to={`/network-meetings/${meeting.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
-                                                        <a href="#" className="btn btn-danger btn-sm" onClick={(e) => {}}>
+                                                        <a href="#" className="btn btn-danger btn-sm" onClick={(e) => dispatch(destroy(meeting.id))}>
                                                             <i className="bi bi-trash"></i>
                                                         </a>
                                                     </div>

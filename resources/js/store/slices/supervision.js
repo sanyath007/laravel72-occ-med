@@ -45,6 +45,30 @@ export const store = createAsyncThunk('supervision/store', async (data, { reject
     }
 })
 
+export const update = createAsyncThunk('supervision/update', async ({ id, data }, { rejectWithValue }) => {
+    try {
+        const res = await api.post(`/api/supervisions/${id}`, data, {
+            headers: { "Content-Type": "multipart/form-data" }
+        })
+
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error)
+    }
+})
+
+export const destroy = createAsyncThunk('supervision/destroy', async (id, { rejectWithValue }) => {
+    try {
+        const res = await api.delete(`/api/supervisions/${id}`)
+
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error)
+    }
+})
+
 export const supervisionSlice = createSlice({
     name: 'supervision',
     initialState,
@@ -98,7 +122,43 @@ export const supervisionSlice = createSlice({
         [store.rejected]: (state, { payload }) => {
             state.loading = false
             state.error = payload
-        }
+        },
+        [update.pending]: (state) => {
+            state.success = false
+            state.error = null
+        },
+        [update.fulfilled]: (state, { payload }) => {
+            const { status, message } = payload
+
+            if (status == 1) {
+                state.success = true
+            } else {
+                state.success = false
+                state.error = { message }
+            }
+        },
+        [update.rejected]: (state, { payload }) => {
+            state.loading = false
+            state.error = payload
+        },
+        [destroy.pending]: (state) => {
+            state.success = false
+            state.error = null
+        },
+        [destroy.fulfilled]: (state, { payload }) => {
+            const { status, message } = payload
+
+            if (status == 1) {
+                state.success = true
+            } else {
+                state.success = false
+                state.error = { message }
+            }
+        },
+        [destroy.rejected]: (state, { payload }) => {
+            state.loading = false
+            state.error = payload
+        },
     }
 })
 

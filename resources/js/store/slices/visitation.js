@@ -34,9 +34,33 @@ export const getVisitation = createAsyncThunk('visitation/getVisitation', async 
 
 export const store = createAsyncThunk('visitation/store', async (data, { rejectWithValue }) => {
     try {
-        const res = await api.post('/api/visitations', data , {
+        const res = await api.post('/api/visitations', data, {
             headers: { "Content-Type": "multipart/form-data" }
         })
+
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error)
+    }
+})
+
+export const update = createAsyncThunk('visitation/update', async ({ id, data }, { rejectWithValue }) => {
+    try {
+        const res = await api.post(`/api/visitations/${id}`, data, {
+            headers: { "Content-Type": "multipart/form-data" }
+        })
+
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error)
+    }
+})
+
+export const destroy = createAsyncThunk('visitation/destroy', async (id, { rejectWithValue }) => {
+    try {
+        const res = await api.delete(`/api/visitations/${id}`)
 
         return res.data
     } catch (error) {
@@ -96,6 +120,42 @@ export const visitationSlice = createSlice({
             }
         },
         [store.rejected]: (state, { payload }) => {
+            state.success = false
+            state.error = payload
+        },
+        [update.pending]: (state) => {
+            state.success = false
+            state.error = nullå
+        },
+        [update.fulfilled]: (state, { payload }) => {
+            const { status, message } = payload
+
+            if (status == 1) {
+                state.success = true
+            } else {
+                state.success = false
+                state.error = { message }
+            }
+        },
+        [update.rejected]: (state, { payload }) => {
+            state.success = false
+            state.error = payload
+        },
+        [destroy.pending]: (state) => {
+            state.success = false
+            state.error = nullå
+        },
+        [destroy.fulfilled]: (state, { payload }) => {
+            const { status, message } = payload
+
+            if (status == 1) {
+                state.success = true
+            } else {
+                state.success = false
+                state.error = { message }
+            }
+        },
+        [destroy.rejected]: (state, { payload }) => {
             state.success = false
             state.error = payload
         }
