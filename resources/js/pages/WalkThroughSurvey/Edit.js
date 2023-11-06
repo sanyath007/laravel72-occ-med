@@ -1,15 +1,31 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { toast } from 'react-toastify'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { GlobalContext } from '../../context/globalContext'
 import { resetSuccess, getSurveying } from '../../store/slices/surveying'
 import SurveyingForm from './Form'
+import Loading from '../../components/Loading'
 
 const EditSurveying = () => {
     const { id } = useParams();
     const navigate = useNavigate()
+    const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
     const { surveying, loading, success } = useSelector(state => state.surveying);
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'แก้ไข Walk-through survey',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'surveyings', name: 'รายการ Walk-through survey', path: '/surveyings' },
+                { id: 'edit', name: 'แก้ไข Walk-through survey', path: null, active: true }
+            ]
+        }))
+    }, []);
 
     useEffect(() => {
         if (id) {

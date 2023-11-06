@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Col, Row, Tab, Tabs } from 'react-bootstrap';
 import { FaCheckSquare, FaCheckCircle, FaFilePdf } from 'react-icons/fa';
+import { GlobalContext } from '../../context/globalContext'
 import { getSurveying } from '../../store/slices/surveying'
 import { toShortTHDate } from '../../utils/formatter'
 import { imageString2UrlArray } from '../../utils'
@@ -19,8 +20,22 @@ const OBJECTIVES = [
 
 const SurveyDetail = () => {
     const { id } = useParams();
+    const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
     const { surveying, loading } = useSelector(state => state.surveying);
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'ายละเอียดการ Walk-through survey',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'surveyings', name: 'รายการ Walk-through survey', path: '/surveyings' },
+                { id: 'detail', name: 'ายละเอียดการ Walk-through survey', path: null, active: true }
+            ]
+        }))
+    }, []);
 
     useEffect(() => {
         if (id) dispatch(getSurveying(id));
@@ -34,7 +49,7 @@ const SurveyDetail = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">บันทึกการ Walk-through survey</h5>
+                            <h5 className="card-title">รายละเอียดการ Walk-through survey</h5>
 
                             {loading && (<div className="text-center"><Loading /></div>)}
                             {!loading && surveying && (

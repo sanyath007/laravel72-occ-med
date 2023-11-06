@@ -33,7 +33,7 @@ export const createFileFromUrl = async (url, filename, defaultType) => {
 }
 
 export const imageString2UrlArray = (str, path) => {
-    if (str === '') return [];
+    if (!str || str === '') return [];
 
     return str.split(',').map(filename => `${path}/${filename}`);
 };

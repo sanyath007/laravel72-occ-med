@@ -1,7 +1,23 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import { GlobalContext } from '../../context/globalContext'
 import VisitationForm from './Form'
 
 const AddVisitation = () => {
+    const { setGlobal } = useContext(GlobalContext)
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'บันทึกการติดตามเยี่ยมบ้าน',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'visitations', name: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: '/visitations' },
+                { id: 'new', name: 'บันทึกการติดตามเยี่ยมบ้าน', path: null, active: true }
+            ]
+        }))
+    }, []);
+
     return (
         <section className="section">
             <div className="row">

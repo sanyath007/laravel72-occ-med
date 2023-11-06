@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { GlobalContext } from '../../context/globalContext'
 import { getVisitation, resetSuccess } from '../../store/slices/visitation'
 import VisitationForm from './Form'
 import Loading from '../../components/Loading'
@@ -9,8 +10,22 @@ import Loading from '../../components/Loading'
 const EditVisitation = () => {
     const { id } = useParams();
     const navigate = useNavigate()
+    const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
     const { visitation, loading, success } = useSelector(state => state.visitation);
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'แก้ไขการติดตามเยี่ยมบ้าน',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'visitations', name: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: '/visitations' },
+                { id: 'edit', name: 'แก้ไขการติดตามเยี่ยมบ้าน', path: null, active: true }
+            ]
+        }))
+    }, []);
 
     useEffect(() => {
         if (id) {
@@ -34,7 +49,7 @@ const EditVisitation = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">บันทึกการติดตามเยี่ยมบ้าน</h5>
+                            <h5 className="card-title">แก้ไขการติดตามเยี่ยมบ้าน</h5>
 
                             {loading && <div className="text-center"><Loading /></div>}
 

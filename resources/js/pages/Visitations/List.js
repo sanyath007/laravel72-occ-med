@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { GlobalContext } from '../../context/globalContext'
 import { getVisitations, destroy } from '../../store/slices/visitation'
 import { toShortTHDate } from '../../utils/formatter'
 import Loading from '../../components/Loading'
@@ -9,6 +10,20 @@ import Pagination from '../../components/Pagination'
 const VisitationList = () => {
     const dispatch = useDispatch();
     const { visitations, pager, loading } = useSelector(state => state.visitation);
+
+    const { setGlobal } = useContext(GlobalContext)
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'visitations', name: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: null, active: true }
+            ]
+        }))
+    }, []);
 
     useEffect(() => {
         dispatch(getVisitations({ url: '/api/visitations/search' }));

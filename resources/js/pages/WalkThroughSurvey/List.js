@@ -1,13 +1,27 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { GlobalContext } from '../../context/globalContext'
 import { getSurveyings, destroy } from '../../store/slices/surveying'
 import { toShortTHDate } from '../../utils/formatter'
 import Loading from '../../components/Loading'
 
 const SurveyingList = () => {
+    const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
     const { surveyings, pager, loading } = useSelector(state => state.surveying);
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'รายการ Walk-through survey',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'surveyings', name: 'รายการ Walk-through survey', path: null, active: true }
+            ]
+        }))
+    }, []);
 
     useEffect(() => {
         dispatch(getSurveyings({ url: '/api/surveyings/search' }));
