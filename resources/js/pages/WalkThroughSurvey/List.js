@@ -5,6 +5,7 @@ import { GlobalContext } from '../../context/globalContext'
 import { getSurveyings, destroy } from '../../store/slices/surveying'
 import { toShortTHDate } from '../../utils/formatter'
 import Loading from '../../components/Loading'
+import Pagination from '../../components/Pagination'
 
 const SurveyingList = () => {
     const { setGlobal } = useContext(GlobalContext)
@@ -26,6 +27,10 @@ const SurveyingList = () => {
     useEffect(() => {
         dispatch(getSurveyings({ url: '/api/surveyings/search' }));
     }, []);
+
+    const handlePageClick = (url) => {
+        console.log(url);
+    };
 
     const handleDelete = (id) => {
         if (confirm('คุณต้องการลบรายการใช่หรือไม่?')) {
@@ -56,7 +61,7 @@ const SurveyingList = () => {
                             </div>
 
                             <div>
-                                <table className="table table-bordered mb-0">
+                                <table className="table table-bordered mb-2">
                                     <thead>
                                         <tr>
                                             <th style={{ width: '5%', textAlign: 'center' }}>#</th>
@@ -73,6 +78,7 @@ const SurveyingList = () => {
                                                 <td colSpan={6} className="text-center"><Loading /></td>
                                             </tr>
                                         )}
+
                                         {!loading && surveyings?.map((surveying, index) => (
                                             <tr key={surveying.id}>
                                                 <td className="text-center">{pager?.from+index}</td>
@@ -109,6 +115,11 @@ const SurveyingList = () => {
                                         ))}
                                     </tbody>
                                 </table>
+
+                                <Pagination
+                                    pager={pager}
+                                    onPageClick={handlePageClick}
+                                />
                             </div>
                         </div>
                     </div>
