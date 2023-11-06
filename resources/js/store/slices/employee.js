@@ -68,7 +68,11 @@ export const destroy = createAsyncThunk('company/destroy', async (id, { rejectWi
 export const employeeSlice = createSlice({
     name: 'employee',
     initialState,
-    reducers: {},
+    reducers: {
+        resetSuccess(state) {
+            state.success = false
+        }
+    },
     extraReducers: {
         [getEmployees.pending]: (state) => {
             state.employees = []
@@ -151,5 +155,7 @@ export const employeeSlice = createSlice({
         }
     }
 })
+
+export const { resetSuccess } = employeeSlice.actions
 
 export default employeeSlice.reducer

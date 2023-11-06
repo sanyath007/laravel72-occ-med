@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { toShortTHDate } from '../../utils/formatter'
 import { getInvestigations, destroy } from '../../store/slices/investigation'
 import Pagination from '../../components/Pagination'
 
@@ -60,7 +61,7 @@ const InvestigationList = () => {
                                         {investigations && investigations.map((investigation, index) => (
                                             <tr key={investigation.id}>
                                                 <td style={{ textAlign: 'center' }}>{pager && pager.from + index}</td>
-                                                <td style={{ textAlign: 'center' }}>{investigation.investigate_date}</td>
+                                                <td style={{ textAlign: 'center' }}>{toShortTHDate(investigation.investigate_date)}</td>
                                                 <td>{investigation.division?.name}</td>
                                                 <td>{investigation.investigate_place}</td>
                                                 <td style={{ textAlign: 'center' }}>{investigation.num_of_people}</td>
