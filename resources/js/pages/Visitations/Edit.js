@@ -39,7 +39,7 @@ const EditVisitation = () => {
                             {loading && <div className="text-center"><Loading /></div>}
 
                             {(!loading && visitation) && (
-                                <VisitationForm />
+                                <VisitationForm id={id} visitation={visitation} />
                             )}
                         </div>
                     </div>

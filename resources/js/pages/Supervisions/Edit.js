@@ -39,7 +39,7 @@ const AddSupervision = () => {
                             {loading && <div className="text-center"><Loading /></div>}
 
                             {(!loading && supervision) && (
-                                <SupervisionForm />
+                                <SupervisionForm id={id} supervision={supervision} />
                             )}
                         </div>
                     </div>

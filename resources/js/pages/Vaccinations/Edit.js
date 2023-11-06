@@ -39,7 +39,7 @@ const EditVaccination = () => {
                             {loading && <div className="text-center"><Loading /></div>}
 
                             {(!loading && vaccination) && (
-                                <VaccinationForm />
+                                <VaccinationForm id={id} vaccination={vaccination} />
                             )}
                         </div>
                     </div>

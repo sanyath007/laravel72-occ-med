@@ -39,7 +39,7 @@ const EditNetworkMeeting = () => {
                             {loading && <div className="text-center"><Loading /></div>}
 
                             {(!loading && meeting) && (
-                                <NetworkMeetingForm />
+                                <NetworkMeetingForm id={id} meeting={meeting} />
                             )}
                         </div>
                     </div>

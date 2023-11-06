@@ -39,7 +39,7 @@ const EditTraining = () => {
                             {loading && <div className="text-center"><Loading /></div>}
 
                             {(!loading && training) && (
-                                <TrainingForm />
+                                <TrainingForm id={id} training={training} />
                             )}
                         </div>
                     </div>

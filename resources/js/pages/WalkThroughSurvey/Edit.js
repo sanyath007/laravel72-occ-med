@@ -38,7 +38,7 @@ const EditSurveying = () => {
                             {loading && <div className="text-center"><Loading /></div>}
 
                             {(!loading && surveying) && (
-                                <SurveyingForm />
+                                <SurveyingForm id={id} surveying={surveying} />
                             )}
                         </div>
                     </div>

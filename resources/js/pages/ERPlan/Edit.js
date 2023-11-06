@@ -39,7 +39,7 @@ const EditERPlan = () => {
                             {loading && <div className="text-center"><Loading /></div>}
 
                             {(!loading && erplan) && (
-                                <ERPlanForm />
+                                <ERPlanForm id={id} erplan={erplan} />
                             )}
                         </div>
                     </div>

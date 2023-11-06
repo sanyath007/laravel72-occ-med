@@ -22,7 +22,7 @@ const initialEmployee = {
     position: ''
 }
 
-const VisitationForm = ({ id, Visitation }) => {
+const VisitationForm = ({ id, visitation }) => {
     const dispatch = useDispatch();
     const [showCompanyModal, setShowCompanyModal] = useState(false);
     const [selecedCompany, setSelectedCompany] = useState(null);
