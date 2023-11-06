@@ -65,6 +65,7 @@ class EmployeeController extends Controller
             $employee->assigned_date = $request['assigned_date'];
             $employee->started_date = $request['started_date'];
             $employee->remark       = $request['remark'];
+            $employee->status       = 1;
 
             if ($employee->save()) {
                 return [

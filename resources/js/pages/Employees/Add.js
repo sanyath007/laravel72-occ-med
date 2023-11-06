@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { GlobalContext } from '../../context/globalContext'
-import { store, resetSuccess } from '../../store/slices/company'
+import { store, resetSuccess } from '../../store/slices/employee'
 import EmployeeForm from '../../components/Employee/Form'
 
 const AddEmployee = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const { success, error } = useSelector(state => state.company)
+    const { success, error } = useSelector(state => state.employee)
     const { setGlobal } = useContext(GlobalContext)
 
     /** Initial global states */

@@ -34,7 +34,7 @@ export const getEmployee = createAsyncThunk('employee/getEmployee', async (id, {
 
 export const store = createAsyncThunk('company/store', async (data, { rejectWithValue }) => {
     try {
-        const res = await api.post('/api/companies', data)
+        const res = await api.post('/api/employees', data)
 
         return res.data
     } catch (error) {
@@ -45,7 +45,7 @@ export const store = createAsyncThunk('company/store', async (data, { rejectWith
 
 export const update = createAsyncThunk('company/update', async ({ id, data }, { rejectWithValue }) => {
     try {
-        const res = await api.put(`/api/companies/${id}`, data)
+        const res = await api.put(`/api/employees/${id}`, data)
 
         return res.data
     } catch (error) {
@@ -56,7 +56,7 @@ export const update = createAsyncThunk('company/update', async ({ id, data }, { 
 
 export const destroy = createAsyncThunk('company/destroy', async (id, { rejectWithValue }) => {
     try {
-        const res = await api.delete(`/api/companies/${id}`)
+        const res = await api.delete(`/api/employees/${id}`)
 
         return res.data
     } catch (error) {
