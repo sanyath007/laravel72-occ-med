@@ -12,7 +12,7 @@ const guidelineSchema = Yup.object().shape({
     file_attachment: Yup.string().required()
 });
 
-const GuidelineForm = () => {
+const GuidelineForm = ({ id, guideline }) => {
     const dispatch = useDispatch();
 
     const handleSubmit = (values, formik) => {

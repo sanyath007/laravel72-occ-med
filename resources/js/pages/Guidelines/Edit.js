@@ -23,7 +23,7 @@ const EditGuideline = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขจัดทำแนวทาง/แบบฟอร์ม/ขั้นตอนการทำงาน</h5>
 
-                            <GuidelineForm />
+                            <GuidelineForm id={id} guideline={guideline} />
                         </div>
                     </div>
                 </div>
