@@ -58,9 +58,11 @@ export const update = createAsyncThunk('guideline/update', async ({ id, data }, 
     }
 })
 
-export const destroy = createAsyncThunk('guideline/destroy', async (id, { rejectWithValue }) => {
+export const destroy = createAsyncThunk('guideline/destroy', async (id, { rejectWithValue, dispatch }) => {
     try {
         const res = await api.delete(`/api/guidelines/${id}`);
+
+        if (res.data.status === 1) dispatch(updateGuidelines(id));
 
         return res.data
     } catch (error) {
@@ -75,7 +77,12 @@ export const guidelineSlice = createSlice({
     reducers: {
         resetSuccess(state) {
             state.success = false
-        }
+        },
+        updateGuidelines(state, { payload }) {
+            const updated = state.guidelines.filter(g => g.id !== payload);
+
+            state.guidelines = updated
+        },
     },
     extraReducers: {
         [getGuidelines.pending]: (state) => {
@@ -161,6 +168,6 @@ export const guidelineSlice = createSlice({
     }
 })
 
-export const { resetSuccess } = guidelineSlice.actions
+export const { resetSuccess, updateGuidelines } = guidelineSlice.actions
 
 export default guidelineSlice.reducer

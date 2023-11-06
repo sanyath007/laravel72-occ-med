@@ -58,9 +58,11 @@ export const update = createAsyncThunk('surveying/update', async ({ id, data }, 
     }
 })
 
-export const destroy = createAsyncThunk('surveying/destroy', async (id, { rejectWithValue }) => {
+export const destroy = createAsyncThunk('surveying/destroy', async (id, { rejectWithValue, dispatch }) => {
     try {
         const res = await api.delete(`/api/surveyings/${id}`)
+
+        if (res.data.status === 1) dispatch(updateSurveyings(id));
 
         return res.data
     } catch (error) {
@@ -75,7 +77,12 @@ export const surveyingSlice = createSlice({
     reducers: {
         resetSuccess(state) {
             state.success = false
-        }
+        },
+        updateSurveyings(state, { payload }) {
+            const updated = state.guidelines.filter(g => g.id !== payload);
+
+            state.guidelines = updated
+        },
     },
     extraReducers: {
         [getSurveyings.pending]: (state) => {
@@ -163,6 +170,6 @@ export const surveyingSlice = createSlice({
     }
 })
 
-export const { resetSuccess } = surveyingSlice.actions
+export const { resetSuccess, updateSurveyings } = surveyingSlice.actions
 
 export default surveyingSlice.reducer

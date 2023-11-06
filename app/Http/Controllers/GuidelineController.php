@@ -108,8 +108,8 @@ class GuidelineController extends Controller
             $guideline = Guideline::find($id);
 
             /** Remove uploaded file */
-            $destinationPath = 'uploads/wts';
-            $existedFile = $destinationPath .'/file/'. $surveying->file_attachment;
+            $destinationPath = 'uploads/guideline/';
+            $existedFile = $destinationPath . $guideline->file_attachment;
             if (\File::exists($existedFile)) {
                 \File::delete($existedFile);
             }

@@ -4,15 +4,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FaFilePdf } from 'react-icons/fa'
 import moment from 'moment'
 import { GlobalContext } from '../../context/globalContext'
-import { getGuidelines, destroy } from '../../store/slices/guideline'
+import { getGuidelines, resetSuccess, destroy } from '../../store/slices/guideline'
 import { toShortTHDate } from '../../utils/formatter'
 import Pagination from '../../components/Pagination'
 import Loading from '../../components/Loading'
+import { toast } from 'react-toastify'
 
 const GuidelineList = () => {
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { guidelines, pager, loading } = useSelector(state => state.guideline);
+    const { guidelines, pager, loading, success } = useSelector(state => state.guideline);
 
     /** Initial global states */
     useEffect(() => {
@@ -29,6 +30,15 @@ const GuidelineList = () => {
     useEffect(() => {
         dispatch(getGuidelines({ url: `/api/guidelines` }));
     }, []);
+
+    /** If delete giudeline is succeed */
+    useEffect(() => {
+        if (success) {
+            toast.success('ลบข้อมูลเรียบร้อยแล้ว');
+    
+            dispatch(resetSuccess());
+        }
+    }, [success]);
 
     const handlePageClick = (url) => {
         console.log(url);
@@ -105,9 +115,9 @@ const GuidelineList = () => {
                                                         <Link to={`/guidelines/${guideline.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
-                                                        <a href="#" className="btn btn-danger btn-sm" onClick={() => handleDelete(guideline.id)}>
+                                                        <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(guideline.id)}>
                                                             <i className="bi bi-trash"></i>
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                 </td>
                                             </tr>
