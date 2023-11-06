@@ -6,7 +6,7 @@ import { FaCheckSquare, FaCheckCircle, FaFilePdf } from 'react-icons/fa';
 import { GlobalContext } from '../../context/globalContext'
 import { getSurveying } from '../../store/slices/surveying'
 import { toShortTHDate } from '../../utils/formatter'
-import { imageString2UrlArray } from '../../utils'
+import { string2Array, imageString2UrlArray } from '../../utils'
 import UploadGallery from '../../components/UploadGallery'
 import Loading from '../../components/Loading'
 import SurveyorList from './Form/SurveyorList'
@@ -199,7 +199,7 @@ const SurveyDetail = () => {
                                     >
                                         <Row className="mb-2">
                                             <Col>
-                                                <GuidelineList guidelines={surveying.guidelines ? surveying.guidelines : []} />
+                                                <GuidelineList guidelines={surveying.guidelines ? string2Array(surveying.guidelines) : []} />
                                             </Col>
                                         </Row>
                                     </Tab>

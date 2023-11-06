@@ -66,3 +66,13 @@ a {
         color: var(--bs-danger);
     }
 }
+
+.uploaded__close-btn {
+    margin: 2px 4px 0 0;
+    color: var(--bg-light);
+    cursor: pointer;
+
+    &:hover {
+        color: var(--bs-danger);
+    }
+}

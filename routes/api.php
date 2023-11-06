@@ -112,7 +112,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/surveyings/{id}', 'SurveyingController@getById');
     Route::get('/surveyings/init/form', 'SurveyingController@getInitialFormData');
     Route::post('/surveyings', 'SurveyingController@store');
-    Route::put('/surveyings/{id}', 'SurveyingController@update');
+    Route::post('/surveyings/{id}', 'SurveyingController@update');
     Route::delete('/surveyings/{id}', 'SurveyingController@destroy');
 
     /** Emergency Response Plans */

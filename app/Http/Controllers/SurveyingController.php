@@ -64,6 +64,7 @@ class SurveyingController extends Controller
             $surveying->guidelines          = implode(',', $request['guidelines']);
             $surveying->remark              = $request['remark'];
 
+            /** Upload file and pictures */
             if ($request->file('file_attachment')) {
                 $file = $request->file('file_attachment');
                 $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
@@ -144,15 +145,22 @@ class SurveyingController extends Controller
             $surveying->guidelines          = implode(',', $request['guidelines']);
             $surveying->remark              = $request['remark'];
 
-            // if ($request->file('file_attachment')) {
-            //     $file = $request->file('file_attachment');
-            //     $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-            //     $destinationPath = 'uploads/wts/file/';
+            /** Upload file and pictures */
+            if ($request->file('file_attachment')) {
+                $destinationPath = 'uploads/wts/file/';
+                $file = $request->file('file_attachment');
+                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
 
-            //     if ($file->move($destinationPath, $fileName)) {
-            //         $surveying->file_attachment = $fileName;
-            //     }
-            // }
+                /** Remove uploaded file */
+                $existedFile = $destinationPath . $surveying->file_attachment;
+                if (\File::exists($existedFile)) {
+                    \File::delete($existedFile);
+                }
+
+                if ($file->move($destinationPath, $fileName)) {
+                    $surveying->file_attachment = $fileName;
+                }
+            }
 
             // if ($request->file('pic_attachments')) {
             //     $index = 0;
@@ -179,11 +187,23 @@ class SurveyingController extends Controller
             if ($surveying->save()) {
                 if (count($request['surveyors']) > 0) {
                     foreach($request['surveyors'] as $surveyor) {
-                        $newSurveyor = new SurveyingSurveyor;
-                        $newSurveyor->survey_id     = $surveying->id;
-                        $newSurveyor->employee_id   = $surveyor['employee_id'];
-                        $newSurveyor->save();
+                        if (array_key_exists('id', $surveyor)) {
+                            /** รายการเดิม */
+                            if (SurveyingSurveyor::where('employee_id', $surveyor['employee_id'])->count() == 0) {
+                                $updatedSurveyor = SurveyingSurveyor::find($surveyor['id']);
+                                $updatedSurveyor->employee_id = $surveyor['employee_id'];
+                                $updatedSurveyor->save();
+                            }
+                        } else {
+                            /** รายการใหม่ */
+                            $newSurveyor = new SurveyingSurveyor;
+                            $newSurveyor->survey_id     = $surveying->id;
+                            $newSurveyor->employee_id   = $surveyor['employee_id'];
+                            $newSurveyor->save();
+                        }
                     }
+                } else {
+                    SurveyingSurveyor::where('survey_id', $id)->delete();
                 }
 
                 return [
@@ -210,37 +230,23 @@ class SurveyingController extends Controller
         try {
             $surveying = Surveying::find($id);
 
-            // if ($request->file('file_attachment')) {
-            //     $file = $request->file('file_attachment');
-            //     $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-            //     $destinationPath = 'uploads/wts/file/';
+            /** Remove uploaded file */
+            $destinationPath = 'uploads/wts';
+            $existedFile = $destinationPath .'/file/'. $surveying->file_attachment;
+            if (\File::exists($existedFile)) {
+                \File::delete($existedFile);
+            }
 
-            //     if ($file->move($destinationPath, $fileName)) {
-            //         $surveying->file_attachment = $fileName;
-            //     }
-            // }
+            if ($surveying->pic_attachments != '') {
+                $pictures = explode(',', $surveying->pic_attachments);
+                foreach($pictures as $pic) {
+                    $existed = $destinationPath .'/file/'. $pic;
 
-            // if ($request->file('pic_attachments')) {
-            //     $index = 0;
-            //     $picNames = '';
-            //     $destinationPath = 'uploads/wts/pic/';
-
-            //     foreach($request->file('pic_attachments') as $file) {
-            //         $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-
-            //         if ($file->move($destinationPath, $fileName)) {
-            //             if ($index < count($request->file('pic_attachments'))) {
-            //                 $picNames .= $fileName.',';
-            //             } else {
-            //                 $picNames .= $fileName;
-            //             }
-            //         }
-
-            //         $index++;
-            //     }
-
-            //     $surveying->pic_attachments = $picNames;
-            // }
+                    if (\File::exists($existed)) {
+                        \File::delete($existed);
+                    }
+                }
+            }
 
             if ($surveying->delete()) {
                 SurveyingSurveyor::where('survey_id', $id)->delete();

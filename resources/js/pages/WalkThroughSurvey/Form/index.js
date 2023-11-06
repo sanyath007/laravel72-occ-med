@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row, Tab, Tabs } from 'react-bootstrap'
-import { FaSave, FaSearch } from 'react-icons/fa'
+import { FaSave, FaSearch, FaFilePdf, FaTimesCircle } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
 import { toast } from 'react-toastify'
 import moment from 'moment'
-import { store } from '../../../store/slices/surveying'
-import { validateFile, isExistedItem } from '../../../utils'
+import { store, update } from '../../../store/slices/surveying'
+import { validateFile, isExistedItem, string2Array } from '../../../utils'
 import ModalCompanies from '../../../components/Modals/ModalCompanies'
 import SurveyorForm from './SurveyorForm'
 import SurveyorList from './SurveyorList'
@@ -44,6 +44,15 @@ const SurveyingForm = ({ id, surveying }) => {
     const [showCompanyModal, setShowCompanyModal] = useState(false);
     const [selectedCompany, setSelectedCompany] = useState(null);
     const [selectedSurveyDate, setSelectedSurveyDate] = useState(moment());
+    const [uploadedFile, setUploadedFile] = useState('');
+
+    useEffect(() => {
+        if (surveying) {
+            setSelectedCompany(surveying.company);
+            setSelectedSurveyDate(moment(surveying.survey_date));
+            setUploadedFile(surveying.file_attachment);
+        }
+    }, [surveying]);
 
     const handleSubmit = (values, formik) => {
         let data = new FormData();
@@ -56,7 +65,11 @@ const SurveyingForm = ({ id, surveying }) => {
             }
         }
 
-        dispatch(store(values));
+        if (surveying) {
+            dispatch(update({ id, data: values }));
+        } else {
+            dispatch(store(values));
+        }
 
         formik.resetForm();
     };
@@ -90,22 +103,23 @@ const SurveyingForm = ({ id, surveying }) => {
 
     return (
         <Formik
+            enableReinitialize
             initialValues={{
-                survey_date: '',
-                objective_id: '',
-                division_id: '',
-                surveyors: [],
-                company_id: '',
-                num_of_departs: '',
-                num_of_employees: '',
-                num_of_health_items: '',
-                is_found_threat: '',
-                have_hra: '',
-                have_report: '',
-                is_adviced: '',
-                is_returned_data: '',
-                guidelines: [],
-                remark: '',
+                survey_date: surveying ? surveying.survey_date : '',
+                objective_id: surveying ? surveying.objective_id : '',
+                division_id: surveying ? surveying.division_id : '',
+                surveyors: surveying ? surveying.surveyors : [],
+                company_id: surveying ? surveying.company_id : '',
+                num_of_departs: surveying ? surveying.num_of_departs : '',
+                num_of_employees: surveying ? surveying.num_of_employees : '',
+                num_of_health_items: surveying ? surveying.num_of_health_items : '',
+                is_found_threat: (surveying && surveying.is_found_threat) ? surveying.is_found_threat : '',
+                have_hra: surveying ? surveying.have_hra : '',
+                have_report: surveying ? surveying.have_report : '',
+                is_adviced: surveying ? surveying.is_adviced : '',
+                is_returned_data: surveying ? surveying.is_adviced : '',
+                guidelines: (surveying && surveying.guidelines) ? string2Array(surveying.guidelines) : [],
+                remark: surveying ? surveying.remark : '',
                 file_attachment: '',
                 pic_attachments: []
             }}
@@ -113,7 +127,6 @@ const SurveyingForm = ({ id, surveying }) => {
             onSubmit={handleSubmit}
         >
             {(formik) => {
-                console.log(formik.errors);
                 return (
                     <Form>
                         <ModalCompanies
@@ -296,7 +309,7 @@ const SurveyingForm = ({ id, surveying }) => {
                                     </Col>
                                 </Row>
                                 <Row className="mb-2">
-                                    <Col md={4}>
+                                    <Col>
                                         <label htmlFor="">สถานะการจัดทำรายงานสำรวจ/ประเมินความเสี่ยง</label>
                                         <label htmlFor="" className="form-control" style={{ display: 'flex' }}>
                                             <Field
@@ -317,21 +330,6 @@ const SurveyingForm = ({ id, surveying }) => {
                                             <span className="text-danger text-sm">{formik.errors.have_report}</span>
                                         )}
                                     </Col>
-                                    <Col>
-                                        <label htmlFor="">แนบไฟล์รายงานเดินสำรวจ</label>
-                                        <input
-                                            type="file"
-                                            onChange={(e) => {
-                                                formik.setFieldValue('file_attachment', e.target.files[0]);
-                                            }}
-                                            className={`form-control ${(formik.errors.file_attachment && formik.touched.file_attachment) ? 'is-invalid' : ''}`}
-                                        />
-                                        {(formik.errors.file_attachment && formik.touched.file_attachment) && (
-                                            <span className="invalid-feedback">{formik.errors.file_attachment}</span>
-                                        )}
-                                    </Col>
-                                </Row>
-                                <Row className="mb-2">
                                     <Col>
                                         <label htmlFor="">ระบุถึงการให้ข้อเสนอแนะในการบริหารจัดการความเสี่ยง</label>
                                         <label htmlFor="" className="form-control" style={{ display: 'flex' }}>
@@ -372,6 +370,32 @@ const SurveyingForm = ({ id, surveying }) => {
                                         </label>
                                         {(formik.errors.is_returned_data && formik.touched.is_returned_data) && (
                                             <span className="text-danger text-sm">{formik.errors.is_returned_data}</span>
+                                        )}
+                                    </Col>
+                                </Row>
+                                <Row className="mb-2">
+                                    <Col>
+                                        <label htmlFor="">แนบไฟล์รายงานเดินสำรวจ</label>
+                                        <input
+                                            type="file"
+                                            onChange={(e) => {
+                                                formik.setFieldValue('file_attachment', e.target.files[0]);
+                                            }}
+                                            className={`form-control ${(formik.errors.file_attachment && formik.touched.file_attachment) ? 'is-invalid' : ''}`}
+                                        />
+                                        {(formik.errors.file_attachment && formik.touched.file_attachment) && (
+                                            <span className="invalid-feedback">{formik.errors.file_attachment}</span>
+                                        )}
+                                    </Col>
+                                    <Col>
+                                        <label htmlFor=""></label>
+                                        {uploadedFile && (
+                                            <div className="d-flex align-items-center">
+                                                <a href={`${process.env.MIX_APP_URL}/uploads/wts/file/${uploadedFile}`} className="p-auto me-2" target="_blank">
+                                                    <FaFilePdf size={'16px'} /> {uploadedFile}
+                                                </a>
+                                                {/* <span className="uploaded__close-btn"><FaTimesCircle /></span> */}
+                                            </div>
                                         )}
                                     </Col>
                                 </Row>
@@ -459,9 +483,9 @@ const SurveyingForm = ({ id, surveying }) => {
                         </Tabs>
 
                         <div className="text-center">
-                            <button type="submit" className={`btn ${false ? 'btn-warning' : 'btn-primary'}`}>
+                            <button type="submit" className={`btn ${surveying ? 'btn-warning' : 'btn-primary'}`}>
                                 <FaSave className="me-1" />
-                                {false ? 'บันทึกการแก้ไข' : 'บันทึก'}
+                                {surveying ? 'บันทึกการแก้ไข' : 'บันทึก'}
                             </button>
                         </div>
                     </Form>
