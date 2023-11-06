@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row } from 'react-bootstrap'
 import { FaSave } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
-import { store } from '../../store/slices/investigation'
+import { store, update } from '../../store/slices/investigation'
 import moment from 'moment'
 
 const investigationSchema = Yup.object().shape({
@@ -14,26 +14,42 @@ const investigationSchema = Yup.object().shape({
 
 const InvestigationForm = ({ id, investigation }) => {
     const dispatch = useDispatch();
-    const [selectedInvestigateDate, setSelectedInvestigateDate] = useState(moment())
+    const [selectedPic, setSelectedPic] = useState('');
+    const [selectedFile, setSelectedFile] = useState('');
+    const [selectedInvestigateDate, setSelectedInvestigateDate] = useState(moment());
+
+    useEffect(() => {
+        if (investigation) {
+            setSelectedPic(investigation.pic_attachment);
+            setSelectedFile(investigation.file_attachment);
+            setSelectedInvestigateDate(moment(investigation.investigate_date))
+        }
+    }, [investigation]);
 
     const handleSubmit = (values, formik) => {
-        dispatch(store(values));
+        if (investigation) {
+            dispatch(update({ id, data: values }));
+        } else {
+            dispatch(store(values));
+        }
+
+        formik.resetForm();
     };
 
     return (
         <Formik
             initialValues={{
-                investigate_date: '',
-                investigate_objective: '',
-                investigate_type_id: '',
-                is_working_disease: '',
-                is_investigate: '',
-                division_id: '',
-                investigate_place: '',
-                num_of_people: '',
+                investigate_date: investigation ? investigation.investigate_date : '',
+                investigate_objective: investigation ? investigation.investigate_objective : '',
+                investigate_type_id: investigation ? investigation.investigate_type_id : '',
+                division_id: investigation ? investigation.division_id : '',
+                is_working_disease: investigation ? investigation.is_working_disease : '',
+                is_investigate: investigation ? investigation.is_investigate : '',
+                investigate_place: investigation ? investigation.investigate_place : '',
+                num_of_people: investigation ? investigation.num_of_people : '',
+                is_return_data: investigation ? investigation.is_return_data : '',
                 file_attachment: '',
                 pic_attachment: '',
-                is_return_data: '',
             }}
             validationSchema={investigationSchema}
             onSubmit={handleSubmit}
@@ -141,7 +157,7 @@ const InvestigationForm = ({ id, investigation }) => {
                             </Col>
                         </Row>
                         <Row className="mb-2">
-                            <Col md={8}>
+                            <Col>
                                 <label htmlFor="">สถานที่สอบสวน</label>
                                 <input
                                     type="text"
@@ -151,31 +167,20 @@ const InvestigationForm = ({ id, investigation }) => {
                                     className="form-control"
                                 />
                             </Col>
-                            <Col>
-                                <label htmlFor="">จำนวนผู้ได้รับผลกระทบ</label>
-                                <input
-                                    type="text"
-                                    name="num_of_people"
-                                    value={formik.values.num_of_people}
-                                    onChange={formik.handleChange}
-                                    className="form-control"
-                                />
-                            </Col>
                         </Row>
                         <Row className="mb-2">
                             <Col>
-                                <label htmlFor="">แนบไฟล์รายงานเดินสำรวจ</label>
-                                <input
-                                    type="file"
-                                    className="form-control"
-                                />
-                            </Col>
-                            <Col>
-                                <label htmlFor="">แนบไฟล์รูปภาพกิจกรรม</label>
-                                <input
-                                    type="file"
-                                    className="form-control"
-                                />
+                                <label htmlFor="">จำนวนผู้ได้รับผลกระทบ</label>
+                                <div className="input-group">
+                                    <input
+                                        type="number"
+                                        name="num_of_people"
+                                        value={formik.values.num_of_people}
+                                        onChange={formik.handleChange}
+                                        className="form-control"
+                                    />
+                                    <span className="input-group-text">ราย</span>
+                                </div>
                             </Col>
                             <Col>
                                 <label htmlFor="">สถานะการคืนข้อมูลแก่แก่ผู้เกี่ยวข้อง</label>
@@ -196,10 +201,46 @@ const InvestigationForm = ({ id, investigation }) => {
                                 </label>
                             </Col>
                         </Row>
+                        <Row className="mb-2">
+                            <Col>
+                                <label htmlFor="">แนบไฟล์รายงานเดินสำรวจ</label>
+                                <div className="d-flex flex-row align-items-center">
+                                    <input
+                                        type="file"
+                                        onChange={(e) => {
+                                            setSelectedFile(e.target.files[0]?.name);
+                                            formik.setFieldValue('file_attachment', e.target.files[0])
+                                        }}
+                                        className="form-control w-50 me-4"
+                                    />
+                                    <div>
+                                        {selectedFile && <span>{selectedFile}</span>}
+                                    </div>
+                                </div>
+                            </Col>
+                        </Row>
+                        <Row className="mb-2">
+                            <Col>
+                                <label htmlFor="">แนบไฟล์รูปภาพกิจกรรม</label>
+                                <div className="d-flex flex-row align-items-center">
+                                    <input
+                                        type="file"
+                                        onChange={(e) => {
+                                            setSelectedPic(e.target.files[0]?.name);
+                                            formik.setFieldValue('pic_attachment', e.target.files[0]);
+                                        }}
+                                        className="form-control w-50 me-4"
+                                    />
+                                    <div>
+                                        {selectedPic && <span>{selectedPic}</span>}
+                                    </div>
+                                </div>
+                            </Col>
+                        </Row>
                         <div className="text-center">
-                            <button type="submit" className={`btn ${false ? 'btn-warning' : 'btn-primary'}`}>
+                            <button type="submit" className={`btn ${investigation ? 'btn-warning' : 'btn-primary'}`}>
                                 <FaSave className="me-1" />
-                                {false ? 'บันทึกการแก้ไข' : 'บันทึก'}
+                                {investigation ? 'บันทึกการแก้ไข' : 'บันทึก'}
                             </button>
                         </div>
                     </Form>

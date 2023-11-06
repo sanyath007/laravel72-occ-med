@@ -38,6 +38,27 @@ class InvestigationController extends Controller
             $investigation->is_return_data = $request['is_return_data'];
             // $investigation->remark = $request['remark'];
 
+            /** Upload file and pictures */
+            if ($request->file('file_attachment')) {
+                $file = $request->file('file_attachment');
+                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
+                $destinationPath = 'uploads/investigation/file/';
+
+                if ($file->move($destinationPath, $fileName)) {
+                    $investigation->file_attachment = $fileName;
+                }
+            }
+
+            if ($request->file('pic_attachment')) {
+                $file = $request->file('pic_attachment');
+                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
+                $destinationPath = 'uploads/investigation/pic/';
+
+                if ($file->move($destinationPath, $fileName)) {
+                    $investigation->pic_attachment = $fileName;
+                }
+            }
+
             if ($investigation->save()) {
                 return [
                     'status'        => 1,
@@ -74,6 +95,39 @@ class InvestigationController extends Controller
             $investigation->is_return_data = $request['is_return_data'];
             // $investigation->remark = $request['remark'];
 
+            /** Upload file and pictures */
+            if ($request->file('file_attachment')) {
+                $file = $request->file('file_attachment');
+                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
+                $destinationPath = 'uploads/investigation/file/';
+
+                /** Check and remove uploaded file */
+                $existedFile = $destinationPath . $investigation->file_attachment;
+                if (\File::exists($existedFile)) {
+                    \File::delete($existedFile);
+                }
+
+                if ($file->move($destinationPath, $fileName)) {
+                    $investigation->file_attachment = $fileName;
+                }
+            }
+
+            if ($request->file('pic_attachment')) {
+                $file = $request->file('pic_attachment');
+                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
+                $destinationPath = 'uploads/investigation/pic/';
+
+                /** Check and remove uploaded picture */
+                $existedPic = $destinationPath . $investigation->pic_attachment;
+                if (\File::exists($existedPic)) {
+                    \File::delete($existedPic);
+                }
+
+                if ($file->move($destinationPath, $fileName)) {
+                    $investigation->pic_attachment = $fileName;
+                }
+            }
+
             if ($investigation->save()) {
                 return [
                     'status'        => 1,
@@ -97,6 +151,18 @@ class InvestigationController extends Controller
     public function destroy($id) {
         try {
             $investigation = Investigation::find($id);
+
+            /** Remove uploaded file and picture */
+            $destinationPath = 'uploads/investigation/';
+            $existedFile = $destinationPath .'file/'. $investigation->file_attachment;
+            if (\File::exists($existedFile)) {
+                \File::delete($existedFile);
+            }
+
+            $existedPic = $destinationPath .'pic/'. $investigation->pic_attachment;
+            if (\File::exists($existedPic)) {
+                \File::delete($existedPic);
+            }
 
             if ($investigation->delete()) {
                 return [
