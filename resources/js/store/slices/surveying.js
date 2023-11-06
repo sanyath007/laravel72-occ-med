@@ -79,9 +79,9 @@ export const surveyingSlice = createSlice({
             state.success = false
         },
         updateSurveyings(state, { payload }) {
-            const updated = state.guidelines.filter(g => g.id !== payload);
+            const updated = state.surveyings.filter(s => s.id !== payload);
 
-            state.guidelines = updated
+            state.surveyings = updated
         },
     },
     extraReducers: {

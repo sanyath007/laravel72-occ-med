@@ -58,9 +58,11 @@ export const update = createAsyncThunk('vaccination/update', async ({ id, data }
     }
 })
 
-export const destroy = createAsyncThunk('vaccination/destroy', async (id, { rejectWithValue }) => {
+export const destroy = createAsyncThunk('vaccination/destroy', async (id, { rejectWithValue, dispatch }) => {
     try {
         const res = await api.delete(`/api/vaccinations/${id}`)
+
+        if (res.data.status === 1) dispatch(updateVaccinations(id));
 
         return res.data
     } catch (error) {
@@ -75,7 +77,12 @@ export const vaccinationSlice = createSlice({
     reducers: {
         resetSuccess(state) {
             state.success = false
-        }
+        },
+        updateVaccinations(state, { payload }) {
+            const updated = state.vaccinations.filter(v => v.id !== payload);
+
+            state.vaccinations = updated
+        },
     },
     extraReducers: {
         [getVaccinations.pending]: (state) => {
@@ -164,6 +171,6 @@ export const vaccinationSlice = createSlice({
     }
 })
 
-export const { resetSuccess } = vaccinationSlice.actions
+export const { resetSuccess, updateVaccinations } = vaccinationSlice.actions
 
 export default vaccinationSlice.reducer

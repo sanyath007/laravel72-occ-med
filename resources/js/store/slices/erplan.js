@@ -58,9 +58,11 @@ export const update = createAsyncThunk('er-plan/update', async ({ id, data }, { 
     }
 })
 
-export const destroy = createAsyncThunk('er-plan/destroy', async (id, { rejectWithValue }) => {
+export const destroy = createAsyncThunk('er-plan/destroy', async (id, { rejectWithValue, dispatch }) => {
     try {
         const res = await api.delete(`/api/er-plans/${id}`)
+
+        if (res.data.status === 1) dispatch(updateErplans(id));
 
         return res.data
     } catch (error) {
@@ -75,7 +77,12 @@ export const erplanSlice = createSlice({
     reducers: {
         resetSuccess(state) {
             state.success = false
-        }
+        },
+        updateErplans(state, { payload }) {
+            const updated = state.erplans.filter(e => e.id !== payload);
+
+            state.erplans = updated
+        },
     },
     extraReducers: {
         [getErplans.pending]: (state) => {
@@ -162,6 +169,6 @@ export const erplanSlice = createSlice({
     }
 })
 
-export const { resetSuccess } = erplanSlice.actions
+export const { resetSuccess, updateErplans } = erplanSlice.actions
 
 export default erplanSlice.reducer

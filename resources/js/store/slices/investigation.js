@@ -58,9 +58,11 @@ export const update = createAsyncThunk('investigation/update', async ({ id, data
     }
 })
 
-export const destroy = createAsyncThunk('investigation/destroy', async (id, { rejectWithValue }) => {
+export const destroy = createAsyncThunk('investigation/destroy', async (id, { rejectWithValue, dispatch }) => {
     try {
         const res = await api.delete(`/api/investigations/${id}`)
+
+        if (res.data.status === 1) dispatch(updateInvestigations(id));
 
         return res.data
     } catch (error) {
@@ -75,7 +77,12 @@ export const investigationSlice = createSlice({
     reducers: {
         resetSuccess(state) {
             state.success = false
-        }
+        },
+        updateInvestigations(state, { payload }) {
+            const updated = state.investigations.filter(i => i.id !== payload);
+
+            state.investigations = updated
+        },
     },
     extraReducers: {
         [getInvestigations.pending]: (state) => {
@@ -162,6 +169,6 @@ export const investigationSlice = createSlice({
     }
 })
 
-export const { resetSuccess } = investigationSlice.actions
+export const { resetSuccess, updateInvestigations } = investigationSlice.actions
 
 export default investigationSlice.reducer

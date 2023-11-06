@@ -58,9 +58,11 @@ export const update = createAsyncThunk('training/update', async ({ id, data }, {
     }
 })
 
-export const destroy = createAsyncThunk('training/destroy', async (id, { rejectWithValue }) => {
+export const destroy = createAsyncThunk('training/destroy', async (id, { rejectWithValue, dispatch }) => {
     try {
         const res = await api.delete(`/api/trainings/${id}`)
+
+        if (res.data.status === 1) dispatch(updateTrainings(id));
 
         return res.data
     } catch (error) {
@@ -75,7 +77,12 @@ export const trainingSlice = createSlice({
     reducers: {
         resetSuccess(state) {
             state.success = false
-        }
+        },
+        updateTrainings(state, { payload }) {
+            const updated = state.trainings.filter(t => t.id !== payload);
+
+            state.trainings = updated
+        },
     },
     extraReducers: {
         [getTrainings.pending]: (state) => {
@@ -163,6 +170,6 @@ export const trainingSlice = createSlice({
     }
 })
 
-export const { resetSuccess } = trainingSlice.actions
+export const { resetSuccess, updateTrainings } = trainingSlice.actions
 
 export default trainingSlice.reducer

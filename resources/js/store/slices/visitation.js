@@ -58,9 +58,11 @@ export const update = createAsyncThunk('visitation/update', async ({ id, data },
     }
 })
 
-export const destroy = createAsyncThunk('visitation/destroy', async (id, { rejectWithValue }) => {
+export const destroy = createAsyncThunk('visitation/destroy', async (id, { rejectWithValue, dispatch }) => {
     try {
         const res = await api.delete(`/api/visitations/${id}`)
+
+        if (res.data.status === 1) dispatch(updateVisitations(id));
 
         return res.data
     } catch (error) {
@@ -75,7 +77,12 @@ export const visitationSlice = createSlice({
     reducers: {
         resetSuccess(state) {
             state.success = false
-        }
+        },
+        updateVisitations(state, { payload }) {
+            const updated = state.visitations.filter(v => v.id !== payload);
+
+            state.visitations = updated
+        },
     },
     extraReducers: {
         [getVisitations.pending]: (state) => {
@@ -162,6 +169,6 @@ export const visitationSlice = createSlice({
     }
 })
 
-export const { resetSuccess } = visitationSlice.actions
+export const { resetSuccess, updateVisitations } = visitationSlice.actions
 
 export default visitationSlice.reducer

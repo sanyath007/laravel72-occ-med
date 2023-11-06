@@ -58,9 +58,11 @@ export const update = createAsyncThunk('supervision/update', async ({ id, data }
     }
 })
 
-export const destroy = createAsyncThunk('supervision/destroy', async (id, { rejectWithValue }) => {
+export const destroy = createAsyncThunk('supervision/destroy', async (id, { rejectWithValue, dispatch }) => {
     try {
         const res = await api.delete(`/api/supervisions/${id}`)
+
+        if (res.data.status === 1) dispatch(updateSupervisions(id));
 
         return res.data
     } catch (error) {
@@ -75,7 +77,12 @@ export const supervisionSlice = createSlice({
     reducers: {
         resetSuccess(state) {
             state.success = false
-        }
+        },
+        updateSupervisions(state, { payload }) {
+            const updated = state.supervisions.filter(s => s.id !== payload);
+
+            state.supervisions = updated
+        },
     },
     extraReducers: {
         [getSupervisions.pending]: (state) => {
@@ -162,6 +169,6 @@ export const supervisionSlice = createSlice({
     }
 })
 
-export const { resetSuccess } = supervisionSlice.actions
+export const { resetSuccess, updateSupervisions } = supervisionSlice.actions
 
 export default supervisionSlice.reducer

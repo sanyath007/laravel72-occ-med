@@ -58,9 +58,11 @@ export const update = createAsyncThunk('screening/update', async ({ id, data }, 
     }
 })
 
-export const destroy = createAsyncThunk('screening/destroy', async (id, { rejectWithValue }) => {
+export const destroy = createAsyncThunk('screening/destroy', async (id, { rejectWithValue, dispatch }) => {
     try {
         const res = await api.delete(`/api/screenings/${id}`)
+
+        if (res.data.status === 1) dispatch(updateScreenings(id));
 
         return res.data
     } catch (error) {
@@ -75,7 +77,12 @@ export const screeningSlice = createSlice({
     reducers: {
         resetSuccess(state) {
             state.success = false
-        }
+        },
+        updateScreenings(state, { payload }) {
+            const updated = state.screenings.filter(s => s.id !== payload);
+
+            state.screenings = updated
+        },
     },
     extraReducers: {
         [getScreenings.pending]: (state) => {
@@ -162,6 +169,6 @@ export const screeningSlice = createSlice({
     }
 })
 
-export const { resetSuccess } = screeningSlice.actions
+export const { resetSuccess, updateScreenings } = screeningSlice.actions
 
 export default screeningSlice.reducer

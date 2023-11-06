@@ -58,9 +58,11 @@ export const update = createAsyncThunk('network-meeting/update', async ({ id, da
     }
 })
 
-export const destroy = createAsyncThunk('network-meeting/destroy', async (id, { rejectWithValue }) => {
+export const destroy = createAsyncThunk('network-meeting/destroy', async (id, { rejectWithValue, dispatch }) => {
     try {
         const res = await api.delete(`/api/network-meetings/${id}`)
+
+        if (res.data.status === 1) dispatch(updateMeetings(id));
 
         return res.data
     } catch (error) {
@@ -75,7 +77,12 @@ export const networkMeetingSlice = createSlice({
     reducers: {
         resetSuccess(state) {
             state.success = false
-        }
+        },
+        updateMeetings(state, { payload }) {
+            const updated = state.meetings.filter(m => m.id !== payload);
+
+            state.meetings = updated
+        },
     },
     extraReducers: {
         [getNetworkMeetings.pending]: (state) => {
@@ -161,6 +168,6 @@ export const networkMeetingSlice = createSlice({
     }
 })
 
-export const { resetSuccess } = networkMeetingSlice.actions
+export const { resetSuccess, updateMeetings } = networkMeetingSlice.actions
 
 export default networkMeetingSlice.reducer
