@@ -122,6 +122,7 @@ const MonthlyForm = ({ monthly, division, routePath }) => {
                                         <td style={{ textAlign: 'center' }}></td>
                                         <td style={{ textAlign: 'center' }}>
                                             <select
+                                                name="year"
                                                 value={formProps.values.year}
                                                 onChange={formProps.handleChange}
                                                 className={`form-control text-center ${(formProps.errors.year && formProps.touched.year) ? 'is-invalid' : ''}`}
