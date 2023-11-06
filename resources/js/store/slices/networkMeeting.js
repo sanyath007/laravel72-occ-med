@@ -21,6 +21,17 @@ export const getNetworkMeetings = createAsyncThunk('network-meeting/getNetworkMe
     }
 })
 
+export const getNetworkMeeting = createAsyncThunk('network-meeting/getNetworkMeeting', async (id, { rejectWithValue }) => {
+    try {
+        const res = await api.get(`/api/network-meetings/${id}`)
+
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error)
+    }
+})
+
 export const store = createAsyncThunk('network-meeting/store', async (data, { rejectWithValue }) => {
     try {
         const res = await api.post('/api/network-meetings', data)
@@ -55,9 +66,21 @@ export const networkMeetingSlice = createSlice({
         [getNetworkMeetings.rejected]: (state) => {
             state.loading = false
         },
-        [store.pending]: (state) => {
-            state.networkMeetings = []
+        [getNetworkMeeting.pending]: (state) => {
+            state.networkMeeting = null
             state.loading = true
+        },
+        [getNetworkMeeting.fulfilled]: (state, { payload }) => {
+            state.networkMeetings = payload
+            state.loading = false
+        },
+        [getNetworkMeeting.rejected]: (state, { payload }) => {
+            state.loading = false
+            state.error = payload
+        },
+        [store.pending]: (state) => {
+            state.success = false
+            state.error = null
         },
         [store.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
@@ -70,7 +93,7 @@ export const networkMeetingSlice = createSlice({
             }
         },
         [store.rejected]: (state, { payload }) => {
-            state.loading = false
+            state.success = false
             state.error = payload
         }
     }

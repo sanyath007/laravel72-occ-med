@@ -1,6 +1,19 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { getVaccination } from '../../store/slices/vaccination'
 
 const VaccinationDetail = () => {
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const { vaccination, loading } = useSelector(state => state.vaccination);
+
+    useEffect(() => {
+        if (id) {
+            dispatch(getVaccination(id));
+        }
+    }, [id]);
+
     return (
         <section className="section">
             <div className="row">

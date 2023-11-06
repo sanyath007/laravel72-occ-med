@@ -21,6 +21,17 @@ export const getTrainings = createAsyncThunk('training/getTrainings', async ({ u
     }
 })
 
+export const getTraining = createAsyncThunk('training/getTraining', async (id, { rejectWithValue }) => {
+    try {
+        const res = await api.get(`/api/trainings/${id}`)
+
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error)
+    }
+})
+
 export const store = createAsyncThunk('training/store', async (data, { rejectWithValue }) => {
     try {
         const res = await api.post('/api/trainings', data , {
@@ -54,12 +65,26 @@ export const trainingSlice = createSlice({
             state.pager = pager
             state.loading = false
         },
-        [getTrainings.rejected]: (state) => {
+        [getTrainings.rejected]: (state, { payload }) => {
             state.loading = false
+            state.error = payload
+        },
+        [getTraining.pending]: (state) => {
+            state.loading = true
+            state.training = null
+            state.error = null
+        },
+        [getTraining.fulfilled]: (state, { payload }) => {
+            state.loading = false
+            state.trainings = payload
+        },
+        [getTraining.rejected]: (state, { payload }) => {
+            state.loading = false
+            state.error = payload
         },
         [store.pending]: (state) => {
-            state.trainings = []
-            state.loading = true
+            state.success = false
+            state.error = null
         },
         [store.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
@@ -72,7 +97,7 @@ export const trainingSlice = createSlice({
             }
         },
         [store.rejected]: (state, { payload }) => {
-            state.loading = false
+            state.success = false
             state.error = payload
         }
     }

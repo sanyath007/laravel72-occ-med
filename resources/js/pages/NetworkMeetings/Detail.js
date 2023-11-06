@@ -1,6 +1,19 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { getNetworkMeeting } from '../../store/slices/networkMeeting'
 
 const NetworkMeetingDetail = () => {
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const { networkMeeting, loading } = useSelector(state => state.networkMeeting);
+
+    useEffect(() => {
+        if (id) {
+            dispatch(getNetworkMeeting(id));
+        }
+    }, [id]);
+
     return (
         <section className="section">
             <div className="row">

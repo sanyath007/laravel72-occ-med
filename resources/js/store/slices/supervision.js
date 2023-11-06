@@ -2,15 +2,15 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import api from "../../api"
 
 const initialState = {
-    investigations: [],
-    investigation: null,
+    supervisions: [],
+    supervision: null,
     pager: null,
     loading: false,
     success: false,
     error: null
 }
 
-export const getInvestigations = createAsyncThunk('investigation/getInvestigations', async ({ url }, { rejectWithValue }) => {
+export const getSupervisions = createAsyncThunk('supervision/getSupervisions', async ({ url }, { rejectWithValue }) => {
     try {
         const res = await api.get(url)
 
@@ -21,9 +21,9 @@ export const getInvestigations = createAsyncThunk('investigation/getInvestigatio
     }
 })
 
-export const getInvestigation = createAsyncThunk('investigation/getInvestigation', async (id, { rejectWithValue }) => {
+export const getSupervision = createAsyncThunk('supervision/getSupervision', async (id, { rejectWithValue }) => {
     try {
-        const res = await api.get(`/api/investigations/${id}`)
+        const res = await api.get(`/api/supervisions/${id}`)
 
         return res.data
     } catch (error) {
@@ -32,9 +32,11 @@ export const getInvestigation = createAsyncThunk('investigation/getInvestigation
     }
 })
 
-export const store = createAsyncThunk('investigation/store', async (data, { rejectWithValue }) => {
+export const store = createAsyncThunk('supervision/store', async (data, { rejectWithValue }) => {
     try {
-        const res = await api.post('/api/investigations', data)
+        const res = await api.post('/api/supervisions', data, {
+            headers: { "Content-Type": "multipart/form-data" }
+        })
 
         return res.data
     } catch (error) {
@@ -43,8 +45,8 @@ export const store = createAsyncThunk('investigation/store', async (data, { reje
     }
 })
 
-export const investigationSlice = createSlice({
-    name: 'investigation',
+export const supervisionSlice = createSlice({
+    name: 'supervision',
     initialState,
     reducers: {
         resetSuccess(state) {
@@ -52,30 +54,30 @@ export const investigationSlice = createSlice({
         }
     },
     extraReducers: {
-        [getInvestigations.pending]: (state) => {
-            state.investigations = []
+        [getSupervisions.pending]: (state) => {
+            state.supervisions = []
             state.loading = true
         },
-        [getInvestigations.fulfilled]: (state, { payload }) => {
+        [getSupervisions.fulfilled]: (state, { payload }) => {
             const { data, ...pager } = payload
 
-            state.investigations = data
+            state.supervisions = data
             state.pager = pager
             state.loading = false
         },
-        [getInvestigations.rejected]: (state) => {
+        [getSupervisions.rejected]: (state) => {
             state.loading = false
         },
-        [getInvestigation.pending]: (state) => {
+        [getSupervision.pending]: (state) => {
             state.loading = true
-            state.investigation = null
+            state.supervision = null
             state.error = null
         },
-        [getInvestigation.fulfilled]: (state, { payload }) => {
-            state.investigation = payload
+        [getSupervision.fulfilled]: (state, { payload }) => {
             state.loading = false
+            state.supervisions = payload
         },
-        [getInvestigation.rejected]: (state, { payload }) => {
+        [getSupervision.rejected]: (state, { payload }) => {
             state.loading = false
             state.error = payload
         },
@@ -94,12 +96,12 @@ export const investigationSlice = createSlice({
             }
         },
         [store.rejected]: (state, { payload }) => {
-            state.success = false
+            state.loading = false
             state.error = payload
         }
     }
 })
 
-export const { resetSuccess } = investigationSlice.actions
+export const { resetSuccess } = supervisionSlice.actions
 
-export default investigationSlice.reducer
+export default supervisionSlice.reducer

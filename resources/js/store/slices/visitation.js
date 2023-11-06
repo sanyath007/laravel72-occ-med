@@ -21,6 +21,17 @@ export const getVisitations = createAsyncThunk('visitation/getVisitations', asyn
     }
 })
 
+export const getVisitation = createAsyncThunk('visitation/getVisitation', async (id, { rejectWithValue }) => {
+    try {
+        const res = await api.get(`/api/visitations/${id}`)
+
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error)
+    }
+})
+
 export const store = createAsyncThunk('visitation/store', async (data, { rejectWithValue }) => {
     try {
         const res = await api.post('/api/visitations', data , {
@@ -57,9 +68,22 @@ export const visitationSlice = createSlice({
         [getVisitations.rejected]: (state) => {
             state.loading = false
         },
-        [store.pending]: (state) => {
-            state.visitations = []
+        [getVisitation.pending]: (state) => {
             state.loading = true
+            state.visitation = null
+            state.error = null
+        },
+        [getVisitation.fulfilled]: (state, { payload }) => {
+            state.visitation = payload
+            state.loading = false
+        },
+        [getVisitation.rejected]: (state, { payload }) => {
+            state.loading = false
+            state.error = payload
+        },
+        [store.pending]: (state) => {
+            state.success = false
+            state.error = nullå
         },
         [store.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
@@ -72,7 +96,7 @@ export const visitationSlice = createSlice({
             }
         },
         [store.rejected]: (state, { payload }) => {
-            state.loading = false
+            state.success = false
             state.error = payload
         }
     }

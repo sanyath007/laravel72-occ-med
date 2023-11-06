@@ -22,7 +22,6 @@ const SurveyDetail = () => {
     const dispatch = useDispatch();
     const { surveying, loading } = useSelector(state => state.surveying);
 
-
     useEffect(() => {
         if (id) dispatch(getSurveying(id));
     }, [id]);

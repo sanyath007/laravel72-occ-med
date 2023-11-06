@@ -21,6 +21,17 @@ export const getErplans = createAsyncThunk('er-plan/getErplans', async ({ url },
     }
 })
 
+export const getErplan = createAsyncThunk('er-plan/getErplan', async (id, { rejectWithValue }) => {
+    try {
+        const res = await api.get(`/api/er-plans/${id}`)
+
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error)
+    }
+})
+
 export const store = createAsyncThunk('er-plan/store', async (data, { rejectWithValue }) => {
     try {
         const res = await api.post('/api/er-plans', data , {
@@ -51,15 +62,28 @@ export const erplanSlice = createSlice({
             const { data, ...pager } = payload
 
             state.erplans = data
-            state.pager = pager
             state.loading = false
+            state.pager = pager
         },
         [getErplans.rejected]: (state) => {
             state.loading = false
         },
-        [store.pending]: (state) => {
-            state.erplans = []
+        [getErplan.pending]: (state) => {
             state.loading = true
+            state.erplan = null
+            state.error = null
+        },
+        [getErplan.fulfilled]: (state, { payload }) => {
+            state.erplan = payload
+            state.loading = false
+        },
+        [getErplan.rejected]: (state, { payload }) => {
+            state.loading = false
+            state.error = payload
+        },
+        [store.pending]: (state) => {
+            state.success = false
+            state.error = null
         },
         [store.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
@@ -72,7 +96,7 @@ export const erplanSlice = createSlice({
             }
         },
         [store.rejected]: (state, { payload }) => {
-            state.loading = false
+            state.success = false
             state.error = payload
         }
     }

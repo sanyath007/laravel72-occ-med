@@ -65,19 +65,22 @@ export const surveyingSlice = createSlice({
             state.pager = pager
             state.loading = false
         },
-        [getSurveyings.rejected]: (state) => {
+        [getSurveyings.rejected]: (state, { payload }) => {
             state.loading = false
+            state.error = payload
         },
         [getSurveying.pending]: (state) => {
-            state.surveying = null
             state.loading = true
+            state.surveying = null
+            state.error = null
         },
         [getSurveying.fulfilled]: (state, { payload }) => {
             state.surveying = payload
             state.loading = false
         },
-        [getSurveying.rejected]: (state) => {
+        [getSurveying.rejected]: (state, { payload }) => {
             state.loading = false
+            state.error = payload
         },
         [store.pending]: (state) => {
             state.success = true

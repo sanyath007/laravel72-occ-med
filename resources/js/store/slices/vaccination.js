@@ -55,8 +55,10 @@ export const vaccinationSlice = createSlice({
     },
     extraReducers: {
         [getVaccinations.pending]: (state) => {
-            state.vaccinations = []
             state.loading = true
+            state.vaccinations = []
+            state.pager = null
+            state.error = null
         },
         [getVaccinations.fulfilled]: (state, { payload }) => {
             const { data, ...pager } = payload
@@ -65,8 +67,9 @@ export const vaccinationSlice = createSlice({
             state.pager = pager
             state.loading = false
         },
-        [getVaccinations.rejected]: (state) => {
+        [getVaccinations.rejected]: (state, { payload }) => {
             state.loading = false
+            state.error = payload
         },
         [getVaccination.pending]: (state) => {
             state.vaccination = null
@@ -76,12 +79,13 @@ export const vaccinationSlice = createSlice({
             state.vaccination = payload
             state.loading = false
         },
-        [getVaccination.rejected]: (state) => {
+        [getVaccination.rejected]: (state, { payload }) => {
             state.loading = false
+            state.error = payload
         },
         [store.pending]: (state) => {
-            state.vaccinations = []
-            state.loading = true
+            state.success = true
+            state.error = null
         },
         [store.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
@@ -94,7 +98,7 @@ export const vaccinationSlice = createSlice({
             }
         },
         [store.rejected]: (state, { payload }) => {
-            state.loading = false
+            state.success = false
             state.error = payload
         }
     }

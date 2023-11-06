@@ -1,6 +1,19 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { getVisitation } from '../../store/slices/visitation'
 
 const VisitationDetail = () => {
+    const { id } = useParams();
+    const dispatch = useDispatch();
+    const { visitation, loading } = useSelector(state => state.visitation);
+
+    useEffect(() => {
+        if (id) {
+            dispatch(getVisitation(id));
+        }
+    }, [id]);
+
     return (
         <section className="section">
             <div className="row">

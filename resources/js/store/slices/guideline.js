@@ -21,6 +21,17 @@ export const getGuidelines = createAsyncThunk('guideline/getGuidelines', async (
     }
 })
 
+export const getGuideline = createAsyncThunk('guideline/getGuideline', async (id, { rejectWithValue }) => {
+    try {
+        const res = await api.get(`/api/guidelines/${id}`)
+
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error)
+    }
+})
+
 export const store = createAsyncThunk('guideline/store', async (data, { rejectWithValue }) => {
     try {
         const res = await api.post('/api/guidelines', data, {
@@ -57,9 +68,21 @@ export const guidelineSlice = createSlice({
         [getGuidelines.rejected]: (state) => {
             state.loading = false
         },
-        [store.pending]: (state) => {
-            state.guidelines = []
+        [getGuideline.pending]: (state) => {
+            state.guideline = null
             state.loading = true
+        },
+        [getGuideline.fulfilled]: (state, { payload }) => {
+            state.guideline = payload
+            state.loading = false
+        },
+        [getGuideline.rejected]: (state, { payload }) => {
+            state.loading = false
+            state.error = payload
+        },
+        [store.pending]: (state) => {
+            state.success = false
+            state.error = null
         },
         [store.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
@@ -72,7 +95,7 @@ export const guidelineSlice = createSlice({
             }
         },
         [store.rejected]: (state, { payload }) => {
-            state.loading = false
+            state.success = false
             state.error = payload
         }
     }

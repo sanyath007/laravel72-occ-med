@@ -2,13 +2,20 @@ import React, { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { resetSuccess } from '../../store/slices/surveying'
+import { resetSuccess, getSurveying } from '../../store/slices/surveying'
 import SurveyingForm from './Form'
 
 const EditSurveying = () => {
+    const { id } = useParams();
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    const { success } = useSelector(state => state.surveying);
+    const { surveying, loading, success } = useSelector(state => state.surveying);
+
+    useEffect(() => {
+        if (id) {
+            dispatch(getSurveying(id));
+        }
+    }, [id]);
 
     useEffect(() => {
         if (success) {

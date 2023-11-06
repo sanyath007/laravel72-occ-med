@@ -21,6 +21,17 @@ export const getScreenings = createAsyncThunk('screening/getScreenings', async (
     }
 })
 
+export const getScreening = createAsyncThunk('screening/getScreening', async (id, { rejectWithValue }) => {
+    try {
+        const res = await api.get(`/api/screenings/${id}`)
+
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error)
+    }
+})
+
 export const store = createAsyncThunk('screening/store', async (data, { rejectWithValue }) => {
     try {
         const res = await api.post('/api/screenings', data, {
@@ -57,9 +68,22 @@ export const screeningSlice = createSlice({
         [getScreenings.rejected]: (state) => {
             state.loading = false
         },
-        [store.pending]: (state) => {
-            state.screenings = []
+        [getScreening.pending]: (state) => {
             state.loading = true
+            state.screening = null
+            state.error = null
+        },
+        [getScreening.fulfilled]: (state, { payload }) => {
+            state.loading = false
+            state.screenings = payload
+        },
+        [getScreening.rejected]: (state, { payload }) => {
+            state.loading = false
+            state.error = payload
+        },
+        [store.pending]: (state) => {
+            state.success = false
+            state.error = null
         },
         [store.fulfilled]: (state, { payload }) => {
             const { status, message } = payload

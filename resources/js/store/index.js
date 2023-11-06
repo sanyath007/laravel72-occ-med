@@ -49,6 +49,7 @@ export default configureStore({
         visitation: visitationReducer,
         vaccination: vaccinationReducer,
         surveying: surveyingReducer,
+        supervision: supervisionReducer,
         erplan: erplanReducer,
         training: trainingReducer,
         screening: screeningReducer,
