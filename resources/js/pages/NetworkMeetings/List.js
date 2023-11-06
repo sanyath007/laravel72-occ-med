@@ -32,7 +32,7 @@ const NetworkMeetingList = () => {
 
     const handleDelete = (id) => {
         if (confirm('คุณต้องการลบรายการใช่หรือไม่?')) {
-            dispatch(destroy(plan.id))
+            dispatch(destroy(id))
         }
     };
 

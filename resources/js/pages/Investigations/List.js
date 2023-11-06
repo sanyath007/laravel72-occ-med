@@ -18,7 +18,7 @@ const InvestigationList = () => {
 
     const handleDelete = (id) => {
         if (confirm('คุณต้องการลบรายการใช่หรือไม่?')) {
-            dispatch(destroy(plan.id))
+            dispatch(destroy(id))
         }
     };
 
@@ -58,7 +58,7 @@ const InvestigationList = () => {
                                     </thead>
                                     <tbody>
                                         {investigations && investigations.map((investigation, index) => (
-                                            <tr key={inv.id}>
+                                            <tr key={investigation.id}>
                                                 <td style={{ textAlign: 'center' }}>{pager && pager.from + index}</td>
                                                 <td style={{ textAlign: 'center' }}>{investigation.investigate_date}</td>
                                                 <td>{investigation.division?.name}</td>
