@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getInvestigations } from '../../store/slices/investigation'
+import { getInvestigations, destroy } from '../../store/slices/investigation'
 import Pagination from '../../components/Pagination'
 
 const InvestigationList = () => {

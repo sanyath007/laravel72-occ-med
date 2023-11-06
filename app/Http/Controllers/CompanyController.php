@@ -135,7 +135,7 @@ class CompanyController extends Controller
         }
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         try {
             $company = Company::find($id);

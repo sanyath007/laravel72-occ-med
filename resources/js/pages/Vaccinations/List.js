@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getVaccinations } from '../../store/slices/vaccination'
+import { getVaccinations, destroy } from '../../store/slices/vaccination'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
 

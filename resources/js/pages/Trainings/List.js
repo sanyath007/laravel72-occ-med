@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getTrainings } from '../../store/slices/training'
+import { getTrainings, destroy } from '../../store/slices/training'
 import { toShortTHDate } from '../../utils/formatter'
 import Loading from '../../components/Loading'
 

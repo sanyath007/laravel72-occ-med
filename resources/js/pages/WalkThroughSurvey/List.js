@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getSurveyings } from '../../store/slices/surveying'
+import { getSurveyings, destroy } from '../../store/slices/surveying'
 import { toShortTHDate } from '../../utils/formatter'
 import Loading from '../../components/Loading'
 

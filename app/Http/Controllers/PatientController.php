@@ -130,7 +130,7 @@ class PatientController extends Controller
         }
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         try {
             $patient = Patient::find($id);
