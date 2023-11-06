@@ -243,7 +243,7 @@ class SurveyingController extends Controller
             // }
 
             if ($surveying->delete()) {
-                SurveyingSurveyor::where('survey_id', id)->delete();
+                SurveyingSurveyor::where('survey_id', $id)->delete();
 
                 return [
                     'status'    => 1,

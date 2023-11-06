@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getVaccinations, destroy } from '../../store/slices/vaccination'
+import { toShortTHDate } from '../../utils/formatter'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
 
@@ -72,7 +73,7 @@ const VaccinationList = () => {
                                                     <p>{vaccination.company?.name}</p>
                                                 </td>
                                                 <td className="text-center">
-                                                    {vaccination.vaccine_date}
+                                                    {toShortTHDate(vaccination.vaccine_date)}
                                                 </td>
                                                 <td className="text-center">
                                                     {vaccination.vaccine?.name}
@@ -85,9 +86,9 @@ const VaccinationList = () => {
                                                         <Link to={`/vaccinations/${vaccination.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
-                                                        <a href="#" className="btn btn-danger btn-sm" onClick={() => handleDelete(vaccination.id)}>
+                                                        <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(vaccination.id)}>
                                                             <i className="bi bi-trash"></i>
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                 </td>
                                             </tr>
