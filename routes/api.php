@@ -71,7 +71,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/investigations', 'InvestigationController@search');
     Route::get('/investigations/{id}', 'InvestigationController@getById');
     Route::post('/investigations', 'InvestigationController@store');
-    Route::put('/investigations/{id}', 'InvestigationController@update');
+    Route::post('/investigations/{id}', 'InvestigationController@update');
     Route::delete('/investigations/{id}', 'InvestigationController@destroy');
 
     /** Guildelines */
@@ -86,7 +86,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/network-meetings/search', 'NetworkMeetingController@search');
     Route::get('/network-meetings/{id}', 'NetworkMeetingController@getById');
     Route::post('/network-meetings', 'NetworkMeetingController@store');
-    Route::put('/network-meetings/{id}', 'NetworkMeetingController@update');
+    Route::post('/network-meetings/{id}', 'NetworkMeetingController@update');
     Route::delete('/network-meetings/{id}', 'NetworkMeetingController@destroy');
 
     /** Visitations */
@@ -94,7 +94,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/visitations/search', 'VisitationController@search');
     Route::get('/visitations/{id}', 'VisitationController@getById');
     Route::post('/visitations', 'VisitationController@store');
-    Route::put('/visitations/{id}', 'VisitationController@update');
+    Route::post('/visitations/{id}', 'VisitationController@update');
     Route::delete('/visitations/{id}', 'VisitationController@destroy');
 
     /** Vaccinations */
@@ -103,7 +103,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/vaccinations/{id}', 'VaccinationController@getById');
     Route::get('/vaccinations/init/form', 'VaccinationController@getInitialFormData');
     Route::post('/vaccinations', 'VaccinationController@store');
-    Route::put('/vaccinations/{id}', 'VaccinationController@update');
+    Route::post('/vaccinations/{id}', 'VaccinationController@update');
     Route::delete('/vaccinations/{id}', 'VaccinationController@destroy');
 
     /** Surveyings */
@@ -121,7 +121,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/er-plans/{id}', 'ERPlanController@getById');
     Route::get('/er-plans/init/form', 'ERPlanController@getInitialFormData');
     Route::post('/er-plans', 'ERPlanController@store');
-    Route::put('/er-plans/{id}', 'ERPlanController@update');
+    Route::post('/er-plans/{id}', 'ERPlanController@update');
     Route::delete('/er-plans/{id}', 'ERPlanController@destroy');
 
     /** Trainings */
@@ -130,7 +130,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/trainings/{id}', 'TrainingController@getById');
     Route::get('/trainings/init/form', 'TrainingController@getInitialFormData');
     Route::post('/trainings', 'TrainingController@store');
-    Route::put('/trainings/{id}', 'TrainingController@update');
+    Route::post('/trainings/{id}', 'TrainingController@update');
     Route::delete('/trainings/{id}', 'TrainingController@destroy');
 
     /** Screenings */
@@ -139,7 +139,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/screenings/{id}', 'ProactiveScreeningController@getById');
     Route::get('/screenings/init/form', 'ProactiveScreeningController@getInitialFormData');
     Route::post('/screenings', 'ProactiveScreeningController@store');
-    Route::put('/screenings/{id}', 'ProactiveScreeningController@update');
+    Route::post('/screenings/{id}', 'ProactiveScreeningController@update');
     Route::delete('/screenings/{id}', 'ProactiveScreeningController@destroy');
 
     /** ICD-10 */
