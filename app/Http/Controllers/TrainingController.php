@@ -147,4 +147,180 @@ class TrainingController extends Controller
             ];
         }
     }
+
+    public function update(Request $request, $id) 
+    {
+        try {
+            $training = Training::find($id);
+            $training->train_date       = $request['train_date'];
+            $training->division_id      = $request['division_id'];
+            $training->place            = $request['place'];
+            $training->topic            = $request['topic'];
+            $training->background       = $request['background'];
+            $training->train_hour       = $request['train_hour'];
+            $training->target_group_id  = $request['target_group_id'];
+            $training->target_group_text = $request['target_group_text'];
+            $training->num_of_participants = $request['num_of_participants'];
+            $training->have_kpi         = $request['have_kpi'];
+            $training->key_success      = $request['key_success'];
+            $training->is_succeed       = $request['is_succeed'];
+            $training->exhibition       = $request['exhibition'];
+            $training->exhibition_name  = $request['exhibition_name'];
+            $training->exhibition_num   = $request['exhibition_num'];
+            $training->demonstration    = $request['demonstration'];
+            $training->demonstration_name = $request['demonstration_name'];
+            $training->demonstration_num = $request['demonstration_num'];
+            $training->consultation     = $request['consultation'];
+            $training->education        = $request['education'];
+            $training->brochure         = $request['brochure'];
+            $training->campaign         = $request['campaign'];
+            $training->campaign_num     = $request['campaign_num'];
+            $training->campaign_num     = $request['campaign_num'];
+            // $training->remark           = $request['remark'];
+
+            // if ($request->file('training_pictures')) {
+            //     $index = 0;
+            //     $picNames = '';
+            //     $destinationPath = 'uploads/training/pic/';
+
+            //     foreach($request->file('training_pictures') as $file) {
+            //         $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
+
+            //         if ($file->move($destinationPath, $fileName)) {
+            //             if ($index < count($request->file('training_pictures'))) {
+            //                 $picNames .= $fileName.',';
+            //             } else {
+            //                 $picNames .= $fileName;
+            //             }
+            //         }
+
+            //         $index++;
+            //     }
+
+            //     $training->training_pictures = $picNames;
+            // }
+
+            // if ($request->file('pr_pictures')) {
+            //     $index = 0;
+            //     $picNames = '';
+            //     $destinationPath = 'uploads/training/pic/';
+
+            //     foreach($request->file('pr_pictures') as $file) {
+            //         $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
+
+            //         if ($file->move($destinationPath, $fileName)) {
+            //             if ($index < count($request->file('pr_pictures'))) {
+            //                 $picNames .= $fileName.',';
+            //             } else {
+            //                 $picNames .= $fileName;
+            //             }
+            //         }
+
+            //         $index++;
+            //     }
+
+            //     $plan->pr_pictures = $picNames;
+            // }
+
+            if ($training->save()) {
+                if (count($request['persons']) > 0) {
+                    foreach($request['persons'] as $person) {
+                        $newPerson = new TrainingPerson;
+                        $newPerson->train_id    = $training->id;
+                        $newPerson->name        = $person['name'];
+                        $newPerson->position    = $person['position'];
+                        $newPerson->company     = $person['company'];
+                        $newPerson->save();
+                    }
+                }
+
+                return [
+                    'status'        => 1,
+                    'message'       => 'Updating successfully!!',
+                    "training"      => $training
+                ];
+            } else {
+                return [
+                    'status'    => 0,
+                    'message'   => 'Something went wrong!!'
+                ];
+            }
+        } catch (\Exception $ex) {
+            return [
+                'status'    => 0,
+                'message'   => $ex->getMessage()
+            ];
+        }
+    }
+
+    public function destroy($id) 
+    {
+        try {
+            $training = Training::find($id);
+
+            // if ($request->file('training_pictures')) {
+            //     $index = 0;
+            //     $picNames = '';
+            //     $destinationPath = 'uploads/training/pic/';
+
+            //     foreach($request->file('training_pictures') as $file) {
+            //         $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
+
+            //         if ($file->move($destinationPath, $fileName)) {
+            //             if ($index < count($request->file('training_pictures'))) {
+            //                 $picNames .= $fileName.',';
+            //             } else {
+            //                 $picNames .= $fileName;
+            //             }
+            //         }
+
+            //         $index++;
+            //     }
+
+            //     $training->training_pictures = $picNames;
+            // }
+
+            // if ($request->file('pr_pictures')) {
+            //     $index = 0;
+            //     $picNames = '';
+            //     $destinationPath = 'uploads/training/pic/';
+
+            //     foreach($request->file('pr_pictures') as $file) {
+            //         $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
+
+            //         if ($file->move($destinationPath, $fileName)) {
+            //             if ($index < count($request->file('pr_pictures'))) {
+            //                 $picNames .= $fileName.',';
+            //             } else {
+            //                 $picNames .= $fileName;
+            //             }
+            //         }
+
+            //         $index++;
+            //     }
+
+            //     $plan->pr_pictures = $picNames;
+            // }
+
+            if ($training->delete()) {
+                /** ลบผู้จัดกิจกรรมทั้งหมด */
+                TrainingPerson::where('train_id', $id)->delete();
+
+                return [
+                    'status'        => 1,
+                    'message'       => 'Deleting successfully!!',
+                ];
+            } else {
+                return [
+                    'status'    => 0,
+                    'message'   => 'Something went wrong!!'
+                ];
+            }
+        } catch (\Exception $ex) {
+            return [
+                'status'    => 0,
+                'message'   => $ex->getMessage()
+            ];
+        }
+    }
 }
