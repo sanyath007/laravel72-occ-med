@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { GlobalContext } from '../../context/globalContext'
 import { toShortTHDate } from '../../utils/formatter'
 import { getErplans, destroy } from '../../store/slices/erplan'
 import Loading from '../../components/Loading'
@@ -19,10 +20,23 @@ const INCIDENTS = [
 ];
 
 const ERPlanList = () => {
+    const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
     const { erplans, pager, loading } = useSelector(state => state.erplan);
     const [endpoint, setEndpoint] = useState('');
     const [params, setParams] = useState('');
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'รายการแผนตอบโต้เหตุฉุกเฉิน',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'companies', name: 'รายการแผนตอบโต้เหตุฉุกเฉิน', path: null, active: true }
+            ]
+        }))
+    }, []);
 
     useEffect(() => {
         if (endpoint === '') {
@@ -65,7 +79,7 @@ const ERPlanList = () => {
                             </div>
 
                             <div>
-                                <table className="table table-bordered mb-0">
+                                <table className="table table-bordered mb-2">
                                     <thead>
                                         <tr>
                                             <th style={{ width: '5%', textAlign: 'center' }}>#</th>

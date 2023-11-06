@@ -2,13 +2,13 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { FaEnvelope, FaMobileAlt, FaUserAlt } from 'react-icons/fa'
-import Pagination from '../../components/Pagination'
 import { GlobalContext } from '../../context/globalContext'
 import { getCompanies } from '../../store/slices/company'
+import Pagination from '../../components/Pagination'
 
 const Companies = () => {
-    const dispatch = useDispatch()
     const { setGlobal } = useContext(GlobalContext)
+    const dispatch = useDispatch()
     const { companies, pager } = useSelector(state => state.company)
 
     /** Initial global states */

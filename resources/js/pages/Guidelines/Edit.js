@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { GlobalContext } from '../../context/globalContext'
 import { getGuideline, resetSuccess } from '../../store/slices/guideline'
 import GuidelineForm from './Form'
 import Loading from '../../components/Loading'
@@ -9,8 +10,22 @@ import Loading from '../../components/Loading'
 const EditGuideline = () => {
     const { id } = useParams();
     const navigate = useNavigate()
+    const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
     const { guideline, loading, success } = useSelector(state => state.guideline);
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'แก้ไขจัดทำแนวทาง/แบบฟอร์ม/ขั้นตอนการทำงาน',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'guidelines', name: 'รายการจัดทำแนวทาง/แบบฟอร์ม/ขั้นตอนการทำงาน', path: '/guidelines' },
+                { id: 'edit', name: 'แก้ไขจัดทำแนวทาง/แบบฟอร์ม/ขั้นตอนการทำงาน', path: null, active: true }
+            ]
+        }))
+    }, []);
 
     useEffect(() => {
         if (id) {

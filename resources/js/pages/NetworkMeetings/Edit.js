@@ -1,16 +1,31 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { GlobalContext } from '../../context/globalContext'
 import { getNetworkMeeting, resetSuccess } from '../../store/slices/networkMeeting'
 import NetworkMeetingForm from './Form'
 import Loading from '../../components/Loading'
 
 const EditNetworkMeeting = () => {
     const { id } = useParams();
+    const { setGlobal } = useContext(GlobalContext)
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const { meeting, loading, success } = useSelector(state => state.networkMeeting);
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'แก้ไขจัดประชุม/อบรมความรู้เครือข่าย',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'network-meetings', name: 'รายการจัดประชุม/อบรมความรู้เครือข่าย', path: '/network-meetings' },
+                { id: 'edit', name: 'แก้ไขจัดประชุม/อบรมความรู้เครือข่าย', path: null, active: true }
+            ]
+        }))
+    }, []);
 
     useEffect(() => {
         if (id) {

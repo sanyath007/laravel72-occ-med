@@ -1,7 +1,23 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import { GlobalContext } from '../../context/globalContext'
 import ERPlanForm from './Form'
 
 const AddERPlan = () => {
+    const { setGlobal } = useContext(GlobalContext)
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'บันทึกการจัดทำแผนตอบโต้เหตุฉุกเฉิน',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'er-plans', name: 'รายการทำแผนตอบโต้เหตุฉุกเฉิน', path: '/er-plans' },
+                { id: 'new', name: 'บันทึกการจัดทำแผนตอบโต้เหตุฉุกเฉิน', path: null, active: true }
+            ]
+        }))
+    }, []);
+
     return (
         <section className="section">
             <div className="row">

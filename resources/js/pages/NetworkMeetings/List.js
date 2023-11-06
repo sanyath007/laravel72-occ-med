@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { GlobalContext } from '../../context/globalContext'
 import { getNetworkMeetings, destroy } from '../../store/slices/networkMeeting'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
@@ -19,8 +20,21 @@ const meetingTypes = [
 const units = ['วัน', 'ชั่วโมง'];
 
 const NetworkMeetingList = () => {
+    const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
     const { meetings, pager, loading } = useSelector(state => state.networkMeeting);
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'รายการจัดประชุม/อบรมความรู้เครือข่าย',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'network-meetings', name: 'รายการจัดประชุม/อบรมความรู้เครือข่าย', path: null, active: true }
+            ]
+        }))
+    }, []);
 
     useEffect(() => {
         dispatch(getNetworkMeetings({ url: '/api/network-meetings/search' }));

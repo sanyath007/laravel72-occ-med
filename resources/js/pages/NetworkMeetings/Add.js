@@ -1,7 +1,23 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import { GlobalContext } from '../../context/globalContext'
 import NetworkMeetingForm from './Form'
 
 const AddNetworkMeeting = () => {
+    const { setGlobal } = useContext(GlobalContext)
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'บันทึกการจัดประชุม/อบรมความรู้เครือข่าย',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'network-meetings', name: 'รายการจัดประชุม/อบรมความรู้เครือข่าย', path: '/network-meetings' },
+                { id: 'new', name: 'บันทึกการจัดประชุม/อบรมความรู้เครือข่าย', path: null, active: true }
+            ]
+        }))
+    }, []);
+
     return (
         <section className="section">
             <div className="row">

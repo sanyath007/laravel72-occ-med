@@ -140,6 +140,7 @@ class ERPlanController extends Controller
                 'message'   => $ex->getMessage()
             ];
         }
+    }
 
     public function update(Request $request, $id) 
     {

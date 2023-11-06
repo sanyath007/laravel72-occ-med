@@ -1,7 +1,23 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import { GlobalContext } from '../../context/globalContext'
 import GuidelineForm from './Form'
 
 const AddGuideline = () => {
+    const { setGlobal } = useContext(GlobalContext)
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'บันทึกข้อมูลจัดทำแนวทาง/แบบฟอร์ม/ขั้นตอนการทำงาน',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'guidelines', name: 'รายการจัดทำแนวทาง/แบบฟอร์ม/ขั้นตอนการทำงาน', path: '/guidelines' },
+                { id: 'new', name: 'บันทึกข้อมูลจัดทำแนวทาง/แบบฟอร์ม/ขั้นตอนการทำงาน', path: null, active: true }
+            ]
+        }))
+    }, []);
+
     return (
         <section className="section">
             <div className="row">

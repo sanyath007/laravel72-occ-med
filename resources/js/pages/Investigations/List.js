@@ -1,13 +1,27 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { GlobalContext } from '../../context/globalContext'
 import { toShortTHDate } from '../../utils/formatter'
 import { getInvestigations, destroy } from '../../store/slices/investigation'
 import Pagination from '../../components/Pagination'
 
 const InvestigationList = () => {
+    const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
     const { investigations, pager, loading } = useSelector(state => state.investigation);
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'รายการสอบสวนโรค/อุบัติเหตุจากงานและสิ่งแวดล้อม',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'investigations', name: 'รายการสอบสวนโรค/อุบัติเหตุจากงานและสิ่งแวดล้อม', path: null, active: true }
+            ]
+        }))
+    }, []);
 
     useEffect(() => {
         dispatch(getInvestigations({ url: `/api/investigations` }));

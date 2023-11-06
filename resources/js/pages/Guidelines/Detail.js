@@ -1,13 +1,28 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
+import { GlobalContext } from '../../context/globalContext'
 import { getGuideline } from '../../store/slices/guideline'
 import Loading from '../../components/Loading'
 
 const GuidelineDetail = () => {
     const { id } = useParams();
+    const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
     const { guideline, loading } = useSelector(state => state.guideline);
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'รายละเอียดจัดทำแนวทาง/แบบฟอร์ม/ขั้นตอนการทำงาน',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'guidelines', name: 'รายการจัดทำแนวทาง/แบบฟอร์ม/ขั้นตอนการทำงาน', path: '/guidelines' },
+                { id: 'detail', name: 'รายละเอียดจัดทำแนวทาง/แบบฟอร์ม/ขั้นตอนการทำงาน', path: null, active: true }
+            ]
+        }))
+    }, []);
 
     useEffect(() => {
         if (id) {

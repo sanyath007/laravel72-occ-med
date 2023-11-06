@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { GlobalContext } from '../../context/globalContext'
 import { getInvestigation, resetSuccess } from '../../store/slices/investigation'
 import InvestigationForm from './Form'
 import Loading from '../../components/Loading'
@@ -9,8 +10,22 @@ import Loading from '../../components/Loading'
 const EditInvestigation = () => {
     const { id } = useParams();
     const navigate = useNavigate()
+    const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
     const { investigation, loading, success } = useSelector(state => state.investigation);
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'แก้ไขสอบสวนโรค/อุบัติเหตุจากงานและสิ่งแวดล้อม',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'investigations', name: 'รายการสอบสวนโรค/อุบัติเหตุจากงานและสิ่งแวดล้อม', path: '/investigations' },
+                { id: 'edit', name: 'แก้ไขสอบสวนโรค/อุบัติเหตุจากงานและสิ่งแวดล้อม', path: null, active: true }
+            ]
+        }))
+    }, []);
 
     useEffect(() => {
         if (id) {

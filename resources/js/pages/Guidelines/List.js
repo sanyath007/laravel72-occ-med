@@ -1,16 +1,30 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { FaFilePdf } from 'react-icons/fa'
 import moment from 'moment'
+import { GlobalContext } from '../../context/globalContext'
 import { getGuidelines, destroy } from '../../store/slices/guideline'
 import { toShortTHDate } from '../../utils/formatter'
 import Pagination from '../../components/Pagination'
 import Loading from '../../components/Loading'
 
 const GuidelineList = () => {
+    const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
     const { guidelines, pager, loading } = useSelector(state => state.guideline);
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'รายการจัดทำแนวทาง/แบบฟอร์ม/ขั้นตอนการทำงาน',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'guidelines', name: 'รายการจัดทำแนวทาง/แบบฟอร์ม/ขั้นตอนการทำงาน', path: null, active: true }
+            ]
+        }))
+    }, []);
 
     useEffect(() => {
         dispatch(getGuidelines({ url: `/api/guidelines` }));
@@ -41,7 +55,7 @@ const GuidelineList = () => {
                                 }}
                                 className="mb-2"
                             >
-                                <h5 className="card-title p-0">การจัดทำแนวทาง/แบบฟอร์ม/ขั้นตอนการทำงาน</h5>
+                                <h5 className="card-title p-0">รายการจัดทำแนวทาง/แบบฟอร์ม/ขั้นตอนการทำงาน</h5>
 
                                 <div>
                                     <Link to="/guidelines/new" className="btn btn-primary">เพิ่มรายการ</Link>
