@@ -1,19 +1,31 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { getGuideline } from '../../store/slices/guideline'
+import { toast } from 'react-toastify';
+import { getNetworkMeeting, resetSuccess } from '../../store/slices/networkMeeting'
 import NetworkMeetingForm from './Form'
 
 const EditNetworkMeeting = () => {
     const { id } = useParams();
+    const navigate = useNavigate()
     const dispatch = useDispatch();
-    const { guideline, loading } = useSelector(state => state.guideline);
+    const { networkMeeting, loading, success } = useSelector(state => state.networkMeeting);
 
     useEffect(() => {
         if (id) {
-            dispatch(getGuideline(id));
+            dispatch(getNetworkMeeting(id));
         }
     }, [id]);
+
+    useEffect(() => {
+        if (success) {
+            toast.success('บันทึกการแก้ไขข้อมูลเรียบร้อยแล้ว!!');
+
+            dispatch(resetSuccess());
+
+            navigate('/networkM-weetings');
+        }
+    }, [success]);
 
     return (
         <section className="section">

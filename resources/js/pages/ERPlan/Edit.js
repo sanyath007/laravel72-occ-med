@@ -1,7 +1,32 @@
 import React from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import { getErplan, resetSuccess } from '../../store/slices/erplan'
 import ERPlanForm from './Form'
 
 const EditERPlan = () => {
+    const { id } = useParams();
+    const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const { erplan, loading, success } = useSelector(state => state.erplan);
+
+    useEffect(() => {
+        if (id) {
+            dispatch(getErplan(id));
+        }
+    }, [id]);
+
+    useEffect(() => {
+        if (success) {
+            toast.success('บันทึกการแก้ไขข้อมูลเรียบร้อยแล้ว!!');
+
+            dispatch(resetSuccess());
+
+            navigate('/erplans');
+        }
+    }, [success]);
+
     return (
         <section className="section">
             <div className="row">

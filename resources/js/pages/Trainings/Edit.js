@@ -1,19 +1,31 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { getTraining } from '../../store/slices/training'
+import { toast } from 'react-toastify';
+import { getTraining, resetSuccess } from '../../store/slices/training'
 import TrainingForm from './Form'
 
 const EditTraining = () => {
     const { id } = useParams();
+    const navigate = useNavigate()
     const dispatch = useDispatch();
-    const { training, loading } = useSelector(state => state.training);
+    const { training, loading, success } = useSelector(state => state.training);
 
     useEffect(() => {
         if (id) {
             dispatch(getTraining(id));
         }
     }, [id]);
+
+    useEffect(() => {
+        if (success) {
+            toast.success('บันทึกการแก้ไขข้อมูลเรียบร้อยแล้ว!!');
+
+            dispatch(resetSuccess());
+
+            navigate('/guidelines');
+        }
+    }, [success]);
 
     return (
         <section className="section">

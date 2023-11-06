@@ -1,19 +1,31 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { getInvestigation } from '../../store/slices/investigation'
+import { toast } from 'react-toastify';
+import { getInvestigation, resetSuccess } from '../../store/slices/investigation'
 import InvestigationForm from './Form'
 
 const EditInvestigation = () => {
     const { id } = useParams();
+    const navigate = useNavigate()
     const dispatch = useDispatch();
-    const { investigation, loading } = useSelector(state => state.investigation);
+    const { investigation, loading, success } = useSelector(state => state.investigation);
 
     useEffect(() => {
         if (id) {
             dispatch(getInvestigation(id));
         }
     }, [id]);
+
+    useEffect(() => {
+        if (success) {
+            toast.success('บันทึกการแก้ไขข้อมูลเรียบร้อยแล้ว!!');
+
+            dispatch(resetSuccess());
+
+            navigate('/guidelines');
+        }
+    }, [success]);
 
     return (
         <section className="section">

@@ -1,19 +1,31 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { getSupervision } from '../../store/slices/supervision'
+import { toast } from 'react-toastify';
+import { getSupervision, resetSuccess } from '../../store/slices/supervision'
 import SupervisionForm from './Form'
 
 const AddSupervision = () => {
     const { id } = useParams();
+    const navigate = useNavigate()
     const dispatch = useDispatch();
-    const { supervision, loading } = useSelector(state => state.supervision);
+    const { supervision, loading, success } = useSelector(state => state.supervision);
 
     useEffect(() => {
         if (id) {
             dispatch(getSupervision(id));
         }
     }, [id]);
+
+    useEffect(() => {
+        if (success) {
+            toast.success('บันทึกการแก้ไขข้อมูลเรียบร้อยแล้ว!!');
+
+            dispatch(resetSuccess());
+
+            navigate('/guidelines');
+        }
+    }, [success]);
 
     return (
         <section className="section">

@@ -1,19 +1,31 @@
 import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { getGuideline } from '../../store/slices/guideline'
+import { toast } from 'react-toastify';
+import { getGuideline, resetSuccess } from '../../store/slices/guideline'
 import GuidelineForm from './Form'
 
 const EditGuideline = () => {
     const { id } = useParams();
+    const navigate = useNavigate()
     const dispatch = useDispatch();
-    const { guideline, loading } = useSelector(state => state.guideline);
+    const { guideline, loading, success } = useSelector(state => state.guideline);
 
     useEffect(() => {
         if (id) {
             dispatch(getGuideline(id));
         }
     }, [id]);
+
+    useEffect(() => {
+        if (success) {
+            toast.success('บันทึกการแก้ไขข้อมูลเรียบร้อยแล้ว!!');
+
+            dispatch(resetSuccess());
+
+            navigate('/guidelines');
+        }
+    }, [success]);
 
     return (
         <section className="section">

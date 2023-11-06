@@ -1,19 +1,31 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { getScreening } from '../../store/slices/screening'
+import { toast } from 'react-toastify';
+import { getScreening, resetSuccess } from '../../store/slices/screening'
 import ScreeningForm from './Form'
 
 const EditScreening = () => {
     const { id } = useParams();
+    const navigate = useNavigate()
     const dispatch = useDispatch();
-    const { screening, loading } = useSelector(state => state.screening);
+    const { screening, loading, success } = useSelector(state => state.screening);
 
     useEffect(() => {
         if (id) {
             dispatch(getScreening(id));
         }
     }, [id]);
+
+    useEffect(() => {
+        if (success) {
+            toast.success('บันทึกการแก้ไขข้อมูลเรียบร้อยแล้ว!!');
+
+            dispatch(resetSuccess());
+
+            navigate('/guidelines');
+        }
+    }, [success]);
 
     return (
         <section className="section">
