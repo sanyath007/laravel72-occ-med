@@ -19,6 +19,12 @@ const VaccinationList = () => {
         }
     }, [dispatch, endpoint, params]);
 
+    const handleDelete = (id) => {
+        if (confirm('คุณต้องการลบรายการใช่หรือไม่?')) {
+            dispatch(destroy(plan.id))
+        }
+    };
+
     return (
         <section className="section">
             <div className="row">
@@ -79,7 +85,7 @@ const VaccinationList = () => {
                                                         <Link to={`/vaccinations/${vaccination.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
-                                                        <a href="#" className="btn btn-danger btn-sm" onClick={(e) => {}}>
+                                                        <a href="#" className="btn btn-danger btn-sm" onClick={() => handleDelete(vaccination.id)}>
                                                             <i className="bi bi-trash"></i>
                                                         </a>
                                                     </div>

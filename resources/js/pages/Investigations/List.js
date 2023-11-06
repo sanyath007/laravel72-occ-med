@@ -16,6 +16,12 @@ const InvestigationList = () => {
         console.log(url);
     };
 
+    const handleDelete = (id) => {
+        if (confirm('คุณต้องการลบรายการใช่หรือไม่?')) {
+            dispatch(destroy(plan.id))
+        }
+    };
+
     return (
         <section className="section">
             <div className="row">
@@ -51,22 +57,22 @@ const InvestigationList = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {investigations && investigations.map((inv, index) => (
+                                        {investigations && investigations.map((investigation, index) => (
                                             <tr key={inv.id}>
                                                 <td style={{ textAlign: 'center' }}>{pager && pager.from + index}</td>
-                                                <td style={{ textAlign: 'center' }}>{inv.investigate_date}</td>
-                                                <td>{inv.division?.name}</td>
-                                                <td>{inv.investigate_place}</td>
-                                                <td style={{ textAlign: 'center' }}>{inv.num_of_people}</td>
+                                                <td style={{ textAlign: 'center' }}>{investigation.investigate_date}</td>
+                                                <td>{investigation.division?.name}</td>
+                                                <td>{investigation.investigate_place}</td>
+                                                <td style={{ textAlign: 'center' }}>{investigation.num_of_people}</td>
                                                 <td style={{ textAlign: 'center' }}>
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                        <Link to={`/investigations/${inv.id}/detail`} className="btn btn-primary btn-sm">
+                                                        <Link to={`/investigations/${investigation.id}/detail`} className="btn btn-primary btn-sm">
                                                             <i className="bi bi-search"></i>
                                                         </Link>
-                                                        <Link to={`/investigations/${inv.id}/edit`} className="btn btn-warning btn-sm">
+                                                        <Link to={`/investigations/${investigation.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
-                                                        <a href="#" className="btn btn-danger btn-sm" onClick={(e) => {}}>
+                                                        <a href="#" className="btn btn-danger btn-sm" onClick={() => handleDelete(investigation.id)}>
                                                             <i className="bi bi-trash"></i>
                                                         </a>
                                                     </div>

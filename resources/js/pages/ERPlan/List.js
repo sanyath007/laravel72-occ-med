@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getErplans } from '../../store/slices/erplan'
 import { toShortTHDate } from '../../utils/formatter'
+import { getErplans, destroy } from '../../store/slices/erplan'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
 
@@ -34,6 +34,12 @@ const ERPlanList = () => {
 
     const handlePageClick = (url) => {
         setEndpoint(url);
+    };
+
+    const handleDelete = (id) => {
+        if (confirm('คุณต้องการลบรายการใช่หรือไม่?')) {
+            dispatch(destroy(plan.id))
+        }
     };
 
     return (
@@ -101,7 +107,7 @@ const ERPlanList = () => {
                                                         <Link to={`/er-plans/${plan.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
-                                                        <a href="#" className="btn btn-danger btn-sm" onClick={(e) => {}}>
+                                                        <a href="#" className="btn btn-danger btn-sm" onClick={() => handleDelete(plan.id)}>
                                                             <i className="bi bi-trash"></i>
                                                         </a>
                                                     </div>
