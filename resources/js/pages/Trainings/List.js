@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../context/globalContext'
-import { getTrainings, destroy } from '../../store/slices/training'
+import { getTrainings, resetSuccess, destroy } from '../../store/slices/training'
 import { toShortTHDate } from '../../utils/formatter'
 import Loading from '../../components/Loading'
 
 const TrainingList = () => {
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { trainings, pager, loading } = useSelector(state => state.training);
+    const { trainings, pager, loading, success } = useSelector(state => state.training);
     const [endpoint, setEndpoint] = useState('');
     const [params, setParams] = useState('');
 
@@ -24,6 +25,15 @@ const TrainingList = () => {
             ]
         }))
     }, []);
+
+    /** If delete giudeline is succeed */
+    useEffect(() => {
+        if (success) {
+            toast.success('ลบข้อมูลเรียบร้อยแล้ว');
+    
+            dispatch(resetSuccess());
+        }
+    }, [success]);
 
     useEffect(() => {
         if (endpoint === '') {
@@ -105,9 +115,9 @@ const TrainingList = () => {
                                                         <Link to={`/trainings/${training.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
-                                                        <a href="#" className="btn btn-danger btn-sm" onClick={() => handleDelete(training.id)}>
+                                                        <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(training.id)}>
                                                             <i className="bi bi-trash"></i>
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                 </td>
                                             </tr>

@@ -26,19 +26,19 @@ const GuidelineList = () => {
             ]
         }))
     }, []);
+    
+        /** If delete giudeline is succeed */
+        useEffect(() => {
+            if (success) {
+                toast.success('ลบข้อมูลเรียบร้อยแล้ว');
+        
+                dispatch(resetSuccess());
+            }
+        }, [success]);
 
     useEffect(() => {
         dispatch(getGuidelines({ url: `/api/guidelines` }));
     }, []);
-
-    /** If delete giudeline is succeed */
-    useEffect(() => {
-        if (success) {
-            toast.success('ลบข้อมูลเรียบร้อยแล้ว');
-    
-            dispatch(resetSuccess());
-        }
-    }, [success]);
 
     const handlePageClick = (url) => {
         console.log(url);

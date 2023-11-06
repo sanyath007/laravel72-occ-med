@@ -1,16 +1,16 @@
 import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../context/globalContext'
-import { getVisitations, destroy } from '../../store/slices/visitation'
+import { getVisitations, resetSuccess, destroy } from '../../store/slices/visitation'
 import { toShortTHDate } from '../../utils/formatter'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
 
 const VisitationList = () => {
     const dispatch = useDispatch();
-    const { visitations, pager, loading } = useSelector(state => state.visitation);
-
+    const { visitations, pager, loading, success } = useSelector(state => state.visitation);
     const { setGlobal } = useContext(GlobalContext)
 
     /** Initial global states */
@@ -24,6 +24,15 @@ const VisitationList = () => {
             ]
         }))
     }, []);
+
+    /** If delete giudeline is succeed */
+    useEffect(() => {
+        if (success) {
+            toast.success('ลบข้อมูลเรียบร้อยแล้ว');
+    
+            dispatch(resetSuccess());
+        }
+    }, [success]);
 
     useEffect(() => {
         dispatch(getVisitations({ url: '/api/visitations/search' }));

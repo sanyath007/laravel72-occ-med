@@ -1,8 +1,9 @@
 import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../context/globalContext'
-import { getNetworkMeetings, destroy } from '../../store/slices/networkMeeting'
+import { getNetworkMeetings, resetSuccess, destroy } from '../../store/slices/networkMeeting'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
 
@@ -22,7 +23,7 @@ const units = ['วัน', 'ชั่วโมง'];
 const NetworkMeetingList = () => {
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { meetings, pager, loading } = useSelector(state => state.networkMeeting);
+    const { meetings, pager, loading, success } = useSelector(state => state.networkMeeting);
 
     /** Initial global states */
     useEffect(() => {
@@ -35,6 +36,15 @@ const NetworkMeetingList = () => {
             ]
         }))
     }, []);
+    
+        /** If delete giudeline is succeed */
+        useEffect(() => {
+            if (success) {
+                toast.success('ลบข้อมูลเรียบร้อยแล้ว');
+        
+                dispatch(resetSuccess());
+            }
+        }, [success]);
 
     useEffect(() => {
         dispatch(getNetworkMeetings({ url: '/api/network-meetings/search' }));
@@ -112,9 +122,9 @@ const NetworkMeetingList = () => {
                                                         <Link to={`/network-meetings/${meeting.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
-                                                        <a href="#" className="btn btn-danger btn-sm" onClick={() => handleDelete(meeting.id)}>
+                                                        <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(meeting.id)}>
                                                             <i className="bi bi-trash"></i>
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                 </td>
                                             </tr>

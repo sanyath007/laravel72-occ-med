@@ -1,10 +1,14 @@
 import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { GlobalContext } from '../../context/globalContext'
-import { getSupervisions, destroy } from '../../store/slices/supervision'
+import { getSupervisions, resetSuccess, destroy } from '../../store/slices/supervision'
+import { useDispatch, useSelector } from 'react-redux'
 
 const SupervisionList = () => {
-    const { setGlobal } = useContext(GlobalContext)
+    const { setGlobal } = useContext(GlobalContext);
+    const dispatch = useDispatch();
+    const { supervisions, pager, loading, success } = useSelector(state => state.supervision);
 
     /** Initial global states */
     useEffect(() => {
@@ -17,6 +21,15 @@ const SupervisionList = () => {
             ]
         }))
     }, []);
+
+    /** If delete giudeline is succeed */
+    useEffect(() => {
+        if (success) {
+            toast.success('ลบข้อมูลเรียบร้อยแล้ว');
+    
+            dispatch(resetSuccess());
+        }
+    }, [success]);
 
     const handleDelete = (id) => {
         if (confirm('คุณต้องการลบรายการใช่หรือไม่?')) {
@@ -72,9 +85,9 @@ const SupervisionList = () => {
                                                         <Link to={`/supervisions/${supervision.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
-                                                        <a href="#" className="btn btn-danger btn-sm" onClick={() => handleDelete(supervision.id)}>
+                                                        <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(supervision.id)}>
                                                             <i className="bi bi-trash"></i>
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                 </td>
                                             </tr>

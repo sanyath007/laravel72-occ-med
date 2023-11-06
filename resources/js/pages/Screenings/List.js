@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../context/globalContext'
-import { getScreenings, destroy } from '../../store/slices/screening'
+import { getScreenings, resetSuccess, destroy } from '../../store/slices/screening'
 import { toShortTHDate } from '../../utils/formatter'
 import Loading from '../../components/Loading'
 
@@ -11,7 +12,7 @@ const SCREEN_TYPES =['คัดกรองโรคจากงาน','คั�
 const ScreeningList = () => {
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { screenings, pager, loading } = useSelector(state => state.screening);
+    const { screenings, pager, loading, success } = useSelector(state => state.screening);
     const [endpoint, setEndpoint] = useState('');
     const [params, setParams] = useState('');
 
@@ -26,6 +27,15 @@ const ScreeningList = () => {
             ]
         }))
     }, []);
+
+    /** If delete giudeline is succeed */
+    useEffect(() => {
+        if (success) {
+            toast.success('ลบข้อมูลเรียบร้อยแล้ว');
+    
+            dispatch(resetSuccess());
+        }
+    }, [success]);
 
     useEffect(() => {
         if (endpoint === '') {
@@ -109,9 +119,9 @@ const ScreeningList = () => {
                                                         <Link to={`/screenings/${screening.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
-                                                        <a href="#" className="btn btn-danger btn-sm" onClick={() => handleDelete(screening.id)}>
+                                                        <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(screening.id)}>
                                                             <i className="bi bi-trash"></i>
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                 </td>
                                             </tr>

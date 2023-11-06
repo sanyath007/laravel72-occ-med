@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../context/globalContext'
-import { getVaccinations, destroy } from '../../store/slices/vaccination'
+import { getVaccinations, resetSuccess, destroy } from '../../store/slices/vaccination'
 import { toShortTHDate } from '../../utils/formatter'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
@@ -10,7 +11,7 @@ import Pagination from '../../components/Pagination'
 const VaccinationList = () => {
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { vaccinations, pager, loading } = useSelector(state => state.vaccination);
+    const { vaccinations, pager, loading, success } = useSelector(state => state.vaccination);
     const [endpoint, setEndpoint] = useState('');
     const [params, setParams] = useState('');
 
@@ -25,6 +26,15 @@ const VaccinationList = () => {
             ]
         }))
     }, []);
+
+    /** If delete giudeline is succeed */
+    useEffect(() => {
+        if (success) {
+            toast.success('ลบข้อมูลเรียบร้อยแล้ว');
+    
+            dispatch(resetSuccess());
+        }
+    }, [success]);
 
     useEffect(() => {
         if (endpoint === '') {

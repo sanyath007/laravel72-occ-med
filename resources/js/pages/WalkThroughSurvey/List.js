@@ -1,8 +1,9 @@
 import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../context/globalContext'
-import { getSurveyings, destroy } from '../../store/slices/surveying'
+import { getSurveyings, resetSuccess, destroy } from '../../store/slices/surveying'
 import { toShortTHDate } from '../../utils/formatter'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
@@ -10,7 +11,7 @@ import Pagination from '../../components/Pagination'
 const SurveyingList = () => {
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { surveyings, pager, loading } = useSelector(state => state.surveying);
+    const { surveyings, pager, loading, success } = useSelector(state => state.surveying);
 
     /** Initial global states */
     useEffect(() => {
@@ -23,6 +24,15 @@ const SurveyingList = () => {
             ]
         }))
     }, []);
+
+    /** If delete giudeline is succeed */
+    useEffect(() => {
+        if (success) {
+            toast.success('ลบข้อมูลเรียบร้อยแล้ว');
+    
+            dispatch(resetSuccess());
+        }
+    }, [success]);
 
     useEffect(() => {
         dispatch(getSurveyings({ url: '/api/surveyings/search' }));
@@ -106,9 +116,9 @@ const SurveyingList = () => {
                                                         <Link to={`/surveyings/${surveying.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
-                                                        <a href="#" className="btn btn-danger btn-sm" onClick={() => handleDelete(surveying.id)}>
+                                                        <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(surveying.id)}>
                                                             <i className="bi bi-trash"></i>
-                                                        </a>
+                                                        </button>
                                                     </div>
                                                 </td>
                                             </tr>
