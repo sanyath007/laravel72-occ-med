@@ -55,15 +55,15 @@ const SurveyingForm = ({ id, surveying }) => {
     }, [surveying]);
 
     const handleSubmit = (values, formik) => {
-        let data = new FormData();
+        // let data = new FormData();
 
-        for(const [key, val] of Object.entries(values)) {
-            if (key === 'surveyors' || key === 'guidelines') {
-                data.append(key, JSON.stringify(val));
-            } else {
-                data.append(key, val);
-            }
-        }
+        // for(const [key, val] of Object.entries(values)) {
+        //     if (key === 'surveyors' || key === 'guidelines') {
+        //         data.append(key, JSON.stringify(val));
+        //     } else {
+        //         data.append(key, val);
+        //     }
+        // }
 
         if (surveying) {
             dispatch(update({ id, data: values }));

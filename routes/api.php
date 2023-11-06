@@ -78,7 +78,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/guidelines', 'GuidelineController@search');
     Route::get('/guidelines/{id}', 'GuidelineController@getById');
     Route::post('/guidelines', 'GuidelineController@store');
-    Route::put('/guidelines/{id}', 'GuidelineController@update');
+    Route::post('/guidelines/{id}', 'GuidelineController@update');
     Route::delete('/guidelines/{id}', 'GuidelineController@destroy');
 
     /** NetworkMeetings */

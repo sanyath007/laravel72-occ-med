@@ -4,12 +4,12 @@ import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row } from 'react-bootstrap'
 import { FaSave, FaFilePdf } from 'react-icons/fa'
-import { store } from '../../store/slices/guideline'
+import { store, update } from '../../store/slices/guideline'
 
 const guidelineSchema = Yup.object().shape({
     topic: Yup.string().required(),
     division_id: Yup.string().required(),
-    file_attachment: Yup.string().required()
+    // file_attachment: Yup.string().required()
 });
 
 const GuidelineForm = ({ id, guideline }) => {
@@ -19,22 +19,25 @@ const GuidelineForm = ({ id, guideline }) => {
     useEffect(() => {
         if (guideline) setFileAttachment(guideline.file_attachment);
     }, [guideline]);
-    console.log(fileAttachment);
 
     const handleSubmit = (values, formik) => {
-        const data = new FormData();
+        // const data = new FormData();
 
-        for(const [key, val] of Object.entries(values)) {
-            if (key === 'file_attachment') {
-                [...val].forEach((file, i) => {
-                    data.append(key, file[0]);
-                })
-            } else {
-                data.append(key, val);
-            }
+        // for(const [key, val] of Object.entries(values)) {
+        //     if (key === 'file_attachment') {
+        //         [...val].forEach((file, i) => {
+        //             data.append(key, file[0]);
+        //         })
+        //     } else {
+        //         data.append(key, val);
+        //     }
+        // }
+
+        if (guideline) {
+            dispatch(update({ id, data: values }));
+        } else {
+            dispatch(store(values));
         }
-
-        dispatch(store(values));
 
         formik.resetForm();
     };
@@ -98,6 +101,13 @@ const GuidelineForm = ({ id, guideline }) => {
                                     {(formik.errors.file_attachment && formik.touched.file_attachment) && (
                                         <span className="text-danger text-sm">{formik.errors.file_attachment}</span>
                                     )}
+                                    <div className="mt-2">
+                                        {fileAttachment && (
+                                            <a href={`${process.env.MIX_APP_URL}/uploads/guideline/${fileAttachment}`} target="_blank">
+                                                <FaFilePdf /> {fileAttachment}
+                                            </a>
+                                        )}
+                                    </div>
                                 </Col>
                             </Row>
                             <Row className="mb-2">

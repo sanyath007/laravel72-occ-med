@@ -28,6 +28,7 @@ class GuidelineController extends Controller
             $guideline->division_id = $request['division_id'];
             $guideline->remark = $request['remark'];
 
+            /** Upload file */
             if ($request->file('file_attachment')) {
                 $file = $request->file('file_attachment');
                 $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
@@ -65,10 +66,17 @@ class GuidelineController extends Controller
             $guideline->division_id = $request['division_id'];
             $guideline->remark = $request['remark'];
 
+            /** Upload file and pictures */
             if ($request->file('file_attachment')) {
                 $file = $request->file('file_attachment');
                 $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
                 $destinationPath = 'uploads/guideline/';
+
+                /** Check and remove uploaded file */
+                $existedFile = $destinationPath . $guideline->file_attachment;
+                if (\File::exists($existedFile)) {
+                    \File::delete($existedFile);
+                }
 
                 if ($file->move($destinationPath, $fileName)) {
                     $guideline->file_attachment = $fileName;
@@ -98,6 +106,13 @@ class GuidelineController extends Controller
     public function destroy($id) {
         try {
             $guideline = Guideline::find($id);
+
+            /** Remove uploaded file */
+            $destinationPath = 'uploads/wts';
+            $existedFile = $destinationPath .'/file/'. $surveying->file_attachment;
+            if (\File::exists($existedFile)) {
+                \File::delete($existedFile);
+            }
 
             if ($guideline->delete()) {
                 return [

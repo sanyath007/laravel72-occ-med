@@ -151,7 +151,7 @@ class SurveyingController extends Controller
                 $file = $request->file('file_attachment');
                 $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
 
-                /** Remove uploaded file */
+                /** Check and remove uploaded file */
                 $existedFile = $destinationPath . $surveying->file_attachment;
                 if (\File::exists($existedFile)) {
                     \File::delete($existedFile);
