@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { GlobalContext } from '../../context/globalContext'
 import { getVaccination, resetSuccess } from '../../store/slices/vaccination'
 import VaccinationForm from './Form'
 import Loading from '../../components/Loading'
@@ -9,8 +10,22 @@ import Loading from '../../components/Loading'
 const EditVaccination = () => {
     const { id } = useParams();
     const navigate = useNavigate()
+    const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
     const { vaccination, loading, success } = useSelector(state => state.vaccination);
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'แก้ไขสร้างเสริมภูมิคุ้มกันโรค',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'vaccinations', name: 'รายการสร้างเสริมภูมิคุ้มกันโรค', path: '/vaccinations' },
+                { id: 'edit', name: 'แก้ไขสร้างเสริมภูมิคุ้มกันโรค', path: null, active: true }
+            ]
+        }))
+    }, []);
 
     useEffect(() => {
         if (id) {

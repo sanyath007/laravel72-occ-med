@@ -100,7 +100,7 @@ export const trainingSlice = createSlice({
         },
         [getTraining.fulfilled]: (state, { payload }) => {
             state.loading = false
-            state.trainings = payload
+            state.training = payload
         },
         [getTraining.rejected]: (state, { payload }) => {
             state.loading = false

@@ -1,15 +1,29 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { GlobalContext } from '../../context/globalContext'
 import { getTrainings, destroy } from '../../store/slices/training'
 import { toShortTHDate } from '../../utils/formatter'
 import Loading from '../../components/Loading'
 
 const TrainingList = () => {
+    const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
     const { trainings, pager, loading } = useSelector(state => state.training);
     const [endpoint, setEndpoint] = useState('');
     const [params, setParams] = useState('');
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'รายการอบรมให้ความรู้',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'trainings', name: 'รายการอบรมให้ความรู้', path: null, active: true }
+            ]
+        }))
+    }, []);
 
     useEffect(() => {
         if (endpoint === '') {

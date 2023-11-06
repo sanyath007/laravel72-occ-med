@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { GlobalContext } from '../../context/globalContext'
 import { getScreening, resetSuccess } from '../../store/slices/screening'
 import ScreeningForm from './Form'
 import Loading from '../../components/Loading'
@@ -9,8 +10,21 @@ import Loading from '../../components/Loading'
 const EditScreening = () => {
     const { id } = useParams();
     const navigate = useNavigate()
+    const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
     const { screening, loading, success } = useSelector(state => state.screening);
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'investigations', name: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: null, active: true }
+            ]
+        }))
+    }, []);
 
     useEffect(() => {
         if (id) {

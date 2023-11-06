@@ -1,8 +1,22 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { GlobalContext } from '../../context/globalContext'
 import { getSupervisions, destroy } from '../../store/slices/supervision'
 
 const SupervisionList = () => {
+    const { setGlobal } = useContext(GlobalContext)
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'รายการนิเทศ/ติดตาม',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'supervisions', name: 'รายการนิเทศ/ติดตาม', path: null, active: true }
+            ]
+        }))
+    }, []);
 
     const handleDelete = (id) => {
         if (confirm('คุณต้องการลบรายการใช่หรือไม่?')) {
@@ -25,7 +39,7 @@ const SupervisionList = () => {
                                 }}
                                 className="mb-2"
                             >
-                                <h5 className="card-title p-0">รายการนิเทศ</h5>
+                                <h5 className="card-title p-0">รายการนิเทศ/ติดตาม</h5>
 
                                 <div>
                                     <Link to="/supervisions/new" className="btn btn-primary">เพิ่มรายการ</Link>

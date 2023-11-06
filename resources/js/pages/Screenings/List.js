@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { GlobalContext } from '../../context/globalContext'
 import { getScreenings, destroy } from '../../store/slices/screening'
 import { toShortTHDate } from '../../utils/formatter'
 import Loading from '../../components/Loading'
@@ -8,10 +9,23 @@ import Loading from '../../components/Loading'
 const SCREEN_TYPES =['คัดกรองโรคจากงาน','คัดกรองโรคจากสิ่งแวดล้อม','คัดกรองโรคทั่วไป','คัดกรองโรคติดต่อ'];
 
 const ScreeningList = () => {
+    const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
     const { screenings, pager, loading } = useSelector(state => state.screening);
     const [endpoint, setEndpoint] = useState('');
     const [params, setParams] = useState('');
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'investigations', name: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: null, active: true }
+            ]
+        }))
+    }, []);
 
     useEffect(() => {
         if (endpoint === '') {

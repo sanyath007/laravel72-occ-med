@@ -1,16 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { GlobalContext } from '../../context/globalContext'
 import { getVaccinations, destroy } from '../../store/slices/vaccination'
 import { toShortTHDate } from '../../utils/formatter'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
 
 const VaccinationList = () => {
+    const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
     const { vaccinations, pager, loading } = useSelector(state => state.vaccination);
     const [endpoint, setEndpoint] = useState('');
     const [params, setParams] = useState('');
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'รายการสร้างเสริมภูมิคุ้มกันโรค',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'vaccinations', name: 'รายการสร้างเสริมภูมิคุ้มกันโรค', path: null, active: true }
+            ]
+        }))
+    }, []);
 
     useEffect(() => {
         if (endpoint === '') {

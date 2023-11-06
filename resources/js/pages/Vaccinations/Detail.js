@@ -1,13 +1,28 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
+import { GlobalContext } from '../../context/globalContext'
 import { getVaccination } from '../../store/slices/vaccination'
 import Loading from '../../components/Loading'
 
 const VaccinationDetail = () => {
     const { id } = useParams();
+    const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
     const { vaccination, loading } = useSelector(state => state.vaccination);
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'รายละเอียดการสร้างเสริมภูมิคุ้มกันโรค',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'vaccinations', name: 'รายการสร้างเสริมภูมิคุ้มกันโรค', path: '/vaccinations' },
+                { id: 'detail', name: 'รายละเอียดการสร้างเสริมภูมิคุ้มกันโรค', path: null, active: true }
+            ]
+        }))
+    }, []);
 
     useEffect(() => {
         if (id) {
