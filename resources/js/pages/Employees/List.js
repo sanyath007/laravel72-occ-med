@@ -58,10 +58,11 @@ const EmployeeList = () => {
                                 <thead>
                                     <tr>
                                         <th scope="col" style={{ width: '3%', textAlign: 'center' }}>#</th>
-                                        <th scope="col" style={{ width: '25%' }}>ชื่อ-สกุล</th>
-                                        <th scope="col">ที่อยู่</th>
-                                        <th scope="col" style={{ width: '20%', textAlign: 'center' }}>ตำแหน่ง</th>
+                                        <th scope="col">ชื่อ-สกุล</th>
+                                        {/* <th scope="col">ที่อยู่</th> */}
+                                        <th scope="col" style={{ width: '25%', textAlign: 'center' }}>ตำแหน่ง</th>
                                         <th scope="col" style={{ width: '15%', textAlign: 'center' }}>ประเภท</th>
+                                        <th scope="col" style={{ width: '10%', textAlign: 'center' }}>สถานะ</th>
                                         <th scope="col" style={{ width: '10%', textAlign: 'center' }}>Actions</th>
                                     </tr>
                                 </thead>
@@ -83,14 +84,15 @@ const EmployeeList = () => {
                                     {(!loading && employees?.length > 0) && employees?.map((employee, row) => (
                                         <tr key={employee.id}>
                                             <th scope="row" style={{ textAlign: 'center' }}>{pager?.from+row}</th>
-                                            <td>{employee.pname}{employee.fname} {employee.lname}</td>
-                                            <td>
-                                                {/* {`${employee.address} หมู่${employee.moo ? employee.moo : '-'} 
+                                            <td>{employee.prefix}{employee.fname} {employee.lname}</td>
+                                            {/* <td>
+                                                {`${employee.address} หมู่${employee.moo ? employee.moo : '-'} 
                                                     ถนน${employee.road ? employee.road : '-'} 
                                                     ต.${employee.tambon.tambon} 
                                                     อ.${employee.amphur.amphur} 
-                                                    จ.${employee.changwat.changwat} ${employee.zipcode}`} */}
-                                            </td>
+                                                    จ.${employee.changwat.changwat} ${employee.zipcode}`}
+                                            </td> */}
+                                            <td>{employee.position?.name}{employee.class ? employee.class?.name : ''}</td>
                                             <td style={{ textAlign: 'center' }}>{employee.type?.name}</td>
                                             <td style={{ fontSize: '12px' }}>
                                                 {/* <p className="m-0"><FaUserAlt /> {employee.contact_name}</p>
