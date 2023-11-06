@@ -4,12 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { getNetworkMeeting, resetSuccess } from '../../store/slices/networkMeeting'
 import NetworkMeetingForm from './Form'
+import Loading from '../../components/Loading'
 
 const EditNetworkMeeting = () => {
     const { id } = useParams();
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    const { networkMeeting, loading, success } = useSelector(state => state.networkMeeting);
+    const { meeting, loading, success } = useSelector(state => state.networkMeeting);
 
     useEffect(() => {
         if (id) {
@@ -35,7 +36,13 @@ const EditNetworkMeeting = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขจัดประชุม/อบรมความรู้เครือข่าย</h5>
 
-                            <NetworkMeetingForm />
+                            {loading && (
+                                <div className="text-center"><Loading /></div>
+                            )}
+
+                            {(!loading && meeting) && (
+                                <NetworkMeetingForm />
+                            )}
                         </div>
                     </div>
                 </div>

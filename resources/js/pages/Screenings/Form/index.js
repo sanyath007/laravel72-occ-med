@@ -30,7 +30,7 @@ const screeningSchema = Yup.object().shape({
     }),
 });
 
-const ScreeningForm = () => {
+const ScreeningForm = ({ id, screening }) => {
     const dispatch = useDispatch();
     const [selectedDate, setSelectedDate] = useState(moment());
 

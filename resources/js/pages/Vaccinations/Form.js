@@ -15,7 +15,7 @@ const vaccinationSchema = Yup.object().shape({
 
 });
 
-const VaccinationForm = () => {
+const VaccinationForm = ({ id, vaccination }) => {
     const dispatch = useDispatch();
     const { data: formData, isLoading } = useGetInitialFormDataQuery();
     const [selectedVaccineDate, setSelectedVaccineDate] = useState(moment());

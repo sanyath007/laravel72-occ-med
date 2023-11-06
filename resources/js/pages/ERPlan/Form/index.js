@@ -30,7 +30,7 @@ const erplanSchema = Yup.object().shape({
     num_of_participants: Yup.number().required(),
 });
 
-const ERPlanForm = () => {
+const ERPlanForm = ({ id, erplan }) => {
     const dispatch = useDispatch();
     const [selectedPlanDate, setSelectedPlanDate] = useState(moment())
 

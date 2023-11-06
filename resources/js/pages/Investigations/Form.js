@@ -12,7 +12,7 @@ const investigationSchema = Yup.object().shape({
     investigate_date: Yup.string().required()
 });
 
-const InvestigationForm = () => {
+const InvestigationForm = ({ id, investigation }) => {
     const dispatch = useDispatch();
     const [selectedInvestigateDate, setSelectedInvestigateDate] = useState(moment())
 

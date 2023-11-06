@@ -35,7 +35,7 @@ const trainingSchema = Yup.object().shape({
     }),
 });
 
-const TrainingForm = () => {
+const TrainingForm = ({ id, training }) => {
     const dispatch = useDispatch();
     const [selectedDate, setSelectedDate] = useState(moment());
 

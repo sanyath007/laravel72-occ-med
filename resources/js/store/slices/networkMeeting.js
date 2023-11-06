@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import api from "../../api"
 
 const initialState = {
-    networkMeetings: [],
-    networkMeeting: null,
+    meetings: [],
+    meeting: null,
     pager: null,
     loading: false,
     success: false,
@@ -53,13 +53,13 @@ export const networkMeetingSlice = createSlice({
     },
     extraReducers: {
         [getNetworkMeetings.pending]: (state) => {
-            state.networkMeetings = []
+            state.meetings = []
             state.loading = true
         },
         [getNetworkMeetings.fulfilled]: (state, { payload }) => {
             const { data, ...pager } = payload
 
-            state.networkMeetings = data
+            state.meetings = data
             state.pager = pager
             state.loading = false
         },
@@ -67,11 +67,11 @@ export const networkMeetingSlice = createSlice({
             state.loading = false
         },
         [getNetworkMeeting.pending]: (state) => {
-            state.networkMeeting = null
+            state.meeting = null
             state.loading = true
         },
         [getNetworkMeeting.fulfilled]: (state, { payload }) => {
-            state.networkMeetings = payload
+            state.meeting = payload
             state.loading = false
         },
         [getNetworkMeeting.rejected]: (state, { payload }) => {

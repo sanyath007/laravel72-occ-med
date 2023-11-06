@@ -6,7 +6,7 @@ import { FaSave } from 'react-icons/fa'
 
 const supervisionSchema = Yup.object().shape({});
 
-const SupervisionForm = () => {
+const SupervisionForm = ({ id, supervision }) => {
 
     const handleSubmit = (values, formik) => {
 

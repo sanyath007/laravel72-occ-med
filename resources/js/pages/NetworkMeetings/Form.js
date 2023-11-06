@@ -12,7 +12,7 @@ const networkMeetingSchema = Yup.object().shape({
     meeting_date: Yup.string().required(),
 });
 
-const NetworkMeetingForm = () => {
+const NetworkMeetingForm = ({ id, meeting }) => {
     const dispatch = useDispatch();
     const [selectedMeetingeDate, setSelectedMeetingeDate] = useState(moment());
 

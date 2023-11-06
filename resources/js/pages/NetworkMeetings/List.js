@@ -20,7 +20,7 @@ const units = ['วัน', 'ชั่วโมง'];
 
 const NetworkMeetingList = () => {
     const dispatch = useDispatch();
-    const { networkMeetings, pager, loading } = useSelector(state => state.networkMeeting);
+    const { meetings, pager, loading } = useSelector(state => state.networkMeeting);
 
     useEffect(() => {
         dispatch(getNetworkMeetings({ url: '/api/network-meetings/search' }));
@@ -71,7 +71,7 @@ const NetworkMeetingList = () => {
                                             </tr>
                                         )}
 
-                                        {networkMeetings && networkMeetings.map((meeting, index) => (
+                                        {meetings && meetings.map((meeting, index) => (
                                             <tr>
                                                 <td style={{ textAlign: 'center' }}>{pager && pager.from+index}</td>
                                                 <td style={{ textAlign: 'center' }}>{meeting.meeting_date}</td>

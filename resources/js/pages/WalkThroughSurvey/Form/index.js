@@ -39,7 +39,7 @@ const surveySchema = Yup.object().shape({
     }),
 });
 
-const SurveyingForm = () => {
+const SurveyingForm = ({ id, surveying }) => {
     const dispatch = useDispatch();
     const [showCompanyModal, setShowCompanyModal] = useState(false);
     const [selectedCompany, setSelectedCompany] = useState(null);
