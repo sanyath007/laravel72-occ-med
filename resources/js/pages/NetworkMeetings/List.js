@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../context/globalContext'
 import { getNetworkMeetings, resetSuccess, destroy } from '../../store/slices/networkMeeting'
+import { toShortTHDate } from '../../utils/formatter'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
 
@@ -32,6 +33,7 @@ const NetworkMeetingList = () => {
             title: 'รายการจัดประชุม/อบรมความรู้เครือข่าย',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
+                { id: 'services', name: 'งานบริการ', path: '/services' },
                 { id: 'network-meetings', name: 'รายการจัดประชุม/อบรมความรู้เครือข่าย', path: null, active: true }
             ]
         }))
@@ -104,7 +106,7 @@ const NetworkMeetingList = () => {
                                         {meetings && meetings.map((meeting, index) => (
                                             <tr key={meeting.id}>
                                                 <td style={{ textAlign: 'center' }}>{pager && pager.from+index}</td>
-                                                <td style={{ textAlign: 'center' }}>{meeting.meeting_date}</td>
+                                                <td style={{ textAlign: 'center' }}>{toShortTHDate(meeting.meeting_date)}</td>
                                                 <td>
                                                     {meetingTypes[meeting.meeting_type_id]}
                                                     <p>
