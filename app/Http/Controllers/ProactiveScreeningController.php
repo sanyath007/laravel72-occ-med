@@ -188,10 +188,17 @@ class ProactiveScreeningController extends Controller
             $screening->is_returned_data = $request['is_returned_data'];
             // $screening->remark           = $request['remark'];
 
+            /** Upload files */
             if ($request->file('plan_file')) {
                 $file = $request->file('plan_file');
                 $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
                 $destinationPath = 'uploads/screening/file/';
+
+                /** Check and remove uploaded file */
+                $existedFile = $destinationPath . $screening->plan_file;
+                if (\File::exists($existedFile)) {
+                    \File::delete($existedFile);
+                }
 
                 if ($file->move($destinationPath, $fileName)) {
                     $screening->plan_file = $fileName;
@@ -202,6 +209,12 @@ class ProactiveScreeningController extends Controller
                 $file = $request->file('summary_file');
                 $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
                 $destinationPath = 'uploads/screening/file/';
+
+                /** Check and remove uploaded file */
+                $existedFile = $destinationPath . $screening->summary_file;
+                if (\File::exists($existedFile)) {
+                    \File::delete($existedFile);
+                }
 
                 if ($file->move($destinationPath, $fileName)) {
                     $screening->summary_file = $fileName;
@@ -233,25 +246,17 @@ class ProactiveScreeningController extends Controller
         try {
             $screening = ProactiveScreening::find($id);
 
-            // if ($request->file('plan_file')) {
-            //     $file = $request->file('plan_file');
-            //     $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-            //     $destinationPath = 'uploads/screening/file/';
+            /** Remove uploaded file */
+            $destinationPath = 'uploads/screening/';
+            $existedPlanFile = $destinationPath .'file/'. $screening->plan_file;
+            if (\File::exists($existedPlanFile)) {
+                \File::delete($existedPlanFile);
+            }
 
-            //     if ($file->move($destinationPath, $fileName)) {
-            //         $screening->plan_file = $fileName;
-            //     }
-            // }
-
-            // if ($request->file('summary_file')) {
-            //     $file = $request->file('summary_file');
-            //     $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-            //     $destinationPath = 'uploads/screening/file/';
-
-            //     if ($file->move($destinationPath, $fileName)) {
-            //         $screening->summary_file = $fileName;
-            //     }
-            // }
+            $existedSumFile = $destinationPath .'file/'. $screening->summary_file;
+            if (\File::exists($existedSumFile)) {
+                \File::delete($existedSumFile);
+            }
 
             if ($screening->delete()) {
                 return [
