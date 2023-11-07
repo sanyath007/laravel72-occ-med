@@ -45,7 +45,7 @@ class VaccinationController extends Controller
             $vaccination->vaccine_date          = $request['vaccine_date'];
             $vaccination->place                 = $request['place'];
             $vaccination->company_id            = $request['company_id'];
-            $vaccination->vaccine_type_id       = $request['vaccine_type_id'];
+            $vaccination->vaccine_id            = $request['vaccine_id'];
             $vaccination->vaccine_text          = $request['vaccine_text'];
             $vaccination->target_group_id       = $request['target_group_id'];
             $vaccination->num_of_vaccinated     = $request['num_of_vaccinated'];
@@ -79,7 +79,7 @@ class VaccinationController extends Controller
             $vaccination->vaccine_date          = $request['vaccine_date'];
             $vaccination->place                 = $request['place'];
             $vaccination->company_id            = $request['company_id'];
-            $vaccination->vaccine_type_id       = $request['vaccine_type_id'];
+            $vaccination->vaccine_id            = $request['vaccine_id'];
             $vaccination->vaccine_text          = $request['vaccine_text'];
             $vaccination->target_group_id       = $request['target_group_id'];
             $vaccination->num_of_vaccinated     = $request['num_of_vaccinated'];
