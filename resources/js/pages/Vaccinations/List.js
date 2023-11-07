@@ -22,6 +22,7 @@ const VaccinationList = () => {
             title: 'รายการสร้างเสริมภูมิคุ้มกันโรค',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
+                { id: 'services', name: 'งานบริการ', path: '/services' },
                 { id: 'vaccinations', name: 'รายการสร้างเสริมภูมิคุ้มกันโรค', path: null, active: true }
             ]
         }))
