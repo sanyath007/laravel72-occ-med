@@ -18,6 +18,7 @@ const InvestigationDetail = () => {
             title: 'รายละเอียดการสอบสวนโรค/อุบัติเหตุจากงานและสิ่งแวดล้อม',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
+                { id: 'services', name: 'งานบริการ', path: '/services' },
                 { id: 'investigations', name: 'รายการสอบสวนโรค/อุบัติเหตุจากงานและสิ่งแวดล้อม', path: '/investigations' },
                 { id: 'detail', name: 'รายละเอียดการสอบสวนโรค/อุบัติเหตุจากงานและสิ่งแวดล้อม', path: null, active: true }
             ]

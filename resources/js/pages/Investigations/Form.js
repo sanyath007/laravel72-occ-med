@@ -9,7 +9,12 @@ import { store, update } from '../../store/slices/investigation'
 import moment from 'moment'
 
 const investigationSchema = Yup.object().shape({
-    investigate_date: Yup.string().required()
+    invest_date: Yup.string().required('กรุณาเลือกวันที่สอบสวนก่อน'),
+    objective: Yup.string().required('กรุณาระบุวัตถุประสงค์ก่อน'),
+    invest_type_id: Yup.string().required('กรุณาเลือกประเภทการสอบสวนก่อน'),
+    division_id: Yup.string().required('กรุณาเลือกผู้ดำเนินการก่อน'),
+    place: Yup.string().required('กรุณาระบุสถานที่สอบสวนก่อน'),
+    num_of_people: Yup.string().required('กรุณาระบุจำนวนผู้ได้รับผลกระทบก่อน'),
 });
 
 const InvestigationForm = ({ id, investigation }) => {
@@ -39,13 +44,13 @@ const InvestigationForm = ({ id, investigation }) => {
     return (
         <Formik
             initialValues={{
-                investigate_date: investigation ? investigation.investigate_date : '',
-                investigate_objective: investigation ? investigation.investigate_objective : '',
-                investigate_type_id: investigation ? investigation.investigate_type_id : '',
+                invest_date: investigation ? investigation.invest_date : '',
+                objective: investigation ? investigation.objective : '',
+                invest_type_id: investigation ? investigation.invest_type_id : '',
                 division_id: investigation ? investigation.division_id : '',
                 is_working_disease: investigation ? investigation.is_working_disease : '',
                 is_investigate: investigation ? investigation.is_investigate : '',
-                investigate_place: investigation ? investigation.investigate_place : '',
+                place: investigation ? investigation.place : '',
                 num_of_people: investigation ? investigation.num_of_people : '',
                 is_return_data: investigation ? investigation.is_return_data : '',
                 file_attachment: '',
@@ -59,49 +64,55 @@ const InvestigationForm = ({ id, investigation }) => {
                     <Form>
                         <Row className="mb-2">
                             <Col md={3}>
-                                <label htmlFor="">วันที่เดินสำรวจ</label>
+                                <label htmlFor="">วันที่สอบสวน</label>
                                 <DatePicker
                                     format="DD/MM/YYYY"
                                     value={selectedInvestigateDate}
                                     onChange={(date) => {
                                         setSelectedInvestigateDate(date);
-                                        formik.setFieldValue('investigate_date', date.format('YYYY-MM-DD'));
+                                        formik.setFieldValue('invest_date', date.format('YYYY-MM-DD'));
                                     }}
                                     sx={{
                                         '& .MuiInputBase-root.MuiOutlinedInput-root': {
-                                            border: `${(formik.errors.investigate_date && formik.touched.investigate_date) ? '1px solid red' : 'inherit'}`
+                                            border: `${(formik.errors.invest_date && formik.touched.invest_date) ? '1px solid red' : 'inherit'}`
                                         }
                                     }}
                                 />
-                                {(formik.errors.investigate_date && formik.touched.investigate_date) && (
-                                    <span className="text-danger text-sm">{formik.errors.investigate_date}</span>
+                                {(formik.errors.invest_date && formik.touched.invest_date) && (
+                                    <span className="text-danger text-sm">{formik.errors.invest_date}</span>
                                 )}
                             </Col>
                             <Col>
                                 <label htmlFor="">วัตถุประสงค์</label>
                                 <input
                                     type="text"
-                                    name="investigate_objective"
-                                    value={formik.values.investigate_objective}
+                                    name="objective"
+                                    value={formik.values.objective}
                                     onChange={formik.handleChange}
-                                    className="form-control"
+                                    className={`form-control ${(formik.errors.objective && formik.touched.objective) ? 'is-invalid' : ''}`}
                                 />
+                                {(formik.errors.objective && formik.touched.objective) && (
+                                    <span className="invalid-feedback">{formik.errors.objective}</span>
+                                )}
                             </Col>
                         </Row>
                         <Row className="mb-2">
                             <Col>
                                 <label htmlFor="">ประเภทการสอบสวน</label>
                                 <select
-                                    name="investigate_type_id"
-                                    value={formik.values.investigate_type_id}
+                                    name="invest_type_id"
+                                    value={formik.values.invest_type_id}
                                     onChange={formik.handleChange}
-                                    className="form-control"
+                                    className={`form-control ${(formik.errors.invest_type_id && formik.touched.invest_type_id) ? 'is-invalid' : ''}`}
                                 >
                                     <option value="">-- เลือก --</option>
                                     <option value="1">โรคเกี่ยวเนื่องจากงาน</option>
                                     <option value="2">ประสบอันตรายจากงาน</option>
                                     <option value="3">โรคจากสิ่งแวดล้อม</option>
                                 </select>
+                                {(formik.errors.invest_type_id && formik.touched.invest_type_id) && (
+                                    <span className="invalid-feedback">{formik.errors.invest_type_id}</span>
+                                )}
                             </Col>
                             <Col>
                                 <label htmlFor="">ผู้ดำเนินการ</label>
@@ -109,13 +120,16 @@ const InvestigationForm = ({ id, investigation }) => {
                                     name="division_id"
                                     value={formik.values.division_id}
                                     onChange={formik.handleChange}
-                                    className="form-control"
+                                    className={`form-control ${(formik.errors.division_id && formik.touched.division_id) ? 'is-invalid' : ''}`}
                                 >
                                     <option value="">-- เลือก --</option>
                                     <option value="2">งานป้องกันและควบคุมโรค</option>
                                     <option value="3">งานส่งเสริมและฟื้นฟู</option>
                                     <option value="4">งานพิษวิทยาและสิ่งแวดล้อม</option>
                                 </select>
+                                {(formik.errors.division_id && formik.touched.division_id) && (
+                                    <span className="invalid-feedback">{formik.errors.division_id}</span>
+                                )}
                             </Col>
                         </Row>
                         <Row className="mb-2">
@@ -165,11 +179,14 @@ const InvestigationForm = ({ id, investigation }) => {
                                 <label htmlFor="">สถานที่สอบสวน</label>
                                 <input
                                     type="text"
-                                    name="investigate_place"
-                                    value={formik.values.investigate_place}
+                                    name="place"
+                                    value={formik.values.place}
                                     onChange={formik.handleChange}
-                                    className="form-control"
+                                    className={`form-control ${(formik.errors.place && formik.touched.place) ? 'is-invalid' : ''}`}
                                 />
+                                {(formik.errors.place && formik.touched.place) && (
+                                    <span className="invalid-feedback">{formik.errors.place}</span>
+                                )}
                             </Col>
                         </Row>
                         <Row className="mb-2">
@@ -181,10 +198,13 @@ const InvestigationForm = ({ id, investigation }) => {
                                         name="num_of_people"
                                         value={formik.values.num_of_people}
                                         onChange={formik.handleChange}
-                                        className="form-control"
+                                        className={`form-control ${(formik.errors.num_of_people && formik.touched.num_of_people) ? 'is-invalid' : ''}`}
                                     />
                                     <span className="input-group-text">ราย</span>
                                 </div>
+                                {(formik.errors.num_of_people && formik.touched.num_of_people) && (
+                                    <span className="text-danger text-sm">{formik.errors.num_of_people}</span>
+                                )}
                             </Col>
                             <Col>
                                 <label htmlFor="">สถานะการคืนข้อมูลแก่แก่ผู้เกี่ยวข้อง</label>
@@ -201,7 +221,7 @@ const InvestigationForm = ({ id, investigation }) => {
                                         type="radio"
                                         name="is_return_data"
                                         value="2"
-                                        checked={formik.values.is_return_data == 1}
+                                        checked={formik.values.is_return_data == 2}
                                     />
                                     <span className="ms-1">ยังไม่คืน</span>
                                 </label>
@@ -225,7 +245,7 @@ const InvestigationForm = ({ id, investigation }) => {
                                 </div>
                             </Col>
                         </Row>
-                        <Row className="mb-2">
+                        <Row className="mb-4">
                             <Col>
                                 <label htmlFor="">แนบไฟล์รูปภาพกิจกรรม</label>
                                 <div className="d-flex flex-row align-items-center">

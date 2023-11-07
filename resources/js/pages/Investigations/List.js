@@ -19,6 +19,7 @@ const InvestigationList = () => {
             title: 'รายการสอบสวนโรค/อุบัติเหตุจากงานและสิ่งแวดล้อม',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
+                { id: 'services', name: 'งานบริการ', path: '/services' },
                 { id: 'investigations', name: 'รายการสอบสวนโรค/อุบัติเหตุจากงานและสิ่งแวดล้อม', path: null, active: true }
             ]
         }))
@@ -85,9 +86,9 @@ const InvestigationList = () => {
                                         {investigations && investigations.map((investigation, index) => (
                                             <tr key={investigation.id}>
                                                 <td style={{ textAlign: 'center' }}>{pager && pager.from + index}</td>
-                                                <td style={{ textAlign: 'center' }}>{toShortTHDate(investigation.investigate_date)}</td>
+                                                <td style={{ textAlign: 'center' }}>{toShortTHDate(investigation.invest_date)}</td>
                                                 <td>{investigation.division?.name}</td>
-                                                <td>{investigation.investigate_place}</td>
+                                                <td>{investigation.place}</td>
                                                 <td style={{ textAlign: 'center' }}>{investigation.num_of_people}</td>
                                                 <td style={{ textAlign: 'center' }}>
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">

@@ -25,17 +25,17 @@ class InvestigationController extends Controller
     public function store(Request $request) {
         try {
             $investigation = new Investigation;
-            $investigation->investigate_date = $request['investigate_date'];
-            $investigation->investigate_objective = $request['investigate_objective'];
-            $investigation->investigate_type_id = $request['investigate_type_id'];
-            $investigation->is_working_disease = $request['is_working_disease'];
-            $investigation->is_investigate = $request['is_investigate'];
-            $investigation->division_id = $request['division_id'];
-            $investigation->investigate_place = $request['investigate_place'];
-            $investigation->num_of_people = $request['num_of_people'];
-            $investigation->file_attachment = $request['file_attachment'];
-            $investigation->pic_attachment = $request['pic_attachment'];
-            $investigation->is_return_data = $request['is_return_data'];
+            $investigation->invest_date         = $request['invest_date'];
+            $investigation->objective           = $request['objective'];
+            $investigation->invest_type_id      = $request['invest_type_id'];
+            $investigation->is_working_disease  = $request['is_working_disease'];
+            $investigation->is_investigate      = $request['is_investigate'];
+            $investigation->division_id         = $request['division_id'];
+            $investigation->place               = $request['place'];
+            $investigation->num_of_people       = $request['num_of_people'];
+            $investigation->file_attachment     = $request['file_attachment'];
+            $investigation->pic_attachment      = $request['pic_attachment'];
+            $investigation->is_return_data      = $request['is_return_data'];
             // $investigation->remark = $request['remark'];
 
             /** Upload file and pictures */
@@ -82,17 +82,17 @@ class InvestigationController extends Controller
     public function update(Request $request, $id) {
         try {
             $investigation = Investigation::find($id);
-            $investigation->investigate_date = $request['investigate_date'];
-            $investigation->investigate_objective = $request['investigate_objective'];
-            $investigation->investigate_type_id = $request['investigate_type_id'];
+            $investigation->invest_date     = $request['invest_date'];
+            $investigation->objective       = $request['objective'];
+            $investigation->invest_type_id  = $request['invest_type_id'];
             $investigation->is_working_disease = $request['is_working_disease'];
-            $investigation->is_investigate = $request['is_investigate'];
-            $investigation->division_id = $request['division_id'];
-            $investigation->investigate_place = $request['investigate_place'];
-            $investigation->num_of_people = $request['num_of_people'];
+            $investigation->is_investigate  = $request['is_investigate'];
+            $investigation->division_id     = $request['division_id'];
+            $investigation->place           = $request['place'];
+            $investigation->num_of_people   = $request['num_of_people'];
             $investigation->file_attachment = $request['file_attachment'];
-            $investigation->pic_attachment = $request['pic_attachment'];
-            $investigation->is_return_data = $request['is_return_data'];
+            $investigation->pic_attachment  = $request['pic_attachment'];
+            $investigation->is_return_data  = $request['is_return_data'];
             // $investigation->remark = $request['remark'];
 
             /** Upload file and pictures */
