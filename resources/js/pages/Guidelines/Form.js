@@ -7,9 +7,9 @@ import { FaSave, FaFilePdf } from 'react-icons/fa'
 import { store, update } from '../../store/slices/guideline'
 
 const guidelineSchema = Yup.object().shape({
-    topic: Yup.string().required(),
-    division_id: Yup.string().required(),
-    // file_attachment: Yup.string().required()
+    topic: Yup.string().required('กรุณาระบุชื่อเอกสารก่อน'),
+    division_id: Yup.string().required('กรุณาเลือกผู้ดำเนินการก่อน'),
+    // file_attachment: Yup.string().required('กรุณาเลือกไฟล์เอกสารก่อน')
 });
 
 const GuidelineForm = ({ id, guideline }) => {
