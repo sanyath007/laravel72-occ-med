@@ -1,9 +1,16 @@
 import React, { useContext, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 import { GlobalContext } from '../../context/globalContext'
+import { resetSuccess } from '../../store/slices/training'
 import TrainingForm from './Form'
 
 const AddTraining = () => {
-    const { setGlobal } = useContext(GlobalContext)
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { success } = useSelector(state => state.training);
+    const { setGlobal } = useContext(GlobalContext);
 
     /** Initial global states */
     useEffect(() => {
@@ -18,6 +25,16 @@ const AddTraining = () => {
             ]
         }))
     }, []);
+
+    useEffect(() => {
+        if (success) {
+            toast.success('บันทึกข้อมูลเรียบร้อยแล้ว!!');
+
+            dispatch(resetSuccess());
+
+            navigate('/trainings');
+        }
+    }, [success]);
 
     return (
         <section className="section">
