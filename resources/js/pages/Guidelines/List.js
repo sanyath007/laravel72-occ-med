@@ -22,6 +22,7 @@ const GuidelineList = () => {
             title: 'รายการจัดทำแนวทาง/แบบฟอร์ม/ขั้นตอนการทำงาน',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
+                { id: 'services', name: 'งานบริการ', path: '/services' },
                 { id: 'guidelines', name: 'รายการจัดทำแนวทาง/แบบฟอร์ม/ขั้นตอนการทำงาน', path: null, active: true }
             ]
         }))
