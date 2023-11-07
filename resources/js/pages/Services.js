@@ -24,7 +24,9 @@ const Services = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title p-0">งานบริการ</h5>
+                            <div className="text-center">
+                                <h2 className="my-4 p-0 fw-bolder">งานบริการ</h2>
+                            </div>
 
                             <div style={{ margin: '20px 0', padding: '0 20px' }}>
                                 <Row className="mb-5">
