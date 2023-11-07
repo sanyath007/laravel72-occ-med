@@ -114,7 +114,7 @@ export const visitationSlice = createSlice({
         },
         [store.pending]: (state) => {
             state.success = false
-            state.error = nullå
+            state.error = null
         },
         [store.fulfilled]: (state, { payload }) => {
             const { status, message } = payload

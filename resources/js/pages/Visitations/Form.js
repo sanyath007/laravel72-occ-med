@@ -257,7 +257,7 @@ const VisitationForm = ({ id, visitation }) => {
                                     type="file"
                                     className="form-control"
                                     onChange={(e) => {
-                                        setSelectedFile(e.target.files[0]);
+                                        setSelectedFile(e.target.files[0]?.name);
                                         formik.setFieldValue('file_attachment', e.target.files[0]);
                                     }}
                                 />
