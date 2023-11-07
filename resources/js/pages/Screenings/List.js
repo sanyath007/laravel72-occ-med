@@ -24,6 +24,7 @@ const ScreeningList = () => {
             title: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
+                { id: 'services', name: 'งานบริการ', path: '/services' },
                 { id: 'investigations', name: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: null, active: true }
             ]
         }))

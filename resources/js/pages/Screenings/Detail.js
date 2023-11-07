@@ -15,10 +15,12 @@ const ScreeningDetail = () => {
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก',
+            title: 'รายละเอียดตรวจคัดกรองสุขภาพพนักงานเชิงรุก',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'investigations', name: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: null, active: true }
+                { id: 'services', name: 'งานบริการ', path: '/services' },
+                { id: 'list', name: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: '/screenings' },
+                { id: 'detail', name: 'รายละเอียดตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: null, active: true }
             ]
         }))
     }, []);

@@ -106,7 +106,7 @@ export const screeningSlice = createSlice({
         },
         [getScreening.fulfilled]: (state, { payload }) => {
             state.loading = false
-            state.screenings = payload
+            state.screening = payload
         },
         [getScreening.rejected]: (state, { payload }) => {
             state.loading = false
