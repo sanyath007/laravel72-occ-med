@@ -1,9 +1,16 @@
 import React, { useContext, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 import { GlobalContext } from '../../context/globalContext'
+import { resetSuccess } from '../../store/slices/screening'
 import ScreeningForm from './Form'
 
 const AddScreening = () => {
-    const { setGlobal } = useContext(GlobalContext)
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { success } = useSelector(state => state.screening);
+    const { setGlobal } = useContext(GlobalContext);
 
     /** Initial global states */
     useEffect(() => {
@@ -12,10 +19,20 @@ const AddScreening = () => {
             title: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'investigations', name: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: null, active: true }
+                { id: 'screenings', name: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: null, active: true }
             ]
         }))
     }, []);
+
+    useEffect(() => {
+        if (success) {
+            toast.success('บันทึกข้อมูลเรียบร้อยแล้ว!!');
+
+            dispatch(resetSuccess());
+
+            navigate('/screenings');
+        }
+    }, [success]);
 
     return (
         <section className="section">
