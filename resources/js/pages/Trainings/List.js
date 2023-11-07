@@ -21,6 +21,7 @@ const TrainingList = () => {
             title: 'รายการอบรมให้ความรู้',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
+                { id: 'services', name: 'งานบริการ', path: '/services' },
                 { id: 'trainings', name: 'รายการอบรมให้ความรู้', path: null, active: true }
             ]
         }))
@@ -109,9 +110,9 @@ const TrainingList = () => {
                                                 </td>
                                                 <td className="text-center">
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                        <Link to={`/trainings/${training.id}/detail`} className="btn btn-primary btn-sm">
+                                                        {/* <Link to={`/trainings/${training.id}/detail`} className="btn btn-primary btn-sm">
                                                             <i className="bi bi-search"></i>
-                                                        </Link>
+                                                        </Link> */}
                                                         <Link to={`/trainings/${training.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
