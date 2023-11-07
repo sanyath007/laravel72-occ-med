@@ -126,6 +126,7 @@ const InvestigationForm = ({ id, investigation }) => {
                                         type="radio"
                                         name="is_working_disease"
                                         value="1"
+                                        checked={formik.values.is_working_disease == 1}
                                     />
                                     <span className="ms-1 me-2">เข้า</span>
 
@@ -133,6 +134,7 @@ const InvestigationForm = ({ id, investigation }) => {
                                         type="radio"
                                         name="is_working_disease"
                                         value="2"
+                                        checked={formik.values.is_working_disease == 2}
                                     />
                                     <span className="ms-1">ไม่เข้า</span>
                                 </label>
@@ -144,6 +146,7 @@ const InvestigationForm = ({ id, investigation }) => {
                                         type="radio"
                                         name="is_investigate"
                                         value="1"
+                                        checked={formik.values.is_investigate == 1}
                                     />
                                     <span className="ms-1 me-2">เข้า</span>
 
@@ -151,6 +154,7 @@ const InvestigationForm = ({ id, investigation }) => {
                                         type="radio"
                                         name="is_investigate"
                                         value="2"
+                                        checked={formik.values.is_investigate == 2}
                                     />
                                     <span className="ms-1">ไม่เข้า</span>
                                 </label>
@@ -189,6 +193,7 @@ const InvestigationForm = ({ id, investigation }) => {
                                         type="radio"
                                         name="is_return_data"
                                         value="1"
+                                        checked={formik.values.is_return_data == 1}
                                     />
                                     <span className="ms-1 me-2">คืนแล้ว</span>
 
@@ -196,6 +201,7 @@ const InvestigationForm = ({ id, investigation }) => {
                                         type="radio"
                                         name="is_return_data"
                                         value="2"
+                                        checked={formik.values.is_return_data == 1}
                                     />
                                     <span className="ms-1">ยังไม่คืน</span>
                                 </label>

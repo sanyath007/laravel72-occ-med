@@ -4,10 +4,11 @@ import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row } from 'react-bootstrap'
 import { DatePicker } from '@mui/x-date-pickers'
-import { FaPencilAlt, FaPlus, FaSave, FaSearch, FaTrash } from 'react-icons/fa'
+import { FaPencilAlt, FaPlus, FaSave, FaSearch, FaTrash, FaFileImage } from 'react-icons/fa'
 import moment from 'moment'
-import { store } from '../../store/slices/visitation'
+import { store, update } from '../../store/slices/visitation'
 import ModalCompanies from '../../components/Modals/ModalCompanies'
+import { useEffect } from 'react'
 
 const visitationSchema = Yup.object().shape({
     visit_date: Yup.string().required(),
@@ -30,6 +31,15 @@ const VisitationForm = ({ id, visitation }) => {
     const [selecedEmployee, setSelectedEmployee] = useState(initialEmployee);
     const [selectedVisitDate, setSelectedVisitDate] = useState(moment())
 
+    /** Initial local state on mounted if it is in editting mode */
+    useEffect(() => {
+        if (visitation) {
+            setSelectedFile(visitation.file_attachment);
+            setSelectedVisitDate(moment(visitation.visit_date));
+            setSelectedCompany(visitation.company);
+        }
+    }, [visitation]);
+
     const handleEmployeeInputChange = (event) => {
         const { name, value } = event.target;
 
@@ -43,32 +53,36 @@ const VisitationForm = ({ id, visitation }) => {
     };
 
     const handleSubmit = (values, formik) => {
-        const data = new FormData();
-        data.append('file_attachment', selecedFile);
+        // const data = new FormData();
+        // data.append('file_attachment', selecedFile);
 
-        for(const [key, val] of Object.entries(values)) {
-            if (key === 'visitors') {
-                data.append(key, JSON.stringify(val));
-            } else {
-                data.append(key, val);
-            }
-        }
+        // for(const [key, val] of Object.entries(values)) {
+        //     if (key === 'visitors') {
+        //         data.append(key, JSON.stringify(val));
+        //     } else {
+        //         data.append(key, val);
+        //     }
+        // }
 
         /** Dispatch redux action to storing or updating data */
-        dispatch(store(values));
+        if (visitation) {
+            dispatch(update({ id, data: values }));
+        } else {
+            dispatch(store(values));
+        }
     };
 
     return (
         <Formik
             initialValues={{
-                visit_date: '',
-                visit_objective: '',
-                division_id: '',
-                company_id: '',
-                visitors: [],
-                num_of_patients: '',
+                visit_date: visitation ? visitation.visit_date : '',
+                visit_objective: visitation ? visitation.visit_objective : '',
+                division_id: visitation ? visitation.division_id : '',
+                company_id: visitation ? visitation.company_id : '',
+                visitors: visitation ? visitation.visitors : [],
+                num_of_patients: visitation ? visitation.num_of_patients : '',
+                is_return_data: visitation ? visitation.is_return_data : '',
                 file_attachment: '',
-                is_return_data: ''
             }}
             validationSchema={visitationSchema}
             onSubmit={handleSubmit}
@@ -221,13 +235,16 @@ const VisitationForm = ({ id, visitation }) => {
                             </Col>
                             <Col>
                                 <label htmlFor="">จำนวนผู้ป่วย</label>
-                                <input
-                                    type="number"
-                                    name="num_of_patients"
-                                    value={formik.values.num_of_patients}
-                                    onChange={formik.handleChange}
-                                    className={`form-control ${(formik.errors.num_of_patients && formik.touched.num_of_patients) ? 'is-invalid' : ''}`}
-                                />
+                                <div className="input-group">
+                                    <input
+                                        type="number"
+                                        name="num_of_patients"
+                                        value={formik.values.num_of_patients}
+                                        onChange={formik.handleChange}
+                                        className={`form-control ${(formik.errors.num_of_patients && formik.touched.num_of_patients) ? 'is-invalid' : ''}`}
+                                    />
+                                    <span className="input-group-text">ราย</span>
+                                </div>
                                 {(formik.errors.num_of_patients && formik.touched.num_of_patients) && (
                                     <span className="invalid-feedback">{formik.errors.num_of_patients}</span>
                                 )}
@@ -244,6 +261,13 @@ const VisitationForm = ({ id, visitation }) => {
                                         formik.setFieldValue('file_attachment', e.target.files[0]);
                                     }}
                                 />
+                                <div className="mt-2">
+                                    {selecedFile && (
+                                        <span className="d-flex flex-row align-items-center text-success">
+                                            <FaFileImage size={'16px'} /> {selecedFile}
+                                        </span>
+                                    )}
+                                </div>
                             </Col>
                             <Col>
                                 <label htmlFor="">สถานะการคืนข้อมูลแก่ผู้เกี่ยวข้อง</label>
@@ -252,6 +276,7 @@ const VisitationForm = ({ id, visitation }) => {
                                         type="radio"
                                         name="is_return_data"
                                         value="1"
+                                        checked={formik.values.is_return_data == 1}
                                     />
                                     <span className="ms-1 me-2">คืนแล้ว</span>
 
@@ -259,15 +284,16 @@ const VisitationForm = ({ id, visitation }) => {
                                         type="radio"
                                         name="is_return_data"
                                         value="2"
+                                        checked={formik.values.is_return_data == 2}
                                     />
                                     <span className="ms-1">ยังไม่คืน</span>
                                 </label>
                             </Col>
                         </Row>
                         <div className="text-center">
-                            <button type="submit" className={`btn ${false ? 'btn-warning' : 'btn-primary'}`}>
+                            <button type="submit" className={`btn ${visitation ? 'btn-warning' : 'btn-primary'}`}>
                                 <FaSave className="me-1" />
-                                {false ? 'บันทึกการแก้ไข' : 'บันทึก'}
+                                {visitation ? 'บันทึกการแก้ไข' : 'บันทึก'}
                             </button>
                         </div>
                     </Form>

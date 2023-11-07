@@ -12,7 +12,8 @@ const AddVisitation = () => {
             title: 'บันทึกการติดตามเยี่ยมบ้าน',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'visitations', name: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: '/visitations' },
+                { id: 'services', name: 'งานบริการ', path: '/services' },
+                { id: 'visitations', name: 'รายการติดตามเยี่ยมบ้าน', path: '/visitations' },
                 { id: 'new', name: 'บันทึกการติดตามเยี่ยมบ้าน', path: null, active: true }
             ]
         }))

@@ -87,25 +87,40 @@ class VisitationController extends Controller
             $visitation->is_return_data     = $request['is_return_data'];
             // $visitation->remark = $request['remark'];
 
-            /** Upload file */
-            // if ($request->file('file_attachment')) {
-            //     $file = $request->file('file_attachment');
-            //     $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-            //     $destinationPath = 'uploads/visitaion/';
+            /** Upload file and pictures */
+            if ($request->file('file_attachment')) {
+                $destinationPath = 'uploads/visitaion/';
+                $file = $request->file('file_attachment');
+                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
 
-            //     if ($file->move($destinationPath, $fileName)) {
-            //         $visitation->file_attachment = $fileName;
-            //     }
-            // }
+                /** Check and remove uploaded file */
+                $existedFile = $destinationPath . $visitation->file_attachment;
+                if (\File::exists($existedFile)) {
+                    \File::delete($existedFile);
+                }
+
+                if ($file->move($destinationPath, $fileName)) {
+                    $visitation->file_attachment = $fileName;
+                }
+            }
 
             if ($visitation->save()) {
                 if (count($request['visitors']) > 0) {
                     foreach($request['visitors'] as $visitor) {
-                        $newVisitor = new VisitationVisitor;
-                        $newVisitor->visitation_id = $visitation->id;
-                        $newVisitor->fullname = $visitor['fullname'];
-                        $newVisitor->position = $visitor['position'];
-                        $newVisitor->save();
+                        if (array_key_exists('id', $visitor)) {
+                            /** รายการเดิม */
+                            $newVisitor = VisitationVisitor::find($visitor['id']);
+                            $newVisitor->fullname = $visitor['fullname'];
+                            $newVisitor->position = $visitor['position'];
+                            $newVisitor->save();
+                        } else {
+                            /** รายการใหม่ */
+                            $newVisitor = new VisitationVisitor;
+                            $newVisitor->visitation_id = $visitation->id;
+                            $newVisitor->fullname = $visitor['fullname'];
+                            $newVisitor->position = $visitor['position'];
+                            $newVisitor->save();
+                        }
                     }
                 }
 
@@ -133,16 +148,12 @@ class VisitationController extends Controller
         try {
             $visitation = Visitation::find($id);
 
-            /** Upload file */
-            // if ($request->file('file_attachment')) {
-            //     $file = $request->file('file_attachment');
-            //     $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-            //     $destinationPath = 'uploads/visitaion/';
-
-            //     if ($file->move($destinationPath, $fileName)) {
-            //         $visitation->file_attachment = $fileName;
-            //     }
-            // }
+            /** Remove uploaded file */
+            $destinationPath = 'uploads/visitaion/';
+            $existedFile = $destinationPath . $visitation->file_attachment;
+            if (\File::exists($existedFile)) {
+                \File::delete($existedFile);
+            }
 
             if ($visitation->delete()) {
                 VisitationVisitor::where('visitation_id', $id)->delete();

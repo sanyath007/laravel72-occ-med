@@ -17,10 +17,11 @@ const VisitationList = () => {
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก',
+            title: 'รายการติดตามเยี่ยมบ้าน',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'visitations', name: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: null, active: true }
+                { id: 'services', name: 'งานบริการ', path: '/services' },
+                { id: 'visitations', name: 'รายการติดตามเยี่ยมบ้าน', path: null, active: true }
             ]
         }))
     }, []);

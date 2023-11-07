@@ -21,7 +21,8 @@ const EditVisitation = () => {
             title: 'แก้ไขการติดตามเยี่ยมบ้าน',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'visitations', name: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: '/visitations' },
+                { id: 'services', name: 'งานบริการ', path: '/services' },
+                { id: 'visitations', name: 'รายการติดตามเยี่ยมบ้าน', path: '/visitations' },
                 { id: 'edit', name: 'แก้ไขการติดตามเยี่ยมบ้าน', path: null, active: true }
             ]
         }))

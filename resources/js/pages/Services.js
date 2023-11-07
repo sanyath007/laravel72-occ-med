@@ -1,8 +1,23 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { GlobalContext } from '../context/globalContext'
 
 const Services = () => {
+    const { setGlobal } = useContext(GlobalContext)
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'งานบริการ',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'services', name: 'งานบริการ', path: null, active: true }
+            ]
+        }))
+    }, []);
+
     return (
         <section className="section">
             <div className="row">

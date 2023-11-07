@@ -132,7 +132,7 @@ export const visitationSlice = createSlice({
         },
         [update.pending]: (state) => {
             state.success = false
-            state.error = nullå
+            state.error = null
         },
         [update.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
