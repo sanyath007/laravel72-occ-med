@@ -9,24 +9,24 @@ import moment from 'moment'
 import { store } from '../../../store/slices/screening'
 
 const screeningSchema = Yup.object().shape({
-    screen_date: Yup.string().required(),
-    screen_type_id: Yup.string().required(),
-    division_id: Yup.string().required(),
-    place: Yup.string().required(),
-    target_group_id: Yup.string().required(),
+    screen_date: Yup.string().required('กรุณาเลือกวันที่คัดกรองก่อน'),
+    screen_type_id: Yup.string().required('กรุณาเลือกประเภทการคัดกรองก่อน'),
+    division_id: Yup.string().required('กรุณาเลือกผู้ดำเนินการก่อน'),
+    place: Yup.string().required('กรุณาระบุสถานประกอบกิจกรรม/จัดอบรมก่อน'),
+    target_group_id: Yup.string().required('กรุณาเลือกกลุ่มเป้าหมายก่อน'),
     target_group_text: Yup.string().when('target_group_id', {
         is: (target_group_id) => target_group_id === '6',
-        then: Yup.string().required()
+        then: Yup.string().required('กรุณาระบุกลุ่มเป้าหมายก่อน')
     }),
-    referal: Yup.string().required(),
-    surveillance: Yup.string().required(),
+    referal: Yup.string().required('กรุณาระบุจำนวนส่งต่อเพื่อรักษาก่อน'),
+    surveillance: Yup.string().required('กรุณาระบุจำนวนเฝ้าระวังต่อเนื่องก่อน'),
     plan_file: Yup.string().when('have_plan', {
         is: (have_plan) => have_plan === '1',
-        then: Yup.string().required()
+        then: Yup.string().required('กรุณาแนบไฟล์การจัดทำแผน/การดำเนินการก่อน')
     }),
     summary_file: Yup.string().when('have_summary', {
         is: (have_summary) => have_summary === '1',
-        then: Yup.string().required()
+        then: Yup.string().required('กรุณาแนบไฟล์สรุปผลและจัดทำรายงานก่อน')
     }),
 });
 
