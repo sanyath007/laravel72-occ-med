@@ -6,6 +6,7 @@ import { GlobalContext } from '../../context/globalContext'
 import { getScreenings, resetSuccess, destroy } from '../../store/slices/screening'
 import { toShortTHDate } from '../../utils/formatter'
 import Loading from '../../components/Loading'
+import Pagination from '../../components/Pagination'
 
 const SCREEN_TYPES =['คัดกรองโรคจากงาน','คัดกรองโรคจากสิ่งแวดล้อม','คัดกรองโรคทั่วไป','คัดกรองโรคติดต่อ'];
 
@@ -78,7 +79,7 @@ const ScreeningList = () => {
                             </div>
 
                             <div>
-                                <table className="table table-bordered mb-0">
+                                <table className="table table-bordered mb-2                   ">
                                     <thead>
                                         <tr>
                                             <th style={{ width: '5%', textAlign: 'center' }}>#</th>
@@ -128,6 +129,11 @@ const ScreeningList = () => {
                                         ))}
                                     </tbody>
                                 </table>
+
+                                <Pagination
+                                    pager={pager}
+                                    onPageClick={handlePageClick}
+                                />
                             </div>
                         </div>
                     </div>
