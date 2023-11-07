@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row, Tab, Tabs } from 'react-bootstrap'
-import { FaSave } from 'react-icons/fa'
+import { FaSave, FaRegFilePdf } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
 import moment from 'moment'
-import { store } from '../../../store/slices/screening'
+import { store, update } from '../../../store/slices/screening'
 
 const screeningSchema = Yup.object().shape({
     screen_date: Yup.string().required('กรุณาเลือกวันที่คัดกรองก่อน'),
@@ -33,21 +33,35 @@ const screeningSchema = Yup.object().shape({
 const ScreeningForm = ({ id, screening }) => {
     const dispatch = useDispatch();
     const [selectedDate, setSelectedDate] = useState(moment());
+    const [selectedPlanFile, setSelectedPlanFile] = useState('');
+    const [selectedSumFile, setSelectedSumFile] = useState('');
+
+    useEffect(() => {
+        if (screening) {
+            setSelectedDate(moment(screening.screen_date));
+            setSelectedPlanFile(screening.plan_file);
+            setSelectedSumFile(screening.summary_file);
+        }
+    }, [screening]);
 
     const handleSubmit = (values, formik) => {
-        const data = new FormData();
+        // const data = new FormData();
 
-        for(const [key, val] of Object.entries(values)) {
-            if (key === 'training_pictures' || key === 'pr_pictures') {
-                [...val].forEach((file, i) => {
-                    data.append(key, file[0]);
-                })
-            } else {
-                data.append(key, val);
-            }
+        // for(const [key, val] of Object.entries(values)) {
+        //     if (key === 'training_pictures' || key === 'pr_pictures') {
+        //         [...val].forEach((file, i) => {
+        //             data.append(key, file[0]);
+        //         })
+        //     } else {
+        //         data.append(key, val);
+        //     }
+        // }
+
+        if (screening) {
+            dispatch(update({ id, data: values }));
+        } else {
+            dispatch(store(values));
         }
-
-        dispatch(store(values));
 
         formik.resetForm();
     };
@@ -55,61 +69,60 @@ const ScreeningForm = ({ id, screening }) => {
     return (
         <Formik
             initialValues={{
-                screen_date: '',
-                screen_type_id: '',
-                division_id: '',
-                place: '',
-                target_group_id: '',
-                target_group_text: '',
-                total: '',
-                total_normal: '',
-                total_risk: '',
-                total_abnormal: '',
-                question: '',
-                question_normal: '',
-                question_risk: '',
-                question_abnormal: '',
-                body: '',
-                body_normal: '',
-                body_risk: '',
-                body_abnormal: '',
-                hearing: '',
-                hearing_normal: '',
-                hearing_risk: '',
-                hearing_abnormal: '',
-                lung: '',
-                lung_normal: '',
-                lung_risk: '',
-                lung_abnormal: '',
-                xlung: '',
-                xlung_normal: '',
-                xlung_risk: '',
-                xlung_abnormal: '',
-                vision: '',
-                vision_normal: '',
-                vision_risk: '',
-                vision_abnormal: '',
-                exposure: '',
-                exposure_normal: '',
-                exposure_risk: '',
-                exposure_abnormal: '',
-                other: '',
-                other_normal: '',
-                other_risk: '',
-                other_abnormal: '',
-                referal: '',
-                surveillance: '',
-                have_plan: '',
+                screen_date: screening ? screening.screen_date : '',
+                screen_type_id: screening ? screening.screen_type_id : '',
+                division_id: screening ? screening.division_id : '',
+                place: screening ? screening.place : '',
+                target_group_id: screening ? screening.target_group_id : '',
+                target_group_text: (screening && screening.target_group_text) ? screening.target_group_text : '',
+                total: (screening && screening.total) ? screening.total : '',
+                total_normal: (screening && screening.total_normal) ? screening.total_normal : '',
+                total_risk: (screening && screening.total_risk) ? screening.total_risk : '',
+                total_abnormal: (screening && screening.total_abnormal) ? screening.total_abnormal : '',
+                question: (screening && screening.question) ? screening.question : '',
+                question_normal: (screening && screening.question_normal) ? screening.question_normal : '',
+                question_risk: (screening && screening.question_risk) ? screening.question_risk : '',
+                question_abnormal: (screening && screening.question_abnormal) ? screening.question_abnormal : '',
+                body: (screening && screening.body) ? screening.body : '',
+                body_normal: (screening && screening.body_normal) ? screening.body_normal : '',
+                body_risk: (screening && screening.body_risk) ? screening.body_risk : '',
+                body_abnormal: (screening && screening.body_abnormal) ? screening.body_abnormal : '',
+                hearing: (screening && screening.hearing) ? screening.hearing : '',
+                hearing_normal: (screening && screening.hearing_normal) ? screening.hearing_normal : '',
+                hearing_risk: (screening && screening.hearing_risk) ? screening.hearing_risk : '',
+                hearing_abnormal: (screening && screening.hearing_abnormal) ? screening.hearing_abnormal : '',
+                lung: (screening && screening.lung) ? screening.lung : '',
+                lung_normal: (screening && screening.lung_normal) ? screening.lung_normal : '',
+                lung_risk: (screening && screening.lung_risk) ? screening.lung_risk : '',
+                lung_abnormal: (screening && screening.lung_abnormal) ? screening.lung_abnormal : '',
+                xlung: (screening && screening.xlung) ? screening.xlung : '',
+                xlung_normal: (screening && screening.xlung_normal) ? screening.xlung_normal : '',
+                xlung_risk: (screening && screening.xlung_risk) ? screening.xlung_risk : '',
+                xlung_abnormal: (screening && screening.xlung_abnormal) ? screening.xlung_abnormal : '',
+                vision: (screening && screening.vision) ? screening.vision : '',
+                vision_normal: (screening && screening.vision_normal) ? screening.vision_normal : '',
+                vision_risk: (screening && screening.vision_risk) ? screening.vision_risk : '',
+                vision_abnormal: (screening && screening.vision_abnormal) ? screening.vision_abnormal : '',
+                exposure: (screening && screening.exposure) ? screening.exposure : '',
+                exposure_normal: (screening && screening.exposure_normal) ? screening.exposure_normal : '',
+                exposure_risk: (screening && screening.exposure_risk) ? screening.exposure_risk : '',
+                exposure_abnormal: (screening && screening.exposure_abnormal) ? screening.exposure_abnormal : '',
+                other: (screening && screening.other) ? screening.other : '',
+                other_normal: (screening && screening.other_normal) ? screening.other_normal : '',
+                other_risk: (screening && screening.other_risk) ? screening.other_risk : '',
+                other_abnormal: (screening && screening.other_abnormal) ? screening.other_abnormal : '',
+                referal: screening ? screening.referal : '',
+                surveillance: screening ? screening.surveillance : '',
+                have_plan: screening ? screening.have_plan : '',
                 plan_file: '',
-                have_summary: '',
+                have_summary: screening ? screening.have_summary : '',
                 summary_file: '',
-                is_returned_data: '',
+                is_returned_data: screening ? screening.is_returned_data : '',
             }}
             validationSchema={screeningSchema}
             onSubmit={handleSubmit}
         >
             {(formik) => {
-                console.log(formik.errors);
                 return (
                     <Form>
                         <Tabs defaultActiveKey="home">
@@ -268,6 +281,7 @@ const ScreeningForm = ({ id, screening }) => {
                                                 type="radio"
                                                 name="have_plan"
                                                 value="1"
+                                                checked={formik.values.have_plan == 1}
                                             />
                                             <span className="ms-1 me-2">มี</span>
 
@@ -275,6 +289,7 @@ const ScreeningForm = ({ id, screening }) => {
                                                 type="radio"
                                                 name="have_plan"
                                                 value="2"
+                                                checked={formik.values.have_plan == 2}
                                             />
                                             <span className="ms-1">ไม่มี</span>
                                         </label>
@@ -284,11 +299,16 @@ const ScreeningForm = ({ id, screening }) => {
                                     </Col>
                                     <Col>
                                         <label htmlFor="">แนบไฟล์</label>
-                                        <input
-                                            type="file"
-                                            onChange={(e) => formik.setFieldValue('plan_file', e.target.files[0])}
-                                            className={`form-control ${(formik.errors.plan_file && formik.touched.plan_file) ? 'is-invalid' : ''}`}
-                                        />
+                                        <div className="d-flex flex-row align-items-center">
+                                            <input
+                                                type="file"
+                                                onChange={(e) => formik.setFieldValue('plan_file', e.target.files[0])}
+                                                className={`form-control w-50 ${(formik.errors.plan_file && formik.touched.plan_file) ? 'is-invalid' : ''}`}
+                                            />
+                                            <div className="ms-2">
+                                                {selectedPlanFile && <span><FaRegFilePdf size={'16px'} /> {selectedPlanFile}</span>}
+                                            </div>
+                                        </div>
                                         {(formik.errors.plan_file && formik.touched.plan_file) && (
                                             <span className="invalid-feedback">{formik.errors.plan_file}</span>
                                         )}
@@ -302,6 +322,7 @@ const ScreeningForm = ({ id, screening }) => {
                                                 type="radio"
                                                 name="have_summary"
                                                 value="1"
+                                                checked={formik.values.have_summary == 1}
                                             />
                                             <span className="ms-1 me-2">มีรายงาน</span>
 
@@ -309,6 +330,7 @@ const ScreeningForm = ({ id, screening }) => {
                                                 type="radio"
                                                 name="have_summary"
                                                 value="2"
+                                                checked={formik.values.have_summary == 2}
                                             />
                                             <span className="ms-1">ไม่มีรายงาน</span>
                                         </label>
@@ -318,11 +340,16 @@ const ScreeningForm = ({ id, screening }) => {
                                     </Col>
                                     <Col>
                                         <label htmlFor="">แนบไฟล์</label>
-                                        <input
-                                            type="file"
-                                            onChange={(e) => formik.setFieldValue('summary_file', e.target.files[0])}
-                                            className={`form-control ${(formik.errors.summary_file && formik.touched.summary_file) ? 'is-invalid' : ''}`}
-                                        />
+                                        <div className="d-flex flex-row align-items-center">
+                                            <input
+                                                type="file"
+                                                onChange={(e) => formik.setFieldValue('summary_file', e.target.files[0])}
+                                                className={`form-control w-50 ${(formik.errors.summary_file && formik.touched.summary_file) ? 'is-invalid' : ''}`}
+                                            />
+                                            <div className="ms-2">
+                                                {selectedSumFile && <span><FaRegFilePdf size={'16px'} /> {selectedSumFile}</span>}
+                                            </div>
+                                        </div>
                                         {(formik.errors.summary_file && formik.touched.summary_file) && (
                                             <span className="invalid-feedback">{formik.errors.summary_file}</span>
                                         )}
@@ -336,6 +363,7 @@ const ScreeningForm = ({ id, screening }) => {
                                                 type="radio"
                                                 name="is_returned_data"
                                                 value="1"
+                                                checked={formik.values.is_returned_data == 1}
                                             />
                                             <span className="ms-1 me-2">คืนแล้ว</span>
 
@@ -343,6 +371,7 @@ const ScreeningForm = ({ id, screening }) => {
                                                 type="radio"
                                                 name="is_returned_data"
                                                 value="2"
+                                                checked={formik.values.is_returned_data == 2}
                                             />
                                             <span className="ms-1">ยังไม่คืน</span>
                                         </label>
@@ -396,15 +425,15 @@ const ScreeningForm = ({ id, screening }) => {
                                                         <div className="input-group">
                                                             <input
                                                                 type="number"
-                                                                name="total_risk"
-                                                                value={formik.values.total_risk}
+                                                                name="total_normal"
+                                                                value={formik.values.total_normal}
                                                                 onChange={formik.handleChange}
-                                                                className={`form-control ${(formik.errors.total_risk && formik.touched.total_risk) ? 'is-invalid' : ''}`}
+                                                                className={`form-control ${(formik.errors.total_normal && formik.touched.total_normal) ? 'is-invalid' : ''}`}
                                                             />
                                                             <span className="input-group-text">ราย</span>
                                                         </div>
-                                                        {(formik.errors.total_risk && formik.touched.total_risk) && (
-                                                            <span className="text-danger text-sm">{formik.errors.total_risk}</span>
+                                                        {(formik.errors.total_normal && formik.touched.total_normal) && (
+                                                            <span className="text-danger text-sm">{formik.errors.total_normal}</span>
                                                         )}
                                                     </td>
                                                     <td>
@@ -957,9 +986,9 @@ const ScreeningForm = ({ id, screening }) => {
                             </Tab>
                         </Tabs>
                         <div className="text-center">
-                            <button type="submit" className={`btn ${false ? 'btn-warning' : 'btn-primary'}`}>
+                            <button type="submit" className={`btn ${screening ? 'btn-warning' : 'btn-primary'}`}>
                                 <FaSave className="me-1" />
-                                {false ? 'บันทึกการแก้ไข' : 'บันทึก'}
+                                {screening ? 'บันทึกการแก้ไข' : 'บันทึก'}
                             </button>
                         </div>
                     </Form>
