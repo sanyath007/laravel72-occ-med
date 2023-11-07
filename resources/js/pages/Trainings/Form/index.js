@@ -12,26 +12,26 @@ import PersonForm from './PersonForm'
 import UploadGallery from '../../../components/UploadGallery'
 
 const trainingSchema = Yup.object().shape({
-    train_date: Yup.string().required(),
-    division_id: Yup.string().required(),
-    place: Yup.string().required(),
-    topic: Yup.string().required(),
-    background: Yup.string().required(),
-    train_hour: Yup.string().required(),
-    target_group_id: Yup.string().required(),
+    train_date: Yup.string().required('กรุณาเลือกวันที่จัดกิจกรรมก่อน'),
+    division_id: Yup.string().required('กรุณาเลือกผู้ดำเนินการก่อน'),
+    place: Yup.string().required('กรุณาระบุสถานประกอบกิจกรรม/จัดอบรมก่อน'),
+    topic: Yup.string().required('กรุณาระบุหัวข้อการอบรมก่อน'),
+    background: Yup.string().required('กรุณาระบุความสำคัญและที่มาก่อน'),
+    train_hour: Yup.string().required('กรุณาระบุจำนวนชั่วโมงบรรยายก่อน'),
+    target_group_id: Yup.string().required('กรุณาเลือกกลุ่มเป้าหมายก่อน'),
     target_group_text:  Yup.string().when('target_group_id', {
         is: (target_group_id) => target_group_id === '6',
-        then: Yup.string().required()
+        then: Yup.string().required('กรุณาระบุกลุ่มเป้าหมายก่อน')
     }),
-    num_of_participants: Yup.string().required(),
-    have_kpi: Yup.string().required(),
+    num_of_participants: Yup.string().required('กรุณาระบุจำนวนผู้เข้าฟังก่อน'),
+    have_kpi: Yup.string().required('กรุณาเลือกการมีตัวชี้วัดก่อน/หลังก่อน'),
     key_success:  Yup.string().when('have_kpi', {
         is: (have_kpi) => have_kpi === '1',
-        then: Yup.string().required()
+        then: Yup.string().required('กรุณาระุบตัวชี้วัดผลสำเร็จก่อน')
     }),
     is_succeed:  Yup.string().when('have_kpi', {
         is: (have_kpi) => have_kpi === '1',
-        then: Yup.string().required()
+        then: Yup.string().required('กรุณาเลือกผลการดำเนินงานก่อน')
     }),
 });
 
