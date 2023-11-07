@@ -118,9 +118,9 @@ const NetworkMeetingList = () => {
                                                 <td style={{ textAlign: 'center' }}>{meeting.division?.name}</td>
                                                 <td style={{ textAlign: 'center' }}>
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                        <Link to={`/network-meetings/${meeting.id}/detail`} className="btn btn-primary btn-sm">
+                                                        {/* <Link to={`/network-meetings/${meeting.id}/detail`} className="btn btn-primary btn-sm">
                                                             <i className="bi bi-search"></i>
-                                                        </Link>
+                                                        </Link> */}
                                                         <Link to={`/network-meetings/${meeting.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
