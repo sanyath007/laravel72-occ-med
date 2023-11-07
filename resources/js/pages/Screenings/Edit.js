@@ -21,7 +21,9 @@ const EditScreening = () => {
             title: 'แก้ไขการตรวจคัดกรองสุขภาพพนักงานเชิงรุก',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'investigations', name: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: null, active: true }
+                { id: 'services', name: 'งานบริการ', path: '/services' },
+                { id: 'list', name: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: '/screenings' },
+                { id: 'edit', name: 'แก้ไขการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: null, active: true }
             ]
         }))
     }, []);
