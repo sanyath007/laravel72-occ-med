@@ -193,18 +193,18 @@ const Sidebar = () => {
                 </li>
                 {/* เจ้าหน้าที่กลุ่มงาน */}
                 <li className="nav-item">
-                    <a className="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                    <a className="nav-link collapsed" data-bs-target="#employees-nav" data-bs-toggle="collapse" href="#">
                         <i className="bi bi-person-workspace"></i><span>เจ้าหน้าที่กลุ่มงาน</span>
                         <i className="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="icons-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <Link to="employees/new" onClick={handleMenuClicked}>
+                            <Link to="/employees/new" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>ลงทะเบียน</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="employees" onClick={handleMenuClicked}>
+                            <Link to="/employees" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>รายการ</span>
                             </Link>
                         </li>
@@ -212,18 +212,18 @@ const Sidebar = () => {
                 </li>
                 {/* สถานประกอบการ */}
                 <li className="nav-item">
-                    <a className="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                    <a className="nav-link collapsed" data-bs-target="#companies-nav" data-bs-toggle="collapse" href="#">
                         <i className="bi bi-house-door"></i><span>สถานประกอบการ</span>
                         <i className="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="icons-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <Link to="companies/new" onClick={handleMenuClicked}>
+                            <Link to="/companies/new" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>ลงทะเบียน</span>
                             </Link>
                         </li>
                         <li>
-                            <Link to="companies" onClick={handleMenuClicked}>
+                            <Link to="/companies" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>รายการ</span>
                             </Link>
                         </li>

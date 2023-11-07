@@ -28,11 +28,12 @@ const SurveyDetail = () => {
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'ายละเอียดการ Walk-through survey',
+            title: 'รายละเอียดการ Walk-through survey',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
+                { id: 'services', name: 'งานบริการ', path: '/services' },
                 { id: 'surveyings', name: 'รายการ Walk-through survey', path: '/surveyings' },
-                { id: 'detail', name: 'ายละเอียดการ Walk-through survey', path: null, active: true }
+                { id: 'detail', name: 'รายละเอียดการ Walk-through survey', path: null, active: true }
             ]
         }))
     }, []);

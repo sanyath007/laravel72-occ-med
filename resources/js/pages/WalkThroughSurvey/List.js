@@ -20,6 +20,7 @@ const SurveyingList = () => {
             title: 'รายการ Walk-through survey',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
+                { id: 'services', name: 'งานบริการ', path: '/services' },
                 { id: 'surveyings', name: 'รายการ Walk-through survey', path: null, active: true }
             ]
         }))

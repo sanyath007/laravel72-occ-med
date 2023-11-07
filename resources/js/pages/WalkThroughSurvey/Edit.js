@@ -21,6 +21,7 @@ const EditSurveying = () => {
             title: 'แก้ไข Walk-through survey',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
+                { id: 'services', name: 'งานบริการ', path: '/services' },
                 { id: 'surveyings', name: 'รายการ Walk-through survey', path: '/surveyings' },
                 { id: 'edit', name: 'แก้ไข Walk-through survey', path: null, active: true }
             ]
