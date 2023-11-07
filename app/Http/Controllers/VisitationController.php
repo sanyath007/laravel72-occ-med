@@ -10,7 +10,9 @@ class VisitationController extends Controller
 {
     public function search(Request $request)
     {
-        $visitations = Visitation::with('division','company','visitors')->paginate(10);
+        $visitations = Visitation::with('division','company','visitors')
+                            ->orderBy('visit_date', 'DESC')
+                            ->paginate(10);
 
         return response()->json($visitations);
     }
