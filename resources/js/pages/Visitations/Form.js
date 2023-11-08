@@ -76,7 +76,7 @@ const VisitationForm = ({ id, visitation }) => {
                 company_id: visitation ? visitation.company_id : '',
                 place: (visitation && visitation.place) ? visitation.place : '',
                 num_of_patients: visitation ? visitation.num_of_patients : '',
-                is_return_data: visitation ? visitation.is_return_data : '',
+                is_returned_data: visitation ? visitation.is_returned_data : '',
                 visitors: visitation ? visitation.visitors : [],
                 file_attachment: '',
             }}
@@ -204,17 +204,17 @@ const VisitationForm = ({ id, visitation }) => {
                                         <label htmlFor="" className="form-control" style={{ display: 'flex' }}>
                                             <Field
                                                 type="radio"
-                                                name="is_return_data"
+                                                name="is_returned_data"
                                                 value="1"
-                                                checked={formik.values.is_return_data == 1}
+                                                checked={formik.values.is_returned_data == 1}
                                             />
                                             <span className="ms-1 me-2">คืนแล้ว</span>
 
                                             <Field
                                                 type="radio"
-                                                name="is_return_data"
+                                                name="is_returned_data"
                                                 value="2"
-                                                checked={formik.values.is_return_data == 2}
+                                                checked={formik.values.is_returned_data == 2}
                                             />
                                             <span className="ms-1">ยังไม่คืน</span>
                                         </label>

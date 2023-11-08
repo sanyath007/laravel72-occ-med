@@ -36,7 +36,7 @@ class VisitationController extends Controller
             $visitation->division_id        = $request['division_id'];
             $visitation->company_id         = $request['company_id'];
             $visitation->num_of_patients    = $request['num_of_patients'];
-            $visitation->is_return_data     = $request['is_return_data'];
+            $visitation->is_returned_data     = $request['is_returned_data'];
             // $visitation->remark = $request['remark'];
 
             /** Upload file */
@@ -90,7 +90,7 @@ class VisitationController extends Controller
             $visitation->division_id        = $request['division_id'];
             $visitation->company_id         = $request['company_id'];
             $visitation->num_of_patients    = $request['num_of_patients'];
-            $visitation->is_return_data     = $request['is_return_data'];
+            $visitation->is_returned_data     = $request['is_returned_data'];
             // $visitation->remark = $request['remark'];
 
             /** Upload file and pictures */

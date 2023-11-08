@@ -277,6 +277,7 @@ const SurveyingForm = ({ id, surveying }) => {
                                                 type="radio"
                                                 name="have_hra"
                                                 value="1"
+                                                checked={formik.values.have_hra == 1}
                                             />
                                             <span className="ms-1 me-2">จัดทำ</span>
 
@@ -284,6 +285,7 @@ const SurveyingForm = ({ id, surveying }) => {
                                                 type="radio"
                                                 name="have_hra"
                                                 value="2"
+                                                checked={formik.values.have_hra == 2}
                                             />
                                             <span className="ms-1">ไม่ได้จัดทำ</span>
                                         </label>
@@ -316,6 +318,7 @@ const SurveyingForm = ({ id, surveying }) => {
                                                 type="radio"
                                                 name="have_report"
                                                 value="1"
+                                                checked={formik.values.have_report == 1}
                                             />
                                             <span className="ms-1 me-2">เสร็จแล้ว</span>
 
@@ -323,6 +326,7 @@ const SurveyingForm = ({ id, surveying }) => {
                                                 type="radio"
                                                 name="have_report"
                                                 value="2"
+                                                checked={formik.values.have_report == 2}
                                             />
                                             <span className="ms-1">ยังไม่เสร็จ</span>
                                         </label>
@@ -337,6 +341,7 @@ const SurveyingForm = ({ id, surveying }) => {
                                                 type="radio"
                                                 name="is_adviced"
                                                 value="1"
+                                                checked={formik.values.is_adviced == 1}
                                             />
                                             <span className="ms-1 me-2">ระบุ</span>
 
@@ -344,6 +349,7 @@ const SurveyingForm = ({ id, surveying }) => {
                                                 type="radio"
                                                 name="is_adviced"
                                                 value="2"
+                                                checked={formik.values.is_adviced == 2}
                                             />
                                             <span className="ms-1">ไม่ระบุ</span>
                                         </label>
@@ -358,6 +364,7 @@ const SurveyingForm = ({ id, surveying }) => {
                                                 type="radio"
                                                 name="is_returned_data"
                                                 value="1"
+                                                checked={formik.values.is_returned_data == 1}
                                             />
                                             <span className="ms-1 me-2">คืนแล้ว</span>
 
@@ -365,6 +372,7 @@ const SurveyingForm = ({ id, surveying }) => {
                                                 type="radio"
                                                 name="is_returned_data"
                                                 value="2"
+                                                checked={formik.values.is_returned_data == 2}
                                             />
                                             <span className="ms-1">ยังไม่คืน</span>
                                         </label>
