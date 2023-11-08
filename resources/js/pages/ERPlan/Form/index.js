@@ -1,17 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row, Tab, Tabs } from 'react-bootstrap'
-import { FaSave, FaTimesCircle } from 'react-icons/fa'
+import { FaSave, FaSearch, FaTimesCircle } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
-import { store } from '../../../store/slices/erplan'
+import { store, update } from '../../../store/slices/erplan'
 import moment from 'moment'
 import PersonForm from './PersonForm'
 import PersonList from './PersonList'
 import ExpertForm from './ExpertForm'
 import ExpertList from './ExpertList'
 import UploadGallery from '../../../components/UploadGallery'
+import ModalCompanies from '../../../components/Modals/ModalCompanies'
 
 const erplanSchema = Yup.object().shape({
     plan_date: Yup.string().required('กรุณาเลือกวันที่จัดกิจกรรมก่อน'),
@@ -32,57 +33,80 @@ const erplanSchema = Yup.object().shape({
 
 const ERPlanForm = ({ id, erplan }) => {
     const dispatch = useDispatch();
-    const [selectedPlanDate, setSelectedPlanDate] = useState(moment())
+    const [selectedPlanDate, setSelectedPlanDate] = useState(moment());
+    const [showCompanyModal, setShowCompanyModal] = useState(false);
+    const [selecedCompany, setSelectedCompany] = useState(null);
+
+    useEffect(() => {
+        if (erplan) {
+            setSelectedPlanDate(moment(erplan.plan_date));
+            if (erplan.company) setSelectedCompany(erplan.company);
+        }
+    }, [erplan]);
 
     const handleSubmit = (values, formik) => {
-        const data = new FormData();
+        // const data = new FormData();
 
-        for(const [key, val] of Object.entries(values)) {
-            if (key === 'pic_attachments') {
-                [...val].forEach((file, i) => {
-                    data.append(key, file[0]);
-                })
-            } else {
-                data.append(key, val);
-            }
+        // for(const [key, val] of Object.entries(values)) {
+        //     if (key === 'pic_attachments') {
+        //         [...val].forEach((file, i) => {
+        //             data.append(key, file[0]);
+        //         })
+        //     } else {
+        //         data.append(key, val);
+        //     }
+        // }
+
+        if (erplan) {
+            dispatch(update({ id, data: values }));
+        } else {
+            dispatch(store(values));
         }
-
-        dispatch(store(values));
     };
 
     return (
         <Formik
             initialValues={{
-                plan_date: '',
-                plan_type_id: '',
-                incident_id: '',
-                division_id: '',
-                company_id: '',
-                persons: [],
-                topic: '',
-                background: '',
-                drill_hour: '',
-                target_group_id: '',
-                target_group_text: '',
-                num_of_participants: '',
-                equipment_eye: '',
-                equipment_face: '',
-                equipment_hand: '',
-                equipment_foot: '',
-                equipment_ear: '',
-                chemical_source: '',
-                experts: [],
+                plan_date: erplan ? erplan.plan_date : '',
+                plan_type_id: erplan ? erplan.plan_type_id : '',
+                incident_id: erplan ? erplan.incident_id : '',
+                division_id: erplan ? erplan.division_id : '',
+                company_id: (erplan && erplan.company_id) ? erplan.company_id : '',
+                place: (erplan && erplan.place) ? erplan.place : '',
+                persons: erplan ? erplan.persons : [],
+                topic: erplan ? erplan.topic : '',
+                background: erplan ? erplan.background : '',
+                drill_hour: erplan ? erplan.drill_hour : '',
+                target_group_id: erplan ? erplan.target_group_id : '',
+                target_group_text: (erplan && erplan.target_group_text) ? erplan.target_group_text : '',
+                num_of_participants: erplan ? erplan.num_of_participants : '',
+                equipment_eye: erplan ? erplan.equipment_eye : '',
+                equipment_face: erplan ? erplan.equipment_face : '',
+                equipment_hand: erplan ? erplan.equipment_hand : '',
+                equipment_foot: erplan ? erplan.equipment_foot : '',
+                equipment_ear: erplan ? erplan.equipment_ear : '',
+                chemical_source: (erplan && erplan.chemical_source) ? erplan.chemical_source : '',
+                experts: erplan ? erplan.experts : [],
                 file_attachment: '',
                 pic_attachments: [],
-                remark: '',
+                remark: (erplan && erplan.remark) ? erplan.remark : '',
             }}
             validationSchema={erplanSchema}
             onSubmit={handleSubmit}
         >
             {(formik) => {
-                console.log(formik.errors);
                 return (
                     <Form>
+                        <ModalCompanies
+                            isOpen={showCompanyModal}
+                            hideModal={() => setShowCompanyModal(false)}
+                            onSelected={(company) => {
+                                setSelectedCompany(company);
+
+                                formik.setFieldValue('company_id', company.id);
+                            }}
+                        />
+
                         <Tabs defaultActiveKey="home">
                             <Tab eventKey="home" title="รายละเอียดแผน" className="border border-top-0 p-4 mb-3">
                                 <Row className="mb-2">
@@ -140,7 +164,7 @@ const ERPlanForm = ({ id, erplan }) => {
                                         )}
                                     </Col>
                                 </Row>
-                                <Row className="mb-3">
+                                <Row className="mb-2">
                                     <Col>
                                         <label htmlFor="">ผู้ดำเนินการ</label>
                                         <select
@@ -160,30 +184,31 @@ const ERPlanForm = ({ id, erplan }) => {
                                     </Col>
                                     <Col md={8}>
                                         <label htmlFor="">สถานที่ประกอบการ</label>
-                                        <input
-                                            type="text"
-                                            name="company_id"
-                                            value={formik.values.company_id}
-                                            onChange={formik.handleChange}
-                                            className={`form-control ${(formik.errors.company_id && formik.touched.company_id) ? 'is-invalid' : ''}`}
-                                        />
+                                        <div className="input-group">
+                                            <div className={`form-control ${(formik.errors.company_id && formik.touched.company_id) ? 'is-invalid' : ''}`}>
+                                                {selecedCompany && selecedCompany.name}
+                                            </div>
+                                            <button type="button" className="btn btn-secondary" onClick={() => setShowCompanyModal(true)}>
+                                                <FaSearch />
+                                            </button>
+                                        </div>
                                         {(formik.errors.company_id && formik.touched.company_id) && (
-                                            <span className="invalid-feedback">{formik.errors.company_id}</span>
+                                            <span className="text-danger text-sm">{formik.errors.company_id}</span>
                                         )}
                                     </Col>
                                 </Row>
                                 <Row className="mb-2">
                                     <Col>
-                                        <label htmlFor="">หัวข้อการซ้อมแผน</label>
+                                        <label htmlFor="">สถานที่จัด</label>
                                         <input
                                             type="text"
-                                            name="topic"
-                                            value={formik.values.topic}
+                                            name="place"
+                                            value={formik.values.place}
                                             onChange={formik.handleChange}
-                                            className={`form-control ${(formik.errors.topic && formik.touched.topic) ? 'is-invalid' : ''}`}
+                                            className={`form-control ${(formik.errors.place && formik.touched.place) ? 'is-invalid' : ''}`}
                                         />
-                                        {(formik.errors.topic && formik.touched.topic) && (
-                                            <span className="invalid-feedback">{formik.errors.topic}</span>
+                                        {(formik.errors.place && formik.touched.place) && (
+                                            <span className="invalid-feedback">{formik.errors.place}</span>
                                         )}
                                     </Col>
                                     <Col md={3}>
@@ -200,6 +225,21 @@ const ERPlanForm = ({ id, erplan }) => {
                                         </div>
                                         {(formik.errors.drill_hour && formik.touched.drill_hour) && (
                                             <span className="text-danger text-sm">{formik.errors.drill_hour}</span>
+                                        )}
+                                    </Col>
+                                </Row>
+                                <Row className="mb-2">
+                                    <Col>
+                                        <label htmlFor="">หัวข้อการซ้อมแผน</label>
+                                        <input
+                                            type="text"
+                                            name="topic"
+                                            value={formik.values.topic}
+                                            onChange={formik.handleChange}
+                                            className={`form-control ${(formik.errors.topic && formik.touched.topic) ? 'is-invalid' : ''}`}
+                                        />
+                                        {(formik.errors.topic && formik.touched.topic) && (
+                                            <span className="invalid-feedback">{formik.errors.topic}</span>
                                         )}
                                     </Col>
                                 </Row>
@@ -281,6 +321,7 @@ const ERPlanForm = ({ id, erplan }) => {
                                                         type="radio"
                                                         name="equipment_eye"
                                                         value="1"
+                                                        checked={formik.values.equipment_eye == 1}
                                                     />
                                                     <span className="ms-1 me-2">Goggle</span>
 
@@ -288,6 +329,7 @@ const ERPlanForm = ({ id, erplan }) => {
                                                         type="radio"
                                                         name="equipment_eye"
                                                         value="2"
+                                                        checked={formik.values.equipment_eye == 2}
                                                     />
                                                     <span className="ms-1">Face shield</span>
                                                 </label>
@@ -299,6 +341,7 @@ const ERPlanForm = ({ id, erplan }) => {
                                                         type="radio"
                                                         name="equipment_face"
                                                         value="1"
+                                                        checked={formik.values.equipment_face == 1}
                                                     />
                                                     <span className="ms-1 me-2">หน้ากากผ้า</span>
 
@@ -306,6 +349,7 @@ const ERPlanForm = ({ id, erplan }) => {
                                                         type="radio"
                                                         name="equipment_face"
                                                         value="2"
+                                                        checked={formik.values.equipment_face == 2}
                                                     />
                                                     <span className="ms-1 me-2">หน้ากากอนามัย</span>
 
@@ -313,6 +357,7 @@ const ERPlanForm = ({ id, erplan }) => {
                                                         type="radio"
                                                         name="equipment_face"
                                                         value="3"
+                                                        checked={formik.values.equipment_face == 3}
                                                     />
                                                     <span className="ms-1 me-2">หน้ากากอนามัย</span>
 
@@ -320,6 +365,7 @@ const ERPlanForm = ({ id, erplan }) => {
                                                         type="radio"
                                                         name="equipment_face"
                                                         value="4"
+                                                        checked={formik.values.equipment_face == 4}
                                                     />
                                                     <span className="ms-1 me-2">หน้ากากแบบครึ่งหน้า</span>
 
@@ -327,6 +373,7 @@ const ERPlanForm = ({ id, erplan }) => {
                                                         type="radio"
                                                         name="equipment_face"
                                                         value="5"
+                                                        checked={formik.values.equipment_face == 5}
                                                     />
                                                     <span className="ms-1 me-2">หน้ากากแบบเต็มหน้า</span>
 
@@ -334,6 +381,7 @@ const ERPlanForm = ({ id, erplan }) => {
                                                         type="radio"
                                                         name="equipment_face"
                                                         value="6"
+                                                        checked={formik.values.equipment_face == 6}
                                                     />
                                                     <span className="ms-1">มีถังอากาศ</span>
                                                 </label>
@@ -345,6 +393,7 @@ const ERPlanForm = ({ id, erplan }) => {
                                                         type="radio"
                                                         name="equipment_hand"
                                                         value="1"
+                                                        checked={formik.values.equipment_hand == 1}
                                                     />
                                                     <span className="ms-1 me-2">ลาเท็กซ์</span>
 
@@ -352,6 +401,7 @@ const ERPlanForm = ({ id, erplan }) => {
                                                         type="radio"
                                                         name="equipment_hand"
                                                         value="2"
+                                                        checked={formik.values.equipment_hand == 2}
                                                     />
                                                     <span className="ms-1 me-2">ไนไตร</span>
 
@@ -359,6 +409,7 @@ const ERPlanForm = ({ id, erplan }) => {
                                                         type="radio"
                                                         name="equipment_hand"
                                                         value="3"
+                                                        checked={formik.values.equipment_hand == 3}
                                                     />
                                                     <span className="ms-1 me-2">พลาสติก</span>
 
@@ -366,6 +417,7 @@ const ERPlanForm = ({ id, erplan }) => {
                                                         type="radio"
                                                         name="equipment_hand"
                                                         value="4"
+                                                        checked={formik.values.equipment_hand == 4}
                                                     />
                                                     <span className="ms-1">อื่นๆ</span>
                                                 </label>
@@ -377,6 +429,7 @@ const ERPlanForm = ({ id, erplan }) => {
                                                         type="radio"
                                                         name="equipment_foot"
                                                         value="1"
+                                                        checked={formik.values.equipment_foot == 1}
                                                     />
                                                     <span className="ms-1 me-2">รองเท้า Safety</span>
 
@@ -384,6 +437,7 @@ const ERPlanForm = ({ id, erplan }) => {
                                                         type="radio"
                                                         name="equipment_foot"
                                                         value="2"
+                                                        checked={formik.values.equipment_foot == 2}
                                                     />
                                                     <span className="ms-1">อื่นๆ</span>
                                                 </label>
@@ -395,6 +449,7 @@ const ERPlanForm = ({ id, erplan }) => {
                                                         type="radio"
                                                         name="equipment_ear"
                                                         value="1"
+                                                        checked={formik.values.equipment_ear == 1}
                                                     />
                                                     <span className="ms-1 me-2">ที่ครอบหู</span>
 
@@ -402,6 +457,7 @@ const ERPlanForm = ({ id, erplan }) => {
                                                         type="radio"
                                                         name="equipment_ear"
                                                         value="2"
+                                                        checked={formik.values.equipment_ear == 2}
                                                     />
                                                     <span className="ms-1 me-2">ปลั๊กอุดหูแบบโฟม</span>
 
@@ -409,6 +465,7 @@ const ERPlanForm = ({ id, erplan }) => {
                                                         type="radio"
                                                         name="equipment_ear"
                                                         value="3"
+                                                        checked={formik.values.equipment_ear == 3}
                                                     />
                                                     <span className="ms-1">ปลั๊กอุดหูชนิดอื่น</span>
                                                 </label>
@@ -515,9 +572,9 @@ const ERPlanForm = ({ id, erplan }) => {
                         </Tabs>
 
                         <div className="text-center">
-                            <button type="submit" className={`btn ${false ? 'btn-warning' : 'btn-primary'}`}>
+                            <button type="submit" className={`btn ${erplan ? 'btn-warning' : 'btn-primary'}`}>
                                 <FaSave className="me-1" />
-                                {false ? 'บันทึกการแก้ไข' : 'บันทึก'}
+                                {erplan ? 'บันทึกการแก้ไข' : 'บันทึก'}
                             </button>
                         </div>
                     </Form>

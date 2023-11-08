@@ -27,11 +27,11 @@ class ERPlan extends Model
 
     public function persons()
     {
-        return $this->hasMany(SurveyingSurveyor::class, 'survey_id', 'id');
+        return $this->hasMany(ERPlanPerson::class, 'plan_id', 'id');
     }
 
     public function experts()
     {
-        return $this->hasMany(SurveyingSurveyor::class, 'survey_id', 'id');
+        return $this->hasMany(ERPlanExpert::class, 'plan_id', 'id');
     }
 }
