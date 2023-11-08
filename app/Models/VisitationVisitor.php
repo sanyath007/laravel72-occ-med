@@ -19,4 +19,9 @@ class VisitationVisitor extends Model
     {
         return $this->belongsTo(Visitation::class, 'visitation_id', 'id');
     }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'employee_id', 'id');
+    }
 }
