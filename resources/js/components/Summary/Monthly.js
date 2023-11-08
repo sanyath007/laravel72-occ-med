@@ -7,7 +7,6 @@ import { getReportBulletsByDivision } from '../../store/slices/reportBullet';
 import { resetSuccess, getMonthlies, destroy } from '../../store/slices/monthly';
 import { budgetMonths } from '../../utils/constraints';
 import { currencyFormat } from '../../utils/formatter';
-import api from '../../api';
 
 const Monthly = ({ division, routePath }) => {
     const dispatch = useDispatch();
@@ -17,8 +16,11 @@ const Monthly = ({ division, routePath }) => {
 
     useEffect(() => {
         dispatch(getReportBulletsByDivision({ path: `/api/report-bullets/division/${division}` }))
-        dispatch(getMonthlies({ division, queryStr: `?year=${filter}` }))
     }, [])
+
+    useEffect(() => {
+        dispatch(getMonthlies({ division, queryStr: `?year=${filter}` }))
+    }, [filter])
 
     useEffect(() => {
         if (isSuccess) {

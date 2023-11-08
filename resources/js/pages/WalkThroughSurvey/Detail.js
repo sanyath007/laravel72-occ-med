@@ -42,8 +42,6 @@ const SurveyDetail = () => {
         if (id) dispatch(getSurveying(id));
     }, [id]);
 
-    console.log(surveying);
-
     return (
         <section className="section">
             <div className="row">
