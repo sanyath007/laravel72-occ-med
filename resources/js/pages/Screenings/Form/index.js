@@ -306,7 +306,11 @@ const ScreeningForm = ({ id, screening }) => {
                                                 className={`form-control w-50 ${(formik.errors.plan_file && formik.touched.plan_file) ? 'is-invalid' : ''}`}
                                             />
                                             <div className="ms-2">
-                                                {selectedPlanFile && <span><FaRegFilePdf size={'16px'} /> {selectedPlanFile}</span>}
+                                                {selectedPlanFile && (
+                                                    <a href={`${process.env.MIX_APP_URL}/uploads/screening/file/${selectedPlanFile}`} target="_blank">
+                                                        <FaRegFilePdf size={'16px'} /> {selectedPlanFile}
+                                                    </a>
+                                                )}
                                             </div>
                                         </div>
                                         {(formik.errors.plan_file && formik.touched.plan_file) && (
@@ -347,7 +351,11 @@ const ScreeningForm = ({ id, screening }) => {
                                                 className={`form-control w-50 ${(formik.errors.summary_file && formik.touched.summary_file) ? 'is-invalid' : ''}`}
                                             />
                                             <div className="ms-2">
-                                                {selectedSumFile && <span><FaRegFilePdf size={'16px'} /> {selectedSumFile}</span>}
+                                                {selectedSumFile && (
+                                                    <a href={`${process.env.MIX_APP_URL}/uploads/screening/file/${selectedSumFile}`} target="_blank">
+                                                        <FaRegFilePdf size={'16px'} /> {selectedSumFile}
+                                                    </a>
+                                                )}
                                             </div>
                                         </div>
                                         {(formik.errors.summary_file && formik.touched.summary_file) && (

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row, Tab, Tabs } from 'react-bootstrap'
-import { FaSave, FaSearch, FaTimesCircle } from 'react-icons/fa'
+import { FaSave, FaSearch, FaTimesCircle, FaRegFilePdf } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
 import { store, update } from '../../../store/slices/erplan'
 import moment from 'moment'
@@ -35,7 +35,8 @@ const ERPlanForm = ({ id, erplan }) => {
     const dispatch = useDispatch();
     const [selectedPlanDate, setSelectedPlanDate] = useState(moment());
     const [showCompanyModal, setShowCompanyModal] = useState(false);
-    const [selecedCompany, setSelectedCompany] = useState(null);
+    const [selectedCompany, setSelectedCompany] = useState(null);
+    const [selectedFile, setSelectedFile] = useState('');
 
     useEffect(() => {
         if (erplan) {
@@ -186,7 +187,7 @@ const ERPlanForm = ({ id, erplan }) => {
                                         <label htmlFor="">สถานที่ประกอบการ</label>
                                         <div className="input-group">
                                             <div className={`form-control ${(formik.errors.company_id && formik.touched.company_id) ? 'is-invalid' : ''}`}>
-                                                {selecedCompany && selecedCompany.name}
+                                                {selectedCompany && selectedCompany.name}
                                             </div>
                                             <button type="button" className="btn btn-secondary" onClick={() => setShowCompanyModal(true)}>
                                                 <FaSearch />
@@ -484,13 +485,27 @@ const ERPlanForm = ({ id, erplan }) => {
                                             className="form-control"
                                         />
                                     </Col>
+                                </Row>
+                                <Row className="mb-3">
                                     <Col>
                                         <label htmlFor="">แนบไฟล์สรุปรายงานการฝึกซ้อม</label>
-                                        <input
-                                            type="file"
-                                            onChange={(e) => formik.setFieldValue('file_attachment', e.target.files[0])}
-                                            className="form-control"
-                                        />
+                                        <div className="d-flex flex-row">
+                                            <input
+                                                type="file"
+                                                onChange={(e) => {
+                                                    setSelectedFile(e.target.files[0]?.name);
+                                                    formik.setFieldValue('file_attachment', e.target.files[0]);
+                                                }}
+                                                className="form-control w-50 me-4"
+                                            />
+                                            <div className="d-flex flex-row align-items-center w-50">
+                                                {selectedFile && (
+                                                    <a href={`${process.env.MIX_APP_URL}/uploads/uploads/erp/file/${selectedFile}`} target="_blank">
+                                                        <FaRegFilePdf size={'16px'} /> {selectedFile}
+                                                    </a>
+                                                )}
+                                            </div>
+                                        </div>
                                     </Col>
                                 </Row>
                             </Tab>

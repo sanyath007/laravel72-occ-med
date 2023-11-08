@@ -236,8 +236,10 @@ const VisitationForm = ({ id, visitation }) => {
                                             </div>
                                             <div className="mt-2 w-50">
                                                 {selecedFile && (
-                                                    <span className="d-flex flex-row align-items-center text-success">
-                                                        <FaFileImage size={'16px'} /> {selecedFile}
+                                                    <span className="d-flex flex-row align-items-center">
+                                                        <a href={`${process.env.MIX_APP_URL}/uploads/visitaion/${selecedFile}`} target="_blank">
+                                                            <FaFileImage size={'16px'} /> {selecedFile}
+                                                        </a>
                                                     </span>
                                                 )}
                                             </div>

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row } from 'react-bootstrap'
-import { FaSave } from 'react-icons/fa'
+import { FaSave, FaRegFilePdf } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
 import { store, update } from '../../store/slices/investigation'
 import moment from 'moment'
@@ -240,7 +240,11 @@ const InvestigationForm = ({ id, investigation }) => {
                                         className="form-control w-50 me-4"
                                     />
                                     <div>
-                                        {selectedFile && <span>{selectedFile}</span>}
+                                        {selectedFile && (
+                                            <a href={`${process.env.MIX_APP_URL}/uploads/investigation/file/${selectedFile}`} target="_blank">
+                                                <FaRegFilePdf size={'16px'} /> {selectedFile}
+                                            </a>
+                                        )}
                                     </div>
                                 </div>
                             </Col>
@@ -258,7 +262,11 @@ const InvestigationForm = ({ id, investigation }) => {
                                         className="form-control w-50 me-4"
                                     />
                                     <div>
-                                        {selectedPic && <span>{selectedPic}</span>}
+                                        {selectedPic && (
+                                            <a href={`${process.env.MIX_APP_URL}/uploads/investigation/pic/${selectedPic}`} target="_blank">
+                                                <FaRegFilePdf size={'16px'} /> {selectedPic}
+                                            </a>
+                                        )}
                                     </div>
                                 </div>
                             </Col>

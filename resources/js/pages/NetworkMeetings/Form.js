@@ -44,7 +44,7 @@ const NetworkMeetingForm = ({ id, meeting }) => {
                 meeting_objective: meeting ? meeting.meeting_objective : '',
                 division_id: meeting ? meeting.division_id : '',
                 meeting_type_id: meeting ? meeting.meeting_type_id : '',
-                meeting_type_text: meeting ? meeting.meeting_type_text : '',
+                meeting_type_text: (meeting && meeting.meeting_type_text) ? meeting.meeting_type_text : '',
                 target_group_id: meeting ? meeting.target_group_id : '',
                 attendee: meeting ? meeting.attendee : '',
                 period: meeting ? meeting.period : '',
