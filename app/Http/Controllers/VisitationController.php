@@ -111,14 +111,18 @@ class VisitationController extends Controller
                     foreach($request['visitors'] as $visitor) {
                         if (array_key_exists('id', $visitor)) {
                             /** รายการเดิม */
-                            $newVisitor = VisitationVisitor::find($visitor['id']);
-                            $newVisitor->fullname = $visitor['fullname'];
-                            $newVisitor->position = $visitor['position'];
-                            $newVisitor->save();
+                            // if (VisitationVisitor::where('employee_id', $visitor['employee_id'])->count() == 0) {
+                                $updatedVisitor = VisitationVisitor::find($visitor['id']);
+                                // $updatedVisitor->employee_id = $person['employee_id'];
+                                $updatedVisitor->fullname = $visitor['fullname'];
+                                $updatedVisitor->position = $visitor['position'];
+                                $updatedVisitor->save();
+                            // }
                         } else {
                             /** รายการใหม่ */
                             $newVisitor = new VisitationVisitor;
                             $newVisitor->visitation_id = $visitation->id;
+                            // $newVisitor->employee_id = $visitor['employee_id'];
                             $newVisitor->fullname = $visitor['fullname'];
                             $newVisitor->position = $visitor['position'];
                             $newVisitor->save();

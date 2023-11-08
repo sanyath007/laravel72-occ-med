@@ -225,12 +225,26 @@ class TrainingController extends Controller
             if ($training->save()) {
                 if (count($request['persons']) > 0) {
                     foreach($request['persons'] as $person) {
-                        $newPerson = new TrainingPerson;
-                        $newPerson->train_id    = $training->id;
-                        $newPerson->name        = $person['name'];
-                        $newPerson->position    = $person['position'];
-                        $newPerson->company     = $person['company'];
-                        $newPerson->save();
+                        if (array_key_exists('id', $person)) {
+                            /** รายการเดิม */
+                            // if (TrainingPerson::where('employee_id', $person['employee_id'])->count() == 0) {
+                                $updatedPerson = TrainingPerson::find($person['id']);
+                                // $updatedPerson->employee_id = $person['employee_id'];
+                                $newPerson->name        = $person['name'];
+                                $newPerson->position    = $person['position'];
+                                $newPerson->company     = $person['company'];
+                                $updatedPerson->save();
+                            // }
+                        } else {
+                            /** รายการใหม่ */
+                            $newPerson = new TrainingPerson;
+                            $newPerson->train_id    = $training->id;
+                            // $newPerson->employee_id = $person['employee_id'];
+                            $newPerson->name        = $person['name'];
+                            $newPerson->position    = $person['position'];
+                            $newPerson->company     = $person['company'];
+                            $newPerson->save();
+                        }
                     }
                 }
 
@@ -258,49 +272,31 @@ class TrainingController extends Controller
         try {
             $training = Training::find($id);
 
-            // if ($request->file('training_pictures')) {
-            //     $index = 0;
-            //     $picNames = '';
-            //     $destinationPath = 'uploads/training/pic/';
+            /** Remove uploaded file */
+            $destinationPath = 'uploads/training/pic/';
+            if ($training->training_pictures != '') {
+                $pictures = explode(',', $training->training_pictures);
 
-            //     foreach($request->file('training_pictures') as $file) {
-            //         $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
+                foreach($pictures as $pic) {
+                    $existed = $destinationPath . $pic;
 
-            //         if ($file->move($destinationPath, $fileName)) {
-            //             if ($index < count($request->file('training_pictures'))) {
-            //                 $picNames .= $fileName.',';
-            //             } else {
-            //                 $picNames .= $fileName;
-            //             }
-            //         }
+                    if (\File::exists($existed)) {
+                        \File::delete($existed);
+                    }
+                }
+            }
 
-            //         $index++;
-            //     }
+            if ($training->pr_pictures != '') {
+                $pictures = explode(',', $training->pr_pictures);
 
-            //     $training->training_pictures = $picNames;
-            // }
+                foreach($pictures as $pic) {
+                    $existed = $destinationPath . $pic;
 
-            // if ($request->file('pr_pictures')) {
-            //     $index = 0;
-            //     $picNames = '';
-            //     $destinationPath = 'uploads/training/pic/';
-
-            //     foreach($request->file('pr_pictures') as $file) {
-            //         $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-
-            //         if ($file->move($destinationPath, $fileName)) {
-            //             if ($index < count($request->file('pr_pictures'))) {
-            //                 $picNames .= $fileName.',';
-            //             } else {
-            //                 $picNames .= $fileName;
-            //             }
-            //         }
-
-            //         $index++;
-            //     }
-
-            //     $plan->pr_pictures = $picNames;
-            // }
+                    if (\File::exists($existed)) {
+                        \File::delete($existed);
+                    }
+                }
+            }
 
             if ($training->delete()) {
                 /** ลบผู้จัดกิจกรรมทั้งหมด */
