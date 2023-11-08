@@ -2,6 +2,11 @@ import React, { useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import ModalEmployees from '../../../components/Modals/ModalEmployees';
 
+const initialEmployee = {
+    fullname: '',
+    position: ''
+};
+
 const EmployeeForm = ({ onAdd }) => {
     const [visior, setVisior] = useState(null);
     const [selecedEmployee, setSelectedEmployee] = useState(initialEmployee);

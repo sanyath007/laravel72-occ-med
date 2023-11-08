@@ -13,17 +13,12 @@ import VisitorForm from './Form/VisitorForm'
 import VisitorList from './Form/VisitorList'
 
 const visitationSchema = Yup.object().shape({
-    visit_date: Yup.string().required(),
-    visit_objective: Yup.string().required(),
-    division_id: Yup.string().required(),
-    company_id: Yup.string().required(),
-    num_of_patients: Yup.string().required(),
+    visit_date: Yup.string().required('กรุณาเลือกวันที่เยี่ยมก่อน'),
+    visit_objective: Yup.string().required('กรุณาเลือกผู้ดำเนินการก่อน'),
+    division_id: Yup.string().required('กรุณาระบุวัตถุประสงค์ก่อน'),
+    company_id: Yup.string().required('กรุณาเลือกสถานประกอบการ/สถานที่ติดตามก่อน'),
+    num_of_patients: Yup.string().required('กรุณาระบุจำนวนผู้ป่วยก่อน'),
 });
-
-const initialEmployee = {
-    fullname: '',
-    position: ''
-}
 
 const VisitationForm = ({ id, visitation }) => {
     const dispatch = useDispatch();
@@ -79,9 +74,10 @@ const VisitationForm = ({ id, visitation }) => {
                 visit_objective: visitation ? visitation.visit_objective : '',
                 division_id: visitation ? visitation.division_id : '',
                 company_id: visitation ? visitation.company_id : '',
-                visitors: visitation ? visitation.visitors : [],
+                place: visitation ? visitation.place : '',
                 num_of_patients: visitation ? visitation.num_of_patients : '',
                 is_return_data: visitation ? visitation.is_return_data : '',
+                visitors: visitation ? visitation.visitors : [],
                 file_attachment: '',
             }}
             validationSchema={visitationSchema}
@@ -161,20 +157,32 @@ const VisitationForm = ({ id, visitation }) => {
                                     </Col>
                                 </Row>
                                 <Row className="mb-2">
-                                    <Col md={9}>
+                                    <Col>
                                         <label htmlFor="">สถานประกอบการ/สถานที่ติดตาม</label>
-                                        <div className="input-group">
-                                            <div className={`form-control ${(formik.errors.company_id && formik.touched.company_id) ? 'is-invalid' : ''}`}>
-                                                {selecedCompany && selecedCompany.name}
+                                        <div className="d-flex flex-row align-items-center">
+                                            <div className="input-group w-50 me-2">
+                                                <div className={`form-control ${(formik.errors.company_id && formik.touched.company_id) ? 'is-invalid' : ''}`}>
+                                                    {selecedCompany && selecedCompany.name}
+                                                </div>
+                                                <button type="button" className="btn btn-secondary" onClick={() => setShowCompanyModal(true)}>
+                                                    <FaSearch />
+                                                </button>
                                             </div>
-                                            <button type="button" className="btn btn-secondary" onClick={() => setShowCompanyModal(true)}>
-                                                <FaSearch />
-                                            </button>
+                                            <input
+                                                type="text"
+                                                name="place"
+                                                value={formik.values.place}
+                                                onChange={formik.handleChange}
+                                                placeholder="ระบุสถานที่ติดตาม (ถ้ามี)"
+                                                className={`form-control w-50 ${(formik.errors.place && formik.touched.place) ? 'is-invalid' : ''}`}
+                                            />
                                         </div>
                                         {(formik.errors.company_id && formik.touched.company_id) && (
                                             <span className="text-danger text-sm">{formik.errors.company_id}</span>
                                         )}
                                     </Col>
+                                </Row>
+                                <Row className="mb-2">
                                     <Col>
                                         <label htmlFor="">จำนวนผู้ป่วย</label>
                                         <div className="input-group">
@@ -190,26 +198,6 @@ const VisitationForm = ({ id, visitation }) => {
                                         {(formik.errors.num_of_patients && formik.touched.num_of_patients) && (
                                             <span className="invalid-feedback">{formik.errors.num_of_patients}</span>
                                         )}
-                                    </Col>
-                                </Row>
-                                <Row className="mb-2">
-                                    <Col md={8}>
-                                        <label htmlFor="">แนบไฟล์รูปภาพกิจกรรม</label>
-                                        <input
-                                            type="file"
-                                            className="form-control"
-                                            onChange={(e) => {
-                                                setSelectedFile(e.target.files[0]?.name);
-                                                formik.setFieldValue('file_attachment', e.target.files[0]);
-                                            }}
-                                        />
-                                        <div className="mt-2">
-                                            {selecedFile && (
-                                                <span className="d-flex flex-row align-items-center text-success">
-                                                    <FaFileImage size={'16px'} /> {selecedFile}
-                                                </span>
-                                            )}
-                                        </div>
                                     </Col>
                                     <Col>
                                         <label htmlFor="">สถานะการคืนข้อมูลแก่ผู้เกี่ยวข้อง</label>
@@ -230,6 +218,30 @@ const VisitationForm = ({ id, visitation }) => {
                                             />
                                             <span className="ms-1">ยังไม่คืน</span>
                                         </label>
+                                    </Col>
+                                </Row>
+                                <Row className="mb-2">
+                                    <Col>
+                                        <div className="d-flex flex-row align-items-center">
+                                            <div className="w-50 me-4">
+                                                <label htmlFor="">แนบไฟล์รูปภาพกิจกรรม</label>
+                                                <input
+                                                    type="file"
+                                                    className="form-control"
+                                                    onChange={(e) => {
+                                                        setSelectedFile(e.target.files[0]?.name);
+                                                        formik.setFieldValue('file_attachment', e.target.files[0]);
+                                                    }}
+                                                />
+                                            </div>
+                                            <div className="mt-2 w-50">
+                                                {selecedFile && (
+                                                    <span className="d-flex flex-row align-items-center text-success">
+                                                        <FaFileImage size={'16px'} /> {selecedFile}
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
                                     </Col>
                                 </Row>
                             </Tab>

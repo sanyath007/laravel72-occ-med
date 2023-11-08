@@ -21,6 +21,7 @@ const EditERPlan = () => {
             title: 'แก้ไขจัดทำแผนตอบโต้เหตุฉุกเฉิน',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
+                { id: 'services', name: 'งานบริการ', path: '/services' },
                 { id: 'er-plans', name: 'รายการทำแผนตอบโต้เหตุฉุกเฉิน', path: '/er-plans' },
                 { id: 'edit', name: 'แก้ไขจัดทำแผนตอบโต้เหตุฉุกเฉิน', path: null, active: true }
             ]

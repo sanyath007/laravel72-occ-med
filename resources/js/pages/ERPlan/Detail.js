@@ -18,6 +18,7 @@ const ERPlanDetail = () => {
             title: 'รายละเอียดจัดทำแผนตอบโต้เหตุฉุกเฉิน',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
+                { id: 'services', name: 'งานบริการ', path: '/services' },
                 { id: 'er-plans', name: 'รายการทำแผนตอบโต้เหตุฉุกเฉิน', path: '/er-plans' },
                 { id: 'detail', name: 'รายละเอียดจัดทำแผนตอบโต้เหตุฉุกเฉิน', path: null, active: true }
             ]

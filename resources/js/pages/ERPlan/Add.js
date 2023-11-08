@@ -12,6 +12,7 @@ const AddERPlan = () => {
             title: 'บันทึกการจัดทำแผนตอบโต้เหตุฉุกเฉิน',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
+                { id: 'services', name: 'งานบริการ', path: '/services' },
                 { id: 'er-plans', name: 'รายการทำแผนตอบโต้เหตุฉุกเฉิน', path: '/er-plans' },
                 { id: 'new', name: 'บันทึกการจัดทำแผนตอบโต้เหตุฉุกเฉิน', path: null, active: true }
             ]

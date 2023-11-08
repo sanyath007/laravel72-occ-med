@@ -34,6 +34,7 @@ const ERPlanList = () => {
             title: 'รายการแผนตอบโต้เหตุฉุกเฉิน',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
+                { id: 'services', name: 'งานบริการ', path: '/services' },
                 { id: 'companies', name: 'รายการแผนตอบโต้เหตุฉุกเฉิน', path: null, active: true }
             ]
         }))
