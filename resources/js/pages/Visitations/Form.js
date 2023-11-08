@@ -74,7 +74,7 @@ const VisitationForm = ({ id, visitation }) => {
                 visit_objective: visitation ? visitation.visit_objective : '',
                 division_id: visitation ? visitation.division_id : '',
                 company_id: visitation ? visitation.company_id : '',
-                place: visitation ? visitation.place : '',
+                place: (visitation && visitation.place) ? visitation.place : '',
                 num_of_patients: visitation ? visitation.num_of_patients : '',
                 is_return_data: visitation ? visitation.is_return_data : '',
                 visitors: visitation ? visitation.visitors : [],

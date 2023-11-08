@@ -1,7 +1,6 @@
 import React from 'react'
 
 const VisitorList = ({ visitors = [], onDelete }) => {
-    console.log(visitors);
     return (
         <div>
             <table className="table table-bordered mb-0">
@@ -9,7 +8,7 @@ const VisitorList = ({ visitors = [], onDelete }) => {
                     <tr>
                         <th style={{ width: '5%', textAlign: 'center' }}>#</th>
                         <th>ชื่อ-สกุล</th>
-                        <th style={{ width: '20%', textAlign: 'center' }}>ตำแหน่ง</th>
+                        <th style={{ width: '30%', textAlign: 'center' }}>ตำแหน่ง</th>
                         <th style={{ width: '10%', textAlign: 'center' }}>Actions</th>
                     </tr>
                 </thead>
