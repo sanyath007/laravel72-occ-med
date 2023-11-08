@@ -14,20 +14,20 @@ import ExpertList from './ExpertList'
 import UploadGallery from '../../../components/UploadGallery'
 
 const erplanSchema = Yup.object().shape({
-    plan_date: Yup.string().required(),
-    plan_type_id: Yup.string().required(),
-    incident_id: Yup.string().required(),
-    division_id: Yup.string().required(),
-    company_id: Yup.string().required(),
-    topic: Yup.string().required(),
-    background: Yup.string().required(),
-    drill_hour: Yup.number().required(),
-    target_group_id: Yup.string().required(),
+    plan_date: Yup.string().required('กรุณาเลือกวันที่จัดกิจกรรมก่อน'),
+    plan_type_id: Yup.string().required('กรุณาเลือกประเภทการซ้อมแผนก่อน'),
+    incident_id: Yup.string().required('กรุณาเลือกประเภทเหตุการณ์/สถานการณ์ก่อน'),
+    division_id: Yup.string().required('กรุณาเลือกผู้ดำเนินการก่อน'),
+    company_id: Yup.string().required('กรุณาระบุสถานที่ประกอบการก่อน'),
+    topic: Yup.string().required('กรุณาระบุหัวข้อการซ้อมแผนก่อน'),
+    background: Yup.string().required('กรุณาระบุจำนวนชั่วโมงการซ้อมแผนก่อน'),
+    drill_hour: Yup.number().required('กรุณาระบุความสำคัญและที่มาก่อน'),
+    target_group_id: Yup.string().required('กรุณาเลือกกลุ่มเป้าหมายก่อน'),
     target_group_text: Yup.string().when('target_group_id', {
         is: (target_group_id) => target_group_id === '6',
-        then: Yup.string().required()
+        then: Yup.string().required('กรุณาระบุกลุ่มเป้าหมายก่อน')
     }),
-    num_of_participants: Yup.number().required(),
+    num_of_participants: Yup.number().required('กรุณาระบุจำนวนผู้เข้าร่วมก่อน'),
 });
 
 const ERPlanForm = ({ id, erplan }) => {

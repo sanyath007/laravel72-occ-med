@@ -196,7 +196,7 @@ const VisitationForm = ({ id, visitation }) => {
                                             <span className="input-group-text">ราย</span>
                                         </div>
                                         {(formik.errors.num_of_patients && formik.touched.num_of_patients) && (
-                                            <span className="invalid-feedback">{formik.errors.num_of_patients}</span>
+                                            <span className="text-danger text-sm">{formik.errors.num_of_patients}</span>
                                         )}
                                     </Col>
                                     <Col>
