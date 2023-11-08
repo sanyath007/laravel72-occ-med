@@ -2,7 +2,6 @@ import React from 'react'
 import { Col, Row } from 'react-bootstrap'
 
 const UploadGallery = ({ images = [], onDelete, minHeight }) => {
-
     const handleDelete = (index) => {
         onDelete(index);
     };
@@ -29,11 +28,13 @@ const UploadGallery = ({ images = [], onDelete, minHeight }) => {
                             <p className="text-sm m-0"><b>ชื่อไฟล์</b> {pic?.name}</p>
                             <p className="text-sm m-0"><b>ขนาด</b> {Math.round(pic?.size/1024)} KB</p>
 
-                            <div className="text-end mt-1">
-                                <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(index)}>
-                                    ลบ
-                                </button>
-                            </div>
+                            {typeof pic === 'object' && (
+                                <div className="text-end mt-1">
+                                    <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(index)}>
+                                        ลบ
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </Col>

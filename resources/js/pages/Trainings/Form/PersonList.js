@@ -1,6 +1,6 @@
 import React from 'react'
 
-const PersonList = ({ persons = [] }) => {
+const PersonList = ({ persons = [], onDelete }) => {
     return (
         <div className="mt-1">
             <table className="table table-bordered mb-0">
@@ -30,7 +30,7 @@ const PersonList = ({ persons = [] }) => {
                             <td className="text-center">{person.company}</td>
                             <td className="text-center">
                                 <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                    <button type="button" className="btn btn-danger btn-sm" onClick={(e) => {}}>
+                                    <button type="button" className="btn btn-danger btn-sm" onClick={() => onDelete(index)}>
                                         <i className="bi bi-trash"></i>
                                     </button>
                                 </div>

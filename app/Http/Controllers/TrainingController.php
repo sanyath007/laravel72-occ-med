@@ -104,7 +104,7 @@ class TrainingController extends Controller
                     $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
 
                     if ($file->move($destinationPath, $fileName)) {
-                        if ($index < count($request->file('pr_pictures'))) {
+                        if ($index < count($request->file('pr_pictures')) - 1) {
                             $picNames .= $fileName.',';
                         } else {
                             $picNames .= $fileName;
@@ -230,9 +230,9 @@ class TrainingController extends Controller
                             // if (TrainingPerson::where('employee_id', $person['employee_id'])->count() == 0) {
                                 $updatedPerson = TrainingPerson::find($person['id']);
                                 // $updatedPerson->employee_id = $person['employee_id'];
-                                $newPerson->name        = $person['name'];
-                                $newPerson->position    = $person['position'];
-                                $newPerson->company     = $person['company'];
+                                $updatedPerson->name        = $person['name'];
+                                $updatedPerson->position    = $person['position'];
+                                $updatedPerson->company     = $person['company'];
                                 $updatedPerson->save();
                             // }
                         } else {

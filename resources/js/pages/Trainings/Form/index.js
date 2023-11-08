@@ -7,6 +7,7 @@ import { FaSave } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
 import moment from 'moment'
 import { store, update } from '../../../store/slices/training'
+import { imageString2UrlArray } from '../../../utils'
 import PersonList from './PersonList'
 import PersonForm from './PersonForm'
 import UploadGallery from '../../../components/UploadGallery'
@@ -29,7 +30,7 @@ const trainingSchema = Yup.object().shape({
         is: (have_kpi) => have_kpi === '1',
         then: Yup.string().required('กรุณาระุบตัวชี้วัดผลสำเร็จก่อน')
     }),
-    is_succeed:  Yup.string().when('have_kpi', {
+    is_succeed:  Yup.mixed().when('have_kpi', {
         is: (have_kpi) => have_kpi === '1',
         then: Yup.string().required('กรุณาเลือกผลการดำเนินงานก่อน')
     }),
@@ -39,15 +40,21 @@ const TrainingForm = ({ id, training }) => {
     const dispatch = useDispatch();
     const [selectedDate, setSelectedDate] = useState(moment());
     const [uploadedTrainPics, setUploadedTrainPics] = useState('');
-    const [uploadedPRPics, setUploadedPRPics] = useState('');
+    const [uploadedPrPics, setUploadedPrPics] = useState('');
 
     useEffect(() => {
         if (training) {
             setSelectedDate(moment(training.train_date));
-            setUploadedTrainPics(training.training_pictures);
-            setUploadedPRPics(training.pr_pictures);
+            setUploadedTrainPics(imageString2UrlArray(training.training_pictures, `${process.env.MIX_APP_URL}/uploads/training/pic`));
+            setUploadedPrPics(imageString2UrlArray(training.pr_pictures, `${process.env.MIX_APP_URL}/uploads/training/pic`));
         }
     }, [training]);
+
+    const handleDeletePerson = (formik, index) => {
+        const newPersons = formik.values.persons.filter((person, i) => i !== index);
+
+        formik.setFieldValue('persons', newPersons);
+    };
 
     const handleSubmit = (values, formik) => {
         // const data = new FormData();
@@ -339,12 +346,14 @@ const TrainingForm = ({ id, training }) => {
                                         <div className="pb-3">
                                             <PersonForm
                                                 onAdd={(person) => {
-                                                    console.log(person);
-                                                    formik.setFieldValue('persons', [ ...formik.values.persons, person])
+                                                    formik.setFieldValue('persons', [ ...formik.values.persons, person]);
                                                 }}
                                             />
 
-                                            <PersonList persons={formik.values.persons} />
+                                            <PersonList
+                                                persons={formik.values.persons}
+                                                onDelete={(index) => handleDeletePerson(formik, index)}
+                                            />
                                         </div>
                                     </Col>
                                 </Row>
@@ -575,13 +584,14 @@ const TrainingForm = ({ id, training }) => {
                                         <input
                                             type="file"
                                             onChange={(e) => {
-                                                formik.setFieldValue('training_pictures', [...formik.values.training_pictures, e.target.files[0]])
+                                                formik.setFieldValue('training_pictures', [...formik.values.training_pictures, e.target.files[0]]);
+                                                setUploadedTrainPics([...uploadedTrainPics, e.target.files[0]]);
                                             }}
                                             className="form-control"
                                         />
 
                                         <UploadGallery
-                                            images={formik.values.training_pictures}
+                                            images={uploadedTrainPics ? uploadedTrainPics : []}
                                             onDelete={(index) => {
                                                 const updatedPics = formik.values.training_pictures.filter((pic, i) => i !== index);
 
@@ -595,13 +605,14 @@ const TrainingForm = ({ id, training }) => {
                                         <input
                                             type="file"
                                             onChange={(e) => {
-                                                formik.setFieldValue('pr_pictures', [...formik.values.pr_pictures, e.target.files[0]])
+                                                formik.setFieldValue('pr_pictures', [...formik.values.pr_pictures, e.target.files[0]]);
+                                                setUploadedPrPics([...uploadedPrPics, e.target.files[0]])
                                             }}
                                             className="form-control"
                                         />
 
                                         <UploadGallery
-                                            images={formik.values.pr_pictures}
+                                            images={uploadedPrPics ? uploadedPrPics : []}
                                             onDelete={(index) => {
                                                 const updatedPics = formik.values.pr_pictures.filter((pic, i) => i !== index);
 
