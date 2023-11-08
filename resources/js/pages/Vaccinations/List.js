@@ -43,7 +43,7 @@ const VaccinationList = () => {
         } else {
             dispatch(getVaccinations({ url: `${endpoint}${params}` }));
         }
-    }, [dispatch, endpoint, params]);
+    }, [endpoint, params]);
 
     const handleDelete = (id) => {
         if (confirm('คุณต้องการลบรายการใช่หรือไม่?')) {

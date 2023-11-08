@@ -57,10 +57,6 @@ const ERPlanList = () => {
         }
     }, [endpoint, params]);
 
-    const handlePageClick = (url) => {
-        setEndpoint(url);
-    };
-
     const handleDelete = (id) => {
         if (confirm('คุณต้องการลบรายการใช่หรือไม่?')) {
             dispatch(destroy(id))
@@ -144,7 +140,7 @@ const ERPlanList = () => {
 
                                 <Pagination
                                     pager={pager}
-                                    onPageClick={handlePageClick}
+                                    onPageClick={(url) => setEndpoint(url)}
                                 />
                             </div>
                         </div>

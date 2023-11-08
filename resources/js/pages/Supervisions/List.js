@@ -1,14 +1,17 @@
 import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../context/globalContext'
 import { getSupervisions, resetSuccess, destroy } from '../../store/slices/supervision'
-import { useDispatch, useSelector } from 'react-redux'
+import Pagination from '../../components/Pagination'
 
 const SupervisionList = () => {
     const { setGlobal } = useContext(GlobalContext);
     const dispatch = useDispatch();
     const { supervisions, pager, loading, success } = useSelector(state => state.supervision);
+    const [endpoint, setEndpoint] = useState('');
+    const [params, setParams] = useState('');
 
     /** Initial global states */
     useEffect(() => {
@@ -30,6 +33,14 @@ const SupervisionList = () => {
             dispatch(resetSuccess());
         }
     }, [success]);
+
+    useEffect(() => {
+        if (endpoint === '') {
+            dispatch(getSupervisions({ url: '/api/supervisions/search' }));
+        } else {
+            dispatch(getSupervisions({ url: `${endpoint}${params}` }));
+        }
+    }, [endpoint, params]);
 
     const handleDelete = (id) => {
         if (confirm('คุณต้องการลบรายการใช่หรือไม่?')) {
@@ -94,6 +105,11 @@ const SupervisionList = () => {
                                         ))}
                                     </tbody>
                                 </table>
+
+                                <Pagination
+                                    pager={pager}
+                                    onPageClick={(url) => setEndpoint(url)}
+                                />
                             </div>
                         </div>
                     </div>

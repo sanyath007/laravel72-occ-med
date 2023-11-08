@@ -25,6 +25,8 @@ const NetworkMeetingList = () => {
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
     const { meetings, pager, loading, success } = useSelector(state => state.networkMeeting);
+    const [endpoint, setEndpoint] = useState('');
+    const [params, setParams] = useState('');
 
     /** Initial global states */
     useEffect(() => {
@@ -49,12 +51,12 @@ const NetworkMeetingList = () => {
         }, [success]);
 
     useEffect(() => {
-        dispatch(getNetworkMeetings({ url: '/api/network-meetings/search' }));
-    }, []);
-
-    const handlePageClick = (url) => {
-        console.log(url);
-    };
+        if (endpoint === '') {
+            dispatch(getNetworkMeetings({ url: '/api/network-meetings/search' }));
+        } else {
+            dispatch(getScreenings({ url: `${endpoint}${params}` }));
+        }
+    }, [endpoint, params]);
 
     const handleDelete = (id) => {
         if (confirm('คุณต้องการลบรายการใช่หรือไม่?')) {
@@ -136,7 +138,7 @@ const NetworkMeetingList = () => {
 
                                 <Pagination
                                     pager={pager}
-                                    onPageClick={handlePageClick}
+                                    onPageClick={(url) => setEndpoint(url)}
                                 />
                             </div>
                         </div>

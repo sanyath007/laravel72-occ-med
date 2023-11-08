@@ -11,6 +11,8 @@ const InvestigationList = () => {
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
     const { investigations, pager, loading, success } = useSelector(state => state.investigation);
+    const [endpoint, setEndpoint] = useState('');
+    const [params, setParams] = useState('');
 
     /** Initial global states */
     useEffect(() => {
@@ -35,12 +37,12 @@ const InvestigationList = () => {
     }, [success]);
 
     useEffect(() => {
-        dispatch(getInvestigations({ url: `/api/investigations` }));
-    }, []);
-
-    const handlePageClick = (url) => {
-        console.log(url);
-    };
+        if (endpoint === '') {
+            dispatch(getInvestigations({ url: `/api/investigations/search` }));
+        } else {
+            dispatch(getScreenings({ url: `${endpoint}${params}` }));
+        }
+    }, [endpoint, params]);
 
     const handleDelete = (id) => {
         if (confirm('คุณต้องการลบรายการใช่หรือไม่?')) {
@@ -110,7 +112,7 @@ const InvestigationList = () => {
 
                                 <Pagination
                                     pager={pager}
-                                    onPageClick={handlePageClick}
+                                    onPageClick={(url) => setEndpoint(url)}
                                 />
                             </div>
                         </div>

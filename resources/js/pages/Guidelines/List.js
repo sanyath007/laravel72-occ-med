@@ -14,6 +14,8 @@ const GuidelineList = () => {
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
     const { guidelines, pager, loading, success } = useSelector(state => state.guideline);
+    const [endpoint, setEndpoint] = useState('');
+    const [params, setParams] = useState('');
 
     /** Initial global states */
     useEffect(() => {
@@ -38,12 +40,12 @@ const GuidelineList = () => {
         }, [success]);
 
     useEffect(() => {
-        dispatch(getGuidelines({ url: `/api/guidelines` }));
-    }, []);
-
-    const handlePageClick = (url) => {
-        console.log(url);
-    };
+        if (endpoint === '') {
+            dispatch(getGuidelines({ url: `/api/guidelines/search` }));
+        } else {
+            dispatch(getScreenings({ url: `${endpoint}${params}` }));
+        }
+    }, [endpoint, params]);
 
     const handleDelete = (id) => {
         if (confirm('คุณต้องการลบรายการใช่หรือไม่?')) {
@@ -128,7 +130,7 @@ const GuidelineList = () => {
 
                                 <Pagination
                                     pager={pager}
-                                    onPageClick={handlePageClick}
+                                    onPageClick={(url) => setEndpoint(url)}
                                 />
                             </div>
                         </div>

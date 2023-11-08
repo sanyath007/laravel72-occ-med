@@ -6,6 +6,7 @@ import { GlobalContext } from '../../context/globalContext'
 import { getTrainings, resetSuccess, destroy } from '../../store/slices/training'
 import { toShortTHDate } from '../../utils/formatter'
 import Loading from '../../components/Loading'
+import Pagination from '../../components/Pagination'
 
 const TrainingList = () => {
     const { setGlobal } = useContext(GlobalContext)
@@ -43,10 +44,6 @@ const TrainingList = () => {
             dispatch(getTrainings({ url: `${endpoint}${params}` }));
         }
     }, [endpoint, params]);
-
-    const handlePageClick = (url) => {
-        setEndpoint(url);
-    };
 
     const handleDelete = (id) => {
         if (confirm('คุณต้องการลบรายการใช่หรือไม่?')) {
@@ -125,6 +122,11 @@ const TrainingList = () => {
                                         ))}
                                     </tbody>
                                 </table>
+
+                                <Pagination
+                                    pager={pager}
+                                    onPageClick={(url) => setEndpoint(url)}
+                                />
                             </div>
                         </div>
                     </div>

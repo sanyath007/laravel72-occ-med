@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,7 +11,9 @@ import Pagination from '../../components/Pagination'
 const VisitationList = () => {
     const dispatch = useDispatch();
     const { visitations, pager, loading, success } = useSelector(state => state.visitation);
-    const { setGlobal } = useContext(GlobalContext)
+    const { setGlobal } = useContext(GlobalContext);
+    const [endpoint, setEndpoint] = useState('');
+    const [params, setParams] = useState('');
 
     /** Initial global states */
     useEffect(() => {
@@ -36,12 +38,12 @@ const VisitationList = () => {
     }, [success]);
 
     useEffect(() => {
-        dispatch(getVisitations({ url: '/api/visitations/search' }));
-    }, []);
-
-    const handlePageClick = (url) => {
-        console.log(url);
-    };
+        if (endpoint === '') {
+            dispatch(getVisitations({ url: '/api/visitations/search' }));
+        } else {
+            dispatch(getVisitations({ url: `${endpoint}${params}` }));
+        }
+    }, [endpoint, params]);
 
     const handleDelete = (id) => {
         if (confirm('คุณต้องการลบรายการใช่หรือไม่?')) {
@@ -120,7 +122,7 @@ const VisitationList = () => {
 
                                 <Pagination
                                     pager={pager}
-                                    onPageClick={handlePageClick}
+                                    onPageClick={(url) => setEndpoint(url)}
                                 />
                             </div>
                         </div>

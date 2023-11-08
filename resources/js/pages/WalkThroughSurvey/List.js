@@ -36,12 +36,12 @@ const SurveyingList = () => {
     }, [success]);
 
     useEffect(() => {
-        dispatch(getSurveyings({ url: '/api/surveyings/search' }));
-    }, []);
-
-    const handlePageClick = (url) => {
-        console.log(url);
-    };
+        if (endpoint === '') {
+            dispatch(getSurveyings({ url: '/api/surveyings/search' }));
+        } else {
+            dispatch(getVisitations({ url: `${endpoint}${params}` }));
+        }
+    }, [endpoint, params]);
 
     const handleDelete = (id) => {
         if (confirm('คุณต้องการลบรายการใช่หรือไม่?')) {
@@ -129,7 +129,7 @@ const SurveyingList = () => {
 
                                 <Pagination
                                     pager={pager}
-                                    onPageClick={handlePageClick}
+                                    onPageClick={(url) => setEndpoint(url)}
                                 />
                             </div>
                         </div>

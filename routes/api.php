@@ -68,14 +68,16 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::post('/toxicologies', 'ToxicologyController@store');
 
     /** Investigations */
-    Route::get('/investigations', 'InvestigationController@search');
+    Route::get('/investigations', 'InvestigationController@getAll');
+    Route::get('/investigations/search', 'InvestigationController@search');
     Route::get('/investigations/{id}', 'InvestigationController@getById');
     Route::post('/investigations', 'InvestigationController@store');
     Route::post('/investigations/{id}', 'InvestigationController@update');
     Route::delete('/investigations/{id}', 'InvestigationController@destroy');
 
     /** Guildelines */
-    Route::get('/guidelines', 'GuidelineController@search');
+    Route::get('/guidelines', 'GuidelineController@getAll');
+    Route::get('/guidelines/search', 'GuidelineController@search');
     Route::get('/guidelines/{id}', 'GuidelineController@getById');
     Route::post('/guidelines', 'GuidelineController@store');
     Route::post('/guidelines/{id}', 'GuidelineController@update');

@@ -47,10 +47,6 @@ const ScreeningList = () => {
         }
     }, [endpoint, params]);
 
-    const handlePageClick = (url) => {
-        setEndpoint(url);
-    };
-
     const handleDelete = (id) => {
         if (confirm('คุณต้องการลบรายการใช่หรือไม่?')) {
             dispatch(destroy(id))
@@ -133,7 +129,7 @@ const ScreeningList = () => {
 
                                 <Pagination
                                     pager={pager}
-                                    onPageClick={handlePageClick}
+                                    onPageClick={(url) => setEndpoint(url)}
                                 />
                             </div>
                         </div>
