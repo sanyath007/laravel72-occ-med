@@ -22,6 +22,6 @@ class Training extends Model
 
     public function persons()
     {
-        return $this->hasMany(SurveyingSurveyor::class, 'survey_id', 'id');
+        return $this->hasMany(TrainingPerson::class, 'train_id', 'id');
     }
 }

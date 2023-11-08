@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
@@ -6,7 +6,7 @@ import { Col, Row, Tab, Tabs } from 'react-bootstrap'
 import { FaSave } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
 import moment from 'moment'
-import { store } from '../../../store/slices/training'
+import { store, update } from '../../../store/slices/training'
 import PersonList from './PersonList'
 import PersonForm from './PersonForm'
 import UploadGallery from '../../../components/UploadGallery'
@@ -38,21 +38,35 @@ const trainingSchema = Yup.object().shape({
 const TrainingForm = ({ id, training }) => {
     const dispatch = useDispatch();
     const [selectedDate, setSelectedDate] = useState(moment());
+    const [uploadedTrainPics, setUploadedTrainPics] = useState('');
+    const [uploadedPRPics, setUploadedPRPics] = useState('');
+
+    useEffect(() => {
+        if (training) {
+            setSelectedDate(moment(training.train_date));
+            setUploadedTrainPics(training.training_pictures);
+            setUploadedPRPics(training.pr_pictures);
+        }
+    }, [training]);
 
     const handleSubmit = (values, formik) => {
-        const data = new FormData();
+        // const data = new FormData();
 
-        for(const [key, val] of Object.entries(values)) {
-            if (key === 'training_pictures' || key === 'pr_pictures') {
-                [...val].forEach((file, i) => {
-                    data.append(key, file[0]);
-                })
-            } else {
-                data.append(key, val);
-            }
+        // for(const [key, val] of Object.entries(values)) {
+        //     if (key === 'training_pictures' || key === 'pr_pictures') {
+        //         [...val].forEach((file, i) => {
+        //             data.append(key, file[0]);
+        //         })
+        //     } else {
+        //         data.append(key, val);
+        //     }
+        // }
+
+        if (training) {
+            dispatch(update({ id, data: values }));
+        } else {
+            dispatch(store(values));
         }
-
-        dispatch(store(values));
 
         formik.resetForm();
     };
@@ -60,31 +74,31 @@ const TrainingForm = ({ id, training }) => {
     return (
         <Formik
             initialValues={{
-                train_date: '',
-                division_id: '',
-                persons: [],
-                place: '',
-                topic: '',
-                background: '',
-                train_hour: '',
-                target_group_id: '',
-                target_group_text: '',
-                num_of_participants: '',
-                have_kpi: '',
-                key_success: '',
-                is_succeed: '',
-                exhibition: '',
-                exhibition_name: '',
-                exhibition_num: '',
-                demonstration: '',
-                demonstration_name: '',
-                demonstration_num: '',
-                consultation: '',
-                education: '',
-                brochure: '',
-                campaign: '',
-                campaign_name: '',
-                campaign_num: '',
+                train_date: training ? training.train_date : '',
+                division_id: training ? training.division_id : '',
+                persons: training ? training.persons : [],
+                place: training ? training.place : '',
+                topic: training ? training.topic : '',
+                background: training ? training.background : '',
+                train_hour: training ? training.train_hour : '',
+                target_group_id: training ? training.target_group_id : '',
+                target_group_text: (training && training.target_group_text) ? training.target_group_text : '',
+                num_of_participants: training ? training.num_of_participants : '',
+                have_kpi: training ? training.have_kpi : '',
+                key_success: (training && training.key_success) ? training.key_success : '',
+                is_succeed: training ? training.is_succeed : '',
+                exhibition: training ? training.exhibition : '',
+                exhibition_name: (training && training.exhibition_name) ? training.exhibition_name : '',
+                exhibition_num: (training && training.exhibition_num) ? training.exhibition_num : '',
+                demonstration: training ? training.demonstration : '',
+                demonstration_name: (training && training.demonstration_name) ? training.demonstration_name : '',
+                demonstration_num: (training && training.demonstration_num) ? training.demonstration_num : '',
+                consultation: (training && training.consultation) ? training.consultation : '',
+                education: (training && training.education) ? training.education : '',
+                brochure: (training && training.brochure) ? training.brochure : '',
+                campaign: training ? training.campaign : '',
+                campaign_name: (training && training.campaign_name) ? training.campaign_name : '',
+                campaign_num: (training && training.campaign_num) ? training.campaign_num : '',
                 training_pictures: [],
                 pr_pictures: []
             }}
@@ -258,6 +272,7 @@ const TrainingForm = ({ id, training }) => {
                                                 type="radio"
                                                 name="have_kpi"
                                                 value="1"
+                                                checked={formik.values.have_kpi == 1}
                                             />
                                             <span className="ms-1 me-2">มี</span>
 
@@ -265,6 +280,7 @@ const TrainingForm = ({ id, training }) => {
                                                 type="radio"
                                                 name="have_kpi"
                                                 value="2"
+                                                checked={formik.values.have_kpi == 2}
                                             />
                                             <span className="ms-1">ไม่มี</span>
                                         </label>
@@ -292,6 +308,7 @@ const TrainingForm = ({ id, training }) => {
                                                 type="radio"
                                                 name="is_succeed"
                                                 value="1"
+                                                checked={formik.values.is_succeed == 1}
                                             />
                                             <span className="ms-1 me-2">สำเร็จ</span>
 
@@ -299,6 +316,7 @@ const TrainingForm = ({ id, training }) => {
                                                 type="radio"
                                                 name="is_succeed"
                                                 value="2"
+                                                checked={formik.values.is_succeed == 2}
                                             />
                                             <span className="ms-1">ไม่สำเร็จ</span>
                                         </label>
@@ -347,6 +365,7 @@ const TrainingForm = ({ id, training }) => {
                                                 type="radio"
                                                 name="exhibition"
                                                 value="1"
+                                                checked={formik.values.exhibition == 1}
                                             />
                                             <span className="ms-1 me-2">มี</span>
 
@@ -354,6 +373,7 @@ const TrainingForm = ({ id, training }) => {
                                                 type="radio"
                                                 name="exhibition"
                                                 value="2"
+                                                checked={formik.values.exhibition == 2}
                                             />
                                             <span className="ms-1">ไม่มี</span>
                                         </label>
@@ -396,6 +416,7 @@ const TrainingForm = ({ id, training }) => {
                                                 type="radio"
                                                 name="demonstration"
                                                 value="1"
+                                                checked={formik.values.demonstration == 1}
                                             />
                                             <span className="ms-1 me-2">มี</span>
 
@@ -403,6 +424,7 @@ const TrainingForm = ({ id, training }) => {
                                                 type="radio"
                                                 name="demonstration"
                                                 value="2"
+                                                checked={formik.values.demonstration == 2}
                                             />
                                             <span className="ms-1">ไม่มี</span>
                                         </label>
@@ -495,6 +517,7 @@ const TrainingForm = ({ id, training }) => {
                                                 type="radio"
                                                 name="campaign"
                                                 value="1"
+                                                checked={formik.values.campaign == 1}
                                             />
                                             <span className="ms-1 me-2">มี</span>
 
@@ -502,6 +525,7 @@ const TrainingForm = ({ id, training }) => {
                                                 type="radio"
                                                 name="campaign"
                                                 value="2"
+                                                checked={formik.values.campaign == 2}
                                             />
                                             <span className="ms-1">ไม่มี</span>
                                         </label>
@@ -590,9 +614,9 @@ const TrainingForm = ({ id, training }) => {
                             </Tab>
                         </Tabs>
                         <div className="text-center">
-                            <button type="submit" className={`btn ${false ? 'btn-warning' : 'btn-primary'}`}>
+                            <button type="submit" className={`btn ${training ? 'btn-warning' : 'btn-primary'}`}>
                                 <FaSave className="me-1" />
-                                {false ? 'บันทึกการแก้ไข' : 'บันทึก'}
+                                {training ? 'บันทึกการแก้ไข' : 'บันทึก'}
                             </button>
                         </div>
                     </Form>
