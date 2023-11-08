@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,6 +12,8 @@ const SurveyingList = () => {
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
     const { surveyings, pager, loading, success } = useSelector(state => state.surveying);
+    const [endpoint, setEndpoint] = useState('');
+    const [params, setParams] = useState('');
 
     /** Initial global states */
     useEffect(() => {
