@@ -10,8 +10,8 @@ class ERPlanPerson extends Model
 
     // protected $primaryKey = "id";
 
-    // public function type()
-    // {
-    //     return $this->belongsTo(InvestigationType::class, 'investigation_type_id', 'id');
-    // }
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'employee_id', 'id');
+    }
 }
