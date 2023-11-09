@@ -231,8 +231,8 @@ class SurveyingController extends Controller
             $surveying = Surveying::find($id);
 
             /** Remove uploaded file */
-            $destinationPath = 'uploads/wts';
-            $existedFile = $destinationPath .'/file/'. $surveying->file_attachment;
+            $destinationPath = 'uploads/wts/';
+            $existedFile = $destinationPath .'file/'. $surveying->file_attachment;
             if (\File::exists($existedFile)) {
                 \File::delete($existedFile);
             }
@@ -240,7 +240,7 @@ class SurveyingController extends Controller
             if ($surveying->pic_attachments != '') {
                 $pictures = explode(',', $surveying->pic_attachments);
                 foreach($pictures as $pic) {
-                    $existed = $destinationPath .'/file/'. $pic;
+                    $existed = $destinationPath .'file/'. $pic;
 
                     if (\File::exists($existed)) {
                         \File::delete($existed);

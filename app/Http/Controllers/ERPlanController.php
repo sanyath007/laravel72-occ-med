@@ -104,6 +104,7 @@ class ERPlanController extends Controller
                     foreach($request['persons'] as $person) {
                         $newPerson = new ERPlanPerson;
                         $newPerson->plan_id   = $plan->id;
+                        $newPerson->employee_id = $person['employee_id'];
                         $newPerson->name      = $person['name'];
                         $newPerson->position  = $person['position'];
                         $newPerson->company   = $person['company'];
@@ -200,24 +201,44 @@ class ERPlanController extends Controller
                 /** ผู้จัดกิจกรรม */
                 if (count($request['persons']) > 0) {
                     foreach($request['persons'] as $person) {
-                        $newPerson = new ERPlanPerson;
-                        $newPerson->plan_id   = $plan->id;
-                        $newPerson->name      = $person['name'];
-                        $newPerson->position  = $person['position'];
-                        $newPerson->company   = $person['company'];
-                        $newPerson->save();
+                        if (array_key_exists('id', $person)) {
+                            /** รายการเดิม */
+                            if (ERPlanPerson::where('employee_id', $person['employee_id'])->count() == 0) {
+                                $updatedPerson = ERPlanPerson::find($person['id']);
+                                $updatedPerson->employee_id = $person['employee_id'];
+                                // $updatedPerson->name = $person['name'];
+                                // $updatedPerson->position = $person['position'];
+                                // $updatedPerson->position = $person['company'];
+                                $updatedPerson->save();
+                            }
+                        } else {
+                            /** รายการใหม่ */
+                            $newPerson = new ERPlanPerson;
+                            $newPerson->plan_id   = $plan->id;
+                            $newPerson->employee_id = $person['employee_id'];
+                            $newPerson->name      = $person['name'];
+                            $newPerson->position  = $person['position'];
+                            $newPerson->company   = $person['company'];
+                            $newPerson->save();
+                        }
                     }
                 }
 
                 /** ผู้เชี่ยวชาญ */
                 if (count($request['experts']) > 0) {
                     foreach($request['experts'] as $expert) {
-                        $newExpert = new ERPlanExpert;
-                        $newExpert->plan_id   = $plan->id;
-                        $newExpert->name      = $expert['name'];
-                        $newExpert->position  = $expert['position'];
-                        $newExpert->company   = $expert['company'];
-                        $newExpert->save();
+                        if (array_key_exists('id', $expert)) {
+                            /** รายการเดิม */
+
+                        } else {
+                            /** รายการใหม่ */
+                            $newExpert = new ERPlanExpert;
+                            $newExpert->plan_id   = $plan->id;
+                            $newExpert->name      = $expert['name'];
+                            $newExpert->position  = $expert['position'];
+                            $newExpert->company   = $expert['company'];
+                            $newExpert->save();
+                        }
                     }
                 }
 
@@ -244,6 +265,24 @@ class ERPlanController extends Controller
     {
         try {
             $plan = ERPlan::find($id);
+
+            /** Remove uploaded file */
+            $destinationPath = 'uploads/erp/';
+            $existedFile = $destinationPath . $plan->file_attachment;
+            if (\File::exists($existedFile)) {
+                \File::delete($existedFile);
+            }
+
+            if ($surveying->pic_attachments != '') {
+                $pictures = explode(',', $surveying->pic_attachments);
+                foreach($pictures as $pic) {
+                    $existedPic = $destinationPath .'pic/'. $pic;
+
+                    if (\File::exists($existedPic)) {
+                        \File::delete($existedPic);
+                    }
+                }
+            }
 
             if ($plan->delete()) {
                 /** ผู้จัดกิจกรรม */
