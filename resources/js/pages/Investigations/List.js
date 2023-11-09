@@ -2,9 +2,11 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
+import { FaFilePdf } from 'react-icons/fa'
 import { GlobalContext } from '../../context/globalContext'
 import { toShortTHDate } from '../../utils/formatter'
 import { getInvestigations, resetSuccess, destroy } from '../../store/slices/investigation'
+import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
 
 const InvestigationList = () => {
@@ -81,17 +83,31 @@ const InvestigationList = () => {
                                             <th style={{ width: '20%', textAlign: 'center' }}>ผู้ดำเนินการ</th>
                                             <th>สถานที่สอบสวน</th>
                                             <th style={{ width: '10%', textAlign: 'center' }}>จำนวนผู้ได้รับผลกระทบ</th>
+                                            <th style={{ width: '6%', textAlign: 'center' }}>ไฟล์รายงาน</th>
                                             <th style={{ width: '10%', textAlign: 'center' }}>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {investigations && investigations.map((investigation, index) => (
+                                        {loading && (
+                                            <tr>
+                                                <td colSpan={7} className="text-center"><Loading /></td>
+                                            </tr>
+                                        )}
+
+                                        {!loading && investigations?.map((investigation, index) => (
                                             <tr key={investigation.id}>
                                                 <td style={{ textAlign: 'center' }}>{pager && pager.from + index}</td>
                                                 <td style={{ textAlign: 'center' }}>{toShortTHDate(investigation.invest_date)}</td>
                                                 <td>{investigation.division?.name}</td>
                                                 <td>{investigation.place}</td>
                                                 <td style={{ textAlign: 'center' }}>{investigation.num_of_people}</td>
+                                                <td style={{ textAlign: 'center' }}>
+                                                    {investigation.file_attachment && (
+                                                        <a href={`${process.env.MIX_APP_URL}/uploads/investigation/file/${investigation.file_attachment}`} target="_blank" className="text-danger">
+                                                            <FaFilePdf size={"20px"} />
+                                                        </a>
+                                                    )}
+                                                </td>
                                                 <td style={{ textAlign: 'center' }}>
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
                                                         {/* <Link to={`/investigations/${investigation.id}/detail`} className="btn btn-primary btn-sm">

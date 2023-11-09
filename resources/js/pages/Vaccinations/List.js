@@ -78,8 +78,8 @@ const VaccinationList = () => {
                                     <thead>
                                         <tr>
                                             <th style={{ width: '5%', textAlign: 'center' }}>#</th>
-                                            <th>สถานที่ให้วัคซีน</th>
                                             <th style={{ width: '10%', textAlign: 'center' }}>วันที่ฉีด</th>
+                                            <th>สถานที่ให้วัคซีน</th>
                                             <th style={{ width: '15%', textAlign: 'center' }}>วัคซีน</th>
                                             <th style={{ width: '10%', textAlign: 'center' }}>Actions</th>
                                         </tr>
@@ -93,12 +93,13 @@ const VaccinationList = () => {
                                         {vaccinations?.map((vaccination, index) => (
                                             <tr key={vaccination.id}>
                                                 <td className="text-center">{pager?.from+index}</td>
-                                                <td>
-                                                    {vaccination.place}
-                                                    <p>{vaccination.company?.name}</p>
-                                                </td>
                                                 <td className="text-center">
                                                     {toShortTHDate(vaccination.vaccine_date)}
+                                                </td>
+                                                <td>
+                                                    <p className="m-0">{vaccination.company?.name}</p>
+                                                    <p className="m-0"><b>สถานที่</b> {vaccination.place}</p>
+                                                    <p className="m-0"><b>จำนวนผู้รับวัคซีน</b> {vaccination.num_of_vaccinated} ราย</p>
                                                 </td>
                                                 <td className="text-center">
                                                     {vaccination.vaccine?.name}

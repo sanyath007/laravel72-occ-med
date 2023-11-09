@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
+import { FaFilePdf } from 'react-icons/fa'
 import { GlobalContext } from '../../context/globalContext'
 import { toShortTHDate } from '../../utils/formatter'
 import { getErplans, resetSuccess, destroy } from '../../store/slices/erplan'
@@ -93,6 +94,7 @@ const ERPlanList = () => {
                                             <th style={{ width: '10%', textAlign: 'center' }}>วันที่สำรวจ</th>
                                             <th>หัวข้อการซ่อม/ประเภทแผน</th>
                                             <th style={{ width: '25%' }}>สถานประกอบการ</th>
+                                            <th style={{ width: '6%', textAlign: 'center' }}>ไฟล์สรุป</th>
                                             <th style={{ width: '20%', textAlign: 'center' }}>ผู้ดำเนินการ</th>
                                             <th style={{ width: '10%', textAlign: 'center' }}>Actions</th>
                                         </tr>
@@ -100,7 +102,7 @@ const ERPlanList = () => {
                                     <tbody>
                                         {loading && (
                                             <tr>
-                                                <td colSpan={6} className="text-center"><Loading /></td>
+                                                <td colSpan={7} className="text-center"><Loading /></td>
                                             </tr>
                                         )}
                                         {!loading && erplans?.map((plan, index) => (
@@ -116,6 +118,13 @@ const ERPlanList = () => {
                                                     {plan.company_id}
                                                     <p className="m-0"><b>จำนวนผู้เข้าร่วม</b> {plan.num_of_participants} ราย</p>
                                                     <p className="m-0"><b>ผู้จัดกิจกรรม</b> {plan.persons?.length} ราย</p>
+                                                </td>
+                                                <td style={{ textAlign: 'center' }}>
+                                                    {plan.file_attachment && (
+                                                        <a href={`${process.env.MIX_APP_URL}/uploads/erp/file/${plan.file_attachment}`} target="_blank" className="text-danger">
+                                                            <FaFilePdf size={"20px"} />
+                                                        </a>
+                                                    )}
                                                 </td>
                                                 <td className="text-center">
                                                     {plan.division?.name}

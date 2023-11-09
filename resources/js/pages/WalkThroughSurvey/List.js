@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
+import { FaFilePdf } from 'react-icons/fa'
 import { GlobalContext } from '../../context/globalContext'
 import { getSurveyings, resetSuccess, destroy } from '../../store/slices/surveying'
 import { toShortTHDate } from '../../utils/formatter'
@@ -80,6 +81,7 @@ const SurveyingList = () => {
                                             <th style={{ width: '5%', textAlign: 'center' }}>#</th>
                                             <th style={{ width: '10%', textAlign: 'center' }}>วันที่สำรวจ</th>
                                             <th>สถานประกอบการ</th>
+                                            <th style={{ width: '6%', textAlign: 'center' }}>ไฟล์รายงาน</th>
                                             <th style={{ width: '20%', textAlign: 'center' }}>ผู้ดำเนินการ</th>
                                             <th style={{ width: '8%', textAlign: 'center' }}>สถานะ</th>
                                             <th style={{ width: '10%', textAlign: 'center' }}>Actions</th>
@@ -88,7 +90,7 @@ const SurveyingList = () => {
                                     <tbody>
                                         {loading && (
                                             <tr>
-                                                <td colSpan={6} className="text-center"><Loading /></td>
+                                                <td colSpan={7} className="text-center"><Loading /></td>
                                             </tr>
                                         )}
 
@@ -103,6 +105,13 @@ const SurveyingList = () => {
                                                         <b>จำนวนพนักงาน/ประชาชน</b> {surveying.num_of_employees} ราย
                                                     </p>
                                                     <p className="m-0"><b>ผู้เดินสำรวจ</b> {surveying.surveyors?.length} ราย</p>
+                                                </td>
+                                                <td className="text-center">
+                                                    {surveying.file_attachment && (
+                                                        <a href={`${process.env.MIX_APP_URL}/uploads/wts/file/${surveying.file_attachment}`} target="_blank" className="text-danger">
+                                                            <FaFilePdf size={"20px"} />
+                                                        </a>
+                                                    )}
                                                 </td>
                                                 <td className="text-center">
                                                     {surveying.division?.name}

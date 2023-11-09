@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
+import { FaFilePdf } from 'react-icons/fa'
 import { GlobalContext } from '../../context/globalContext'
 import { getScreenings, resetSuccess, destroy } from '../../store/slices/screening'
 import { toShortTHDate } from '../../utils/formatter'
@@ -81,7 +82,8 @@ const ScreeningList = () => {
                                         <tr>
                                             <th style={{ width: '5%', textAlign: 'center' }}>#</th>
                                             <th style={{ width: '10%', textAlign: 'center' }}>วันที่จัดกิจกรรม</th>
-                                            <th>ชื่อเอกสาร</th>
+                                            <th>รายละเอียดการคัดกรอง</th>
+                                            <th style={{ width: '6%', textAlign: 'center' }}>ไฟล์สรุปผล</th>
                                             <th style={{ width: '15%', textAlign: 'center' }}>ผู้ดำเนินการ</th>
                                             <th style={{ width: '10%', textAlign: 'center' }}>Actions</th>
                                         </tr>
@@ -89,7 +91,7 @@ const ScreeningList = () => {
                                     <tbody>
                                         {loading && (
                                             <tr>
-                                                <td colSpan={5} className="text-center"><Loading /></td>
+                                                <td colSpan={6} className="text-center"><Loading /></td>
                                             </tr>
                                         )}
                                         {!loading && screenings?.map((screening, index) => (
@@ -105,6 +107,13 @@ const ScreeningList = () => {
                                                         <b className="ms-2">เสี่ยง/ไม่ชัดเจน</b> {screening.total_risk ? screening.total_risk : '-'} ราย
                                                         <b className="ms-2">ผิดปกติ</b> {screening.total_abnormal ? screening.total_abnormal : '-'} ราย
                                                     </p>
+                                                </td>
+                                                <td style={{ textAlign: 'center' }}>
+                                                    {screening.summary_file && (
+                                                        <a href={`${process.env.MIX_APP_URL}/uploads/screening/file/${screening.summary_file}`} target="_blank" className="text-danger">
+                                                            <FaFilePdf size={"20px"} />
+                                                        </a>
+                                                    )}
                                                 </td>
                                                 <td className="text-center">
                                                     {screening.division?.name}

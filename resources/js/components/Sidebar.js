@@ -197,7 +197,7 @@ const Sidebar = () => {
                         <i className="bi bi-person-workspace"></i><span>เจ้าหน้าที่กลุ่มงาน</span>
                         <i className="bi bi-chevron-down ms-auto"></i>
                     </a>
-                    <ul id="icons-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <ul id="employees-nav" className="nav-content collapse " data-bs-parent="#employees-nav">
                         <li>
                             <Link to="/employees/new" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>ลงทะเบียน</span>
@@ -216,7 +216,7 @@ const Sidebar = () => {
                         <i className="bi bi-house-door"></i><span>สถานประกอบการ</span>
                         <i className="bi bi-chevron-down ms-auto"></i>
                     </a>
-                    <ul id="icons-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <ul id="companies-nav" className="nav-content collapse " data-bs-parent="#companies-nav">
                         <li>
                             <Link to="/companies/new" onClick={handleMenuClicked}>
                                 <i className="bi bi-circle"></i><span>ลงทะเบียน</span>

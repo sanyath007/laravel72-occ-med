@@ -74,7 +74,7 @@ const TrainingList = () => {
                             </div>
 
                             <div>
-                                <table className="table table-bordered mb-0">
+                                <table className="table table-bordered mb-2">
                                     <thead>
                                         <tr>
                                             <th style={{ width: '5%', textAlign: 'center' }}>#</th>

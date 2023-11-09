@@ -229,7 +229,7 @@ const InvestigationForm = ({ id, investigation }) => {
                         </Row>
                         <Row className="mb-2">
                             <Col>
-                                <label htmlFor="">แนบไฟล์รายงานเดินสำรวจ</label>
+                                <label htmlFor="">แนบไฟล์รายงานการสอบสวน</label>
                                 <div className="d-flex flex-row align-items-center">
                                     <input
                                         type="file"
