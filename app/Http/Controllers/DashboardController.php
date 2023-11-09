@@ -19,7 +19,7 @@ class DashboardController extends Controller
         $data = [
             'surveying'     => Surveying::whereBetween('survey_date', [$sdate, $edate])->count(),
             'screening'     => ProactiveScreening::whereBetween('screen_date', [$sdate, $edate])->count(),
-            'investigating' => Investigation::whereBetween('investigate_date', [$sdate, $edate])->count(),
+            'investigating' => Investigation::whereBetween('invest_date', [$sdate, $edate])->count(),
             'training'      => Training::whereBetween('train_date', [$sdate, $edate])->count(),
             'visiting'      => Visitation::whereBetween('visit_date', [$sdate, $edate])->count(),
         ];
