@@ -1,21 +1,39 @@
 import React, { useState } from 'react'
 import { FaPlus, FaSearch } from 'react-icons/fa'
+import ModalEmployees from '../../../components/Modals/ModalEmployees';
 
-const initialPerson = { name: '', position: '', company: '' };
+// const initialPerson = { name: '', position: '', company: '' };
 
 const PersonForm = ({ onAdd }) => {
-    const [person, setPerson] = useState(initialPerson);
+    const [person, setPerson] = useState(null);
+    const [showModal, setShowModal] = useState(null);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
 
-        setPerson({ ...person, [e.target.name]: e.target.value })
+    //     setPerson({ ...person, [e.target.name]: e.target.value })
+    // };
+
+    const handleAdd = () => {
+        onAdd(person);
+
+        setPerson(null);
     };
+
     return (
         <div>
-            <label htmlFor="">ผู้จัดกิจกรรมและบรรยาย</label>
+            <ModalEmployees
+                isOpen={showModal}
+                hideModal={() => setShowModal(false)}
+                onSelected={(employee) => {
+                    setPerson(employee);
+
+                    setShowModal(false);
+                }}
+            />
+
             <div className="d-flex flex-row">
-                <input
+                {/* <input
                     type="text"
                     name="name"
                     value={person.name}
@@ -48,6 +66,21 @@ const PersonForm = ({ onAdd }) => {
                     }}
                 >
                     <FaPlus />
+                </button> */}
+
+                <div className="input-group w-25 me-2">
+                    <div className="form-control">
+                        {person?.cid}
+                    </div>
+                    <button type="button" className="btn btn-secondary" onClick={() => setShowModal(true)}>
+                        <FaSearch />
+                    </button>
+                </div>
+                <div className="form-control w-75 me-2">
+                    {person?.prefix}{person?.fname} {person?.lname} ตำแหน่ง {person?.position?.name}
+                </div>
+                <button type="button" className="btn btn-primary" onClick={() => handleAdd()}>
+                    เพิ่ม
                 </button>
             </div>
         </div>

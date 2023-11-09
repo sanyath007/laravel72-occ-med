@@ -1,6 +1,6 @@
 import React from 'react'
 
-const PersonList = ({ persons = [] }) => {
+const PersonList = ({ persons = [], onDelete }) => {
     return (
         <div className="mt-1">
             <table className="table table-bordered mb-0">
@@ -23,14 +23,16 @@ const PersonList = ({ persons = [] }) => {
                     )}
 
                     {persons.map((person, index) => (
-                        <tr key={index}>
+                        <tr key={person.id}>
                             <td className="text-center">{index+1}</td>
-                            <td>{person.name}</td>
-                            <td className="text-center">{person.position}</td>
-                            <td className="text-center">{person.company}</td>
+                            <td>{person.employee?.prefix}{person.employee?.fname} {person.employee?.lname}</td>
+                            <td className="text-center">
+                                {person.employee?.position?.name}{person.employee?.class && person.employee?.class?.name}
+                            </td>
+                            <td className="text-center"></td>
                             <td className="text-center">
                                 <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                    <button type="button" className="btn btn-danger btn-sm" onClick={(e) => {}}>
+                                    <button type="button" className="btn btn-danger btn-sm" onClick={() => onDelete(person.id)}>
                                         <i className="bi bi-trash"></i>
                                     </button>
                                 </div>

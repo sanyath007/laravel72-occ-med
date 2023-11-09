@@ -14,7 +14,8 @@ class ERPlanController extends Controller
     {
         $date = $request->get('date');
 
-        $plans = ERPlan::with('division','company','persons','persons.employee','experts')
+        $plans = ERPlan::with('division','company','experts','persons')
+                        ->with('persons.employee','persons.employee.position','persons.employee.class')
                         // ->when(!empty($date), function($q) use ($date) {
                         //     $q->where('surver_date', $date);
                         // })
@@ -25,7 +26,9 @@ class ERPlanController extends Controller
 
     public function getById($id)
     {
-        $plan = ERPlan::with('division','company','persons','persons.employee','experts')->find($id);
+        $plan = ERPlan::with('division','company','experts','persons')
+                        ->with('persons.employee','persons.employee.position','persons.employee.class')
+                        ->find($id);
 
         return response()->json($plan);
     }
@@ -100,20 +103,20 @@ class ERPlanController extends Controller
 
             if ($plan->save()) {
                 /** ผู้จัดกิจกรรม */
-                if (count($request['persons']) > 0) {
+                if ($request['persons'] && count($request['persons']) > 0) {
                     foreach($request['persons'] as $person) {
                         $newPerson = new ERPlanPerson;
                         $newPerson->plan_id   = $plan->id;
                         $newPerson->employee_id = $person['employee_id'];
-                        $newPerson->name      = $person['name'];
-                        $newPerson->position  = $person['position'];
-                        $newPerson->company   = $person['company'];
+                        // $newPerson->name      = $person['name'];
+                        // $newPerson->position  = $person['position'];
+                        // $newPerson->company   = $person['company'];
                         $newPerson->save();
                     }
                 }
 
                 /** ผู้เชี่ยวชาญ */
-                if (count($request['experts']) > 0) {
+                if ($request['experts'] && count($request['experts']) > 0) {
                     foreach($request['experts'] as $expert) {
                         $newExpert = new ERPlanExpert;
                         $newExpert->plan_id   = $plan->id;

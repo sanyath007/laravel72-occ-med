@@ -45,6 +45,16 @@ const ERPlanForm = ({ id, erplan }) => {
         }
     }, [erplan]);
 
+    const handleAddPerson = (formik, person) => {
+        formik.setFieldValue('persons', [...formik.values.persons, { employee_id: person.id, employee: person }]);
+    };
+
+    const handleDeletePerson = (formik, id) => {
+        const updatedPersons = formik.values.persons.filter(person => person.employee_id !== id);
+
+        formik.setFieldValue('persons', updatedPersons);
+    };
+
     const handleSubmit = (values, formik) => {
         // const data = new FormData();
 
@@ -520,14 +530,9 @@ const ERPlanForm = ({ id, erplan }) => {
                                 <Row className="mb-2">
                                     <Col>
                                         <div className="pb-3">
-                                            <PersonForm
-                                                onAdd={(person) => {
-                                                    console.log(person);
-                                                    formik.setFieldValue('persons', [ ...formik.values.persons, person])
-                                                }}
-                                            />
+                                            <PersonForm onAdd={(person) => handleAddPerson(formik, person)} />
 
-                                            <PersonList persons={formik.values.persons} />
+                                            <PersonList persons={formik.values.persons} onDelete={(id) => handleDeletePerson(formik, id)} />
                                         </div>
                                     </Col>
                                 </Row>

@@ -41,7 +41,6 @@ const VisitationForm = ({ id, visitation }) => {
     };
 
     const handleDeleteVisitor = (formik, id) => {
-        console.log(id);
         const updatedVisitors = formik.values.visitors.filter(visitor => visitor.employee_id !== id);
 
         formik.setFieldValue('visitors', updatedVisitors);
