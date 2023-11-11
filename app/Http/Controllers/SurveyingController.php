@@ -84,7 +84,7 @@ class SurveyingController extends Controller
                     $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
 
                     if ($file->move($destinationPath, $fileName)) {
-                        if ($index < count($request->file('pic_attachments'))) {
+                        if ($index < count($request->file('pic_attachments')) - 1) {
                             $picNames .= $fileName.',';
                         } else {
                             $picNames .= $fileName;
