@@ -15,6 +15,7 @@ import SurveyorList from './SurveyorList'
 import GuidelineForm from './GuidelineForm'
 import GuidelineList from './GuidelineList'
 import UploadGallery from '../../../components/UploadGallery'
+import MultipleFileUpload from '../../../components/MultipleFileUpload'
 
 const ACCEPT_FILE_TYPE = ['pdf', 'doc', 'docx'];
 const ACCEPT_PIC_TYPE = ['jpg','jpeg','png'];
@@ -464,7 +465,7 @@ const SurveyingForm = ({ id, surveying }) => {
                             >
                                 <Row className="mb-2">
                                     <Col>
-                                        <input
+                                        {/* <input
                                             type="file"
                                             onChange={(e) => {
                                                 formik.setFieldValue('pic_attachments', [...formik.values.pic_attachments, e.target.files[0]])
@@ -484,7 +485,9 @@ const SurveyingForm = ({ id, surveying }) => {
                                                 formik.setFieldValue('pic_attachments', updatedPics);
                                             }}
                                             minHeight={'200px'}
-                                        />
+                                        /> */}
+
+                                        <MultipleFileUpload />
                                     </Col>
                                 </Row>
                             </Tab>
