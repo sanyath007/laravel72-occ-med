@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
-import { FaSearch } from 'react-icons/fa'
+import { FaSearch, FaPlus } from 'react-icons/fa'
 import ModalEmployees from '../../../components/Modals/ModalEmployees';
+import ModalAddEmployee from '../../../components/Modals/ModalEmployeeForm';
 
 const SurveyorForm = ({ onAdd }) => {
     const [surveyor, setSurveyor] = useState(null);
-    const [showModal, setShowModal] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [showNewModal, setShowNewModal] = useState(false);
 
     const handleAdd = () => {
         onAdd(surveyor);
@@ -24,11 +26,20 @@ const SurveyorForm = ({ onAdd }) => {
                 }}
             />
 
+            <ModalAddEmployee
+                isOpen={showNewModal}
+                hideModal={() => setShowNewModal(false)}
+                onSuccess={() => console.log(employee)}
+            />
+
             <div className="d-flex flex-row">
                 <div className="input-group w-25 me-2">
                     <div className="form-control">
                         {surveyor?.cid}
                     </div>
+                    <button type="button" className="btn btn-primary" onClick={() => setShowNewModal(true)}>
+                        <FaPlus />
+                    </button>
                     <button type="button" className="btn btn-secondary" onClick={() => setShowModal(true)}>
                         <FaSearch />
                     </button>
