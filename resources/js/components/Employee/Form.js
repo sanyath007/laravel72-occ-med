@@ -8,17 +8,17 @@ import { useGetInitialFormDataQuery } from '../../store/services/employeeApi'
 
 const employeeSchema = Yup.object().shape({
     prefix: Yup.string().required('กรุณาเลือกคำนำหน้าก่อน'),
-    fname: Yup.string().required('กรุณาระบุคำนำหน้าก่อน'),
-    lname: Yup.string().required('กรุณาระุบคำนำหน้าก่อน'),
-    cid: Yup.string().required('กรุณาระบุคำนำหน้าก่อน'),
-    sex: Yup.string().required('กรุณาเลือกคำนำหน้าก่อน'),
-    position_id: Yup.string().required('กรุณาเลือกคำนำหน้าก่อน'),
+    fname: Yup.string().required('กรุณาระบุชื่อก่อน'),
+    lname: Yup.string().required('กรุณาระบุนาสกุลก่อน'),
+    cid: Yup.string().required('กรุณาระบุเลข 13 หลักก่อน'),
+    sex: Yup.string().required('กรุณาเลือกเพศก่อน'),
+    position_id: Yup.string().required('กรุณาเลือกตำแหน่งก่อน'),
     // address: Yup.string().required(),
     // tambon_id: Yup.string().required(),
     // amphur_id: Yup.string().required(),
     // changwat_id: Yup.string().required(),
     // zipcode: Yup.string().required(),
-    tel1: Yup.string().required('กรุณาระบุคำนำหน้าก่อน'),
+    tel1: Yup.string().required('กรุณาระบุเบอร์โทรศัพท์ก่อน'),
 })
 
 const EmployeeForm = ({ employee, onSubmit }) => {
@@ -95,7 +95,7 @@ const EmployeeForm = ({ employee, onSubmit }) => {
             {(formik) => (
                 <Form>
                     <div className="row mb-3">
-                        <div className="col-md-4 form-group mb-2">
+                        <div className="col-md-2 form-group mb-2">
                             <label htmlFor="">คำนำหน้า</label>
                             <select
                                 name="prefix"
@@ -116,7 +116,7 @@ const EmployeeForm = ({ employee, onSubmit }) => {
                                 </div>
                             )}
                         </div>
-                        <div className="col-md-4 form-group mb-2">
+                        <div className="col-md-5 form-group mb-2">
                             <label htmlFor="">ชื่อ</label>
                             <input
                                 type="text"
@@ -131,7 +131,7 @@ const EmployeeForm = ({ employee, onSubmit }) => {
                                 </div>
                             )}
                         </div>
-                        <div className="col-md-4 form-group mb-2">
+                        <div className="col-md-5 form-group mb-2">
                             <label htmlFor="">สกุล</label>
                             <input
                                 type="text"
