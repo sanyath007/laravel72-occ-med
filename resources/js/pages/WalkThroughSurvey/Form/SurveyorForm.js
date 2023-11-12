@@ -19,7 +19,7 @@ const SurveyorForm = ({ onAdd }) => {
             <ModalEmployees
                 isOpen={showModal}
                 hideModal={() => setShowModal(false)}
-                onSelected={(employee) => {
+                onSelect={(employee) => {
                     setSurveyor(employee);
 
                     setShowModal(false);
@@ -29,7 +29,11 @@ const SurveyorForm = ({ onAdd }) => {
             <ModalAddEmployee
                 isOpen={showNewModal}
                 hideModal={() => setShowNewModal(false)}
-                onSuccess={() => console.log(employee)}
+                onSuccess={(employee) => {
+                    setSurveyor(employee);
+
+                    setShowNewModal(false);
+                }}
             />
 
             <div className="d-flex flex-row">
@@ -45,7 +49,7 @@ const SurveyorForm = ({ onAdd }) => {
                     </button>
                 </div>
                 <div className="form-control w-75 me-2">
-                    {surveyor?.fname} {surveyor?.lname} ตำแหน่ง {surveyor?.position?.name}
+                    {surveyor?.prefix}{surveyor?.fname} {surveyor?.lname} ตำแหน่ง {surveyor?.position?.name}
                 </div>
                 <button type="button" className="btn btn-primary" onClick={() => handleAdd()}>
                     เพิ่ม

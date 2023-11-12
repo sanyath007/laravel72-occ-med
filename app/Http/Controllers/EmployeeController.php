@@ -13,7 +13,7 @@ class EmployeeController extends Controller
 {
     public function search(Request $request)
     {
-        $employees = Employee::with('position','class','type')
+        $employees = Employee::with('position','level','type')
                         ->whereNotIn('position_id', [1])
                         ->paginate(20);
 
@@ -22,7 +22,7 @@ class EmployeeController extends Controller
 
     public function getAll(Request $request)
     {
-        $employees = Employee::with('position', 'class', 'type')
+        $employees = Employee::with('position', 'level', 'type')
                         ->whereNotIn('position_id', [1])
                         ->get();
 
@@ -59,9 +59,9 @@ class EmployeeController extends Controller
             $employee->tel1         = $request['tel1'];
             $employee->tel2         = $request['tel2'];
             // $employee->email      = $request['email'];
-            $employee->position_id  = $request['position_id'];
-            $employee->position_class_id = $request['position_class_id'];
             $employee->position_type_id = $request['position_type_id'];
+            $employee->position_id  = $request['position_id'];
+            $employee->position_level_id = $request['position_level_id'];
             $employee->assigned_date = $request['assigned_date'];
             $employee->started_date = $request['started_date'];
             $employee->remark       = $request['remark'];
@@ -71,7 +71,7 @@ class EmployeeController extends Controller
                 return [
                     'status'    => 1,
                     'message'   => 'Insertion successfully!!',
-                    "employee"  => $employee
+                    "employee"  => Employee::with('position', 'level', 'type')->find($employee->id)
                 ];
             } else {
                 return [
@@ -100,9 +100,9 @@ class EmployeeController extends Controller
             $employee->tel1         = $request['tel1'];
             $employee->tel2         = $request['tel2'];
             // $employee->email      = $request['email'];
-            $employee->position_id  = $request['position_id'];
-            $employee->position_class_id = $request['position_class_id'];
             $employee->position_type_id = $request['position_type_id'];
+            $employee->position_id  = $request['position_id'];
+            $employee->position_level_id = $request['position_level_id'];
             $employee->assigned_date = $request['assigned_date'];
             $employee->started_date = $request['started_date'];
             $employee->remark       = $request['remark'];

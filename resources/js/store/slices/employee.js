@@ -103,14 +103,16 @@ export const employeeSlice = createSlice({
             state.loading = false
         },
         [store.pending]: (state) => {
+            state.employee = null
             state.success = false
             state.error = null
         },
         [store.fulfilled]: (state, { payload }) => {
-            const { status, message } = payload
-
+            const { status, message, employee } = payload
+            
             if (status === 1) {
                 state.success = true
+                state.employee = employee
             } else {
                 state.error = { message }
             }

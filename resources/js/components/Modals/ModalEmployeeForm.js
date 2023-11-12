@@ -1,8 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Modal } from 'react-bootstrap'
+import { toast } from 'react-toastify'
+import { resetSuccess } from '../../store/slices/employee'
 import EmployeeForm from '../Employee/Form'
 
-const ModalAddEmployee = ({ isOpen, hideModal, ...props }) => {
+const ModalAddEmployee = ({ isOpen, hideModal, onSuccess, ...props }) => {
+    const dispatch = useDispatch();
+    const { employee, success } = useSelector(state => state.employee);
+
+    useEffect(() => {
+        if (success) {
+            toast.success("บันทึกข้อมูลเจ้าหน้าที่เรียบร้อยแล้ว!!");
+
+            dispatch(resetSuccess());
+
+            onSuccess(employee);
+        }
+    }, [success]);
 
     return (
         <Modal

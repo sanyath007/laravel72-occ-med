@@ -15,13 +15,17 @@ const employeeSchema = Yup.object().shape({
     lname: Yup.string().required('กรุณาระบุนาสกุลก่อน'),
     cid: Yup.string().required('กรุณาระบุเลข 13 หลักก่อน'),
     sex: Yup.string().required('กรุณาเลือกเพศก่อน'),
-    position_id: Yup.string().required('กรุณาเลือกตำแหน่งก่อน'),
     // address: Yup.string().required(),
     // tambon_id: Yup.string().required(),
     // amphur_id: Yup.string().required(),
     // changwat_id: Yup.string().required(),
     // zipcode: Yup.string().required(),
     tel1: Yup.string().required('กรุณาระบุเบอร์โทรศัพท์ก่อน'),
+    position_id: Yup.string().required('กรุณาเลือกตำแหน่งก่อน'),
+    position_level_id: Yup.string().when('position_type_id', {
+        is: (position_type_id) => position_type_id == 1,
+        then: Yup.string().required('กรุณาเลือกระดับก่อน')
+    }),
 })
 
 const EmployeeForm = ({ id, employee }) => {
@@ -80,9 +84,9 @@ const EmployeeForm = ({ id, employee }) => {
                 lname: employee ? employee.lname || '' : '',
                 sex: employee ? employee.sex || '' : '',
                 birthdate: employee ? employee.birthdate || '' : '',
-                position_id: employee ? employee.position_id || '' : '',
-                position_class_id: employee ? employee.position_class_id || '' : '',
                 position_type_id: employee ? employee.position_type_id || '' : '',
+                position_id: employee ? employee.position_id || '' : '',
+                position_level_id: employee ? employee.position_level_id || '' : '',
                 // address: employee ? employee.address || '' : '',
                 // moo: employee ? employee.moo || '' : '',
                 // road: employee ? employee.road || '' : '',
@@ -374,6 +378,27 @@ const EmployeeForm = ({ id, employee }) => {
                             />
                         </div>
                         <div className="col-md-4 form-group mb-2">
+                            <label htmlFor="">ประเภทตำแหน่ง</label>
+                            <select
+                                name="position_type_id"
+                                value={formik.values.position_type_id}
+                                onChange={formik.handleChange}
+                                className={`form-control ${formik.errors.position_type_id && formik.touched.position_type_id ? 'is-invalid' : ''}`}
+                            >
+                                <option value="">-- ประเภทตำแหน่ง --</option>
+                                {formData?.positionTypes?.map(ptype => (
+                                    <option value={ptype.id} key={ptype.id}>
+                                        {ptype.name}
+                                    </option>
+                                ))}
+                            </select>
+                            {formik.errors.position_type_id && formik.touched.position_type_id ? (
+                                <div className="invalid-feedback">
+                                    {formik.errors.position_type_id}
+                                </div>
+                            ) : null}
+                        </div>
+                        <div className="col-md-4 form-group mb-2">
                             <label htmlFor="">ตำแหน่ง</label>
                             <select
                                 name="position_id"
@@ -397,10 +422,10 @@ const EmployeeForm = ({ id, employee }) => {
                         <div className="col-md-4 form-group mb-2">
                             <label htmlFor="">ระดับ</label>
                             <select
-                                name="position_class_id"
-                                value={formik.values.position_class_id}
+                                name="position_level_id"
+                                value={formik.values.position_level_id}
                                 onChange={formik.handleChange}
-                                className={`form-control ${formik.errors.position_class_id && formik.touched.position_class_id ? 'is-invalid' : ''}`}
+                                className={`form-control ${formik.errors.position_level_id && formik.touched.position_level_id ? 'is-invalid' : ''}`}
                             >
                                 <option value="">-- ระดับ --</option>
                                 {formData?.positionClasses?.map(pclass => (
@@ -409,30 +434,9 @@ const EmployeeForm = ({ id, employee }) => {
                                     </option>
                                 ))}
                             </select>
-                            {formik.errors.position_class_id && formik.touched.position_class_id ? (
+                            {formik.errors.position_level_id && formik.touched.position_level_id ? (
                                 <div className="invalid-feedback">
-                                    {formik.errors.position_class_id}
-                                </div>
-                            ) : null}
-                        </div>
-                        <div className="col-md-4 form-group mb-2">
-                            <label htmlFor="">ประเภทตำแหน่ง</label>
-                            <select
-                                name="position_type_id"
-                                value={formik.values.position_type_id}
-                                onChange={formik.handleChange}
-                                className={`form-control ${formik.errors.position_type_id && formik.touched.position_type_id ? 'is-invalid' : ''}`}
-                            >
-                                <option value="">-- ประเภทตำแหน่ง --</option>
-                                {formData?.positionTypes?.map(ptype => (
-                                    <option value={ptype.id} key={ptype.id}>
-                                        {ptype.name}
-                                    </option>
-                                ))}
-                            </select>
-                            {formik.errors.position_type_id && formik.touched.position_type_id ? (
-                                <div className="invalid-feedback">
-                                    {formik.errors.position_type_id}
+                                    {formik.errors.position_level_id}
                                 </div>
                             ) : null}
                         </div>

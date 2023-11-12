@@ -13,9 +13,9 @@ class Employee extends Model
         return $this->belongsTo(Position::class, 'position_id', 'id');
     }
 
-    public function class()
+    public function level()
     {
-        return $this->belongsTo(PositionClass::class, 'position_class_id', 'id');
+        return $this->belongsTo(PositionLevel::class, 'position_level_id', 'id');
     }
 
     public function type()
