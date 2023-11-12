@@ -5,6 +5,7 @@ import { FaSave } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
 import moment from 'moment'
 import { useGetInitialFormDataQuery } from '../../store/services/employeeApi'
+import DropdownAutocomplete from '../DropdownAutocomplete'
 
 const employeeSchema = Yup.object().shape({
     prefix: Yup.string().required('กรุณาเลือกคำนำหน้าก่อน'),
@@ -97,7 +98,7 @@ const EmployeeForm = ({ employee, onSubmit }) => {
                     <div className="row mb-3">
                         <div className="col-md-2 form-group mb-2">
                             <label htmlFor="">คำนำหน้า</label>
-                            <select
+                            {/* <select
                                 name="prefix"
                                 value={formik.values.prefix}
                                 onChange={formik.handleChange}
@@ -109,9 +110,17 @@ const EmployeeForm = ({ employee, onSubmit }) => {
                                         {prefix.name}
                                     </option>
                                 ))}
-                            </select>
+                            </select> */}
+                            <DropdownAutocomplete
+                                label={'คำนำหน้า'}
+                                options={formData?.prefixes?.map(prefix => ({ label: prefix.name, id: prefix.provis_code }))}
+                                onSelect={(prefix) => {
+                                    formik.setFieldValue('prefix', prefix.label);
+                                }}
+                                isInvalid={formik.errors.prefix && formik.touched.prefix}
+                            />
                             {formik.errors.prefix && formik.touched.prefix && (
-                                <div className="invalid-feedback">
+                                <div className="text-danger text-sm">
                                     {formik.errors.prefix}
                                 </div>
                             )}
