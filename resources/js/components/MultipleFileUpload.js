@@ -20,45 +20,43 @@ const MultipleFileUpload = () => {
 
     return (
         <div>
-            <form>
-                <div className="file-upload">
-                    <div className="file-upload-box">
-                        <input
-                            type="file"
-                            className="file-upload-input"
-                            onChange={handleFileChange}
-                            multiple
-                        />
+            <div className="file-upload">
+                <div className="file-upload-box">
+                    <input
+                        type="file"
+                        className="file-upload-input"
+                        onChange={handleFileChange}
+                        multiple
+                    />
 
-                        <span>Drag and Drop or <span className="file-upload-link">Choose your files</span></span>
-                    </div>
+                    <span>Drag and Drop or <span className="file-upload-link">Choose your files</span></span>
                 </div>
-                <div className="file-attach">
-                    {selectedFiles.map((file, index) => (
-                        <div className="file-attach-box" key={index}>
-                            <div className="file-image">
-                                <img src={URL.createObjectURL(file)} alt="" />
-                            </div>
-                            <div className="file-detail">
-                                <h6>{file?.name}</h6>
-                                <p>
-                                    <span className="me-2">Size: {filesizes(file?.size)}</span>
-                                    <span>Modified Time: {file?.lastModifiedDate.toLocaleString('en-IN')}</span>
-                                </p>
+            </div>
+            <div className="file-attach">
+                {selectedFiles.map((file, index) => (
+                    <div className="file-attach-box" key={index}>
+                        <div className="file-image">
+                            <img src={URL.createObjectURL(file)} alt="" />
+                        </div>
+                        <div className="file-detail">
+                            <h6>{file?.name}</h6>
+                            <p>
+                                <span className="me-2">Size: {filesizes(file?.size)}</span>
+                                <span>Modified Time: {file?.lastModifiedDate.toLocaleString('en-IN')}</span>
+                            </p>
 
-                                <div className="file-actions">
-                                    <button type="button" className="file-action-btn">
-                                        Delete
-                                    </button>
-                                </div>
+                            <div className="file-actions">
+                                <button type="button" className="file-action-btn">
+                                    Delete
+                                </button>
                             </div>
                         </div>
-                    ))}
-                </div>
-                <div className="text-end">
-                    <button className="btn-upload">Upload</button>
-                </div>
-            </form>
+                    </div>
+                ))}
+            </div>
+            <div className="text-end">
+                <button className="btn-upload">Upload</button>
+            </div>
         </div>
     )
 }
