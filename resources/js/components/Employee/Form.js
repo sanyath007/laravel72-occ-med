@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { FaSave } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
 import moment from 'moment'
 import { useGetInitialFormDataQuery } from '../../store/services/employeeApi'
+import { store, update } from '../../store/slices/employee'
 import DropdownAutocomplete from '../DropdownAutocomplete'
 
 const employeeSchema = Yup.object().shape({
@@ -22,11 +24,12 @@ const employeeSchema = Yup.object().shape({
     tel1: Yup.string().required('กรุณาระบุเบอร์โทรศัพท์ก่อน'),
 })
 
-const EmployeeForm = ({ employee, onSubmit }) => {
+const EmployeeForm = ({ id, employee }) => {
+    const dispatch = useDispatch();
     const { data: formData, isLoading } = useGetInitialFormDataQuery();
-    const [selectedฺBirthDate, setSelectedฺBirthDate] = useState(moment())
-    const [selectedAssignedDate, setSelectedAssignedDate] = useState(moment())
-    const [selectedStartedDate, setSelectedStartedDate] = useState(moment())
+    const [selectedฺBirthDate, setSelectedฺBirthDate] = useState(moment());
+    const [selectedAssignedDate, setSelectedAssignedDate] = useState(moment());
+    const [selectedStartedDate, setSelectedStartedDate] = useState(moment());
     // const [changwats, setChangwats] = useState([])
     // const [amphur, setAmphur] = useState({ amphurs: [], filteredAmphurs: [] })
     // const [tambon, setTambon] = useState({ tambons: [], filteredTambons: [] })
@@ -56,7 +59,11 @@ const EmployeeForm = ({ employee, onSubmit }) => {
     // }
 
     const handleSubmit = async (values, formik) => {
-        onSubmit(values)
+        if (employee) {
+            dispatch(update(values));
+        } else {
+            dispatch(store(values));
+        }
 
         /** Clear form values */
         formik.resetForm()
