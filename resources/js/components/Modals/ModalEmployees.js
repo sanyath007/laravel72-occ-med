@@ -75,7 +75,7 @@ const ModalEmployees = ({ isOpen, hideModal, onSelect, ...props }) => {
                                         : <AiOutlineWoman className="text-success m-0 p-0" />}
                                 </td>
                                 <td>
-                                    {employee.position?.name}{employee.class && employee.class?.name}
+                                    {employee.position?.name}{employee.class && employee.level?.name}
                                 </td>
                                 <td style={{ textAlign: 'center' }}>
                                     <button
