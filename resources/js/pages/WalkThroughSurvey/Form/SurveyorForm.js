@@ -37,7 +37,7 @@ const SurveyorForm = ({ onAdd }) => {
             />
 
             <div className="d-flex flex-row">
-                <div className="input-group w-25 me-2">
+                <div className="input-group w-30 me-2">
                     <div className="form-control">
                         {surveyor?.cid}
                     </div>
@@ -48,7 +48,7 @@ const SurveyorForm = ({ onAdd }) => {
                         <FaSearch />
                     </button>
                 </div>
-                <div className="form-control w-75 me-2">
+                <div className="form-control w-70 me-2">
                     {surveyor?.prefix}{surveyor?.fname} {surveyor?.lname} ตำแหน่ง {surveyor?.position?.name}
                 </div>
                 <button type="button" className="btn btn-primary" onClick={() => handleAdd()}>

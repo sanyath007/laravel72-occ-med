@@ -9,7 +9,7 @@ import { calcAgeY } from '../../utils/calculator'
 import Pagination from '../Pagination'
 import PatientFilter from '../Patient/PatientFilter'
 
-const ModalEmployees = ({ isOpen, hideModal, onSelected, ...props }) => {
+const ModalEmployees = ({ isOpen, hideModal, onSelect, ...props }) => {
     const dispatch = useDispatch()
     const { employees, pager, loading } = useSelector(state => state.employee)
     const [endpoint, setEndpoint] = useState('')
@@ -81,7 +81,7 @@ const ModalEmployees = ({ isOpen, hideModal, onSelected, ...props }) => {
                                     <button
                                         type="button"
                                         className="btn btn-primary btn-sm"
-                                        onClick={() => onSelected(employee)}
+                                        onClick={() => onSelect(employee)}
                                     >
                                         <i className="bi bi-download"></i>
                                     </button>
