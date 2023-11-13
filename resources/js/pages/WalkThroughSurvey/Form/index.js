@@ -149,6 +149,8 @@ const SurveyingForm = ({ id, surveying }) => {
                                 setSelectedCompany(company);
 
                                 formik.setFieldValue('company_id', company.id);
+
+                                setShowCompanyForm(false);
                             }}
                         />
 

@@ -1,8 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Modal } from 'react-bootstrap'
+import { toast } from 'react-toastify'
+import { useDispatch, useSelector } from 'react-redux'
+import { resetSuccess } from '../../store/slices/company'
 import CompanyForm from '../Company/Form'
 
-const ModalCompanyForm = ({ isOpen, hideModal }) => {
+const ModalCompanyForm = ({ isOpen, hideModal, onSuccess }) => {
+    const dispatch = useDispatch();
+    const { company, success } = useSelector(state => state.company);
+
+    useEffect(() => {
+        if (success) {
+            toast.success('บันทึกข้อมูลสถานประกอบการเรียบร้อยแล้ว!!');
+
+            dispatch(resetSuccess());
+
+            onSuccess(company);
+        }
+    }, [success]);
+
     return (
         <Modal
             show={isOpen}

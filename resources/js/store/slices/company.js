@@ -88,38 +88,40 @@ export const companySlice = createSlice({
             state.loading = false
         },
         [store.pending]: (state) => {
-            state.loading = true
+            state.success = false
+            state.company = null
+            state.error = null
         },
         [store.fulfilled]: (state, { payload }) => {
-            if (payload.status == 1) {
-                state.success = true
-            } else {
-                state.error = payload
-            }
+            const { status, message, company } = payload;
 
-            // state.companies = payload
-            // state.pager = pager
-            state.loading = false
+            if (status === 1) {
+                state.success = true
+                state.company = company
+            } else {
+                state.error = { message }
+            }
         },
-        [store.rejected]: (state) => {
-            state.loading = false
+        [store.rejected]: (state, { payload }) => {
+            state.success = false
+            state.error = payload
         },
         [update.pending]: (state) => {
-            state.loading = true
+            state.success = false
+            state.error = null
         },
         [update.fulfilled]: (state, { payload }) => {
-            if (payload.status == 1) {
+            const { status, message } = payload;
+
+            if (status === 1) {
                 state.success = true
             } else {
-                state.error = payload
+                state.error = { message }
             }
-
-            // state.companies = payload
-            // state.pager = pager
-            state.loading = false
         },
-        [update.rejected]: (state) => {
-            state.loading = false
+        [update.rejected]: (state, { payload }) => {
+            state.success = false
+            state.error = payload
         }
     }
 })
