@@ -43,13 +43,13 @@ class CompanyController extends Controller
         return response()->json($company);
     }
 
-    public function getInitForms()
+    public function getInitialFormData()
     {
         return [
-            "companyTypes"  => CompanyType::all(),
-            "changwats"     => Changwat::all(),
-            "amphurs"       => Amphur::all(),
-            "tambons"       => Tambon::all(),
+            "types"     => CompanyType::all(),
+            "changwats" => Changwat::all(),
+            "amphurs"   => Amphur::all(),
+            "tambons"   => Tambon::all(),
         ];
     }
 

@@ -30,6 +30,7 @@ import { trainingApi } from './services/trainingApi'
 import { screeningApi } from './services/screeningApi'
 import { supervisionApi } from './services/supervisionApi'
 import { employeeApi } from './services/employeeApi'
+import { companyApi } from './services/companyApi'
 
 export default configureStore({
     reducer: {
@@ -64,6 +65,7 @@ export default configureStore({
         [screeningApi.reducerPath]: screeningApi.reducer,
         [employeeApi.reducerPath]: employeeApi.reducer,
         [supervisionApi.reducerPath]: supervisionApi.reducer,
+        [companyApi.reducerPath]: companyApi.reducer,
     },
     middleware: (getDefaultMiddleware) => 
         getDefaultMiddleware().concat(
@@ -76,5 +78,6 @@ export default configureStore({
             screeningApi.middleware,
             employeeApi.middleware,
             supervisionApi.middleware,
+            companyApi.middleware,
         ),
 })
