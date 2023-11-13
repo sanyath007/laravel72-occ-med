@@ -3,19 +3,20 @@ import { useDispatch } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row, Tab, Tabs } from 'react-bootstrap'
-import { FaSave, FaSearch, FaFilePdf, FaTimesCircle } from 'react-icons/fa'
+import { FaFilePdf, FaPlus, FaSave, FaSearch, FaTimesCircle } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
 import { toast } from 'react-toastify'
 import moment from 'moment'
 import { store, update } from '../../../store/slices/surveying'
 import { validateFile, isExistedItem, string2Array } from '../../../utils'
 import ModalCompanies from '../../../components/Modals/ModalCompanies'
+import ModalCompanyForm from '../../../components/Modals/ModalCompanyForm'
 import SurveyorForm from './SurveyorForm'
 import SurveyorList from './SurveyorList'
 import GuidelineForm from './GuidelineForm'
 import GuidelineList from './GuidelineList'
 import UploadGallery from '../../../components/UploadGallery'
-import MultipleFileUpload from '../../../components/MultipleFileUpload'
+import MultipleFileUpload from '../../../components/Forms/MultipleFileUpload'
 
 const ACCEPT_FILE_TYPE = ['pdf', 'doc', 'docx'];
 const ACCEPT_PIC_TYPE = ['jpg','jpeg','png'];
@@ -42,7 +43,8 @@ const surveySchema = Yup.object().shape({
 
 const SurveyingForm = ({ id, surveying }) => {
     const dispatch = useDispatch();
-    const [showCompanyModal, setShowCompanyModal] = useState(false);
+    const [showCompanyForm, setShowCompanyForm] = useState(false);
+    const [showCompanyList, setShowCompanyList] = useState(false);
     const [selectedCompany, setSelectedCompany] = useState(null);
     const [selectedSurveyDate, setSelectedSurveyDate] = useState(moment());
     const [uploadedFile, setUploadedFile] = useState('');
@@ -131,9 +133,19 @@ const SurveyingForm = ({ id, surveying }) => {
                 return (
                     <Form>
                         <ModalCompanies
-                            isOpen={showCompanyModal}
-                            hideModal={() => setShowCompanyModal(false)}
+                            isOpen={showCompanyList}
+                            hideModal={() => setShowCompanyList(false)}
                             onSelected={(company) => {
+                                setSelectedCompany(company);
+
+                                formik.setFieldValue('company_id', company.id);
+                            }}
+                        />
+
+                        <ModalCompanyForm
+                            isOpen={showCompanyForm}
+                            hideModal={() => setShowCompanyForm(false)}
+                            onSuccess={(company) => {
                                 setSelectedCompany(company);
 
                                 formik.setFieldValue('company_id', company.id);
@@ -208,7 +220,10 @@ const SurveyingForm = ({ id, surveying }) => {
                                             <div className={`form-control ${(formik.errors.company_id && formik.touched.company_id) ? 'is-invalid' : ''}`}>
                                                 {selectedCompany?.name}
                                             </div>
-                                            <button type="button" className="btn btn-secondary" onClick={() => setShowCompanyModal(true)}>
+                                            <button type="button" className="btn btn-primary" onClick={() => setShowCompanyForm(true)}>
+                                                <FaPlus />
+                                            </button>
+                                            <button type="button" className="btn btn-secondary" onClick={() => setShowCompanyList(true)}>
                                                 <FaSearch />
                                             </button>
                                         </div>
