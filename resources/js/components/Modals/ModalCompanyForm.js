@@ -1,6 +1,6 @@
 import React from 'react'
 import { Modal } from 'react-bootstrap'
-import CompanyForm from '../Company/CompanyForm'
+import CompanyForm from '../Company/Form'
 
 const ModalCompanyForm = ({ isOpen, hideModal }) => {
     return (

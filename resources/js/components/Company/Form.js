@@ -3,7 +3,10 @@ import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { FaSave, FaMapMarkedAlt } from 'react-icons/fa'
 import { useGetInitialFormDataQuery } from '../../store/services/companyApi'
-import ModalMapSelection from '../../components/Modals/ModalMapSelection'
+import { store, update } from '../../store/slices/company'
+import Loading from '../Loading'
+import ModalMapSelection from '../Modals/ModalMapSelection'
+import { useDispatch } from 'react-redux'
 
 const companySchema = Yup.object().shape({
     name: Yup.string().required('กรุณาระบุชื่อสถานประกอบการก่อน!!'),
@@ -16,10 +19,13 @@ const companySchema = Yup.object().shape({
     tel: Yup.string().required('กรุณาระบุเบอร์โทรศัพท์ก่อน!!'),
 })
 
-const CompanyForm = ({ company, onSubmit, ...props }) => {
+const CompanyForm = ({ id, company, ...props }) => {
+    const dispatch = useDispatch();
     const { data: formData, isLoading } = useGetInitialFormDataQuery();
     const [showMap, setShowMap] = useState(false);
     const [companyCoord, setCompanyCoord] = useState([]);
+    const [filteredAmphurs, setFilteredAmphurs] = useState([]);
+    const [filteredTambons, setFilteredTambons] = useState([]);
 
     // useEffect(() => {
     //     if (company) {
@@ -41,26 +47,24 @@ const CompanyForm = ({ company, onSubmit, ...props }) => {
         }
     }, [company])
 
-    // const handleChangwatSelected = (chw_id) => {
-    //     const filteredAmphurs = amphur.amphurs.filter(amp => amp.chw_id === chw_id)
+    const handleChangwatSelected = (chw_id) => {
+        setFilteredAmphurs(formData?.amphurs.filter(amp => amp.chw_id === chw_id));
+    }
 
-    //     setAmphur(prevAmphur => ({ ...prevAmphur, filteredAmphurs }))
-    // }
-
-    // const handleAmphurSelected = (amp_id) => {
-    //     const filteredTambons = tambon.tambons.filter(tam => tam.amp_id === amp_id)
-
-    //     setTambon(prevTambon => ({ ...prevTambon, filteredTambons }))
-    // }
+    const handleAmphurSelected = (amp_id) => {
+        setFilteredTambons(formData?.tambons.filter(tam => tam.amp_id === amp_id));
+    }
 
     const handleSubmit = async (values, props) => {
-        onSubmit(values)
+        if (company) {
+            dispatch(update(values));
+        } else {
+            dispatch(store(values));
+        }
 
         /** Clear form values */
         props.resetForm()
     }
-
-    console.log(formData);
 
     return (
         <Formik
@@ -115,27 +119,30 @@ const CompanyForm = ({ company, onSubmit, ...props }) => {
                                 </div>
                             ) : null }
                         </div>
-                        {/* <div className="col-md-6 form-group mb-2">
+                        <div className="col-md-6 form-group mb-2">
                             <label htmlFor="">ประเภทสถานประกอบการ</label>
-                            <select
-                                name="company_type_id"
-                                value={formProps.values.company_type_id}
-                                onChange={formProps.handleChange}
-                                className={`form-control ${formProps.errors.company_type_id && formProps.touched.company_type_id ? 'is-invalid' : ''}`}
-                            >
-                                <option value="">-- กรุณาเลือก --</option>
-                                {companyTypes && companyTypes.map(type => (
-                                    <option key={type.id} value={type.id}>
-                                        {type.name}
-                                    </option>
-                                ))}
-                            </select>
+                            {isLoading && <div className="form-control text-center"><Loading /></div>}
+                            {(!isLoading && formData) && (
+                                <select
+                                    name="company_type_id"
+                                    value={formProps.values.company_type_id}
+                                    onChange={formProps.handleChange}
+                                    className={`form-control ${formProps.errors.company_type_id && formProps.touched.company_type_id ? 'is-invalid' : ''}`}
+                                >
+                                    <option value="">-- กรุณาเลือก --</option>
+                                    {formData?.types.map(type => (
+                                        <option key={type.id} value={type.id}>
+                                            {type.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
                             {formProps.errors.company_type_id && formProps.touched.company_type_id ? (
                                 <div className="invalid-feedback">
                                     {formProps.errors.company_type_id}
                                 </div>
                             ) : null }
-                        </div> */}
+                        </div>
                         <div className="col-md-6 form-group mb-2">
                             <label htmlFor="">ที่อยู่ เลขที่</label>
                             <input
@@ -171,9 +178,9 @@ const CompanyForm = ({ company, onSubmit, ...props }) => {
                                 className="form-control"
                             />
                         </div>
-                        {/* <div className="col-md-4 form-group mb-2">
+                        <div className="col-md-4 form-group mb-2">
                             <label htmlFor="">จังหวัด</label>
-                            {isLoading && <Loading />}
+                            {isLoading && <div className="form-control text-center"><Loading /></div>}
                             {(!isLoading && formData) && (
                                 <select
                                     id="changwat_id"
@@ -187,7 +194,7 @@ const CompanyForm = ({ company, onSubmit, ...props }) => {
                                     className={`form-control ${formProps.errors.changwat_id && formProps.touched.changwat_id ? 'is-invalid' : ''}`}
                                 >
                                     <option value="">-- กรุณาเลือก --</option>
-                                    {changwats.length > 0 && changwats.map(changwat => (
+                                    {formData?.changwats.map(changwat => (
                                         <option key={changwat.chw_id} value={changwat.chw_id}>
                                             {changwat.changwat}
                                         </option>
@@ -202,23 +209,26 @@ const CompanyForm = ({ company, onSubmit, ...props }) => {
                         </div>
                         <div className="col-md-4 form-group mb-2">
                             <label htmlFor="">อำเภอ</label>
-                            <select
-                                name="amphur_id"
-                                value={formProps.values.amphur_id}
-                                onChange={(e) => {
-                                    const { value } = e.target
-                                    formProps.setFieldValue('amphur_id', value)
-                                    handleAmphurSelected(value)
-                                }}
-                                className={`form-control ${formProps.errors.amphur_id && formProps.touched.amphur_id ? 'is-invalid' : ''}`}
-                            >
-                                <option value="">-- กรุณาเลือก --</option>
-                                {amphur.filteredAmphurs.length > 0 && amphur.filteredAmphurs.map(amp => (
-                                    <option key={amp.id} value={amp.id}>
-                                        {amp.amphur}
-                                    </option>
-                                ))}
-                            </select>
+                            {isLoading && <div className="form-control text-center"><Loading /></div>}
+                            {(!isLoading && formData) && (
+                                <select
+                                    name="amphur_id"
+                                    value={formProps.values.amphur_id}
+                                    onChange={(e) => {
+                                        const { value } = e.target
+                                        formProps.setFieldValue('amphur_id', value)
+                                        handleAmphurSelected(value)
+                                    }}
+                                    className={`form-control ${formProps.errors.amphur_id && formProps.touched.amphur_id ? 'is-invalid' : ''}`}
+                                >
+                                    <option value="">-- กรุณาเลือก --</option>
+                                    {filteredAmphurs.map(amp => (
+                                        <option key={amp.id} value={amp.id}>
+                                            {amp.amphur}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
                             {formProps.errors.amphur_id && formProps.touched.amphur_id ? (
                                 <div className="invalid-feedback">
                                     {formProps.errors.amphur_id}
@@ -227,25 +237,28 @@ const CompanyForm = ({ company, onSubmit, ...props }) => {
                         </div>
                         <div className="col-md-4 form-group mb-2">
                             <label htmlFor="">ตำบล</label>
-                            <select
-                                name="tambon_id"
-                                value={formProps.values.tambon_id}
-                                onChange={formProps.handleChange}
-                                className={`form-control ${formProps.errors.tambon_id && formProps.touched.tambon_id ? 'is-invalid' : ''}`}
-                            >
-                                <option value="">-- กรุณาเลือก --</option>
-                                {tambon.filteredTambons.length > 0 && tambon.filteredTambons.map(tam => (
-                                    <option key={tam.id} value={tam.id}>
-                                        {tam.tambon}
-                                    </option>
-                                ))}
-                            </select>
+                            {isLoading && <div className="form-control text-center"><Loading /></div>}
+                            {(!isLoading && formData) && (
+                                <select
+                                    name="tambon_id"
+                                    value={formProps.values.tambon_id}
+                                    onChange={formProps.handleChange}
+                                    className={`form-control ${formProps.errors.tambon_id && formProps.touched.tambon_id ? 'is-invalid' : ''}`}
+                                >
+                                    <option value="">-- กรุณาเลือก --</option>
+                                    {filteredTambons.map(tam => (
+                                        <option key={tam.id} value={tam.id}>
+                                            {tam.tambon}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
                             {formProps.errors.tambon_id && formProps.touched.tambon_id ? (
                                 <div className="invalid-feedback">
                                     {formProps.errors.tambon_id}
                                 </div>
                             ) : null }
-                        </div> */}
+                        </div>
                         <div className="col-md-2 form-group mb-2">
                             <label htmlFor="">รหัสไปรษณีย์</label>
                             <input

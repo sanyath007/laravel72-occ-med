@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import CompanyForm from '../../components/Company/CompanyForm'
 import { GlobalContext } from '../../context/globalContext'
 import { store, resetSuccess } from '../../store/slices/company'
+import CompanyForm from '../../components/Company/Form'
 
 const CompanyNew = () => {
     const dispatch = useDispatch()

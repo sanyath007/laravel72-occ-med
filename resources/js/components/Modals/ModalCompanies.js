@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Modal } from 'react-bootstrap'
 import { getCompanies } from '../../store/slices/company'
 import Pagination from '../Pagination'
-import CompanyFilter from '../Company/CompanyFilter'
+import CompanyFilter from '../Company/Filter'
 
 const ModalCompanies = ({ isOpen, hideModal, onSelected, ...props }) => {
     const dispatch = useDispatch()

@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import CompanyForm from '../../components/Company/CompanyForm'
 import { GlobalContext } from '../../context/globalContext'
 import { getCompany, update } from '../../store/slices/company'
+import CompanyForm from '../../components/Company/Form'
 
 const CompanyEdit = () => {
     const { id } = useParams()
