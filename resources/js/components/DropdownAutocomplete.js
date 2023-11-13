@@ -9,6 +9,7 @@ const DropdownAutocomplete = ({ options=[], onSelect, isInvalid }) => {
             onChange={(e, newVal) => onSelect(newVal)}
             id="combo-box-demo"
             options={options}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
             renderInput={(params) => <TextField {...params} />}
             sx={{
                 '& .MuiFormControl-root.MuiTextField-root': {

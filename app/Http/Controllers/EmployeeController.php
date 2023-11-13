@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\Pname;
 use App\Models\Position;
-use App\Models\PositionClass;
+use App\Models\PositionLevel;
 use App\Models\PositionType;
 
 class EmployeeController extends Controller
@@ -39,10 +39,10 @@ class EmployeeController extends Controller
     public function getInitialFormData()
     {
         return [
-            'prefixes'          => Pname::all(),
-            'positions'         => Position::all(),
-            'positionClasses'   => PositionClass::all(),
-            'positionTypes'     => PositionType::all(),
+            'prefixes'  => Pname::all(),
+            'positions' => Position::all(),
+            'levels'    => PositionLevel::all(),
+            'types'     => PositionType::all(),
         ];
     }
 
