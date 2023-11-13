@@ -6,14 +6,14 @@ import api from '../../api'
 import ModalMapSelection from '../../components/Modals/ModalMapSelection'
 
 const companySchema = Yup.object().shape({
-    name: Yup.string().required(),
-    company_type_id: Yup.string().required(),
-    address: Yup.string().required(),
-    tambon_id: Yup.string().required(),
-    amphur_id: Yup.string().required(),
-    changwat_id: Yup.string().required(),
-    zipcode: Yup.string().required(),
-    tel: Yup.string().required(),
+    name: Yup.string().required('กรุณาระบุชื่อสถานประกอบการก่อน!!'),
+    company_type_id: Yup.string().required('กรุณาเลือกประเภทก่อน!!'),
+    address: Yup.string().required('กรุณาระบุที่อยู่ก่อน!!'),
+    tambon_id: Yup.string().required('กรุณาเลือกตำบลก่อน!!'),
+    amphur_id: Yup.string().required('กรุณาเลือกอำเภอก่อน!!'),
+    changwat_id: Yup.string().required('กรุณาเลือกจังหวัดก่อน!!'),
+    zipcode: Yup.string().required('กรุณาระบุรหัสไปรษณีย์ก่อน!!'),
+    tel: Yup.string().required('กรุณาระบุเบอร์โทรศัพท์ก่อน!!'),
 })
 
 const CompanyForm = ({ company, onSubmit, ...props }) => {
