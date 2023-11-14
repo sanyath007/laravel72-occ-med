@@ -10,9 +10,9 @@ const initialState = {
     error: null
 }
 
-export const getCompanies = createAsyncThunk('company/getCompanies', async ({ path }, { rejectWithValue }) => {
+export const getCompanies = createAsyncThunk('company/getCompanies', async ({ url }, { rejectWithValue }) => {
     try {
-        const res = await api.get(path)
+        const res = await api.get(url)
     
         return res.data
     } catch (error) {
@@ -21,7 +21,7 @@ export const getCompanies = createAsyncThunk('company/getCompanies', async ({ pa
     }
 })
 
-export const getCompany = createAsyncThunk('company/getCompany', async ({ id }, { rejectWithValue }) => {
+export const getCompany = createAsyncThunk('company/getCompany', async (id, { rejectWithValue }) => {
     try {
         const res = await api.get(`/api/companies/${id}`)
     

@@ -7,9 +7,11 @@ import { getCompanies } from '../../store/slices/company'
 import Pagination from '../../components/Pagination'
 
 const CompanyList = () => {
-    const { setGlobal } = useContext(GlobalContext)
-    const dispatch = useDispatch()
-    const { companies, pager } = useSelector(state => state.company)
+    const dispatch = useDispatch();
+    const { companies, pager } = useSelector(state => state.company);
+    const { setGlobal } = useContext(GlobalContext);
+    const [endpoint, setEndpoint] = useState('');
+    const [params, setParams] = useState('');
 
     /** Initial global states */
     useEffect(() => {
@@ -24,22 +26,12 @@ const CompanyList = () => {
     }, [])
 
     useEffect(() => {
-        fetchCompanies()
-
-        return () => fetchCompanies()
-    }, [])
-
-    const fetchCompanies = (path='/api/companies') => {
-        /** Filtering logic */
-
-        /** Filtering logic */
-
-        dispatch(getCompanies({ path }))
-    }
-
-    const handlePageClick = (path) => {
-        fetchCompanies(path)
-    }
+        if (endpoint === '') {
+            dispatch(getCompanies({ url: `/api/companies/search?page=${params}` }))
+        } else {
+            dispatch(getCompanies({ url: `${endpoint}${params}` }))
+        }
+    }, [endpoint, params])
 
     return (
         <section className="section">
@@ -94,7 +86,7 @@ const CompanyList = () => {
 
                             <Pagination
                                 pager={pager}
-                                onPageClick={handlePageClick}
+                                onPageClick={(url) => setEndpoint(url)}
                             />
 
                         </div>
