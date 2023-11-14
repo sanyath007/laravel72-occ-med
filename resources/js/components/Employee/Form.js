@@ -8,6 +8,7 @@ import moment from 'moment'
 import { useGetInitialFormDataQuery } from '../../store/services/employeeApi'
 import { store, update } from '../../store/slices/employee'
 import DropdownAutocomplete from '../Forms/DropdownAutocomplete'
+import Loading from '../../components/Loading'
 
 const employeeSchema = Yup.object().shape({
     prefix: Yup.string().required('กรุณาเลือกคำนำหน้าก่อน'),
@@ -122,14 +123,17 @@ const EmployeeForm = ({ id, employee }) => {
                                     </option>
                                 ))}
                             </select> */}
-                            <DropdownAutocomplete
-                                label={'คำนำหน้า'}
-                                options={formData?.prefixes?.map(prefix => ({ label: prefix.name, id: prefix.provis_code }))}
-                                onSelect={(prefix) => {
-                                    formik.setFieldValue('prefix', prefix.label);
-                                }}
-                                isInvalid={formik.errors.prefix && formik.touched.prefix}
-                            />
+                            {isLoading && <div className="form-control text-center"><Loading /></div>}
+                            {(!isLoading && formData) && (
+                                <DropdownAutocomplete
+                                    label={'คำนำหน้า'}
+                                    options={formData?.prefixes?.map(prefix => ({ label: prefix.name, id: prefix.provis_code }))}
+                                    onSelect={(prefix) => {
+                                        formik.setFieldValue('prefix', prefix.label);
+                                    }}
+                                    isInvalid={formik.errors.prefix && formik.touched.prefix}
+                                />
+                            )}
                             {formik.errors.prefix && formik.touched.prefix && (
                                 <div className="text-danger text-sm">
                                     {formik.errors.prefix}
@@ -379,19 +383,22 @@ const EmployeeForm = ({ id, employee }) => {
                         </div>
                         <div className="col-md-4 form-group mb-2">
                             <label htmlFor="">ประเภทตำแหน่ง</label>
-                            <select
-                                name="position_type_id"
-                                value={formik.values.position_type_id}
-                                onChange={formik.handleChange}
-                                className={`form-control ${formik.errors.position_type_id && formik.touched.position_type_id ? 'is-invalid' : ''}`}
-                            >
-                                <option value="">-- ประเภทตำแหน่ง --</option>
-                                {formData?.positionTypes?.map(ptype => (
-                                    <option value={ptype.id} key={ptype.id}>
-                                        {ptype.name}
-                                    </option>
-                                ))}
-                            </select>
+                            {isLoading && <div className="form-control text-center"><Loading /></div>}
+                            {(!isLoading && formData) && (
+                                <select
+                                    name="position_type_id"
+                                    value={formik.values.position_type_id}
+                                    onChange={formik.handleChange}
+                                    className={`form-control ${formik.errors.position_type_id && formik.touched.position_type_id ? 'is-invalid' : ''}`}
+                                >
+                                    <option value="">-- ประเภทตำแหน่ง --</option>
+                                    {formData?.types?.map(type => (
+                                        <option value={type.id} key={type.id}>
+                                            {type.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
                             {formik.errors.position_type_id && formik.touched.position_type_id ? (
                                 <div className="invalid-feedback">
                                     {formik.errors.position_type_id}
@@ -400,19 +407,22 @@ const EmployeeForm = ({ id, employee }) => {
                         </div>
                         <div className="col-md-4 form-group mb-2">
                             <label htmlFor="">ตำแหน่ง</label>
-                            <select
-                                name="position_id"
-                                value={formik.values.position_id}
-                                onChange={formik.handleChange}
-                                className={`form-control ${formik.errors.position_id && formik.touched.position_id ? 'is-invalid' : ''}`}
-                            >
-                                <option value="">-- ตำแหน่ง --</option>
-                                {formData?.positions?.map(position => (
-                                    <option value={position.id} key={position.id}>
-                                        {position.name}
-                                    </option>
-                                ))}
-                            </select>
+                            {isLoading && <div className="form-control text-center"><Loading /></div>}
+                            {(!isLoading && formData) && (
+                                <select
+                                    name="position_id"
+                                    value={formik.values.position_id}
+                                    onChange={formik.handleChange}
+                                    className={`form-control ${formik.errors.position_id && formik.touched.position_id ? 'is-invalid' : ''}`}
+                                >
+                                    <option value="">-- ตำแหน่ง --</option>
+                                    {formData?.positions?.map(position => (
+                                        <option value={position.id} key={position.id}>
+                                            {position.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
                             {formik.errors.position_id && formik.touched.position_id ? (
                                 <div className="invalid-feedback">
                                     {formik.errors.position_id}
@@ -421,19 +431,22 @@ const EmployeeForm = ({ id, employee }) => {
                         </div>
                         <div className="col-md-4 form-group mb-2">
                             <label htmlFor="">ระดับ</label>
-                            <select
-                                name="position_level_id"
-                                value={formik.values.position_level_id}
-                                onChange={formik.handleChange}
-                                className={`form-control ${formik.errors.position_level_id && formik.touched.position_level_id ? 'is-invalid' : ''}`}
-                            >
-                                <option value="">-- ระดับ --</option>
-                                {formData?.positionClasses?.map(pclass => (
-                                    <option value={pclass.id} key={pclass.id}>
-                                        {pclass.name}
-                                    </option>
-                                ))}
-                            </select>
+                            {isLoading && <div className="form-control text-center"><Loading /></div>}
+                            {(!isLoading && formData) && (
+                                <select
+                                    name="position_level_id"
+                                    value={formik.values.position_level_id}
+                                    onChange={formik.handleChange}
+                                    className={`form-control ${formik.errors.position_level_id && formik.touched.position_level_id ? 'is-invalid' : ''}`}
+                                >
+                                    <option value="">-- ระดับ --</option>
+                                    {formData?.levels?.map(level => (
+                                        <option value={level.id} key={level.id}>
+                                            {level.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
                             {formik.errors.position_level_id && formik.touched.position_level_id ? (
                                 <div className="invalid-feedback">
                                     {formik.errors.position_level_id}

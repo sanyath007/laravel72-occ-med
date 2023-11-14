@@ -13,9 +13,11 @@ class EmployeeController extends Controller
 {
     public function search(Request $request)
     {
+        $limit = empty($request->get('limit')) ? 10 : $request->get('limit');
+
         $employees = Employee::with('position','level','type')
                         ->whereNotIn('position_id', [1])
-                        ->paginate(20);
+                        ->paginate($limit);
 
         return response()->json($employees);
     }

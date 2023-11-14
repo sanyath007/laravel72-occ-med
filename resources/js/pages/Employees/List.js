@@ -92,7 +92,7 @@ const EmployeeList = () => {
                                                     อ.${employee.amphur.amphur} 
                                                     จ.${employee.changwat.changwat} ${employee.zipcode}`}
                                             </td> */}
-                                            <td>{employee.position?.name}{employee.class ? employee.level?.name : ''}</td>
+                                            <td>{employee.position?.name}{employee.level ? employee.level?.name : ''}</td>
                                             <td style={{ textAlign: 'center' }}>{employee.type?.name}</td>
                                             <td style={{ fontSize: '12px' }}>
                                                 {/* <p className="m-0"><FaUserAlt /> {employee.contact_name}</p>
