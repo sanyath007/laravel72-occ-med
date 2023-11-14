@@ -13,10 +13,18 @@ class EmployeeController extends Controller
 {
     public function search(Request $request)
     {
-        $limit = empty($request->get('limit')) ? 10 : $request->get('limit');
+        $position   = $request->get('position');
+        $name       = $request->get('name');
+        $limit      = empty($request->get('limit')) ? 10 : $request->get('limit');
 
         $employees = Employee::with('position','level','type')
                         ->whereNotIn('position_id', [1])
+                        ->when(!empty($position), function($query) use ($position) {
+                            $query->where('position_id', $position);
+                        })
+                        ->when(!empty($name), function($query) use ($name) {
+                            $query->where('fname', 'like', '%'.$name.'%');
+                        })
                         ->paginate($limit);
 
         return response()->json($employees);

@@ -29,7 +29,7 @@ const EmployeeList = () => {
 
     useEffect(() => {
         if (endpoint === '') {
-            dispatch(getEmployees({ url: '/api/employees/search' }))
+            dispatch(getEmployees({ url: `/api/employees/search?page=${params}` }))
         } else {
             dispatch(getEmployees({ url: `${endpoint}${params}` }))
         }
