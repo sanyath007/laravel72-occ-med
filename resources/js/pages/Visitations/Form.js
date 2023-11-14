@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row, Tabs, Tab } from 'react-bootstrap'
 import { DatePicker } from '@mui/x-date-pickers'
-import { FaSave, FaSearch, FaFileImage } from 'react-icons/fa'
+import { FaSave, FaSearch, FaFileImage, FaPlus } from 'react-icons/fa'
 import moment from 'moment'
 import { store, update } from '../../store/slices/visitation'
-import ModalCompanies from '../../components/Modals/ModalCompanies'
-import { useEffect } from 'react'
 import VisitorForm from './Form/VisitorForm'
 import VisitorList from './Form/VisitorList'
+import ModalCompanies from '../../components/Modals/ModalCompanies'
+import ModalCompanyForm from '../../components/Modals/ModalCompanyForm'
 
 const visitationSchema = Yup.object().shape({
     visit_date: Yup.string().required('กรุณาเลือกวันที่เยี่ยมก่อน'),
@@ -22,7 +22,8 @@ const visitationSchema = Yup.object().shape({
 
 const VisitationForm = ({ id, visitation }) => {
     const dispatch = useDispatch();
-    const [showCompanyModal, setShowCompanyModal] = useState(false);
+    const [showCompanyForm, setShowCompanyForm] = useState(false);
+    const [showCompanyList, setShowCompanyList] = useState(false);
     const [selecedCompany, setSelectedCompany] = useState(null);
     const [selecedFile, setSelectedFile] = useState(null);
     const [selectedVisitDate, setSelectedVisitDate] = useState(moment())
@@ -86,12 +87,22 @@ const VisitationForm = ({ id, visitation }) => {
                 return (
                     <Form>
                         <ModalCompanies
-                            isOpen={showCompanyModal}
-                            hideModal={() => setShowCompanyModal(false)}
+                            isOpen={showCompanyList}
+                            hideModal={() => setShowCompanyList(false)}
                             onSelected={(company) => {
                                 setSelectedCompany(company);
 
                                 formik.setFieldValue('company_id', company.id);
+                            }}
+                        />
+
+                        <ModalCompanyForm
+                            isOpen={showCompanyForm}
+                            hideModal={() => setShowCompanyForm(false)}
+                            onSuccess={(company) => {
+                                setSelectedCompany(company);
+
+                                formik.setFieldValue('company_id', )
                             }}
                         />
 
@@ -163,7 +174,10 @@ const VisitationForm = ({ id, visitation }) => {
                                                 <div className={`form-control ${(formik.errors.company_id && formik.touched.company_id) ? 'is-invalid' : ''}`}>
                                                     {selecedCompany && selecedCompany.name}
                                                 </div>
-                                                <button type="button" className="btn btn-secondary" onClick={() => setShowCompanyModal(true)}>
+                                                <button type="button" className="btn btn-primary" onClick={() => setShowCompanyForm(true)}>
+                                                    <FaPlus />
+                                                </button>
+                                                <button type="button" className="btn btn-secondary" onClick={() => setShowCompanyList(true)}>
                                                     <FaSearch />
                                                 </button>
                                             </div>
