@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from 'react'
+import { generateQueryString } from '../../utils'
+
+const initialFilters = { type: '', name: '' };
 
 const CompanyFilter = ({ onFilter }) => {
-    const [filterings, setFilterings] = useState({ type: '', name: '' })
+    const [filters, setFilters] = useState(initialFilters)
 
     useEffect(() => {
-        generateQueryStrings()
-    }, [filterings])
+        handleFilter()
+    }, [filters])
 
-    const generateQueryStrings = () => {
-        const type = filterings.type == '' ? '' : filterings.type
-        const name = filterings.name == '' ? '' : filterings.name
+    const handleFilter = () => {
+        const queryStr = generateQueryString(filters)
 
-        setQueryStrings(`&type=${type}&name=${name}`)
+        onFilter(queryStr)
     }
 
     const handleChange = (e) => {
         const { name, value } = e.target
 
-        setFilterings(prevState => ({ ...prevState, [name]: value }))
+        setFilters(prevState => ({ ...prevState, [name]: value }))
     }
 
     return (
-        <div className="d-flex gap-3">
+        <div className="d-flex gap-2">
             <select
                 name="type"
-                value={filterings.type}
+                value={filters.type}
                 onChange={handleChange}
                 className="form-control"
             >
@@ -35,11 +37,14 @@ const CompanyFilter = ({ onFilter }) => {
             <input
                 type="text"
                 name="name"
-                value={filterings.name}
+                value={filters.name}
                 onChange={handleChange}
                 className="form-control"
                 placeholder="ค้นหาด้วยชื่อสถานประกอบการ"
             />
+            <button type="button" className="btn btn-danger" onClick={() => setFilters(initialFilters)}>
+                เคลียร์
+            </button>
         </div>
     )
 }

@@ -40,11 +40,19 @@ const CompanyList = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">รายการสถานประกอบการ</h5>
+                            <div className="d-flex flex-row justify-content-between align-items-center py-2">
+                                <h5 className="card-title py-1 my-auto">รายการสถานประกอบการ</h5>
+
+                                <div>
+                                    <Link to="/employees/new" className="btn btn-primary">
+                                        เพิ่มสถานประกอบการ
+                                    </Link>
+                                </div>
+                            </div>
 
                             <CompanyFilter onFilter={(queryStr) => setParams(queryStr)} />
 
-                            <table className="table table-striped table-bordered">
+                            <table className="table table-striped table-bordered mt-2">
                                 <thead>
                                     <tr>
                                         <th scope="col" style={{ width: '3%', textAlign: 'center' }}>#</th>
