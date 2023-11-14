@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const CompanyFilter = ({ setQueryStrings }) => {
+const CompanyFilter = ({ onFilter }) => {
     const [filterings, setFilterings] = useState({ type: '', name: '' })
 
     useEffect(() => {

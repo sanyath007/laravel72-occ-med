@@ -5,6 +5,7 @@ import { FaEnvelope, FaMobileAlt, FaUserAlt } from 'react-icons/fa'
 import { GlobalContext } from '../../context/globalContext'
 import { getCompanies } from '../../store/slices/company'
 import Pagination from '../../components/Pagination'
+import CompanyFilter from '../../components/Company/Filter'
 
 const CompanyList = () => {
     const dispatch = useDispatch();
@@ -40,6 +41,9 @@ const CompanyList = () => {
                     <div className="card">
                         <div className="card-body">
                             <h5 className="card-title">รายการสถานประกอบการ</h5>
+
+                            <CompanyFilter onFilter={(queryStr) => setParams(queryStr)} />
+
                             <table className="table table-striped table-bordered">
                                 <thead>
                                     <tr>

@@ -29,7 +29,7 @@ const ModalCompanies = ({ isOpen, hideModal, onSelected, ...props }) => {
             <Modal.Header closeButton>รายการสถานที่ทำงาน</Modal.Header>
             <Modal.Body>
                 <div className="alert border-dark alert-dismissible fade show" role="alert">
-                    <CompanyFilter setQueryStrings={(queryStrings) => setParams(queryStrings)} />
+                    <CompanyFilter onFilter={(queryStr) => setParams(queryStr)} />
                 </div>
 
                 <table className="table table-striped table-bordered">
