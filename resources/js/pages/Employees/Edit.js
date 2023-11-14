@@ -15,11 +15,11 @@ const EditEmployee = () => {
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'แก้ไขรายการเจ้าหน้าที่กลุ่มงาน',
+            title: 'แก้ไขรายการเจ้าหน้าที่',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'companies', name: 'รายการเจ้าหน้าที่กลุ่มงาน', path: '/companies' },
-                { id: 'new', name: 'แก้ไขรายการเจ้าหน้าที่กลุ่มงาน', path: null, active: true }
+                { id: 'companies', name: 'รายการเจ้าหน้าที่', path: '/companies' },
+                { id: 'new', name: 'แก้ไขรายการเจ้าหน้าที่', path: null, active: true }
             ]
         }))
     }, [])
@@ -41,7 +41,7 @@ const EditEmployee = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">แก้ไขรายการเจ้าหน้าที่กลุ่มงาน : ID {id}</h5>
+                            <h5 className="card-title">แก้ไขรายการเจ้าหน้าที่ : ID {id}</h5>
 
                             <EmployeeForm onSubmit={handleSubmit} employee={employee} />
                         </div>

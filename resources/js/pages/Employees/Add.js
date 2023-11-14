@@ -16,11 +16,11 @@ const AddEmployee = () => {
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'เพิ่มเจ้าหน้าที่กลุ่มงาน',
+            title: 'เพิ่มเจ้าหน้าที่',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'employees', name: 'รายการเจ้าหน้าที่กลุ่มงาน', path: '/employees' },
-                { id: 'new', name: 'เพิ่มเจ้าหน้าที่กลุ่มงาน', path: null, active: true }
+                { id: 'employees', name: 'รายการเจ้าหน้าที่', path: '/employees' },
+                { id: 'new', name: 'เพิ่มเจ้าหน้าที่', path: null, active: true }
             ]
         }))
     }, [])
@@ -43,7 +43,7 @@ const AddEmployee = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">เพิ่มเจ้าหน้าที่กลุ่มงาน</h5>
+                            <h5 className="card-title">เพิ่มเจ้าหน้าที่</h5>
 
                             <EmployeeForm onSubmit={handleSubmit} />
 

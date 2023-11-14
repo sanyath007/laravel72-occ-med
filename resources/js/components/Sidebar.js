@@ -191,10 +191,10 @@ const Sidebar = () => {
                         </li>
                     </ul>
                 </li>
-                {/* เจ้าหน้าที่กลุ่มงาน */}
+                {/* เจ้าหน้าที่ */}
                 <li className="nav-item">
                     <a className="nav-link collapsed" data-bs-target="#employees-nav" data-bs-toggle="collapse" href="#">
-                        <i className="bi bi-person-workspace"></i><span>เจ้าหน้าที่กลุ่มงาน</span>
+                        <i className="bi bi-person-workspace"></i><span>เจ้าหน้าที่</span>
                         <i className="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="employees-nav" className="nav-content collapse " data-bs-parent="#employees-nav">

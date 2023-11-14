@@ -19,10 +19,10 @@ const EmployeeList = () => {
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'รายการเจ้าหน้าที่กลุ่มงาน',
+            title: 'รายการเจ้าหน้าที่',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'employees', name: 'รายการเจ้าหน้าที่กลุ่มงาน', path: null, active: true }
+                { id: 'employees', name: 'รายการเจ้าหน้าที่', path: null, active: true }
             ]
         }))
     }, [])
@@ -46,11 +46,11 @@ const EmployeeList = () => {
                     <div className="card">
                         <div className="card-body">
                             <div className="d-flex flex-row justify-content-between align-items-center py-2">
-                                <h5 className="card-title py-1 my-auto">รายการเจ้าหน้าที่กลุ่มงาน</h5>
+                                <h5 className="card-title py-1 my-auto">รายการเจ้าหน้าที่</h5>
 
                                 <div>
                                     <Link to="/employees/new" className="btn btn-primary">
-                                        เพิ่มเจ้าหน้าที่กลุ่มงาน
+                                        เพิ่มเจ้าหน้าที่
                                     </Link>
                                 </div>
                             </div>
