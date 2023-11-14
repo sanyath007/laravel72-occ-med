@@ -100,6 +100,8 @@ const EmployeeForm = ({ id, employee }) => {
                 // email: employee ? employee.email || '' : '',
                 assigned_date: employee ? employee.assigned_date || '' : '',
                 stared_date: employee ? employee.start_date || '' : '',
+                is_employee: employee ? employee.is_employee : '',
+                is_expert: employee ? employee.is_expert : '',
                 remark: employee ? employee.remark || '' : ''
             }}
             validationSchema={employeeSchema}
@@ -490,6 +492,24 @@ const EmployeeForm = ({ id, employee }) => {
                             {(formik.errors.started_date && formik.touched.started_date) && (
                                 <span className="text-danger text-sm">{formik.errors.started_date}</span>
                             )}
+                        </div>
+                        <div className="col-md-6 form-group mt-3 mb-2">
+                            <label className="form-control">
+                                <Field
+                                    type="checkbox"
+                                    name="is_employee"
+                                />
+                                <span className="ms-1">เป็นเจ้าหน้าที่ รพ.</span>
+                            </label>
+                        </div>
+                        <div className="col-md-6 form-group mt-3 mb-2">
+                            <label className="form-control">
+                                <Field
+                                    type="checkbox"
+                                    name="is_expert"
+                                />
+                                <span className="ms-1">เป็นผู้เชี่ยวชาญ</span>
+                            </label>
                         </div>
                         <div className="col-md-12 form-group mb-2">
                             <label htmlFor="">หมายเหตุ</label>
