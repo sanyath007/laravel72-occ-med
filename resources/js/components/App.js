@@ -16,9 +16,9 @@ import Patients from "../pages/Patients/Patients";
 import PatientNew from "../pages/Patients/PatientNew";
 import PatientEdit from "../pages/Patients/PatientEdit";
 import PatientDetail from "../pages/Patients/PatientDetail";
-import Companies from "../pages/Companies/Companies";
-import CompanyNew from "../pages/Companies/CompanyNew";
-import CompanyEdit from "../pages/Companies/CompanyEdit";
+import CompanyList from "../pages/Companies/List";
+import CompanyNew from "../pages/Companies/New";
+import CompanyEdit from "../pages/Companies/Edit";
 import Checkups from "../pages/Checkups/Checkups";
 import CheckupForm from "../pages/Checkups/Form/CheckupForm";
 import CheckupMonthly from "../pages/Checkups/Summary/Monthly";
@@ -96,7 +96,7 @@ import AddERPlan from "../pages/ERPlan/Add";
 import EditERPlan from "../pages/ERPlan/Edit";
 import ERPlanDetail from "../pages/ERPlan/Detail";
 import ERPlanList from "../pages/ERPlan/List";
-import AddEmployee from "../pages/Employees/Add";
+import EmployeeNew from "../pages/Employees/New";
 import EditEmployee from "../pages/Employees/Edit";
 import EmployeeList from "../pages/Employees/List";
 import Services from "../pages/Services";
@@ -134,7 +134,7 @@ export default function App() {
                         <Route path="/patients/:id/detail" element={<PatientDetail />} />
                         {/* Employees routes */}
                         <Route path="/employees" element={<EmployeeList />} />
-                        <Route path="/employees/new" element={<AddEmployee />} />
+                        <Route path="/employees/new" element={<EmployeeNew />} />
                         <Route path="/employees/:id/edit" element={<EditEmployee />} />
                         {/* <Route path="/employees/:id/detail" element={<EmployeeDetail />} /> */}
                         {/* Clinics routes */}
@@ -178,7 +178,7 @@ export default function App() {
                         <Route path="/checkups/summary/:id/edit" element={<EditCheckupMonthly />} />
                         <Route path="/checkups/summary-year" element={<CheckupYearly />} />
                         {/* Companies routes */}
-                        <Route path="/companies" element={<Companies />} />
+                        <Route path="/companies" element={<CompanyList />} />
                         <Route path="/companies/new" element={<CompanyNew />} />
                         <Route path="/companies/:id/edit" element={<CompanyEdit />} />
                         {/* Report Bullets */}

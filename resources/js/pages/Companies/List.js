@@ -6,7 +6,7 @@ import { GlobalContext } from '../../context/globalContext'
 import { getCompanies } from '../../store/slices/company'
 import Pagination from '../../components/Pagination'
 
-const Companies = () => {
+const CompanyList = () => {
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch()
     const { companies, pager } = useSelector(state => state.company)
@@ -105,4 +105,4 @@ const Companies = () => {
     )
 }
 
-export default Companies
+export default CompanyList

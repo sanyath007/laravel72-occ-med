@@ -6,7 +6,7 @@ import { GlobalContext } from '../../context/globalContext'
 import { store, resetSuccess } from '../../store/slices/employee'
 import EmployeeForm from '../../components/Employee/Form'
 
-const AddEmployee = () => {
+const EmployeeNew = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { success, error } = useSelector(state => state.employee)
@@ -55,4 +55,4 @@ const AddEmployee = () => {
     )
 }
 
-export default AddEmployee
+export default EmployeeNew
