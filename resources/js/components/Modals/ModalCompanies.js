@@ -7,22 +7,18 @@ import Pagination from '../Pagination'
 import CompanyFilter from '../Company/Filter'
 
 const ModalCompanies = ({ isOpen, hideModal, onSelected, ...props }) => {
-    const dispatch = useDispatch()
-    const { companies, pager, loading } = useSelector(state => state.company)
-    const [queryStrings, setQueryStrings] = useState('')
+    const dispatch = useDispatch();
+    const { companies, pager, loading } = useSelector(state => state.company);
+    const [endpoint, setEndpoint] = useState('')
+    const [params, setParams] = useState('')
 
     useEffect(() => {
-        console.log('on queryStrings changed...');
-        fetchCompanies()
-    }, [queryStrings])
-
-    const fetchCompanies = (path='/api/companies?page=') => {
-        dispatch(getCompanies({ path: `${path}${queryStrings}` }))
-    }
-
-    const handlePageClick = (path) => {
-        fetchCompanies(path)
-    }
+        if (endpoint === '') {
+            dispatch(getCompanies({ url: `/api/companies/search?page=${params}` }))
+        } else {
+            dispatch(getCompanies({ path: `${endpoint}${params}` }))
+        }
+    }, [endpoint, params])
 
     return (
         <Modal
@@ -33,7 +29,7 @@ const ModalCompanies = ({ isOpen, hideModal, onSelected, ...props }) => {
             <Modal.Header closeButton>รายการสถานที่ทำงาน</Modal.Header>
             <Modal.Body>
                 <div className="alert border-dark alert-dismissible fade show" role="alert">
-                    <CompanyFilter setQueryStrings={setQueryStrings} />
+                    <CompanyFilter setQueryStrings={(queryStrings) => setParams(queryStrings)} />
                 </div>
 
                 <table className="table table-striped table-bordered">
@@ -90,7 +86,7 @@ const ModalCompanies = ({ isOpen, hideModal, onSelected, ...props }) => {
             <Modal.Footer>
                 <Pagination
                     pager={pager}
-                    onPageClick={handlePageClick}
+                    onPageClick={(url) => setEndpoint(url)}
                 />
             </Modal.Footer>
         </Modal>
