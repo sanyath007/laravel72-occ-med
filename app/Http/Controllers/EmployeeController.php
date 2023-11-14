@@ -74,6 +74,8 @@ class EmployeeController extends Controller
             $employee->position_level_id = $request['position_level_id'];
             $employee->assigned_date = $request['assigned_date'];
             $employee->started_date = $request['started_date'];
+            $employee->is_employee  = $request['is_employee'];
+            $employee->is_expert    = $request['is_expert' ];
             $employee->remark       = $request['remark'];
             $employee->status       = 1;
 
@@ -115,6 +117,8 @@ class EmployeeController extends Controller
             $employee->position_level_id = $request['position_level_id'];
             $employee->assigned_date = $request['assigned_date'];
             $employee->started_date = $request['started_date'];
+            $employee->is_employee  = $request['is_employee'];
+            $employee->is_expert    = $request['is_expert' ];
             $employee->remark       = $request['remark'];
 
             if ($employee->save()) {
