@@ -182,8 +182,9 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::delete('/report-bullets/{id}', 'ReportBulletController@destroy');
 
     /** Companies */
-    Route::get('/companies', 'CompanyController@getCompanies');
-    Route::get('/companies/{id}', 'CompanyController@getCompany');
+    Route::get('/companies', 'CompanyController@getAll');
+    Route::get('/companies/search', 'CompanyController@search');
+    Route::get('/companies/{id}', 'CompanyController@getById');
     Route::get('/companies/init/form', 'CompanyController@getInitialFormData');
     Route::post('/companies', 'CompanyController@store');
     Route::put('/companies/{id}', 'CompanyController@update');
