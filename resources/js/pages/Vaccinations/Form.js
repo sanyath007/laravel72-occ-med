@@ -3,13 +3,14 @@ import { useDispatch } from 'react-redux'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row } from 'react-bootstrap'
-import { FaSave, FaSearch } from 'react-icons/fa'
+import { FaPlus, FaSave, FaSearch } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
 import moment from 'moment'
 import { store, update } from '../../store/slices/vaccination'
 import { useGetInitialFormDataQuery } from '../../store/services/vaccinationApi'
 import Loading from '../../components/Loading'
 import ModalCompanies from '../../components/Modals/ModalCompanies'
+import ModalCompanyForm from '../../components/Modals/ModalCompanyForm'
 
 const vaccinationSchema = Yup.object().shape({
     vaccine_date: Yup.string().required('กรุณาเลือกวันที่ฉีดก่อน'),
@@ -28,7 +29,8 @@ const VaccinationForm = ({ id, vaccination }) => {
     const dispatch = useDispatch();
     const { data: formData, isLoading } = useGetInitialFormDataQuery();
     const [selectedVaccineDate, setSelectedVaccineDate] = useState(moment());
-    const [showModalCompanies, setShowModalCompanies] = useState(false);
+    const [showCompanyList, setShowCompanyList] = useState(false);
+    const [showCompanyForm, setShowCompanyForm] = useState(false);
     const [selectedCompany, setSelectedCompany] = useState(null);
 
     useEffect(() => {
@@ -70,13 +72,23 @@ const VaccinationForm = ({ id, vaccination }) => {
                 return (
                     <Form>
                         <ModalCompanies
-                            isOpen={showModalCompanies}
-                            hideModal={() => setShowModalCompanies(false)}
+                            isOpen={showCompanyList}
+                            hideModal={() => setShowCompanyList(false)}
                             onSelected={(company) => {
                                 setSelectedCompany(company);
 
                                 formik.setFieldValue('company_id', company.id);
                                 formik.setFieldTouched('company_id', true);
+                            }}
+                        />
+
+                        <ModalCompanyForm
+                            isOpen={showCompanyForm}
+                            hideModal={() => setShowCompanyForm(false)}
+                            onSuccess={(company) => {
+                                setSelectedCompany(company);
+
+                                formik.setFieldValue('company_id', )
                             }}
                         />
 
@@ -115,7 +127,10 @@ const VaccinationForm = ({ id, vaccination }) => {
                                     <div className={`form-control ${(formik.errors.company_id && formik.touched.company_id) ? 'is-invalid' : ''}`}>
                                         {selectedCompany && selectedCompany.name}
                                     </div>
-                                    <button className="btn btn-secondary" onClick={() => setShowModalCompanies(true)}>
+                                    <button className="btn btn-primary" onClick={() => setShowCompanyForm(true)}>
+                                        <FaPlus />
+                                    </button>
+                                    <button className="btn btn-secondary" onClick={() => setShowCompanyList(true)}>
                                         <FaSearch />
                                     </button>
                                 </div>
