@@ -13,7 +13,8 @@ class SurveyingController extends Controller
     {
         $date = $request->get('date');
 
-        $surveyings = Surveying::with('division','company','surveyors','surveyors.employee')
+        $surveyings = Surveying::with('division','company','company.type','surveyors')
+                        ->with('surveyors.employee','surveyors.employee.position','surveyors.employee.level')
                         // ->when(!empty($date), function($q) use ($date) {
                         //     $q->where('surver_date', $date);
                         // })
@@ -25,7 +26,7 @@ class SurveyingController extends Controller
     public function getById($id)
     {
         $surveying = Surveying::with('division','company','company.type','surveyors')
-                        ->with('surveyors.employee','surveyors.employee.position','surveyors.employee.class')
+                        ->with('surveyors.employee','surveyors.employee.position','surveyors.employee.level')
                         ->find($id);
 
         return response()->json($surveying);

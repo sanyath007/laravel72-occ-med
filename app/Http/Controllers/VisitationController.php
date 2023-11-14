@@ -11,7 +11,7 @@ class VisitationController extends Controller
     public function search(Request $request)
     {
         $visitations = Visitation::with('division','company','visitors')
-                            ->with('visitors.employee','visitors.employee.position','visitors.employee.class')
+                            ->with('visitors.employee','visitors.employee.position','visitors.employee.level')
                             ->orderBy('visit_date', 'DESC')
                             ->paginate(10);
 
@@ -21,7 +21,7 @@ class VisitationController extends Controller
     public function getById($id)
     {
         $visitation = Visitation::with('division','company','visitors')
-                            ->with('visitors.employee','visitors.employee.position','visitors.employee.class')
+                            ->with('visitors.employee','visitors.employee.position','visitors.employee.level')
                             ->find($id);
 
         return response()->json($visitation);

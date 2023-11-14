@@ -15,7 +15,7 @@ class ERPlanController extends Controller
         $date = $request->get('date');
 
         $plans = ERPlan::with('division','company','experts','persons')
-                        ->with('persons.employee','persons.employee.position','persons.employee.class')
+                        ->with('persons.employee','persons.employee.position','persons.employee.level')
                         // ->when(!empty($date), function($q) use ($date) {
                         //     $q->where('surver_date', $date);
                         // })
@@ -27,7 +27,7 @@ class ERPlanController extends Controller
     public function getById($id)
     {
         $plan = ERPlan::with('division','company','experts','persons')
-                        ->with('persons.employee','persons.employee.position','persons.employee.class')
+                        ->with('persons.employee','persons.employee.position','persons.employee.level')
                         ->find($id);
 
         return response()->json($plan);
