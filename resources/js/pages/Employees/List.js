@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FaEnvelope, FaMobileAlt, FaUserAlt } from 'react-icons/fa'
 import { GlobalContext } from '../../context/globalContext'
 import { getEmployees } from '../../store/slices/employee'
-import Pagination from '../../components/Pagination'
 import Loading from '../../components/Loading'
+import EmployeeFilter from '../../components/Employee/Filter'
+import Pagination from '../../components/Pagination'
 
 const EmployeeList = () => {
     const dispatch = useDispatch()
@@ -32,7 +33,7 @@ const EmployeeList = () => {
         } else {
             dispatch(getEmployees({ url: `${endpoint}${params}` }))
         }
-    }, [endpoint])
+    }, [endpoint, params])
 
     const handlePageClick = (url) => {
         setEndpoint(url)
@@ -54,7 +55,9 @@ const EmployeeList = () => {
                                 </div>
                             </div>
 
-                            <table className="table table-striped table-bordered">
+                            <EmployeeFilter onFilter={(queryStr) => setParams(queryStr)} />
+
+                            <table className="table table-striped table-bordered mt-2">
                                 <thead>
                                     <tr>
                                         <th scope="col" style={{ width: '3%', textAlign: 'center' }}>#</th>

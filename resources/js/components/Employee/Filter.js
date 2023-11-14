@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const EmployeeFilter = ({ setQueryStrings }) => {
+const EmployeeFilter = ({ onFilter }) => {
     const [filterings, setFilterings] = useState({ type: '', name: '' })
 
     useEffect(() => {
@@ -11,7 +11,7 @@ const EmployeeFilter = ({ setQueryStrings }) => {
         const type = filterings.type == '' ? '' : filterings.type
         const name = filterings.name == '' ? '' : filterings.name
 
-        setQueryStrings(`&type=${type}&name=${name}`)
+        onFilter(`&type=${type}&name=${name}`)
     }
 
     const handleChange = (e) => {
@@ -28,7 +28,7 @@ const EmployeeFilter = ({ setQueryStrings }) => {
                 onChange={handleChange}
                 className="form-control"
             >
-                <option value="">-- ประเภท --</option>
+                <option value="">-- ตำแหน่ง --</option>
                 <option value="1">ราชการ</option>
                 <option value="2">รัฐวิสาหกิจ</option>
             </select>
@@ -38,7 +38,7 @@ const EmployeeFilter = ({ setQueryStrings }) => {
                 value={filterings.name}
                 onChange={handleChange}
                 className="form-control"
-                placeholder="ค้นหาด้วยชื่อสถานประกอบการ"
+                placeholder="ค้นหาด้วยชื่อ-สกุล"
             />
         </div>
     )
