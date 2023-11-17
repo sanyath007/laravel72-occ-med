@@ -127,10 +127,10 @@ const VaccinationForm = ({ id, vaccination }) => {
                                     <div className={`form-control ${(formik.errors.company_id && formik.touched.company_id) ? 'is-invalid' : ''}`}>
                                         {selectedCompany && selectedCompany.name}
                                     </div>
-                                    <button className="btn btn-primary" onClick={() => setShowCompanyForm(true)}>
+                                    <button type="button" className="btn btn-primary" onClick={() => setShowCompanyForm(true)}>
                                         <FaPlus />
                                     </button>
-                                    <button className="btn btn-secondary" onClick={() => setShowCompanyList(true)}>
+                                    <button type="button" className="btn btn-secondary" onClick={() => setShowCompanyList(true)}>
                                         <FaSearch />
                                     </button>
                                 </div>
