@@ -6,10 +6,11 @@ import { GlobalContext } from '../../context/globalContext'
 import { getCompanies } from '../../store/slices/company'
 import Pagination from '../../components/Pagination'
 import CompanyFilter from '../../components/Company/Filter'
+import Loading from '../../components/Loading'
 
 const CompanyList = () => {
     const dispatch = useDispatch();
-    const { companies, pager } = useSelector(state => state.company);
+    const { companies, pager, loading } = useSelector(state => state.company);
     const { setGlobal } = useContext(GlobalContext);
     const [endpoint, setEndpoint] = useState('');
     const [params, setParams] = useState('');
@@ -44,7 +45,7 @@ const CompanyList = () => {
                                 <h5 className="card-title py-1 my-auto">รายการสถานประกอบการ</h5>
 
                                 <div>
-                                    <Link to="/employees/new" className="btn btn-primary">
+                                    <Link to="/companies/new" className="btn btn-primary">
                                         เพิ่มสถานประกอบการ
                                     </Link>
                                 </div>
@@ -64,7 +65,12 @@ const CompanyList = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {companies && companies.map((company, row) => (
+                                    {loading && (
+                                        <tr>
+                                            <td className="text-center" colSpan={6}><Loading /></td>
+                                        </tr>
+                                    )}
+                                    {!loading && companies?.map((company, row) => (
                                         <tr key={company.id}>
                                             <th scope="row" style={{ textAlign: 'center' }}>{pager && pager?.from+row}</th>
                                             <td>{company.name}</td>
