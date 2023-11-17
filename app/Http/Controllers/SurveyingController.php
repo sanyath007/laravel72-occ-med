@@ -62,7 +62,7 @@ class SurveyingController extends Controller
             $surveying->have_report         = $request['have_report'];
             $surveying->is_adviced          = $request['is_adviced'];
             $surveying->is_returned_data    = $request['is_returned_data'];
-            $surveying->guidelines          = implode(',', $request['guidelines']);
+            $surveying->guidelines          = !empty($request['guidelines']) ? implode(',', $request['guidelines']) : '';
             $surveying->remark              = $request['remark'];
 
             /** Upload file and pictures */

@@ -54,9 +54,9 @@ const MultipleFileUpload = () => {
                     </div>
                 ))}
             </div>
-            <div className="text-end">
+            {/* <div className="text-end">
                 <button className="btn-upload">Upload</button>
-            </div>
+            </div> */}
         </div>
     )
 }
