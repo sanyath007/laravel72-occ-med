@@ -16,7 +16,7 @@ const ModalCompanies = ({ isOpen, hideModal, onSelected, ...props }) => {
         if (endpoint === '') {
             dispatch(getCompanies({ url: `/api/companies/search?page=${params}` }))
         } else {
-            dispatch(getCompanies({ path: `${endpoint}${params}` }))
+            dispatch(getCompanies({ url: `${endpoint}${params}` }))
         }
     }, [endpoint, params])
 
