@@ -1,21 +1,11 @@
 import React, { useState } from 'react'
+import { filesizes } from '../../utils';
 
-const MultipleFileUpload = () => {
-    const [selectedFiles, setSelectedFiles] = useState([]);
-
+const MultipleFileUpload = ({ files, onSelect, onDelete }) => {
     const handleFileChange = (e) => {
         const file = e.target.files[0];
 
-        setSelectedFiles(prevState => [...prevState, file]);
-    };
-
-    const filesizes = (bytes, decimals = 2) => {
-        if (bytes === 0) return '0 Bytes';
-        const k = 1024;
-        const dm = decimals < 0 ? 0 : decimals;
-        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        onSelect([...files, file]);
     };
 
     return (
@@ -33,7 +23,7 @@ const MultipleFileUpload = () => {
                 </div>
             </div>
             <div className="file-attach">
-                {selectedFiles.map((file, index) => (
+                {files.map((file, index) => (
                     <div className="file-attach-box" key={index}>
                         <div className="file-image">
                             <img src={URL.createObjectURL(file)} alt="" />
@@ -46,7 +36,7 @@ const MultipleFileUpload = () => {
                             </p>
 
                             <div className="file-actions">
-                                <button type="button" className="file-action-btn">
+                                <button type="button" className="file-action-btn" onClick={() => onDelete(index)}>
                                     Delete
                                 </button>
                             </div>

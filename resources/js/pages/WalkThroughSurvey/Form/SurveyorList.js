@@ -26,7 +26,7 @@ const SurveyorList = ({ surveyors = [], onDelete }) => {
                             <td className="text-center">{index+1}</td>
                             <td>{surveyor.employee?.prefix}{surveyor.employee?.fname} {surveyor.employee?.lname}</td>
                             <td className="text-center">
-                                {surveyor.employee?.position?.name}{surveyor.employee?.class && surveyor.employee?.class?.name}
+                                {surveyor.employee?.position?.name}{surveyor.employee?.level && surveyor.employee?.level?.name}
                             </td>
                             <td className="text-center">
                                 <div className="btn-group" role="group" aria-label="Basic mixed styles example">

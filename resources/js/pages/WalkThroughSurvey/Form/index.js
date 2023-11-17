@@ -492,19 +492,24 @@ const SurveyingForm = ({ id, surveying }) => {
                                         />
                                         {(formik.errors.pic_attachments && formik.touched.pic_attachments) && (
                                             <span className="invalid-feedback">{formik.errors.pic_attachments}</span>
-                                        )}
+                                        )} */}
 
-                                        <UploadGallery
-                                            images={formik.values.pic_attachments}
+                                        <MultipleFileUpload
+                                            files={formik.values.pic_attachments}
+                                            onSelect={(files) => {
+                                                formik.setFieldValue('pic_attachments', files);
+                                            }}
                                             onDelete={(index) => {
                                                 const updatedPics = formik.values.pic_attachments.filter((pic, i) => i !== index);
 
                                                 formik.setFieldValue('pic_attachments', updatedPics);
                                             }}
-                                            minHeight={'200px'}
-                                        /> */}
+                                        />
 
-                                        <MultipleFileUpload />
+                                        <UploadGallery
+                                            images={formik.values.pic_attachments}
+                                            minHeight={'200px'}
+                                        />
                                     </Col>
                                 </Row>
                             </Tab>
