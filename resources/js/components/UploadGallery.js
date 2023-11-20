@@ -18,7 +18,7 @@ const UploadGallery = ({ images = [], onDelete, minHeight }) => {
                 image={selectedImage}
             />
 
-            {images.map((pic, index) => (
+            {images?.map((pic, index) => (
                 <Col md={3} key={index}>
                     <div className="border rounded-2">
                         <div

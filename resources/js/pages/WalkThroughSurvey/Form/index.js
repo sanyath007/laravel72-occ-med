@@ -8,7 +8,7 @@ import { DatePicker } from '@mui/x-date-pickers'
 import { toast } from 'react-toastify'
 import moment from 'moment'
 import { store, update } from '../../../store/slices/surveying'
-import { validateFile, isExistedItem, string2Array } from '../../../utils'
+import { validateFile, isExistedItem, string2Array, imageString2UrlArray } from '../../../utils'
 import ModalCompanies from '../../../components/Modals/ModalCompanies'
 import ModalCompanyForm from '../../../components/Modals/ModalCompanyForm'
 import SurveyorForm from './SurveyorForm'
@@ -48,12 +48,14 @@ const SurveyingForm = ({ id, surveying }) => {
     const [selectedCompany, setSelectedCompany] = useState(null);
     const [selectedSurveyDate, setSelectedSurveyDate] = useState(moment());
     const [uploadedFile, setUploadedFile] = useState('');
+    const [uploadedPics, setUploadedPics] = useState([]);
 
     useEffect(() => {
         if (surveying) {
             setSelectedCompany(surveying.company);
             setSelectedSurveyDate(moment(surveying.survey_date));
             setUploadedFile(surveying.file_attachment);
+            setUploadedPics(imageString2UrlArray(surveying.pic_attachments, `${process.env.MIX_APP_URL}/uploads/wts/pic`));
         }
     }, [surveying]);
 
@@ -489,10 +491,7 @@ const SurveyingForm = ({ id, surveying }) => {
                                             }}
                                             
                                             className={`form-control ${(formik.errors.pic_attachments && formik.touched.pic_attachments) ? 'is-invalid' : ''}`}
-                                        />
-                                        {(formik.errors.pic_attachments && formik.touched.pic_attachments) && (
-                                            <span className="invalid-feedback">{formik.errors.pic_attachments}</span>
-                                        )} */}
+                                        /> */}
 
                                         <MultipleFileUpload
                                             files={formik.values.pic_attachments}
@@ -501,15 +500,21 @@ const SurveyingForm = ({ id, surveying }) => {
                                             }}
                                             onDelete={(index) => {
                                                 const updatedPics = formik.values.pic_attachments.filter((pic, i) => i !== index);
-
+                                                
                                                 formik.setFieldValue('pic_attachments', updatedPics);
                                             }}
                                         />
+                                        {(formik.errors.pic_attachments && formik.touched.pic_attachments) && (
+                                            <span className="text-danger text-sm">{formik.errors.pic_attachments}</span>
+                                        )}
 
-                                        <UploadGallery
-                                            images={formik.values.pic_attachments}
-                                            minHeight={'200px'}
-                                        />
+                                        <div className="mt-4">
+                                            <h4>รูปที่อัพโหลดแล้ว</h4>
+                                            <UploadGallery
+                                                images={uploadedPics}
+                                                minHeight={'200px'}
+                                            />
+                                        </div>
                                     </Col>
                                 </Row>
                             </Tab>
