@@ -4,7 +4,7 @@ import { GlobalContext } from '../../context/globalContext'
 import api from '../../api'
 import SurveyingBar from './SurveyingBar'
 import ScreeningPie from './ScreeningPie'
-import ToxicologyLine from './ToxicologyLine'
+import InvestigationBar from './InvestigationBar'
 
 const Dashboard = () => {
     const { setGlobal } = useContext(GlobalContext);
@@ -394,7 +394,7 @@ const Dashboard = () => {
                         </div>
                         <div className="col-md-8">
                             <div className="card info-card customers-card">
-                                <ToxicologyLine />
+                                <InvestigationBar />
                             </div>
                         </div>
                     </div>

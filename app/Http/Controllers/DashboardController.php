@@ -26,4 +26,55 @@ class DashboardController extends Controller
 
         return response()->json($data);
     }
+
+    public function getSurveyingGroupByCompanies(Request $request, $year)
+    {
+        $sdate = '';
+        $edate = '';
+
+        $data = Surveying::select(
+                                \DB::raw('concat(year(survey_date), month(survey_date)) as month'),
+                                \DB::raw('count(company_id) as num')
+                            )
+                            ->groupBy(\DB::raw('concat(year(survey_date), month(survey_date))'))
+                            ->whereBetween('survey_date', [$sdate, $edate])
+                            ->get();
+
+        return response()->json($data);
+    }
+
+    public function getInvestByDivisions(Request $request, $year)
+    {
+        $sdate = '2023-10-01';
+        $edate = '2024-09-31';
+
+        $data = [
+            'dep2' => Investigation::select(
+                                \DB::raw('concat(year(invest_date), month(invest_date)) as month'),
+                                \DB::raw('count(id) as num')
+                            )
+                            ->groupBy(\DB::raw('concat(year(invest_date), month(invest_date))'))
+                            ->whereBetween('invest_date', [$sdate, $edate])
+                            ->where('division_id', 2)
+                            ->get(),
+            'dep3' => Investigation::select(
+                                \DB::raw('concat(year(invest_date), month(invest_date)) as month'),
+                                \DB::raw('count(id) as num')
+                            )
+                            ->groupBy(\DB::raw('concat(year(invest_date), month(invest_date))'))
+                            ->whereBetween('invest_date', [$sdate, $edate])
+                            ->where('division_id', 3)
+                            ->get(),
+            'dep4' => Investigation::select(
+                                \DB::raw('concat(year(invest_date), month(invest_date)) as month'),
+                                \DB::raw('count(id) as num')
+                            )
+                            ->groupBy(\DB::raw('concat(year(invest_date), month(invest_date))'))
+                            ->whereBetween('invest_date', [$sdate, $edate])
+                            ->where('division_id', 4)
+                            ->get(),
+        ];
+
+        return response()->json($data);
+    }
 }

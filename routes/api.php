@@ -34,6 +34,8 @@ Route::post('/login', 'Auth\LoginController@login');
 Route::group(['middleware' => 'auth:sanctum'], function() {
     /** Dashboard */
     Route::get('/dashboard/{year}/stat', 'DashboardController@getStats');
+    Route::get('/dashboard/{year}/surveying-group-companies', 'DashboardController@getSurveyingGroupByCompanies');
+    Route::get('/dashboard/{year}/invest-by-divisions', 'DashboardController@getInvestByDivisions');
 
     /** Addresses */
     Route::get('/addresses', 'AddressController@getAddresses');
