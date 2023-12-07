@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { DatePicker } from '@mui/x-date-pickers'
 import { Bar } from 'react-chartjs-2'
 import {
     Chart as ChartJS,
@@ -11,6 +12,7 @@ import {
 } from 'chart.js'
 import { faker } from '@faker-js/faker'
 import api from '../../api'
+import moment from 'moment'
 
 ChartJS.register(
     CategoryScale,
@@ -69,15 +71,16 @@ const months = [
 
 const SurveyingBar = () => {
     const [bar, setBar] = useState([]);
+    const [selectedYear, setSelectedYear] = useState(moment());
 
     useEffect(() => {
         getData();
 
         return () => getData();
-    }, []);
+    }, [selectedYear]);
 
     const getData = async () => {
-        const res = await api.get(`/api/dashboard/2566/surveying-group-companies`);
+        const res = await api.get(`/api/dashboard/${selectedYear}/surveying-group-companies`);
 
         const series = months.map(m => {
             const data = res.data?.find(d => parseInt(d.month.substring(4), 10) === m.id);
@@ -90,19 +93,33 @@ const SurveyingBar = () => {
     };
 
     return (
-        <Bar
-            options={options}
-            data={{
-                labels: months.map(month => month.name),
-                datasets: [
-                    {
-                        label: 'จำนวนสถานประกอบกิจการ/ สถานที่',
-                        data: bar,
-                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                    },
-                ],
-            }}
-        />
+        <div className="card info-card customers-card">
+            <div class="card-header">
+                <div className="w-25">
+                    <DatePicker
+                        format="YYYY"
+                        views={['year']}
+                        value={selectedYear}
+                        onChange={(date) => setSelectedYear(date)}
+                    />
+                </div>
+            </div>
+            <div className="card-body">
+                <Bar
+                    options={options}
+                    data={{
+                        labels: months.map(month => month.name),
+                        datasets: [
+                            {
+                                label: 'จำนวนสถานประกอบกิจการ/ สถานที่',
+                                data: bar,
+                                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                            },
+                        ],
+                    }}
+                />
+            </div>
+        </div>
     )
 }
 

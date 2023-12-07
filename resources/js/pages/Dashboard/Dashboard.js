@@ -38,8 +38,8 @@ const Dashboard = () => {
             <div className="row">
                 {/* =================================== Left =================================== */}
                 <div className="col-lg-12">
+                    {/* =================================== Stat Cards =================================== */}
                     <div className="row">
-                        {/* =================================== Stat Cards =================================== */}
                         <div className="col-xxl-4 col-md-4">
                             <div className="card info-card sales-card">
                                 <div className="filter">
@@ -374,6 +374,7 @@ const Dashboard = () => {
                         </div>
                         {/* =================================== End of Top Selling =================================== */}
                     </div>
+                    {/* =================================== Stat Cards =================================== */}
                 </div>
                 {/* =================================== End of Left =================================== */}
 
@@ -381,20 +382,22 @@ const Dashboard = () => {
                 <div className="col-lg-12">
                     <div className="row">
                         <div className="col-md-12">
-                            <div className="card info-card customers-card">
-                                <SurveyingBar />
-                            </div>
+                            <SurveyingBar />
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-md-4">
                             <div className="card info-card customers-card">
-                                <ScreeningPie />
+                                <div className="card-body">
+                                    <ScreeningPie />
+                                </div>
                             </div>
                         </div>
                         <div className="col-md-8">
                             <div className="card info-card customers-card">
-                                <InvestigationBar />
+                                <div className="card-body">
+                                    <InvestigationBar />
+                                </div>
                             </div>
                         </div>
                     </div>
