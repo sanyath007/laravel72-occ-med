@@ -26,20 +26,23 @@ ChartJS.register(
 export const options = {
     responsive: true,
     plugins: {
-    //     legend: {
-    //         position: 'top'
-    //     },
+        legend: {
+            position: 'top'
+        },
         title: {
             display: true,
             text: 'สำรวจสภาพปัญหาที่ทำงาน (Walk through survey)',
         },
     },
+    scales: {
+        y: {
+            min: 0,
+            max: 10,
+        }
+    }
 };
 
 const months = [
-    { id: 10, name: 'ต.ค.' },
-    { id: 11, name: 'พ.ย.' },
-    { id: 12, name: 'ธ.ค.' },
     { id: 1, name: 'ม.ค.' },
     { id: 2, name: 'ก.พ.' },
     { id: 3, name: 'มี.ค.' },
@@ -48,7 +51,10 @@ const months = [
     { id: 6, name: 'มิ.ย.' },
     { id: 7, name: 'ก.ค.' },
     { id: 8, name: 'ส.ค.' },
-    { id: 9, name: 'ก.ย.' }
+    { id: 9, name: 'ก.ย.' },
+    { id: 10, name: 'ต.ค.' },
+    { id: 11, name: 'พ.ย.' },
+    { id: 12, name: 'ธ.ค.' },
 ];
 
 // const labels = ['ต.ค.','พ.ย.', 'ธ.ค.', 'ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.', 'ก.ค.', 'ส.ค.', 'ก.ย.'];
@@ -80,7 +86,7 @@ const SurveyingBar = () => {
     }, [selectedYear]);
 
     const getData = async () => {
-        const res = await api.get(`/api/dashboard/${selectedYear}/surveying-group-companies`);
+        const res = await api.get(`/api/dashboard/${selectedYear.year()}/surveying-group-companies`);
 
         const series = months.map(m => {
             const data = res.data?.find(d => parseInt(d.month.substring(4), 10) === m.id);
@@ -94,14 +100,26 @@ const SurveyingBar = () => {
 
     return (
         <div className="card info-card customers-card">
-            <div class="card-header">
-                <div className="w-25">
-                    <DatePicker
-                        format="YYYY"
-                        views={['year']}
-                        value={selectedYear}
-                        onChange={(date) => setSelectedYear(date)}
-                    />
+            <div className="card-header">
+                <div className="d-flex align-items-center">
+                    <div className="w-50 d-flex me-1 justify-content-end align-items-center">
+                        <span className="me-1">จากเดือน:</span>
+                        <DatePicker
+                            format="YYYY"
+                            views={['year']}
+                            value={selectedYear}
+                            onChange={(date) => setSelectedYear(date)}
+                        />
+                    </div> - 
+                    <div className="w-50 d-flex ms-1 justify-content-start align-items-center">
+                        <span className="me-1">ถึงเดือน:</span>
+                        <DatePicker
+                            format="YYYY"
+                            views={['year']}
+                            value={selectedYear}
+                            onChange={(date) => setSelectedYear(date)}
+                        />
+                    </div>
                 </div>
             </div>
             <div className="card-body">
