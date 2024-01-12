@@ -10,10 +10,11 @@ const ModalImageViewer = ({ isOpen, hideModal, image }) => {
         >
             <Modal.Header closeButton>รูปภาพ</Modal.Header>
             <Modal.Body>
-                <div className="d-flex align-items-center justify-content-center">
+                <div className="d-flex align-items-center justify-content-center" style={{ height: '550px', overflow: 'scroll' }}>
                     <img
                         src={typeof image === 'object' ? URL.createObjectURL(image) : image}
                         alt="image-viewer"
+                        style={{ width: '100%' }}
                     />
                 </div>
             </Modal.Body>
