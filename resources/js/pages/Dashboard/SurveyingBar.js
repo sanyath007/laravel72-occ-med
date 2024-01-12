@@ -13,6 +13,7 @@ import {
 import { faker } from '@faker-js/faker'
 import api from '../../api'
 import moment from 'moment'
+import { generateBudgetYear } from '../../utils'
 
 ChartJS.register(
     CategoryScale,
@@ -77,7 +78,7 @@ const months = [
 
 const SurveyingBar = () => {
     const [bar, setBar] = useState([]);
-    const [selectedFromMonth, setSelectedFromMonth] = useState(moment());
+    const [selectedFromMonth, setSelectedFromMonth] = useState(moment(`${generateBudgetYear()-1}-10-01`));
     const [selectedToMonth, setSelectedToMonth] = useState(moment());
 
     useEffect(() => {
