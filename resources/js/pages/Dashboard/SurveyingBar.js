@@ -77,16 +77,20 @@ const months = [
 
 const SurveyingBar = () => {
     const [bar, setBar] = useState([]);
-    const [selectedYear, setSelectedYear] = useState(moment());
+    const [selectedFromMonth, setSelectedFromMonth] = useState(moment());
+    const [selectedToMonth, setSelectedToMonth] = useState(moment());
 
     useEffect(() => {
         getData();
 
         return () => getData();
-    }, [selectedYear]);
+    }, [selectedFromMonth, selectedToMonth]);
 
-    const getData = async () => {
-        const res = await api.get(`/api/dashboard/${selectedYear.year()}/surveying-group-companies`);
+    const getData = async (year='2566') => {
+        const from = selectedFromMonth.format('YYYY-MM');
+        const to = selectedToMonth.format('YYYY-MM');
+
+        const res = await api.get(`/api/dashboard/${year}/surveying-group-companies?from=${from}&to=${to}`);
 
         const series = months.map(m => {
             const data = res.data?.find(d => parseInt(d.month.substring(4), 10) === m.id);
@@ -105,19 +109,19 @@ const SurveyingBar = () => {
                     <div className="w-50 d-flex me-1 justify-content-end align-items-center">
                         <span className="me-1">จากเดือน:</span>
                         <DatePicker
-                            format="YYYY"
-                            views={['year']}
-                            value={selectedYear}
-                            onChange={(date) => setSelectedYear(date)}
+                            format="MM/YYYY"
+                            views={['year','month']}
+                            value={selectedFromMonth}
+                            onChange={(date) => setSelectedFromMonth(date)}
                         />
                     </div> - 
                     <div className="w-50 d-flex ms-1 justify-content-start align-items-center">
                         <span className="me-1">ถึงเดือน:</span>
                         <DatePicker
-                            format="YYYY"
-                            views={['year']}
-                            value={selectedYear}
-                            onChange={(date) => setSelectedYear(date)}
+                            format="MM/YYYY"
+                            views={['year','month']}
+                            value={selectedToMonth}
+                            onChange={(date) => setSelectedToMonth(date)}
                         />
                     </div>
                 </div>
