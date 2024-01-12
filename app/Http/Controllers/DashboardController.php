@@ -29,8 +29,8 @@ class DashboardController extends Controller
 
     public function getSurveyingGroupByCompanies(Request $request, $year)
     {
-        $sdate = $year.'-01-01';
-        $edate = $year.'-12-31';
+        $sdate = $request->get('from').'-01';
+        $edate = date("Y-m-t", strtotime($request->get('to').'-01'));
 
         $data = Surveying::select(
                                 \DB::raw('concat(year(survey_date), month(survey_date)) as month'),
