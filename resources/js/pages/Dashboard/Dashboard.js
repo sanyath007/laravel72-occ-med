@@ -7,11 +7,12 @@ import api from '../../api'
 import SurveyingBar from './SurveyingBar'
 import ScreeningPie from './ScreeningPie'
 import InvestigationBar from './InvestigationBar'
+import { generateBudgetYear } from '../../utils'
 
 const Dashboard = () => {
     const { setGlobal } = useContext(GlobalContext);
     const [stats, setStats] = useState(null);
-    const [selectedFromMonth, setSelectedFromMonth] = useState(moment());
+    const [selectedFromMonth, setSelectedFromMonth] = useState(moment(`${generateBudgetYear()-1}-10-01`));
     const [selectedToMonth, setSelectedToMonth] = useState(moment());
 
     useEffect(() => {

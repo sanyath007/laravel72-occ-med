@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const generateQueryString = (inputs) => {
     let queryStr = '';
     for (const [key, val] of Object.entries(inputs)) {
@@ -52,3 +54,11 @@ export const filesizes = (bytes, decimals = 2) => {
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 };
+
+export const generateBudgetYear = () => {
+    if (moment().month() > 9) {
+        return moment().year() + 1;
+    }
+
+    return moment().year();
+}
