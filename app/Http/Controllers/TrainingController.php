@@ -17,6 +17,7 @@ class TrainingController extends Controller
                         // ->when(!empty($date), function($q) use ($date) {
                         //     $q->where('surver_date', $date);
                         // })
+                        ->orderBy('train_date', 'desc')
                         ->paginate(10);
 
         return response()->json($trainings);
