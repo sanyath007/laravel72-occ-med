@@ -118,7 +118,7 @@ class TrainingController extends Controller
             }
 
             if ($training->save()) {
-                if (count($request['persons']) > 0) {
+                if (array_key_exists('persons', $request) && count($request['persons']) > 0) {
                     foreach($request['persons'] as $person) {
                         $newPerson = new TrainingPerson;
                         $newPerson->train_id    = $training->id;
