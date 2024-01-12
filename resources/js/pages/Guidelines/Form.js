@@ -84,6 +84,7 @@ const GuidelineForm = ({ id, guideline }) => {
                                         <option value="2">งานป้องกันและควบคุมโรค</option>
                                         <option value="3">งานส่งเสริมและฟื้นฟู</option>
                                         <option value="4">งานพิษวิทยาและสิ่งแวดล้อม</option>
+                                        <option value="7">อาจารย์แพทย์/การเรียนการสอน</option>
                                     </select>
                                     {(formik.errors.division_id && formik.touched.division_id) && (
                                         <span className="text-danger text-sm">{formik.errors.division_id}</span>
