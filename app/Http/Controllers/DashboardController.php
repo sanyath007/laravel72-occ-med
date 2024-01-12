@@ -13,8 +13,8 @@ class DashboardController extends Controller
 {
     public function getStats(Request $request, $year)
     {
-        $sdate = '2023-10-01';
-        $edate = '2024-09-31';
+        $sdate = $request->get('from').'-01';
+        $edate = date("Y-m-t", strtotime($request->get('to').'-01'));
 
         $data = [
             'surveying'     => Surveying::whereBetween('survey_date', [$sdate, $edate])->count(),

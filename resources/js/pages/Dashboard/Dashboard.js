@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { GlobalContext } from '../../context/globalContext'
+import { DatePicker } from '@mui/x-date-pickers'
+import moment from 'moment'
 import api from '../../api'
 import SurveyingBar from './SurveyingBar'
 import ScreeningPie from './ScreeningPie'
@@ -9,6 +11,8 @@ import InvestigationBar from './InvestigationBar'
 const Dashboard = () => {
     const { setGlobal } = useContext(GlobalContext);
     const [stats, setStats] = useState(null);
+    const [selectedFromMonth, setSelectedFromMonth] = useState(moment());
+    const [selectedToMonth, setSelectedToMonth] = useState(moment());
 
     useEffect(() => {
         setGlobal((prev) => ({
@@ -25,10 +29,13 @@ const Dashboard = () => {
         getStats();
 
         return () => getStats();
-    }, []);
+    }, [selectedFromMonth, selectedToMonth]);
 
     const getStats = async (year='2566') => {
-        const res = await api.get(`/api/dashboard/${year}/stat`);
+        const from = selectedFromMonth.format('YYYY-MM');
+        const to = selectedToMonth.format('YYYY-MM');
+
+        const res = await api.get(`/api/dashboard/${year}/stat?from=${from}&to=${to}`);
         
         setStats(res.data);
     }
@@ -39,6 +46,27 @@ const Dashboard = () => {
                 {/* =================================== Left =================================== */}
                 <div className="col-lg-12">
                     {/* =================================== Stat Cards =================================== */}
+                    <div className="d-flex align-items-center mb-2">
+                        <div className="w-50 d-flex me-1 justify-content-end align-items-center">
+                            <span className="me-1">จากเดือน:</span>
+                            <DatePicker
+                                format="MM/YYYY"
+                                views={['year','month']}
+                                value={selectedFromMonth}
+                                onChange={(date) => setSelectedFromMonth(date)}
+                            />
+                        </div> - 
+                        <div className="w-50 d-flex ms-1 justify-content-start align-items-center">
+                            <span className="me-1">ถึงเดือน:</span>
+                            <DatePicker
+                                format="MM/YYYY"
+                                views={['year','month']}
+                                value={selectedToMonth}
+                                onChange={(date) => setSelectedToMonth(date)}
+                            />
+                        </div>
+                    </div>
+
                     <div className="row">
                         <div className="col-xxl-4 col-md-4">
                             <div className="card info-card sales-card">
