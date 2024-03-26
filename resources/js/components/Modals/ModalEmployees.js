@@ -33,7 +33,7 @@ const ModalEmployees = ({ isOpen, hideModal, onSelect, ...props }) => {
             onHide={hideModal}
             size="xl"
         >
-            <Modal.Header closeButton>รายการผู้ป่วยทั้งหมด</Modal.Header>
+            <Modal.Header closeButton>รายการเจ้าหน้าที่ทั้งหมด</Modal.Header>
             <Modal.Body>
                 <div className="alert border-dark alert-dismissible fade show" role="alert">
                     {/* <PatientFilter setQueryStrings={setQueryStrings} /> */}

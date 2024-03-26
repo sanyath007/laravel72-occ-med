@@ -25,7 +25,7 @@ const PersonForm = ({ onAdd }) => {
             <ModalEmployees
                 isOpen={showModal}
                 hideModal={() => setShowModal(false)}
-                onSelected={(employee) => {
+                onSelect={(employee) => {
                     setPerson(employee);
 
                     setShowModal(false);
