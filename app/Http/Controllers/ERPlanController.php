@@ -19,6 +19,7 @@ class ERPlanController extends Controller
                         // ->when(!empty($date), function($q) use ($date) {
                         //     $q->where('surver_date', $date);
                         // })
+                        ->orderBy('plan_date', 'DESC')
                         ->paginate(10);
 
         return response()->json($plans);
@@ -202,7 +203,7 @@ class ERPlanController extends Controller
 
             if ($plan->save()) {
                 /** ผู้จัดกิจกรรม */
-                if (count($request['persons']) > 0) {
+                if (array_key_exists('persons', $request) && count($request['persons']) > 0) {
                     foreach($request['persons'] as $person) {
                         if (array_key_exists('id', $person)) {
                             /** รายการเดิม */
@@ -228,7 +229,7 @@ class ERPlanController extends Controller
                 }
 
                 /** ผู้เชี่ยวชาญ */
-                if (count($request['experts']) > 0) {
+                if (array_key_exists('experts', $request) && count($request['experts']) > 0) {
                     foreach($request['experts'] as $expert) {
                         if (array_key_exists('id', $expert)) {
                             /** รายการเดิม */
@@ -271,13 +272,13 @@ class ERPlanController extends Controller
 
             /** Remove uploaded file */
             $destinationPath = 'uploads/erp/';
-            $existedFile = $destinationPath . $plan->file_attachment;
+            $existedFile = $destinationPath .'file/'. $plan->file_attachment;
             if (\File::exists($existedFile)) {
                 \File::delete($existedFile);
             }
 
-            if ($surveying->pic_attachments != '') {
-                $pictures = explode(',', $surveying->pic_attachments);
+            if ($plan->pic_attachments != '') {
+                $pictures = explode(',', $plan->pic_attachments);
                 foreach($pictures as $pic) {
                     $existedPic = $destinationPath .'pic/'. $pic;
 
