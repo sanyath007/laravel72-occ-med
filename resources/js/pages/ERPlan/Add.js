@@ -1,9 +1,16 @@
 import React, { useContext, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { GlobalContext } from '../../context/globalContext'
+import { resetSuccess } from '../../store/slices/erplan'
 import ERPlanForm from './Form'
 
 const AddERPlan = () => {
-    const { setGlobal } = useContext(GlobalContext)
+    const navigate = useNavigate();
+    const { setGlobal } = useContext(GlobalContext);
+    const dispatch = useDispatch();
+    const { success } = useSelector(state => state.erplan);
 
     /** Initial global states */
     useEffect(() => {
@@ -18,6 +25,16 @@ const AddERPlan = () => {
             ]
         }))
     }, []);
+
+    useEffect(() => {
+        if (success) {
+            toast.success('บันทึกการข้อมูลเรียบร้อยแล้ว!!');
+
+            dispatch(resetSuccess());
+
+            navigate('/er-plans');
+        }
+    }, [success]);
 
     return (
         <section className="section">
