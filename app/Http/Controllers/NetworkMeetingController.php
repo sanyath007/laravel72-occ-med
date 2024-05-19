@@ -10,7 +10,7 @@ class NetworkMeetingController extends Controller
 {
     public function search(Request $request)
     {
-        $meetings = NetworkMeeting::with('division')->paginate(10);
+        $meetings = NetworkMeeting::with('division')->orderBy('meeting_date', 'DESC')->paginate(10);
 
         return response()->json($meetings);
     }
