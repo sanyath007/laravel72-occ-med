@@ -54,7 +54,7 @@ const NetworkMeetingList = () => {
         if (endpoint === '') {
             dispatch(getNetworkMeetings({ url: '/api/network-meetings/search' }));
         } else {
-            dispatch(getScreenings({ url: `${endpoint}${params}` }));
+            dispatch(getNetworkMeetings({ url: `${endpoint}${params}` }));
         }
     }, [endpoint, params]);
 
