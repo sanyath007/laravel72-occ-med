@@ -18,6 +18,7 @@ class SurveyingController extends Controller
                         // ->when(!empty($date), function($q) use ($date) {
                         //     $q->where('surver_date', $date);
                         // })
+                        ->orderBy('survey_date', 'DESC')
                         ->paginate(10);
 
         return response()->json($surveyings);

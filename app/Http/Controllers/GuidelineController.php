@@ -9,7 +9,7 @@ class GuidelineController extends Controller
 {
     public function search(Request $request)
     {
-        $guidelines = Guideline::with('division')->paginate(10);
+        $guidelines = Guideline::with('division')->orderBy('created_at', 'DESC')->paginate(10);
 
         return response()->json($guidelines);
     }

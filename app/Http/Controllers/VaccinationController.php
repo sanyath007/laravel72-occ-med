@@ -11,7 +11,7 @@ class VaccinationController extends Controller
 {
     public function search(Request $request)
     {
-        $vaccinations = Vaccination::with('vaccine','company')->paginate(10);
+        $vaccinations = Vaccination::with('vaccine','company')->orderBy('vaccine_date', 'DESC')->paginate(10);
 
         return response()->json($vaccinations);
     }
