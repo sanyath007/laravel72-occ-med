@@ -5,8 +5,8 @@ import { useAuth } from '../hooks/useAuth'
 import AuthContext from '../context/authContext'
 
 const initialData = {
-    email: 'sanyath',
-    password: '4621008811',
+    email: '',
+    password: '',
     device_name: 'mobile',
     remember: true
 }
