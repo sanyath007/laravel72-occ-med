@@ -101,7 +101,7 @@ const Monthly = ({ division, routePath }) => {
                                     </th>
                                 )
                             })}
-                            <th style={{ width: '5%', textAlign: 'center' }}>2566</th>
+                            <th style={{ width: '5%', textAlign: 'center' }}>{filter}</th>
                         </tr>
                     </thead>
                     <tbody>
