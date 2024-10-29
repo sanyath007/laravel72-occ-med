@@ -42,7 +42,7 @@ const SurveyingList = () => {
         if (endpoint === '') {
             dispatch(getSurveyings({ url: '/api/surveyings/search' }));
         } else {
-            dispatch(getVisitations({ url: `${endpoint}${params}` }));
+            dispatch(getSurveyings({ url: `${endpoint}${params}` }));
         }
     }, [endpoint, params]);
 
