@@ -12,7 +12,7 @@ const AddSupervision = () => {
             title: 'บันทึกการนิเทศ/ติดตาม',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'supervisions', name: 'รายการนิเทศ/ติดตาม', path: '/supervisions' },
+                { id: 'supervisions', name: 'รายการนิเทศ/ติดตาม', path: '/services/supervisions' },
                 { id: 'new', name: 'บันทึกการนิเทศ/ติดตาม', path: null, active: true }
             ]
         }))

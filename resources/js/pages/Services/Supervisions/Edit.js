@@ -21,7 +21,7 @@ const AddSupervision = () => {
             title: 'แก้ไขการนิเทศ/ติดตาม',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'supervisions', name: 'รายการนิเทศ/ติดตาม', path: '/supervisions' },
+                { id: 'supervisions', name: 'รายการนิเทศ/ติดตาม', path: '/services/supervisions' },
                 { id: 'edit', name: 'แก้ไขการนิเทศ/ติดตาม', path: null, active: true }
             ]
         }))
@@ -39,7 +39,7 @@ const AddSupervision = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/supervisions');
+            navigate('/services/supervisions');
         }
     }, [success]);
 

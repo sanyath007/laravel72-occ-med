@@ -18,7 +18,7 @@ const SupervisionDetail = () => {
             title: 'รายละเอียดการนิเทศ/ติดตาม',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'supervisions', name: 'รายการนิเทศ/ติดตาม', path: '/supervisions' },
+                { id: 'supervisions', name: 'รายการนิเทศ/ติดตาม', path: '/services/supervisions' },
                 { id: 'detail', name: 'รายละเอียดการนิเทศ/ติดตาม', path: null, active: true }
             ]
         }))

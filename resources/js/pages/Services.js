@@ -75,7 +75,7 @@ const Services = () => {
                                 </Row>
                                 {/* <Row className="mb-3">
                                     <Col className="text-start">
-                                        <Link to="/supervisions" className="btn btn-primary w-100">นิเทศ-ติดตาม</Link>
+                                        <Link to="/services/supervisions" className="btn btn-primary w-100">นิเทศ-ติดตาม</Link>
                                     </Col>
                                     <Col className="text-start"></Col>
                                     <Col className="text-start"></Col>

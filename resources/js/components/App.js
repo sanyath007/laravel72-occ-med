@@ -230,11 +230,6 @@ export default function App() {
                         <Route path="/vaccinations/new" element={<AddVaccination />} />
                         <Route path="/vaccinations/:id/edit" element={<EditVaccination />} />
                         <Route path="/vaccinations/:id/detail" element={<VaccinationDetail />} />
-                        {/* Supervisions */}
-                        <Route path="/supervisions" element={<SupervisionList />} />
-                        <Route path="/supervisions/new" element={<AddSupervision />} />
-                        <Route path="/supervisions/:id/edit" element={<EditSupervision />} />
-                        <Route path="/supervisions/:id/detail" element={<SupervisionDetail />} />
 
                         <Route path="/services">
                             {/* Environments */}
@@ -262,13 +257,18 @@ export default function App() {
                             {/* Occupations */}
                             <Route path="occupations" element={<OccupationList />} />
                             {/* Sanitations */}
-                            
+
 
                             {/* Screenings */}
-                            <Route path="/screenings" element={<ScreeningList />} />
-                            <Route path="/screenings/new" element={<AddScreening />} />
-                            <Route path="/screenings/:id/edit" element={<EditScreening />} />
-                            <Route path="/screenings/:id/detail" element={<ScreeningDetail />} />
+                            <Route path="screenings" element={<ScreeningList />} />
+                            <Route path="screenings/new" element={<AddScreening />} />
+                            <Route path="screenings/:id/edit" element={<EditScreening />} />
+                            <Route path="screenings/:id/detail" element={<ScreeningDetail />} />
+                            {/* Supervisions */}
+                            <Route path="supervisions" element={<SupervisionList />} />
+                            <Route path="supervisions/new" element={<AddSupervision />} />
+                            <Route path="supervisions/:id/edit" element={<EditSupervision />} />
+                            <Route path="supervisions/:id/detail" element={<SupervisionDetail />} />
                         </Route>
                     </Route>
                     {/* ============================= Public routes ============================= */}

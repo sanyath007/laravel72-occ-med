@@ -66,7 +66,7 @@ const SupervisionList = () => {
                                 <h5 className="card-title p-0">รายการนิเทศ/ติดตาม</h5>
 
                                 <div>
-                                    <Link to="/supervisions/new" className="btn btn-primary">เพิ่มรายการ</Link>
+                                    <Link to="/services/supervisions/new" className="btn btn-primary">เพิ่มรายการ</Link>
                                 </div>
                             </div>
 
@@ -90,10 +90,10 @@ const SupervisionList = () => {
                                                 <td></td>
                                                 <td>
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                        <Link to={`/supervisions/${supervision.id}/detail`} className="btn btn-primary btn-sm">
+                                                        <Link to={`/services/supervisions/${supervision.id}/detail`} className="btn btn-primary btn-sm">
                                                             <i className="bi bi-search"></i>
                                                         </Link>
-                                                        <Link to={`/supervisions/${supervision.id}/edit`} className="btn btn-warning btn-sm">
+                                                        <Link to={`/services/supervisions/${supervision.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
                                                         <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(supervision.id)}>
