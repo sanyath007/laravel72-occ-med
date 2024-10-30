@@ -37,7 +37,7 @@ const Services = () => {
                                         <Link to="/services/investigations" className="btn btn-primary w-100">สอบสวนโรคหรืออุบัติเหตุจากงาน</Link>
                                     </Col>
                                     <Col className="text-start">
-                                        <Link to="/screenings" className="btn btn-primary w-100">ตรวจคัดกรองสุขภาพพนักงานเชิงรุก</Link>
+                                        <Link to="/services/screenings" className="btn btn-primary w-100">ตรวจคัดกรองสุขภาพพนักงานเชิงรุก</Link>
                                     </Col>
                                 </Row>
                                 <Row className="mb-5">

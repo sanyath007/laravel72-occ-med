@@ -20,7 +20,7 @@ const AddScreening = () => {
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'list', name: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: '/screenings' },
+                { id: 'list', name: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: '/services/screenings' },
                 { id: 'new', name: 'บันทึกการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: null, active: true }
             ]
         }))
@@ -32,7 +32,7 @@ const AddScreening = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/screenings');
+            navigate('/services/screenings');
         }
     }, [success]);
 

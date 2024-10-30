@@ -22,7 +22,7 @@ const EditScreening = () => {
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'list', name: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: '/screenings' },
+                { id: 'list', name: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: '/services/screenings' },
                 { id: 'edit', name: 'แก้ไขการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: null, active: true }
             ]
         }))
@@ -40,7 +40,7 @@ const EditScreening = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/screenings');
+            navigate('/services/screenings');
         }
     }, [success]);
 

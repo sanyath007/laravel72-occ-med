@@ -215,11 +215,6 @@ export default function App() {
                         <Route path="/surveyings/new" element={<AddSurveying />} />
                         <Route path="/surveyings/:id/edit" element={<EditSurveying />} />
                         <Route path="/surveyings/:id/detail" element={<SurveyDetail />} />
-                        {/* Screenings */}
-                        <Route path="/screenings" element={<ScreeningList />} />
-                        <Route path="/screenings/new" element={<AddScreening />} />
-                        <Route path="/screenings/:id/edit" element={<EditScreening />} />
-                        <Route path="/screenings/:id/detail" element={<ScreeningDetail />} />
                         {/* VisitHomes */}
                         <Route path="/visitations" element={<VisitationList />} />
                         <Route path="/visitations/new" element={<AddVisitation />} />
@@ -266,6 +261,14 @@ export default function App() {
                             <Route path="network-meetings/:id/detail" element={<NetworkMeetingDetail />} />
                             {/* Occupations */}
                             <Route path="occupations" element={<OccupationList />} />
+                            {/* Sanitations */}
+                            
+
+                            {/* Screenings */}
+                            <Route path="/screenings" element={<ScreeningList />} />
+                            <Route path="/screenings/new" element={<AddScreening />} />
+                            <Route path="/screenings/:id/edit" element={<EditScreening />} />
+                            <Route path="/screenings/:id/detail" element={<ScreeningDetail />} />
                         </Route>
                     </Route>
                     {/* ============================= Public routes ============================= */}

@@ -72,7 +72,7 @@ const ScreeningList = () => {
                                 <h5 className="card-title p-0">รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก</h5>
 
                                 <div>
-                                    <Link to="/screenings/new" className="btn btn-primary">เพิ่มรายการ</Link>
+                                    <Link to="/services/screenings/new" className="btn btn-primary">เพิ่มรายการ</Link>
                                 </div>
                             </div>
 
@@ -123,7 +123,7 @@ const ScreeningList = () => {
                                                         {/* <Link to={`/screenings/${screening.id}/detail`} className="btn btn-primary btn-sm">
                                                             <i className="bi bi-search"></i>
                                                         </Link> */}
-                                                        <Link to={`/screenings/${screening.id}/edit`} className="btn btn-warning btn-sm">
+                                                        <Link to={`/services/screenings/${screening.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
                                                         <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(screening.id)}>

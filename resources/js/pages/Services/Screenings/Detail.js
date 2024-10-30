@@ -19,7 +19,7 @@ const ScreeningDetail = () => {
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'list', name: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: '/screenings' },
+                { id: 'list', name: 'รายการตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: '/services/screenings' },
                 { id: 'detail', name: 'รายละเอียดตรวจคัดกรองสุขภาพพนักงานเชิงรุก', path: null, active: true }
             ]
         }))
