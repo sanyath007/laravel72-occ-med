@@ -20,7 +20,7 @@ const AddInvestigation = () => {
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'investigations', name: 'รายการสอบสวนโรค/อุบัติเหตุจากงานและสิ่งแวดล้อม', path: '/investigations' },
+                { id: 'investigations', name: 'รายการสอบสวนโรค/อุบัติเหตุจากงานและสิ่งแวดล้อม', path: '/services/investigations' },
                 { id: 'new', name: 'บันทึกการสอบสวนโรค/อุบัติเหตุจากงานและสิ่งแวดล้อม', path: null, active: true }
             ]
         }))
@@ -32,7 +32,7 @@ const AddInvestigation = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/investigations');
+            navigate('/services/investigations');
         }
     }, [success]);
 

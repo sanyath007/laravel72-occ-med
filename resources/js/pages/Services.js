@@ -34,7 +34,7 @@ const Services = () => {
                                         <Link to="/surveyings" className="btn btn-primary w-100">Walk-through Survey</Link>
                                     </Col>
                                     <Col className="text-start">
-                                        <Link to="/investigations" className="btn btn-primary w-100">สอบสวนโรคหรืออุบัติเหตุจากงาน</Link>
+                                        <Link to="/services/investigations" className="btn btn-primary w-100">สอบสวนโรคหรืออุบัติเหตุจากงาน</Link>
                                     </Col>
                                     <Col className="text-start">
                                         <Link to="/screenings" className="btn btn-primary w-100">ตรวจคัดกรองสุขภาพพนักงานเชิงรุก</Link>

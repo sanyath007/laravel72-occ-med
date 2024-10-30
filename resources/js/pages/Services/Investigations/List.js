@@ -70,7 +70,7 @@ const InvestigationList = () => {
                                 <h5 className="card-title p-0">รายการสอบสวนโรค/อุบัติเหตุจากงานและสิ่งแวดล้อม</h5>
 
                                 <div>
-                                    <Link to="/investigations/new" className="btn btn-primary">เพิ่มรายการ</Link>
+                                    <Link to="/services/investigations/new" className="btn btn-primary">เพิ่มรายการ</Link>
                                 </div>
                             </div>
 
@@ -113,7 +113,7 @@ const InvestigationList = () => {
                                                         {/* <Link to={`/investigations/${investigation.id}/detail`} className="btn btn-primary btn-sm">
                                                             <i className="bi bi-search"></i>
                                                         </Link> */}
-                                                        <Link to={`/investigations/${investigation.id}/edit`} className="btn btn-warning btn-sm">
+                                                        <Link to={`/services/investigations/${investigation.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
                                                         <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(investigation.id)}>

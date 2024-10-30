@@ -215,11 +215,6 @@ export default function App() {
                         <Route path="/surveyings/new" element={<AddSurveying />} />
                         <Route path="/surveyings/:id/edit" element={<EditSurveying />} />
                         <Route path="/surveyings/:id/detail" element={<SurveyDetail />} />
-                        {/* Investigations */}
-                        <Route path="/investigations" element={<InvestigationList />} />
-                        <Route path="/investigations/new" element={<AddInvestigation />} />
-                        <Route path="/investigations/:id/edit" element={<EditInvestigation />} />
-                        <Route path="/investigations/:id/detail" element={<InvestigationDetail />} />
                         {/* Screenings */}
                         <Route path="/screenings" element={<ScreeningList />} />
                         <Route path="/screenings/new" element={<AddScreening />} />
@@ -264,6 +259,11 @@ export default function App() {
                             <Route path="guidelines/new" element={<AddGuideline />} />
                             <Route path="guidelines/:id/edit" element={<EditGuideline />} />
                             <Route path="guidelines/:id/detail" element={<GuidelineDetail />} />
+                            {/* Investigations */}
+                            <Route path="investigations" element={<InvestigationList />} />
+                            <Route path="investigations/new" element={<AddInvestigation />} />
+                            <Route path="investigations/:id/edit" element={<EditInvestigation />} />
+                            <Route path="investigations/:id/detail" element={<InvestigationDetail />} />
                             {/* Occupations */}
                             <Route path="occupations" element={<OccupationList />} />
                         </Route>

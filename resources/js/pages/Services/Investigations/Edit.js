@@ -22,7 +22,7 @@ const EditInvestigation = () => {
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'investigations', name: 'รายการสอบสวนโรค/อุบัติเหตุจากงานและสิ่งแวดล้อม', path: '/investigations' },
+                { id: 'investigations', name: 'รายการสอบสวนโรค/อุบัติเหตุจากงานและสิ่งแวดล้อม', path: '/services/investigations' },
                 { id: 'edit', name: 'แก้ไขสอบสวนโรค/อุบัติเหตุจากงานและสิ่งแวดล้อม', path: null, active: true }
             ]
         }))
@@ -40,7 +40,7 @@ const EditInvestigation = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/investigations');
+            navigate('/services/investigations');
         }
     }, [success]);
 

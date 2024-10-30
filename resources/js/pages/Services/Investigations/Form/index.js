@@ -5,7 +5,7 @@ import * as Yup from 'yup'
 import { Col, Row } from 'react-bootstrap'
 import { FaSave, FaRegFilePdf } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
-import { store, update } from '../../../store/slices/investigation'
+import { store, update } from '../../../../store/slices/investigation'
 import moment from 'moment'
 
 const investigationSchema = Yup.object().shape({
