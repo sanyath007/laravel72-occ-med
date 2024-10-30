@@ -42,7 +42,7 @@ const InvestigationList = () => {
         if (endpoint === '') {
             dispatch(getInvestigations({ url: `/api/investigations/search` }));
         } else {
-            dispatch(getScreenings({ url: `${endpoint}${params}` }));
+            dispatch(getInvestigations({ url: `${endpoint}${params}` }));
         }
     }, [endpoint, params]);
 
