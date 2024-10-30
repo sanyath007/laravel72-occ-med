@@ -62,6 +62,17 @@ const Services = () => {
                                         <Link to="/er-plans" className="btn btn-primary w-100">จัดทำแผนตอบโต้เหตุฉุกเฉิน</Link>
                                     </Col>
                                 </Row>
+                                <Row className="mb-5">
+                                    <Col className="text-start">
+                                        <Link to="/services/environments" className="btn btn-primary w-100">ตรวจวัดสิ่งแวดล้อมในการทำงาน</Link>
+                                    </Col>
+                                    <Col className="text-start">
+                                        <Link to="/services/occupations" className="btn btn-primary w-100">อาชีวอนามัยใน รพ.</Link>
+                                    </Col>
+                                    <Col className="text-start">
+                                        <Link to="/services/sanitations" className="btn btn-primary w-100">สุขาภิบาลใน รพ.</Link>
+                                    </Col>
+                                </Row>
                                 {/* <Row className="mb-3">
                                     <Col className="text-start">
                                         <Link to="/supervisions" className="btn btn-primary w-100">นิเทศ-ติดตาม</Link>

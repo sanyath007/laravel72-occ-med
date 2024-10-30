@@ -120,6 +120,10 @@ import EditERPlan from "../pages/Services/ERPlan/Edit";
 import ERPlanDetail from "../pages/Services/ERPlan/Detail";
 import ERPlanList from "../pages/Services/ERPlan/List";
 
+import EnvironmentList from '../pages/Services/Environments/List'
+
+import OccupationList from '../pages/Services/Occupations/List'
+
 import { useAuth } from "../hooks/useAuth"
 import AuthContext from "../context/authContext";
 import { GlobalProvider } from '../context/globalContext'
@@ -158,6 +162,14 @@ export default function App() {
                         <Route path="/employees/new" element={<EmployeeNew />} />
                         <Route path="/employees/:id/edit" element={<EditEmployee />} />
                         {/* <Route path="/employees/:id/detail" element={<EmployeeDetail />} /> */}
+                        {/* Companies routes */}
+                        <Route path="/companies" element={<CompanyList />} />
+                        <Route path="/companies/new" element={<CompanyNew />} />
+                        <Route path="/companies/:id/edit" element={<CompanyEdit />} />
+                        {/* Report Bullets */}
+                        <Route path="/report-bullets" element={<ReportBulletList />} />
+                        <Route path="/report-bullets/new" element={<AddReportBullet />} />
+                        <Route path="/report-bullets/:id/edit" element={<EditReportBullet />} />
                         {/* Clinics routes */}
                         <Route path="/clinics" element={<Clinics />} />
                         <Route path="/clinics/summary" element={<ClinicMonthly />} />
@@ -198,14 +210,6 @@ export default function App() {
                         <Route path="/checkups/summary/add" element={<AddCheckupMonthly />} />
                         <Route path="/checkups/summary/:id/edit" element={<EditCheckupMonthly />} />
                         <Route path="/checkups/summary-year" element={<CheckupYearly />} />
-                        {/* Companies routes */}
-                        <Route path="/companies" element={<CompanyList />} />
-                        <Route path="/companies/new" element={<CompanyNew />} />
-                        <Route path="/companies/:id/edit" element={<CompanyEdit />} />
-                        {/* Report Bullets */}
-                        <Route path="/report-bullets" element={<ReportBulletList />} />
-                        <Route path="/report-bullets/new" element={<AddReportBullet />} />
-                        <Route path="/report-bullets/:id/edit" element={<EditReportBullet />} />
                         {/* WTS */}
                         <Route path="/surveyings" element={<SurveyingList />} />
                         <Route path="/surveyings/new" element={<AddSurveying />} />
@@ -251,11 +255,17 @@ export default function App() {
                         <Route path="/guidelines/new" element={<AddGuideline />} />
                         <Route path="/guidelines/:id/edit" element={<EditGuideline />} />
                         <Route path="/guidelines/:id/detail" element={<GuidelineDetail />} />
+
                         {/* Emergency Response Plans */}
                         <Route path="/er-plans" element={<ERPlanList />} />
                         <Route path="/er-plans/new" element={<AddERPlan />} />
                         <Route path="/er-plans/:id/edit" element={<EditERPlan />} />
                         <Route path="/er-plans/:id/detail" element={<ERPlanDetail />} />
+
+                        <Route path="/services">
+                            <Route path="environments" element={<EnvironmentList />} />
+                            <Route path="occupations" element={<OccupationList />} />
+                        </Route>
                     </Route>
                     {/* ============================= Public routes ============================= */}
                     <Route path="/signin" element={<Signin />} />
