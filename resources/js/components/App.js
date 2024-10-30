@@ -19,93 +19,114 @@ import PatientDetail from "../pages/Patients/PatientDetail";
 import CompanyList from "../pages/Companies/List";
 import CompanyNew from "../pages/Companies/New";
 import CompanyEdit from "../pages/Companies/Edit";
-import Checkups from "../pages/Checkups/Checkups";
-import CheckupForm from "../pages/Checkups/Form/CheckupForm";
-import CheckupMonthly from "../pages/Checkups/Summary/Monthly";
-import AddCheckupMonthly from "../pages/Checkups/Summary/Add";
-import EditCheckupMonthly from "../pages/Checkups/Summary/Edit";
-import CheckupYearly from "../pages/Checkups/Summary/Yearly";
-import Clinics from "../pages/Clinics/Clinics";
-import ClinicMonthly from "../pages/Clinics/Summary/Monthly";
-import AddClinicMonthly from "../pages/Clinics/Summary/Add";
-import EditClinicMonthly from "../pages/Clinics/Summary/Edit";
-import ClinicYearly from "../pages/Clinics/Summary/Yearly";
-import Preventions from "../pages/Preventions/Preventions";
-import PreventionForm from "../pages/Preventions/Form/PreventionForm";
-import PreventionMonthly from "../pages/Preventions/Summary/Monthly";
-import AddPreventionMonthly from "../pages/Preventions/Summary/Add";
-import EditPreventionMonthly from "../pages/Preventions/Summary/Edit";
-import PreventionYearly from "../pages/Preventions/Summary/Yearly";
-import Promotions from "../pages/Promotions/Promotions";
-import PromotionForm from "../pages/Promotions/Form/PromotionForm";
-import PromotionMonthly from "../pages/Promotions/Summary/Monthly";
-import AddPromotionMonthly from "../pages/Promotions/Summary/Add";
-import EditPromotionMonthly from "../pages/Promotions/Summary/Edit";
-import PromotionYearly from "../pages/Promotions/Summary/Yearly";
-import Toxicologies from "../pages/Toxicologies/Toxicologies";
-import ToxicologyForm from "../pages/Toxicologies/Form";
-import ToxicologyMonthly from "../pages/Toxicologies/Summary/Monthly";
-import AddToxicologyMonthly from "../pages/Toxicologies/Summary/Add";
-import EditToxicologyMonthly from "../pages/Toxicologies/Summary/Edit";
-import ToxicologyYearly from "../pages/Toxicologies/Summary/Yearly";
-import PollutionSources from "../pages/Toxicologies/PollutionSources";
-import OccupationMonthly from "../pages/Occupations/Summary/Monthly";
-import AddOccupationMonthly from "../pages/Occupations/Summary/Add";
-import EditOccupationMonthly from "../pages/Occupations/Summary/Edit";
-import OccupationYearly from "../pages/Occupations/Summary/Yearly";
 import ReportBulletList from "../pages/ReportBullets/List";
 import AddReportBullet from "../pages/ReportBullets/Add";
 import EditReportBullet from "../pages/ReportBullets/Edit";
-import AddSurveying from "../pages/WalkThroughSurvey/Add";
-import EditSurveying from "../pages/WalkThroughSurvey/Edit";
-import SurveyDetail from "../pages/WalkThroughSurvey/Detail";
-import SurveyingList from "../pages/WalkThroughSurvey/List";
-import AddInvestigation from "../pages/Investigations/Add";
-import EditInvestigation from "../pages/Investigations/Edit";
-import InvestigationDetail from "../pages/Investigations/Detail";
-import InvestigationList from "../pages/Investigations/List";
-import AddScreening from "../pages/Screenings/Add"
-import EditScreening from "../pages/Screenings/Edit"
-import ScreeningDetail from "../pages/Screenings/Detail"
-import ScreeningList from "../pages/Screenings/List"
-import AddVisitation from "../pages/Visitations/Add"
-import EditVisitation from "../pages/Visitations/Edit"
-import VisitationDetail from "../pages/Visitations/Detail"
-import VisitationList from "../pages/Visitations/List"
-import AddNetworkMeeting from "../pages/NetworkMeetings/Add"
-import EditNetworkMeeting from "../pages/NetworkMeetings/Edit"
-import NetworkMeetingDetail from "../pages/NetworkMeetings/Detail"
-import NetworkMeetingList from "../pages/NetworkMeetings/List"
-import AddTraining from "../pages/Trainings/Add"
-import EditTraining from "../pages/Trainings/Edit"
-import TrainingDetail from "../pages/Trainings/Detail"
-import TrainingList from "../pages/Trainings/List"
-import AddVaccination from "../pages/Vaccinations/Add"
-import EditVaccination from "../pages/Vaccinations/Edit"
-import VaccinationDetail from "../pages/Vaccinations/Detail"
-import VaccinationList from "../pages/Vaccinations/List"
-import AddSupervision from "../pages/Supervisions/Add"
-import EditSupervision from "../pages/Supervisions/Edit"
-import SupervisionDetail from "../pages/Supervisions/Detail"
-import SupervisionList from "../pages/Supervisions/List"
-import AddGuideline from "../pages/Guidelines/Add"
-import EditGuideline from "../pages/Guidelines/Edit"
-import GuidelineDetail from "../pages/Guidelines/Detail"
-import GuidelineList from "../pages/Guidelines/List"
-import AddERPlan from "../pages/ERPlan/Add";
-import EditERPlan from "../pages/ERPlan/Edit";
-import ERPlanDetail from "../pages/ERPlan/Detail";
-import ERPlanList from "../pages/ERPlan/List";
 import EmployeeNew from "../pages/Employees/New";
 import EditEmployee from "../pages/Employees/Edit";
 import EmployeeList from "../pages/Employees/List";
+
+/** Summary */
+import Checkups from "../pages/Summary/Checkups/Checkups";
+import CheckupForm from "../pages/Summary/Checkups/Form/CheckupForm";
+import CheckupMonthly from "../pages/Summary/Checkups/Summary/Monthly";
+import AddCheckupMonthly from "../pages/Summary/Checkups/Summary/Add";
+import EditCheckupMonthly from "../pages/Summary/Checkups/Summary/Edit";
+import CheckupYearly from "../pages/Summary/Checkups/Summary/Yearly";
+
+import Clinics from "../pages/Summary/Clinics/Clinics";
+import ClinicMonthly from "../pages/Summary/Clinics/Summary/Monthly";
+import AddClinicMonthly from "../pages/Summary/Clinics/Summary/Add";
+import EditClinicMonthly from "../pages/Summary/Clinics/Summary/Edit";
+import ClinicYearly from "../pages/Summary/Clinics/Summary/Yearly";
+
+import Preventions from "../pages/Summary/Preventions/Preventions";
+import PreventionForm from "../pages/Summary/Preventions/Form/PreventionForm";
+import PreventionMonthly from "../pages/Summary/Preventions/Summary/Monthly";
+import AddPreventionMonthly from "../pages/Summary/Preventions/Summary/Add";
+import EditPreventionMonthly from "../pages/Summary/Preventions/Summary/Edit";
+import PreventionYearly from "../pages/Summary/Preventions/Summary/Yearly";
+
+import Promotions from "../pages/Summary/Promotions/Promotions";
+import PromotionForm from "../pages/Summary/Promotions/Form/PromotionForm";
+import PromotionMonthly from "../pages/Summary/Promotions/Summary/Monthly";
+import AddPromotionMonthly from "../pages/Summary/Promotions/Summary/Add";
+import EditPromotionMonthly from "../pages/Summary/Promotions/Summary/Edit";
+import PromotionYearly from "../pages/Summary/Promotions/Summary/Yearly";
+
+import Toxicologies from "../pages/Summary/Toxicologies/Toxicologies";
+import ToxicologyForm from "../pages/Summary/Toxicologies/Form";
+import ToxicologyMonthly from "../pages/Summary/Toxicologies/Summary/Monthly";
+import AddToxicologyMonthly from "../pages/Summary/Toxicologies/Summary/Add";
+import EditToxicologyMonthly from "../pages/Summary/Toxicologies/Summary/Edit";
+import ToxicologyYearly from "../pages/Summary/Toxicologies/Summary/Yearly";
+import PollutionSources from "../pages/Summary/Toxicologies/PollutionSources";
+
+import OccupationMonthly from "../pages/Summary/Occupations/Summary/Monthly";
+import AddOccupationMonthly from "../pages/Summary/Occupations/Summary/Add";
+import EditOccupationMonthly from "../pages/Summary/Occupations/Summary/Edit";
+import OccupationYearly from "../pages/Summary/Occupations/Summary/Yearly";
+
+/** Services */
 import Services from "../pages/Services";
+
+import AddSurveying from "../pages/Services/WalkThroughSurvey/Add";
+import EditSurveying from "../pages/Services/WalkThroughSurvey/Edit";
+import SurveyDetail from "../pages/Services/WalkThroughSurvey/Detail";
+import SurveyingList from "../pages/Services/WalkThroughSurvey/List";
+
+import AddInvestigation from "../pages/Services/Investigations/Add";
+import EditInvestigation from "../pages/Services/Investigations/Edit";
+import InvestigationDetail from "../pages/Services/Investigations/Detail";
+import InvestigationList from "../pages/Services/Investigations/List";
+
+import AddScreening from "../pages/Services/Screenings/Add"
+import EditScreening from "../pages/Services/Screenings/Edit"
+import ScreeningDetail from "../pages/Services/Screenings/Detail"
+import ScreeningList from "../pages/Services/Screenings/List"
+
+import AddVisitation from "../pages/Services/Visitations/Add"
+import EditVisitation from "../pages/Services/Visitations/Edit"
+import VisitationDetail from "../pages/Services/Visitations/Detail"
+import VisitationList from "../pages/Services/Visitations/List"
+
+import AddNetworkMeeting from "../pages/Services/NetworkMeetings/Add"
+import EditNetworkMeeting from "../pages/Services/NetworkMeetings/Edit"
+import NetworkMeetingDetail from "../pages/Services/NetworkMeetings/Detail"
+import NetworkMeetingList from "../pages/Services/NetworkMeetings/List"
+
+import AddTraining from "../pages/Services/Trainings/Add"
+import EditTraining from "../pages/Services/Trainings/Edit"
+import TrainingDetail from "../pages/Services/Trainings/Detail"
+import TrainingList from "../pages/Services/Trainings/List"
+
+import AddVaccination from "../pages/Services/Vaccinations/Add"
+import EditVaccination from "../pages/Services/Vaccinations/Edit"
+import VaccinationDetail from "../pages/Services/Vaccinations/Detail"
+import VaccinationList from "../pages/Services/Vaccinations/List"
+
+import AddSupervision from "../pages/Services/Supervisions/Add"
+import EditSupervision from "../pages/Services/Supervisions/Edit"
+import SupervisionDetail from "../pages/Services/Supervisions/Detail"
+import SupervisionList from "../pages/Services/Supervisions/List"
+
+import AddGuideline from "../pages/Services/Guidelines/Add"
+import EditGuideline from "../pages/Services/Guidelines/Edit"
+import GuidelineDetail from "../pages/Services/Guidelines/Detail"
+import GuidelineList from "../pages/Services/Guidelines/List"
+
+import AddERPlan from "../pages/Services/ERPlan/Add";
+import EditERPlan from "../pages/Services/ERPlan/Edit";
+import ERPlanDetail from "../pages/Services/ERPlan/Detail";
+import ERPlanList from "../pages/Services/ERPlan/List";
+
 import { useAuth } from "../hooks/useAuth"
 import AuthContext from "../context/authContext";
 import { GlobalProvider } from '../context/globalContext'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import store from "../store";
+
 import "moment/locale/th";
 import 'react-toastify/dist/ReactToastify.css';
 
