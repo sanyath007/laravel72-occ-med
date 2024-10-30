@@ -70,7 +70,7 @@ const SurveyingList = () => {
                                 <h5 className="card-title p-0">รายการ Walk-through survey</h5>
 
                                 <div>
-                                    <Link to="/surveyings/new" className="btn btn-primary">เพิ่มรายการ</Link>
+                                    <Link to="/services/surveyings/new" className="btn btn-primary">เพิ่มรายการ</Link>
                                 </div>
                             </div>
 
@@ -122,10 +122,10 @@ const SurveyingList = () => {
                                                 </td>
                                                 <td className="text-center">
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                        <Link to={`/surveyings/${surveying.id}/detail`} className="btn btn-primary btn-sm">
+                                                        <Link to={`/services/surveyings/${surveying.id}/detail`} className="btn btn-primary btn-sm">
                                                             <i className="bi bi-search"></i>
                                                         </Link>
-                                                        <Link to={`/surveyings/${surveying.id}/edit`} className="btn btn-warning btn-sm">
+                                                        <Link to={`/services/surveyings/${surveying.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
                                                         <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(surveying.id)}>

@@ -20,7 +20,7 @@ const AddSurveying = () => {
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'surveyings', name: 'รายการ Walk-through survey', path: '/surveyings' },
+                { id: 'surveyings', name: 'รายการ Walk-through survey', path: '/services/surveyings' },
                 { id: 'new', name: 'บันทึกการ Walk-through survey', path: null, active: true }
             ]
         }))
@@ -32,7 +32,7 @@ const AddSurveying = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/surveyings');
+            navigate('/services/surveyings');
         }
     }, [success]);
 

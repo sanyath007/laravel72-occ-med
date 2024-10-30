@@ -31,7 +31,7 @@ const Services = () => {
                             <div style={{ margin: '20px 0', padding: '0 20px' }}>
                                 <Row className="mb-5">
                                     <Col className="text-start">
-                                        <Link to="/surveyings" className="btn btn-primary w-100">Walk-through Survey</Link>
+                                        <Link to="/services/surveyings" className="btn btn-primary w-100">Walk-through Survey</Link>
                                     </Col>
                                     <Col className="text-start">
                                         <Link to="/services/investigations" className="btn btn-primary w-100">สอบสวนโรคหรืออุบัติเหตุจากงาน</Link>
