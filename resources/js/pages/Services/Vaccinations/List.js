@@ -69,7 +69,7 @@ const VaccinationList = () => {
                                 <h5 className="card-title p-0">รายการสร้างเสริมภูมิคุ้มกันโรค (Immunization)</h5>
 
                                 <div>
-                                    <Link to="/vaccinations/new" className="btn btn-primary">เพิ่มรายการ</Link>
+                                    <Link to="/services/vaccinations/new" className="btn btn-primary">เพิ่มรายการ</Link>
                                 </div>
                             </div>
 
@@ -106,10 +106,10 @@ const VaccinationList = () => {
                                                 </td>
                                                 <td className="text-center">
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                        {/* <Link to={`/vaccinations/${vaccination.id}/detail`} className="btn btn-primary btn-sm">
+                                                        {/* <Link to={`/services/vaccinations/${vaccination.id}/detail`} className="btn btn-primary btn-sm">
                                                             <i className="bi bi-search"></i>
                                                         </Link> */}
-                                                        <Link to={`/vaccinations/${vaccination.id}/edit`} className="btn btn-warning btn-sm">
+                                                        <Link to={`/services/vaccinations/${vaccination.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
                                                         <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(vaccination.id)}>

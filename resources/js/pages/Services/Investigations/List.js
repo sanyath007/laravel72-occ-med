@@ -110,7 +110,7 @@ const InvestigationList = () => {
                                                 </td>
                                                 <td style={{ textAlign: 'center' }}>
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                        {/* <Link to={`/investigations/${investigation.id}/detail`} className="btn btn-primary btn-sm">
+                                                        {/* <Link to={`/services/investigations/${investigation.id}/detail`} className="btn btn-primary btn-sm">
                                                             <i className="bi bi-search"></i>
                                                         </Link> */}
                                                         <Link to={`/services/investigations/${investigation.id}/edit`} className="btn btn-warning btn-sm">

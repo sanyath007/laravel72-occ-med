@@ -48,12 +48,12 @@ const Services = () => {
                                         <Link to="/services/trainings" className="btn btn-primary w-100">การอบรมให้ความรู้</Link>
                                     </Col>
                                     <Col className="text-start">
-                                        <Link to="/network-meetings" className="btn btn-primary w-100">การจัดประชุม/อบรมความรู้เครือข่าย</Link>
+                                        <Link to="/services/network-meetings" className="btn btn-primary w-100">การจัดประชุม/อบรมความรู้เครือข่าย</Link>
                                     </Col>
                                 </Row>
                                 <Row className="mb-5">
                                     <Col className="text-start">
-                                        <Link to="/vaccinations" className="btn btn-primary w-100">สร้างเสริมภูมิคุ้มกันโรค</Link>
+                                        <Link to="/services/vaccinations" className="btn btn-primary w-100">สร้างเสริมภูมิคุ้มกันโรค</Link>
                                     </Col>
                                     <Col className="text-start">
                                         <Link to="/services/guidelines" className="btn btn-primary w-100">จัดทำแนวทาง/ระบบงาน</Link>

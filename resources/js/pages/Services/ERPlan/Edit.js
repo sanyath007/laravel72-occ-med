@@ -40,7 +40,7 @@ const EditERPlan = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/er-plans');
+            navigate('/services/er-plans');
         }
     }, [success]);
 

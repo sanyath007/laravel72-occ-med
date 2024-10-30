@@ -32,7 +32,7 @@ const AddERPlan = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/er-plans');
+            navigate('/services/er-plans');
         }
     }, [success]);
 

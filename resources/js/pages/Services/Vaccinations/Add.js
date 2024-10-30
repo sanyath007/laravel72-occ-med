@@ -20,7 +20,7 @@ const AddVaccination = () => {
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'vaccinations', name: 'รายการสร้างเสริมภูมิคุ้มกันโรค', path: '/vaccinations' },
+                { id: 'vaccinations', name: 'รายการสร้างเสริมภูมิคุ้มกันโรค', path: '/services/vaccinations' },
                 { id: 'new', name: 'บันทึกการสร้างเสริมภูมิคุ้มกันโรค', path: null, active: true }
             ]
         }))
@@ -32,7 +32,7 @@ const AddVaccination = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/vaccinations');
+            navigate('/services/vaccinations');
         }
     }, [success]);
 

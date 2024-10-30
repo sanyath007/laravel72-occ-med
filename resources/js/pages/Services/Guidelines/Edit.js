@@ -40,7 +40,7 @@ const EditGuideline = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/guidelines');
+            navigate('/services/guidelines');
         }
     }, [success]);
 

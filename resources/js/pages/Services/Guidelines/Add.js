@@ -32,7 +32,7 @@ const AddGuideline = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/guidelines');
+            navigate('/services/guidelines');
         }
     }, [success]);
 
