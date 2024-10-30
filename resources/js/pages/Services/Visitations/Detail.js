@@ -19,7 +19,7 @@ const VisitationDetail = () => {
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'visitations', name: 'รายการติดตามเยี่ยมบ้าน', path: '/visitations' },
+                { id: 'visitations', name: 'รายการติดตามเยี่ยมบ้าน', path: '/services/visitations' },
                 { id: 'detail', name: 'รายละเอียดการติดตามเยี่ยมบ้าน', path: null, active: true }
             ]
         }))

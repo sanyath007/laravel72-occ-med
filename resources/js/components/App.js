@@ -215,11 +215,6 @@ export default function App() {
                         <Route path="/surveyings/new" element={<AddSurveying />} />
                         <Route path="/surveyings/:id/edit" element={<EditSurveying />} />
                         <Route path="/surveyings/:id/detail" element={<SurveyDetail />} />
-                        {/* VisitHomes */}
-                        <Route path="/visitations" element={<VisitationList />} />
-                        <Route path="/visitations/new" element={<AddVisitation />} />
-                        <Route path="/visitations/:id/edit" element={<EditVisitation />} />
-                        <Route path="/visitations/:id/" element={<VisitationDetail />} />
 
                         <Route path="/services">
                             {/* Environments */}
@@ -269,6 +264,11 @@ export default function App() {
                             <Route path="vaccinations/new" element={<AddVaccination />} />
                             <Route path="vaccinations/:id/edit" element={<EditVaccination />} />
                             <Route path="vaccinations/:id/detail" element={<VaccinationDetail />} />
+                            {/* Visitations */}
+                            <Route path="/visitations" element={<VisitationList />} />
+                            <Route path="/visitations/new" element={<AddVisitation />} />
+                            <Route path="/visitations/:id/edit" element={<EditVisitation />} />
+                            <Route path="/visitations/:id/" element={<VisitationDetail />} />
                         </Route>
                     </Route>
                     {/* ============================= Public routes ============================= */}

@@ -69,7 +69,7 @@ const VisitationList = () => {
                                 <h5 className="card-title p-0">รายการติดตามเยี่ยมบ้าน</h5>
 
                                 <div>
-                                    <Link to="/visitations/new" className="btn btn-primary">เพิ่มรายการ</Link>
+                                    <Link to="/services/visitations/new" className="btn btn-primary">เพิ่มรายการ</Link>
                                 </div>
                             </div>
 
@@ -104,10 +104,10 @@ const VisitationList = () => {
                                                 <td>{visit.division?.name}</td>
                                                 <td style={{ textAlign: 'center' }}>
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                        {/* <Link to={`/visitations/${visit.id}/detail`} className="btn btn-primary btn-sm">
+                                                        {/* <Link to={`/services/visitations/${visit.id}/detail`} className="btn btn-primary btn-sm">
                                                             <i className="bi bi-search"></i>
                                                         </Link> */}
-                                                        <Link to={`/visitations/${visit.id}/edit`} className="btn btn-warning btn-sm">
+                                                        <Link to={`/services/visitations/${visit.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
                                                         <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(visit.id)}>

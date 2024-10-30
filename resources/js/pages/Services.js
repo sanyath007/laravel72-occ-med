@@ -42,7 +42,7 @@ const Services = () => {
                                 </Row>
                                 <Row className="mb-5">
                                     <Col className="text-start">
-                                        <Link to="/visitations" className="btn btn-primary w-100">ติดตามเยี่ยมบ้าน/สถานประกอบการ</Link>
+                                        <Link to="/services/visitations" className="btn btn-primary w-100">ติดตามเยี่ยมบ้าน/สถานประกอบการ</Link>
                                     </Col>
                                     <Col className="text-start">
                                         <Link to="/services/trainings" className="btn btn-primary w-100">การอบรมให้ความรู้</Link>

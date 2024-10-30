@@ -22,7 +22,7 @@ const EditVisitation = () => {
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'visitations', name: 'รายการติดตามเยี่ยมบ้าน', path: '/visitations' },
+                { id: 'visitations', name: 'รายการติดตามเยี่ยมบ้าน', path: '/services/visitations' },
                 { id: 'edit', name: 'แก้ไขการติดตามเยี่ยมบ้าน', path: null, active: true }
             ]
         }))
@@ -40,7 +40,7 @@ const EditVisitation = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/visitations');
+            navigate('/services/visitations');
         }
     }, [success]);
 
