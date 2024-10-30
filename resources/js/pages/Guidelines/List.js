@@ -43,7 +43,7 @@ const GuidelineList = () => {
         if (endpoint === '') {
             dispatch(getGuidelines({ url: `/api/guidelines/search` }));
         } else {
-            dispatch(getScreenings({ url: `${endpoint}${params}` }));
+            dispatch(getGuidelines({ url: `${endpoint}${params}` }));
         }
     }, [endpoint, params]);
 
