@@ -256,14 +256,15 @@ export default function App() {
                         <Route path="/guidelines/:id/edit" element={<EditGuideline />} />
                         <Route path="/guidelines/:id/detail" element={<GuidelineDetail />} />
 
-                        {/* Emergency Response Plans */}
-                        <Route path="/er-plans" element={<ERPlanList />} />
-                        <Route path="/er-plans/new" element={<AddERPlan />} />
-                        <Route path="/er-plans/:id/edit" element={<EditERPlan />} />
-                        <Route path="/er-plans/:id/detail" element={<ERPlanDetail />} />
-
                         <Route path="/services">
+                            {/* Emergency Response Plans */}
+                            <Route path="er-plans" element={<ERPlanList />} />
+                            <Route path="er-plans/new" element={<AddERPlan />} />
+                            <Route path="er-plans/:id/edit" element={<EditERPlan />} />
+                            <Route path="er-plans/:id/detail" element={<ERPlanDetail />} />
+                            {/* Environments */}
                             <Route path="environments" element={<EnvironmentList />} />
+                            {/* Occupations */}
                             <Route path="occupations" element={<OccupationList />} />
                         </Route>
                     </Route>

@@ -19,7 +19,7 @@ const ERPlanDetail = () => {
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'er-plans', name: 'รายการทำแผนตอบโต้เหตุฉุกเฉิน', path: '/er-plans' },
+                { id: 'er-plans', name: 'รายการทำแผนตอบโต้เหตุฉุกเฉิน', path: '/services/er-plans' },
                 { id: 'detail', name: 'รายละเอียดจัดทำแผนตอบโต้เหตุฉุกเฉิน', path: null, active: true }
             ]
         }))
