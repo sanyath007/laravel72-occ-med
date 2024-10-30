@@ -69,7 +69,7 @@ const TrainingList = () => {
                                 <h5 className="card-title p-0">รายการอบรมให้ความรู้</h5>
 
                                 <div>
-                                    <Link to="/trainings/new" className="btn btn-primary">เพิ่มรายการ</Link>
+                                    <Link to="/services/trainings/new" className="btn btn-primary">เพิ่มรายการ</Link>
                                 </div>
                             </div>
 
@@ -107,10 +107,10 @@ const TrainingList = () => {
                                                 </td>
                                                 <td className="text-center">
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                        {/* <Link to={`/trainings/${training.id}/detail`} className="btn btn-primary btn-sm">
+                                                        {/* <Link to={`/services/trainings/${training.id}/detail`} className="btn btn-primary btn-sm">
                                                             <i className="bi bi-search"></i>
                                                         </Link> */}
-                                                        <Link to={`/trainings/${training.id}/edit`} className="btn btn-warning btn-sm">
+                                                        <Link to={`/services/trainings/${training.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
                                                         <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(training.id)}>

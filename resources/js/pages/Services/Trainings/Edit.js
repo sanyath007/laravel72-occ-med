@@ -22,7 +22,7 @@ const EditTraining = () => {
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'trainings', name: 'รายการอบรมให้ความรู้', path: '/trainings' },
+                { id: 'trainings', name: 'รายการอบรมให้ความรู้', path: '/services/trainings' },
                 { id: 'edit', name: 'แก้ไขอบรมให้ความรู้', path: null, active: true }
             ]
         }))
@@ -40,7 +40,7 @@ const EditTraining = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/trainings');
+            navigate('/services/trainings');
         }
     }, [success]);
 

@@ -19,7 +19,7 @@ const TrainingDetail = () => {
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'trainings', name: 'รายการอบรมให้ความรู้', path: '/trainings' },
+                { id: 'trainings', name: 'รายการอบรมให้ความรู้', path: '/services/trainings' },
                 { id: 'detail', name: 'รายละเอียดการอบรมให้ความรู้', path: null, active: true }
             ]
         }))

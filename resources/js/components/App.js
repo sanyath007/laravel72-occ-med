@@ -220,11 +220,6 @@ export default function App() {
                         <Route path="/visitations/new" element={<AddVisitation />} />
                         <Route path="/visitations/:id/edit" element={<EditVisitation />} />
                         <Route path="/visitations/:id/" element={<VisitationDetail />} />
-                        {/* Trainings */}
-                        <Route path="/trainings" element={<TrainingList />} />
-                        <Route path="/trainings/new" element={<AddTraining />} />
-                        <Route path="/trainings/:id/edit" element={<EditTraining />} />
-                        <Route path="/trainings/:id/detail" element={<TrainingDetail />} />
                         {/* Vaccinations */}
                         <Route path="/vaccinations" element={<VaccinationList />} />
                         <Route path="/vaccinations/new" element={<AddVaccination />} />
@@ -269,6 +264,11 @@ export default function App() {
                             <Route path="supervisions/new" element={<AddSupervision />} />
                             <Route path="supervisions/:id/edit" element={<EditSupervision />} />
                             <Route path="supervisions/:id/detail" element={<SupervisionDetail />} />
+                            {/* Trainings */}
+                            <Route path="trainings" element={<TrainingList />} />
+                            <Route path="trainings/new" element={<AddTraining />} />
+                            <Route path="trainings/:id/edit" element={<EditTraining />} />
+                            <Route path="trainings/:id/detail" element={<TrainingDetail />} />
                         </Route>
                     </Route>
                     {/* ============================= Public routes ============================= */}
