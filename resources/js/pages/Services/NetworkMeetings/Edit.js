@@ -22,7 +22,7 @@ const EditNetworkMeeting = () => {
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'network-meetings', name: 'รายการจัดประชุม/อบรมความรู้เครือข่าย', path: '/network-meetings' },
+                { id: 'network-meetings', name: 'รายการจัดประชุม/อบรมความรู้เครือข่าย', path: '/services/network-meetings' },
                 { id: 'edit', name: 'แก้ไขจัดประชุม/อบรมความรู้เครือข่าย', path: null, active: true }
             ]
         }))
@@ -40,7 +40,7 @@ const EditNetworkMeeting = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/network-meetings');
+            navigate('/services/network-meetings');
         }
     }, [success]);
 

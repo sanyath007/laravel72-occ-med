@@ -6,7 +6,7 @@ import { Col, Row } from 'react-bootstrap'
 import { FaSave } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
 import moment from 'moment'
-import { store, update } from '../../../store/slices/networkMeeting'
+import { store, update } from '../../../../store/slices/networkMeeting'
 
 const networkMeetingSchema = Yup.object().shape({
     meeting_date: Yup.string().required('กรุณาเลือกวันที่ก่อน'),

@@ -225,11 +225,6 @@ export default function App() {
                         <Route path="/visitations/new" element={<AddVisitation />} />
                         <Route path="/visitations/:id/edit" element={<EditVisitation />} />
                         <Route path="/visitations/:id/" element={<VisitationDetail />} />
-                        {/* NetworkMeetings */}
-                        <Route path="/network-meetings" element={<NetworkMeetingList />} />
-                        <Route path="/network-meetings/new" element={<AddNetworkMeeting />} />
-                        <Route path="/network-meetings/:id/edit" element={<EditNetworkMeeting />} />
-                        <Route path="/network-meetings/:id/detail" element={<NetworkMeetingDetail />} />
                         {/* Trainings */}
                         <Route path="/trainings" element={<TrainingList />} />
                         <Route path="/trainings/new" element={<AddTraining />} />
@@ -264,6 +259,11 @@ export default function App() {
                             <Route path="investigations/new" element={<AddInvestigation />} />
                             <Route path="investigations/:id/edit" element={<EditInvestigation />} />
                             <Route path="investigations/:id/detail" element={<InvestigationDetail />} />
+                            {/* NetworkMeetings */}
+                            <Route path="network-meetings" element={<NetworkMeetingList />} />
+                            <Route path="network-meetings/new" element={<AddNetworkMeeting />} />
+                            <Route path="network-meetings/:id/edit" element={<EditNetworkMeeting />} />
+                            <Route path="network-meetings/:id/detail" element={<NetworkMeetingDetail />} />
                             {/* Occupations */}
                             <Route path="occupations" element={<OccupationList />} />
                         </Route>

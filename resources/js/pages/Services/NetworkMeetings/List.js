@@ -82,7 +82,7 @@ const NetworkMeetingList = () => {
                                 <h5 className="card-title p-0">รายการจัดประชุม/อบรมความรู้เครือข่าย</h5>
 
                                 <div>
-                                    <Link to="/network-meetings/new" className="btn btn-primary">เพิ่มรายการ</Link>
+                                    <Link to="/services/network-meetings/new" className="btn btn-primary">เพิ่มรายการ</Link>
                                 </div>
                             </div>
 
@@ -123,7 +123,7 @@ const NetworkMeetingList = () => {
                                                         {/* <Link to={`/network-meetings/${meeting.id}/detail`} className="btn btn-primary btn-sm">
                                                             <i className="bi bi-search"></i>
                                                         </Link> */}
-                                                        <Link to={`/network-meetings/${meeting.id}/edit`} className="btn btn-warning btn-sm">
+                                                        <Link to={`/services/network-meetings/${meeting.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
                                                         <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(meeting.id)}>

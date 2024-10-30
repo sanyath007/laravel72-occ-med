@@ -19,7 +19,7 @@ const NetworkMeetingDetail = () => {
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'network-meetings', name: 'รายการจัดประชุม/อบรมความรู้เครือข่าย', path: '/network-meetings' },
+                { id: 'network-meetings', name: 'รายการจัดประชุม/อบรมความรู้เครือข่าย', path: '/services/network-meetings' },
                 { id: 'detail', name: 'รายละเอียดการจัดประชุม/อบรมความรู้เครือข่าย', path: null, active: true }
             ]
         }))
