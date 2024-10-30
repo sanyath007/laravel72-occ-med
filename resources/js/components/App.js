@@ -250,20 +250,20 @@ export default function App() {
                         <Route path="/supervisions/new" element={<AddSupervision />} />
                         <Route path="/supervisions/:id/edit" element={<EditSupervision />} />
                         <Route path="/supervisions/:id/detail" element={<SupervisionDetail />} />
-                        {/* Guidelines */}
-                        <Route path="/guidelines" element={<GuidelineList />} />
-                        <Route path="/guidelines/new" element={<AddGuideline />} />
-                        <Route path="/guidelines/:id/edit" element={<EditGuideline />} />
-                        <Route path="/guidelines/:id/detail" element={<GuidelineDetail />} />
 
                         <Route path="/services">
+                            {/* Environments */}
+                            <Route path="environments" element={<EnvironmentList />} />
                             {/* Emergency Response Plans */}
                             <Route path="er-plans" element={<ERPlanList />} />
                             <Route path="er-plans/new" element={<AddERPlan />} />
                             <Route path="er-plans/:id/edit" element={<EditERPlan />} />
                             <Route path="er-plans/:id/detail" element={<ERPlanDetail />} />
-                            {/* Environments */}
-                            <Route path="environments" element={<EnvironmentList />} />
+                            {/* Guidelines */}
+                            <Route path="guidelines" element={<GuidelineList />} />
+                            <Route path="guidelines/new" element={<AddGuideline />} />
+                            <Route path="guidelines/:id/edit" element={<EditGuideline />} />
+                            <Route path="guidelines/:id/detail" element={<GuidelineDetail />} />
                             {/* Occupations */}
                             <Route path="occupations" element={<OccupationList />} />
                         </Route>

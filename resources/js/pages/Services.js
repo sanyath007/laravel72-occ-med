@@ -56,10 +56,10 @@ const Services = () => {
                                         <Link to="/vaccinations" className="btn btn-primary w-100">สร้างเสริมภูมิคุ้มกันโรค</Link>
                                     </Col>
                                     <Col className="text-start">
-                                        <Link to="/guidelines" className="btn btn-primary w-100">จัดทำแนวทาง/ระบบงาน</Link>
+                                        <Link to="/services/guidelines" className="btn btn-primary w-100">จัดทำแนวทาง/ระบบงาน</Link>
                                     </Col>
                                     <Col className="text-start">
-                                        <Link to="er-plans" className="btn btn-primary w-100">จัดทำแผนตอบโต้เหตุฉุกเฉิน</Link>
+                                        <Link to="/services/er-plans" className="btn btn-primary w-100">จัดทำแผนตอบโต้เหตุฉุกเฉิน</Link>
                                     </Col>
                                 </Row>
                                 <Row className="mb-5">

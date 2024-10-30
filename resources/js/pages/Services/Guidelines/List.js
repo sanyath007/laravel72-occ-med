@@ -71,7 +71,7 @@ const GuidelineList = () => {
                                 <h5 className="card-title p-0">รายการจัดทำแนวทาง/แบบฟอร์ม/ขั้นตอนการทำงาน</h5>
 
                                 <div>
-                                    <Link to="/guidelines/new" className="btn btn-primary">เพิ่มรายการ</Link>
+                                    <Link to="/services/guidelines/new" className="btn btn-primary">เพิ่มรายการ</Link>
                                 </div>
                             </div>
 
@@ -115,7 +115,7 @@ const GuidelineList = () => {
                                                         {/* <Link to={`/guidelines/${guideline.id}/detail`} className="btn btn-primary btn-sm">
                                                             <i className="bi bi-search"></i>
                                                         </Link> */}
-                                                        <Link to={`/guidelines/${guideline.id}/edit`} className="btn btn-warning btn-sm">
+                                                        <Link to={`/services/guidelines/${guideline.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>
                                                         <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(guideline.id)}>
