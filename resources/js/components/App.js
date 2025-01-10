@@ -133,6 +133,8 @@ import store from "../store";
 
 import "moment/locale/th";
 import 'react-toastify/dist/ReactToastify.css';
+import AddEnvironment from "../pages/Services/Environments/Add";
+import EditEnvironment from "../pages/Services/Environments/Edit";
 
 export default function App() {
     const { userData } = useAuth()
@@ -214,6 +216,8 @@ export default function App() {
                         <Route path="/services">
                             {/* Environments */}
                             <Route path="environments" element={<EnvironmentList />} />
+                            <Route path="environments/new" element={<AddEnvironment />} />
+                            <Route path="environments/:id/edit" element={<EditEnvironment />} />
                             {/* Emergency Response Plans */}
                             <Route path="er-plans" element={<ERPlanList />} />
                             <Route path="er-plans/new" element={<AddERPlan />} />
