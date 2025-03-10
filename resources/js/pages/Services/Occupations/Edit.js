@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../../context/globalContext'
 import { resetSuccess, getSurveying } from '../../../store/slices/surveying'
 import Loading from '../../../components/Loading'
-import EnvironmentForm from './Form'
+import OccupationForm from './Form'
 
 const EditOccupation = () => {
     const { id } = useParams();
@@ -18,12 +18,12 @@ const EditOccupation = () => {
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'แก้ไขผลตรวจวัดสิ่งแวดล้อม',
+            title: 'แก้ไขอาชีวอนามัยในโรงพยาบาล',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'environments', name: 'รายการผลตรวจวัดสิ่งแวดล้อม', path: '/services/environments' },
-                { id: 'edit', name: 'แก้ไขผลตรวจวัดสิ่งแวดล้อม', path: null, active: true }
+                { id: 'occupations', name: 'รายการอาชีวอนามัยในโรงพยาบาล', path: '/services/occupations' },
+                { id: 'edit', name: 'แก้ไขอาชีวอนามัยในโรงพยาบาล', path: null, active: true }
             ]
         }))
     }, []);
@@ -40,7 +40,7 @@ const EditOccupation = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/services/environments');
+            navigate('/services/occupations');
         }
     }, [success]);
 
@@ -50,12 +50,12 @@ const EditOccupation = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">แก้ไขผลตรวจวัดสิ่งแวดล้อม</h5>
+                            <h5 className="card-title">แก้ไขอาชีวอนามัยในโรงพยาบาล</h5>
 
                             {loading && <div className="text-center"><Loading /></div>}
 
                             {(!loading && surveying) && (
-                                <EnvironmentForm id={id} surveying={surveying} />
+                                <OccupationForm id={id} surveying={surveying} />
                             )}
                         </div>
                     </div>

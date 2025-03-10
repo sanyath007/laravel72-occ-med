@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../../context/globalContext'
 import { resetSuccess } from '../../../store/slices/surveying'
-import EnvironmentForm from './Form'
+import OccupationForm from './Form'
 
 const AddOccupation = () => {
     const navigate = useNavigate()
@@ -16,12 +16,12 @@ const AddOccupation = () => {
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'บันทึกผลตรวจวัดสิ่งแวดล้อม',
+            title: 'บันทึกอาชีวอนามัยในโรงพยาบาล',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'environments', name: 'รายการผลตรวจวัดสิ่งแวดล้อม', path: '/services/environments' },
-                { id: 'new', name: 'บันทึกผลตรวจวัดสิ่งแวดล้อม', path: null, active: true }
+                { id: 'occupations', name: 'รายการอาชีวอนามัยในโรงพยาบาล', path: '/services/occupations' },
+                { id: 'new', name: 'บันทึกอาชีวอนามัยในโรงพยาบาล', path: null, active: true }
             ]
         }))
     }, []);
@@ -32,7 +32,7 @@ const AddOccupation = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/services/environments');
+            navigate('/services/occupations');
         }
     }, [success]);
 
@@ -42,9 +42,9 @@ const AddOccupation = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">บันทึกผลตรวจวัดสิ่งแวดล้อม</h5>
+                            <h5 className="card-title">บันทึกอาชีวอนามัยในโรงพยาบาล</h5>
 
-                            <EnvironmentForm />
+                            <OccupationForm />
                         </div>
                     </div>
                 </div>
