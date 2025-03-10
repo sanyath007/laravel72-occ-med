@@ -248,12 +248,12 @@ export default function App() {
                             <Route path="occupations" element={<OccupationList />} />
                             <Route path="occupations/new" element={<AddOccupation />} />
                             <Route path="occupations/:id/edit" element={<EditOccupation />} />
-                            <Route path="occupations/:id/detail" element={<OccupationDetail />} />
+                            {/* <Route path="occupations/:id/detail" element={<OccupationDetail />} /> */}
                             {/* Sanitations */}
                             <Route path="sanitations" element={<SanitationList />} />
                             <Route path="sanitations/new" element={<AddSanitation />} />
                             <Route path="sanitations/:id/edit" element={<EditSanitation />} />
-                            <Route path="sanitations/:id/detail" element={<SanitationDetail />} />
+                            {/* <Route path="sanitations/:id/detail" element={<SanitationDetail />} /> */}
                             {/* Screenings */}
                             <Route path="screenings" element={<ScreeningList />} />
                             <Route path="screenings/new" element={<AddScreening />} />

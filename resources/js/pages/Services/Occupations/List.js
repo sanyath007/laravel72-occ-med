@@ -21,7 +21,7 @@ const OccupationList = () => {
                                 <h5 className="card-title p-0">อาชีวอนามัยในโรงพยาบาล</h5>
 
                                 <div>
-                                    <Link to="/services/investigations/new" className="btn btn-primary">เพิ่มรายการ</Link>
+                                    <Link to="/services/occupations/new" className="btn btn-primary">เพิ่มรายการ</Link>
                                 </div>
                             </div>
 
