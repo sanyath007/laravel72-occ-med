@@ -121,8 +121,16 @@ import ERPlanDetail from "../pages/Services/ERPlan/Detail";
 import ERPlanList from "../pages/Services/ERPlan/List";
 
 import EnvironmentList from '../pages/Services/Environments/List'
+import AddEnvironment from "../pages/Services/Environments/Add";
+import EditEnvironment from "../pages/Services/Environments/Edit";
 
 import OccupationList from '../pages/Services/Occupations/List'
+import AddOccupation from '../pages/Services/Occupations/Add'
+import EditOccupation from '../pages/Services/Occupations/Edit'
+
+import SanitationList from '../pages/Services/Sanitations/List'
+import AddSanitation from '../pages/Services/Sanitations/Add'
+import EditSanitation from '../pages/Services/Sanitations/Edit'
 
 import { useAuth } from "../hooks/useAuth"
 import AuthContext from "../context/authContext";
@@ -133,8 +141,6 @@ import store from "../store";
 
 import "moment/locale/th";
 import 'react-toastify/dist/ReactToastify.css';
-import AddEnvironment from "../pages/Services/Environments/Add";
-import EditEnvironment from "../pages/Services/Environments/Edit";
 
 export default function App() {
     const { userData } = useAuth()
@@ -240,9 +246,14 @@ export default function App() {
                             <Route path="network-meetings/:id/detail" element={<NetworkMeetingDetail />} />
                             {/* Occupations */}
                             <Route path="occupations" element={<OccupationList />} />
+                            <Route path="occupations/new" element={<AddOccupation />} />
+                            <Route path="occupations/:id/edit" element={<EditOccupation />} />
+                            <Route path="occupations/:id/detail" element={<OccupationDetail />} />
                             {/* Sanitations */}
-
-
+                            <Route path="sanitations" element={<SanitationList />} />
+                            <Route path="sanitations/new" element={<AddSanitation />} />
+                            <Route path="sanitations/:id/edit" element={<EditSanitation />} />
+                            <Route path="sanitations/:id/detail" element={<SanitationDetail />} />
                             {/* Screenings */}
                             <Route path="screenings" element={<ScreeningList />} />
                             <Route path="screenings/new" element={<AddScreening />} />
