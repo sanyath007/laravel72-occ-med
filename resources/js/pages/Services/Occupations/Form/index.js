@@ -86,16 +86,13 @@ const OccupationForm = ({ id, surveying }) => {
                 division_id: surveying ? surveying.division_id : '',
                 surveyors: surveying ? surveying.surveyors : [],
                 company_id: surveying ? surveying.company_id : '',
-                num_of_departs: surveying ? surveying.num_of_departs : '',
-                num_of_employees: surveying ? surveying.num_of_employees : '',
-                num_of_health_items: (surveying && surveying.num_of_health_items) ? surveying.num_of_health_items : '',
-                is_found_threat: (surveying && surveying.is_found_threat) ? surveying.is_found_threat : '',
-                have_hra: (surveying && surveying.have_hra) ? surveying.have_hra : '',
-                have_report: (surveying && surveying.have_report) ? surveying.have_report : '',
-                is_adviced: (surveying && surveying.is_adviced) ? surveying.is_adviced : '',
-                is_returned_data: (surveying && surveying.is_adviced) ? surveying.is_adviced : '',
-                guidelines: (surveying && surveying.guidelines) ? string2Array(surveying.guidelines) : [],
-                remark: (surveying && surveying.remark) ? surveying.remark : '',
+                source_id: surveying ? surveying.source_id : '',
+                source_text: (surveying && surveying.source_text) ? surveying.source_text : '',
+                problem_text: (surveying && surveying.problem_text) ? surveying.problem_text : '',
+                cause_id: (surveying && surveying.cause_id) ? surveying.cause_id : '',
+                cause_text: (surveying && surveying.cause_text) ? surveying.cause_text : '',
+                solution_id: (surveying && surveying.solution_id) ? surveying.solution_id : '',
+                solution_text: (surveying && surveying.solution_text) ? surveying.solution_text : '',
                 file_attachment: '',
                 pic_attachments: []
             }}
@@ -130,7 +127,7 @@ const OccupationForm = ({ id, surveying }) => {
                         <Tabs defaultActiveKey="home">
                             <Tab
                                 eventKey="home"
-                                title="รายละเอียดดารตรวจวัดสิ่งแวดล้อม"
+                                title="สำรวจสภาพปัญหา"
                                 className="border border-top-0 p-4 mb-3"
                             >
                                 <Row className="mb-2">
@@ -162,8 +159,8 @@ const OccupationForm = ({ id, surveying }) => {
                                             className={`form-control ${(formik.errors.objective_id && formik.touched.objective_id) ? 'is-invalid' : ''}`}
                                         >
                                             <option value="">-- เลือก --</option>
-                                            <option value="1">ประเมินความเสี่ยงและกำหนดรายการตรวจสุขภาพ</option>
-                                            <option value="2">ประเมินความเสี่ยงประเมินความเสี่ยงด้านสุขภาพจากมลพิษ</option>
+                                            <option value="1">สำรวจปัญหาสภาพแวดล้อมในการทำงาน</option>
+                                            <option value="2">สำรวจปัญหาทางอนามัยสิ่งแวดล้อมและสุขภิบาล</option>
                                             <option value="3">อื่นๆ ระบุ</option>
                                         </select>
                                         {(formik.errors.objective_id && formik.touched.objective_id) && (
@@ -227,137 +224,113 @@ const OccupationForm = ({ id, surveying }) => {
                                 </Row>
                                 <Row className="mb-2">
                                     <Col>
-                                        <label htmlFor="">จำนวนหน่วยงานที่ตรวจวัด</label>
-                                        <div className="input-group">
-                                            <input
-                                                type="number"
-                                                name="num_of_departs"
-                                                value={formik.values.num_of_departs}
-                                                onChange={formik.handleChange}
-                                                className={`form-control ${(formik.errors.num_of_departs && formik.touched.num_of_departs) ? 'is-invalid' : ''}`}
-                                            />
-                                            <span className="input-group-text">แผนก</span>
-                                        </div>
-                                        {(formik.errors.num_of_departs && formik.touched.num_of_departs) && (
-                                            <span className="text-danger text-sm">{formik.errors.num_of_departs}</span>
+                                        <label htmlFor="">ที่มาของปัญหาหรือร้องขอ</label>
+                                        <select
+                                            name="source_id"
+                                            value={formik.values.source_id}
+                                            onChange={formik.handleChange}
+                                            className={`form-control ${(formik.errors.source_id && formik.touched.source_id) ? 'is-invalid' : ''}`}
+                                        >
+                                            <option value="">-- เลือก --</option>
+                                            <option value="">รับแจ้งจากสถานประกอบการ/หน่วยงาน</option>
+                                            <option value="">ร้องเรียนจากผู้รับบริการ</option>
+                                            <option value="">รายงานความเสี่ยง</option>
+                                            <option value="">อื่นๆ</option>
+                                        </select>
+                                        {(formik.errors.source_id && formik.touched.source_id) && (
+                                            <span className="text-danger text-sm">{formik.errors.source_id}</span>
                                         )}
                                     </Col>
-                                    <Col>
-                                        <label htmlFor="">จำนวนเจ้าหน้าที่</label>
-                                        <div className="input-group">
-                                            <input
-                                                type="number"
-                                                name="num_of_employees"
-                                                value={formik.values.num_of_employees}
-                                                onChange={formik.handleChange}
-                                                className={`form-control ${(formik.errors.num_of_employees && formik.touched.num_of_employees) ? 'is-invalid' : ''}`}
-                                            />
-                                            <span className="input-group-text">คน</span>
-                                        </div>
-                                        {(formik.errors.num_of_employees && formik.touched.num_of_employees) && (
-                                            <span className="text-danger text-sm">{formik.errors.num_of_employees}</span>
-                                        )}
-                                    </Col>
-                                    <Col>
-                                        <label htmlFor="">สิ่งคุกคามที่พบ</label>
-                                        <label className="form-control">
-                                            <Field
-                                                type="checkbox"
-                                                name="is_found_threat"
-                                            />
-                                            <span className="ms-1">สิ่งคุกคามที่พบ</span>
-                                        </label>
-                                        {(formik.errors.is_found_threat && formik.touched.is_found_threat) && (
-                                            <span className="text-danger text-sm">{formik.errors.is_found_threat}</span>
-                                        )}
-                                    </Col>
-                                </Row>
-                                <Row className="mb-2">
-                                    <Col>
-                                        <label htmlFor="">กำหนดรายการตรวจวัด</label>
-                                        <div className="input-group">
-                                            <input
-                                                type="number"
-                                                name="num_of_health_items"
-                                                value={formik.values.num_of_health_items}
-                                                onChange={formik.handleChange}
-                                                className="form-control"
-                                            />
-                                            <span className="input-group-text">รายการ</span>
-                                        </div>
-                                        {(formik.errors.num_of_health_items && formik.touched.num_of_health_items) && (
-                                            <span className="text-danger text-sm">{formik.errors.num_of_health_items}</span>
-                                        )}
-                                    </Col>
-                                    <Col>
-                                        <label htmlFor="">สถานะการจัดทำรายงานตรวจวัด</label>
-                                        <label htmlFor="" className="form-control" style={{ display: 'flex' }}>
-                                            <Field
-                                                type="radio"
-                                                name="have_report"
-                                                value="1"
-                                                checked={formik.values.have_report == 1}
-                                            />
-                                            <span className="ms-1 me-2">เสร็จแล้ว</span>
-
-                                            <Field
-                                                type="radio"
-                                                name="have_report"
-                                                value="2"
-                                                checked={formik.values.have_report == 2}
-                                            />
-                                            <span className="ms-1">ยังไม่เสร็จ</span>
-                                        </label>
-                                        {(formik.errors.have_report && formik.touched.have_report) && (
-                                            <span className="text-danger text-sm">{formik.errors.have_report}</span>
-                                        )}
-                                    </Col>
-                                </Row>
-                                <Row className="mb-2">
-                                    <Col>
-                                        <label htmlFor="">ระบุถึงการให้ข้อเสนอแนะในการบริหารจัดการความเสี่ยง</label>
-                                        <label htmlFor="" className="form-control" style={{ display: 'flex' }}>
-                                            <Field
-                                                type="radio"
-                                                name="is_adviced"
-                                                value="1"
-                                                checked={formik.values.is_adviced == 1}
-                                            />
-                                            <span className="ms-1 me-2">ระบุ</span>
-
-                                            <Field
-                                                type="radio"
-                                                name="is_adviced"
-                                                value="2"
-                                                checked={formik.values.is_adviced == 2}
-                                            />
-                                            <span className="ms-1">ไม่ระบุ</span>
-                                        </label>
-                                        {(formik.errors.is_adviced && formik.touched.is_adviced) && (
-                                            <span className="text-danger text-sm">{formik.errors.is_adviced}</span>
-                                        )}
-                                    </Col>
-                                    <Col>
-                                        <label htmlFor="">สถานะการคืนข้อมูลแก่หน่วยงาน</label>
-                                        <label htmlFor="" className="form-control" style={{ display: 'flex' }}>
-                                            <Field
-                                                type="radio"
-                                                name="is_returned_data"
-                                                value="1"
-                                                checked={formik.values.is_returned_data == 1}
-                                            />
-                                            <span className="ms-1 me-2">คืนแล้ว</span>
-
-                                            <Field
-                                                type="radio"
-                                                name="is_returned_data"
-                                                value="2"
-                                                checked={formik.values.is_returned_data == 2}
-                                            />
-                                            <span className="ms-1">ยังไม่คืน</span>
-                                        </label>
+                                    <Col md={8}>
+                                        <label htmlFor="">ระบุ</label>
+                                        <input
+                                            type="text"
+                                            name="num_of_employees"
+                                            value={formik.values.num_of_employees}
+                                            onChange={formik.handleChange}
+                                            className={`form-control ${(formik.errors.num_of_employees && formik.touched.num_of_employees) ? 'is-invalid' : ''}`}
+                                        />
                                         {(formik.errors.is_returned_data && formik.touched.is_returned_data) && (
                                             <span className="text-danger text-sm">{formik.errors.is_returned_data}</span>
+                                        )}
+                                    </Col>
+                                </Row>
+                                <Row className="mb-2">
+                                    <Col>
+                                        <label htmlFor="">รายละเอียดของปัญหา</label>
+                                        <textarea
+                                            rows={2}
+                                            name="problem_text"
+                                            value={formik.values.problem_text}
+                                            onChange={formik.handleChange}
+                                            className={`form-control ${(formik.errors.problem_text && formik.touched.problem_text) ? 'is-invalid' : ''}`}
+                                        ></textarea>
+                                        {(formik.errors.problem_text && formik.touched.problem_text) && (
+                                            <span className="text-danger text-sm">{formik.errors.problem_text}</span>
+                                        )}
+                                    </Col>
+                                </Row>
+                                <Row className="mb-2">
+                                    <Col>
+                                        <label htmlFor="">ผลการสำรวจและสาเหตุของปัญหา</label>
+                                        <select
+                                            name="cause_id"
+                                            value={formik.values.cause_id}
+                                            onChange={formik.handleChange}
+                                            className={`form-control ${(formik.errors.cause_id && formik.touched.cause_id) ? 'is-invalid' : ''}`}
+                                        >
+                                            <option value="">-- เลือก --</option>
+                                            <option value="">สิ่งแวดล้อมในการทำงานไม่เหมาะสม</option>
+                                            <option value="">เหตุรำคาญจากสิ่งแวดล้อม</option>
+                                            <option value="">อื่นๆ</option>
+                                        </select>
+                                        {(formik.errors.cause_id && formik.touched.cause_id) && (
+                                            <span className="text-danger text-sm">{formik.errors.cause_id}</span>
+                                        )}
+                                    </Col>
+                                    <Col md={8}>
+                                        <label htmlFor="">ระบุ</label>
+                                        <input
+                                            type="text"
+                                            name="num_of_employees"
+                                            value={formik.values.num_of_employees}
+                                            onChange={formik.handleChange}
+                                            className={`form-control ${(formik.errors.num_of_employees && formik.touched.num_of_employees) ? 'is-invalid' : ''}`}
+                                        />
+                                        {(formik.errors.is_returned_data && formik.touched.is_returned_data) && (
+                                            <span className="text-danger text-sm">{formik.errors.is_returned_data}</span>
+                                        )}
+                                    </Col>
+                                </Row>
+                                <Row className="mb-2">
+                                    <Col>
+                                        <label htmlFor="">การเสนอแนะและการแก้ไขปัญหา</label>
+                                        <select
+                                            name="solution_id"
+                                            value={formik.values.solution_id}
+                                            onChange={formik.handleChange}
+                                            className={`form-control ${(formik.errors.solution_id && formik.touched.solution_id) ? 'is-invalid' : ''}`}
+                                        >
+                                            <option value="">-- เลือก --</option>
+                                            <option value="">วางแผนการตรวจวัดสิ่งแวดล้อม</option>
+                                            <option value="">แก้ไขปัญหาร่วมกับหน่วยงาน</option>
+                                            <option value="">อื่นๆ</option>
+                                        </select>
+                                        {(formik.errors.solution_id && formik.touched.solution_id) && (
+                                            <span className="text-danger text-sm">{formik.errors.solution_id}</span>
+                                        )}
+                                    </Col>
+                                    <Col md={8}>
+                                        <label htmlFor="">ระบุ</label>
+                                        <input
+                                            type="text"
+                                            name="solution_text"
+                                            value={formik.values.solution_text}
+                                            onChange={formik.handleChange}
+                                            className={`form-control ${(formik.errors.solution_text && formik.touched.solution_text) ? 'is-invalid' : ''}`}
+                                        />
+                                        {(formik.errors.solution_text && formik.touched.solution_text) && (
+                                            <span className="text-danger text-sm">{formik.errors.solution_text}</span>
                                         )}
                                     </Col>
                                 </Row>
@@ -390,7 +363,7 @@ const OccupationForm = ({ id, surveying }) => {
                             </Tab>
                             <Tab
                                 eventKey="surveyors"
-                                title="ผู้ตรวจวัด"
+                                title="ผู้ร่วมสำรวจ"
                                 className={`border border-top-0 p-4 mb-3`}
                                 style={{ minHeight: '50vh' }}
                             >
