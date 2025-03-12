@@ -18,12 +18,12 @@ const EditSanitation = () => {
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'แก้ไขผลตรวจวัดสิ่งแวดล้อม',
+            title: 'แก้ไขตรวจประเมินมาตรฐาน',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'environments', name: 'รายการผลตรวจวัดสิ่งแวดล้อม', path: '/services/environments' },
-                { id: 'edit', name: 'แก้ไขผลตรวจวัดสิ่งแวดล้อม', path: null, active: true }
+                { id: 'environments', name: 'รายการตรวจประเมินมาตรฐาน', path: '/services/environments' },
+                { id: 'edit', name: 'แก้ไขตรวจประเมินมาตรฐาน', path: null, active: true }
             ]
         }))
     }, []);
@@ -50,7 +50,7 @@ const EditSanitation = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">แก้ไขผลตรวจวัดสิ่งแวดล้อม</h5>
+                            <h5 className="card-title">แก้ไขตรวจประเมินมาตรฐาน</h5>
 
                             {loading && <div className="text-center"><Loading /></div>}
 

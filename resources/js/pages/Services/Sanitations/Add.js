@@ -16,12 +16,12 @@ const AddSanitation = () => {
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'บันทึกผลตรวจวัดสิ่งแวดล้อม',
+            title: 'บันทึกตรวจประเมินมาตรฐาน',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'environments', name: 'รายการผลตรวจวัดสิ่งแวดล้อม', path: '/services/environments' },
-                { id: 'new', name: 'บันทึกผลตรวจวัดสิ่งแวดล้อม', path: null, active: true }
+                { id: 'environments', name: 'รายการตรวจประเมินมาตรฐาน', path: '/services/environments' },
+                { id: 'new', name: 'บันทึกตรวจประเมินมาตรฐาน', path: null, active: true }
             ]
         }))
     }, []);
@@ -42,7 +42,7 @@ const AddSanitation = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">บันทึกผลตรวจวัดสิ่งแวดล้อม</h5>
+                            <h5 className="card-title">บันทึกตรวจประเมินมาตรฐาน</h5>
 
                             <EnvironmentForm />
                         </div>
