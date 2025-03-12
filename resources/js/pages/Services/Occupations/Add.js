@@ -16,12 +16,12 @@ const AddOccupation = () => {
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'บันทึกอาชีวอนามัยในโรงพยาบาล',
+            title: 'บันทึกการสำรวจสภาพปัญหา',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'occupations', name: 'รายการอาชีวอนามัยในโรงพยาบาล', path: '/services/occupations' },
-                { id: 'new', name: 'บันทึกอาชีวอนามัยในโรงพยาบาล', path: null, active: true }
+                { id: 'occupations', name: 'รายการสำรวจสภาพปัญหา', path: '/services/occupations' },
+                { id: 'new', name: 'บันทึกการสำรวจสภาพปัญหา', path: null, active: true }
             ]
         }))
     }, []);
@@ -42,7 +42,7 @@ const AddOccupation = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">บันทึกอาชีวอนามัยในโรงพยาบาล</h5>
+                            <h5 className="card-title">บันทึกการสำรวจสภาพปัญหา</h5>
 
                             <OccupationForm />
                         </div>

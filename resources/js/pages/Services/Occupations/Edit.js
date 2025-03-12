@@ -18,12 +18,12 @@ const EditOccupation = () => {
     useEffect(() => {
         setGlobal((prev) => ({
             ...prev,
-            title: 'แก้ไขอาชีวอนามัยในโรงพยาบาล',
+            title: 'แก้ไขรายการสำรวจสภาพปัญหา',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'occupations', name: 'รายการอาชีวอนามัยในโรงพยาบาล', path: '/services/occupations' },
-                { id: 'edit', name: 'แก้ไขอาชีวอนามัยในโรงพยาบาล', path: null, active: true }
+                { id: 'occupations', name: 'รายการสำรวจสภาพปัญหา', path: '/services/occupations' },
+                { id: 'edit', name: 'แก้ไขรายการสำรวจสภาพปัญหา', path: null, active: true }
             ]
         }))
     }, []);
@@ -50,7 +50,7 @@ const EditOccupation = () => {
                 <div className="col-lg-12">
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title">แก้ไขอาชีวอนามัยในโรงพยาบาล</h5>
+                            <h5 className="card-title">แก้ไขรายการสำรวจสภาพปัญหา</h5>
 
                             {loading && <div className="text-center"><Loading /></div>}
 
