@@ -9,10 +9,11 @@ const Checkbox = (props) => {
     }, [props.checked])
 
     return (
-        <>
+        <div>
             <Field
                 type="checkbox"
                 name={props.name}
+                value={props.value}
                 checked={checked}
                 onChange={(e) => {
                     setChecked(e.target.checked)
@@ -20,7 +21,7 @@ const Checkbox = (props) => {
                 }}
                 className="me-1"
             /> {props.label}
-        </>
+        </div>
     )
 }
 
