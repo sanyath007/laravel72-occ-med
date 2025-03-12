@@ -1,8 +1,24 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { GlobalContext } from '../../../context/globalContext'
 import Pagination from '../../../components/Pagination'
 
 const SanitationList = () => {
+    const { setGlobal } = useContext(GlobalContext)
+
+    /** Initial global states */
+    useEffect(() => {
+        setGlobal((prev) => ({
+            ...prev,
+            title: 'รายการตรวจประเมินมาตรฐาน',
+            breadcrumbs: [
+                { id: 'home', name: 'Home', path: '/' },
+                { id: 'services', name: 'งานบริการ', path: '/services' },
+                { id: 'sanitations', name: 'รายการตรวจประเมินมาตรฐาน', path: '/services/sanitations' },
+            ]
+        }))
+    }, []);
+
     return (
         <section className="section">
             <div className="row">
@@ -18,7 +34,7 @@ const SanitationList = () => {
                                 }}
                                 className="mb-2"
                             >
-                                <h5 className="card-title p-0">อาชีวอนามัยในโรงพยาบาล</h5>
+                                <h5 className="card-title p-0">รายการตรวจประเมินมาตรฐาน</h5>
 
                                 <div>
                                     <Link to="/services/sanitations/new" className="btn btn-primary">เพิ่มรายการ</Link>
