@@ -104,6 +104,7 @@ const EnvironmentForm = ({ id, surveying }) => {
                 job_desc_id: surveying ? surveying.job_desc_id : '',
                 job_desc_text: (surveying && surveying.job_desc_text) ? surveying.job_desc_text : '',
                 environments: surveying ? surveying.environments : [],
+                other_text: (surveying && surveying.other_text) ? surveying.other_text : '',
                 have_report: (surveying && surveying.have_report) ? surveying.have_report : '',
                 is_returned_data: (surveying && surveying.is_adviced) ? surveying.is_adviced : '',
                 // remark: (surveying && surveying.remark) ? surveying.remark : '',
@@ -310,59 +311,72 @@ const EnvironmentForm = ({ id, surveying }) => {
                                 <Row className="mb-2">
                                     <Col>
                                         <label htmlFor="">รายการสิ่งแวดล้อม</label>
-                                        <label className="form-control" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                            <Checkbox
-                                                name="environments"
-                                                value="light"
-                                                handleChange={(val) => handleCheckboxGroup(formik, 'light', val)}
-                                                label="แสงส่วาง"
-                                            />
+                                        <div className="form-control" style={{ display: 'flex', flexDirection: 'column' }}>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                <Checkbox
+                                                    name="environments"
+                                                    value="light"
+                                                    handleChange={(val) => handleCheckboxGroup(formik, 'light', val)}
+                                                    label="แสงส่วาง"
+                                                />
 
-                                            <Checkbox
-                                                name="environments"
-                                                value="heat"
-                                                handleChange={(val) => handleCheckboxGroup(formik, 'heat', val)}
-                                                label="ความร้อน"
-                                            />
+                                                <Checkbox
+                                                    name="environments"
+                                                    value="heat"
+                                                    handleChange={(val) => handleCheckboxGroup(formik, 'heat', val)}
+                                                    label="ความร้อน"
+                                                />
 
-                                            <Checkbox
-                                                name="environments"
-                                                value="sound"
-                                                handleChange={(val) => handleCheckboxGroup(formik, 'sound', val)}
-                                                label="เสียง"
-                                            />
+                                                <Checkbox
+                                                    name="environments"
+                                                    value="sound"
+                                                    handleChange={(val) => handleCheckboxGroup(formik, 'sound', val)}
+                                                    label="เสียง"
+                                                />
 
-                                            <Checkbox
-                                                name="environments"
-                                                value="chem"
-                                                handleChange={(val) => handleCheckboxGroup(formik, 'chem', val)}
-                                                label="สารเคมี"
-                                            />
+                                                <Checkbox
+                                                    name="environments"
+                                                    value="chem"
+                                                    handleChange={(val) => handleCheckboxGroup(formik, 'chem', val)}
+                                                    label="สารเคมี"
+                                                />
+                                            </div>
 
-                                            <Checkbox
-                                                name="environments"
-                                                value="aqi"
-                                                handleChange={(val) => handleCheckboxGroup(formik, 'aqi', val)}
-                                                label="คุณภาพอากาศในอาคาร"
-                                            />
+                                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                <Checkbox
+                                                    name="environments"
+                                                    value="aqi"
+                                                    handleChange={(val) => handleCheckboxGroup(formik, 'aqi', val)}
+                                                    label="คุณภาพอากาศในอาคาร"
+                                                />
 
-                                            <Checkbox
-                                                name="environments"
-                                                value="air"
-                                                handleChange={(val) => handleCheckboxGroup(formik, 'air', val)}
-                                                label="การหมุนเวียนอากาศ"
-                                            />
+                                                <Checkbox
+                                                    name="environments"
+                                                    value="air"
+                                                    handleChange={(val) => handleCheckboxGroup(formik, 'air', val)}
+                                                    label="การหมุนเวียนอากาศ"
+                                                />
 
-                                            <Checkbox
-                                                name="environments"
-                                                value="oth"
-                                                handleChange={(val) => handleCheckboxGroup(formik, 'oth', val)}
-                                                label="อื่นๆ"
-                                            />
-                                        </label>
+                                                <Checkbox
+                                                    name="environments"
+                                                    value="oth"
+                                                    handleChange={(val) => handleCheckboxGroup(formik, 'oth', val)}
+                                                    label="อื่นๆ"
+                                                />
+                                            </div>
+                                        </div>
                                         {(formik.errors.environments && formik.touched.environments) && (
                                             <span className="text-danger text-sm">{formik.errors.environments}</span>
                                         )}
+                                    </Col>
+                                    <Col md={4}>
+                                        <label htmlFor="">ระบุรายการสิ่งแวดล้อมอื่นๆ</label>
+                                        <input
+                                            name="other_text"
+                                            value={formik.values.other_text}
+                                            onChange={formik.handleChange}
+                                            className="form-control"
+                                        />
                                     </Col>
                                 </Row>
                                 <Row className="mb-2">
