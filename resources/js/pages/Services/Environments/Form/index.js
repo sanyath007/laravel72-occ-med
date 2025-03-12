@@ -130,7 +130,7 @@ const EnvironmentForm = ({ id, surveying }) => {
                         <Tabs defaultActiveKey="home">
                             <Tab
                                 eventKey="home"
-                                title="รายละเอียดดารตรวจวัดสิ่งแวดล้อม"
+                                title="รายละเอียดการตรวจวัดสิ่งแวดล้อม"
                                 className="border border-top-0 p-4 mb-3"
                             >
                                 <Row className="mb-2">

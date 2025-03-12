@@ -83,8 +83,8 @@ const OccupationForm = ({ id, surveying }) => {
             initialValues={{
                 survey_date: surveying ? surveying.survey_date : '',
                 objective_id: surveying ? surveying.objective_id : '',
+                objective_text: (surveying && surveying.objective_text) ? surveying.objective_text : '',
                 division_id: surveying ? surveying.division_id : '',
-                surveyors: surveying ? surveying.surveyors : [],
                 company_id: surveying ? surveying.company_id : '',
                 source_id: surveying ? surveying.source_id : '',
                 source_text: (surveying && surveying.source_text) ? surveying.source_text : '',
@@ -94,6 +94,7 @@ const OccupationForm = ({ id, surveying }) => {
                 solution_id: (surveying && surveying.solution_id) ? surveying.solution_id : '',
                 solution_text: (surveying && surveying.solution_text) ? surveying.solution_text : '',
                 file_attachment: '',
+                surveyors: surveying ? surveying.surveyors : [],
                 pic_attachments: []
             }}
             validationSchema={surveySchema}
