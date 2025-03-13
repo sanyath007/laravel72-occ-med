@@ -13,7 +13,7 @@ class EnvMeasurementController extends Controller
     {
         $date = $request->get('date');
 
-        $surveyings = EnvMeasurement::with('division','company','company.type','surveyors')
+        $measurements = EnvMeasurement::with('division','company','company.type','surveyors')
                         ->with('surveyors.employee','surveyors.employee.position','surveyors.employee.level')
                         // ->when(!empty($date), function($q) use ($date) {
                         //     $q->where('surver_date', $date);
@@ -21,16 +21,16 @@ class EnvMeasurementController extends Controller
                         ->orderBy('survey_date', 'DESC')
                         ->paginate(10);
 
-        return response()->json($surveyings);
+        return response()->json($measurements);
     }
 
     public function getById($id)
     {
-        $surveying = EnvMeasurement::with('division','company','company.type','surveyors')
+        $measurement = EnvMeasurement::with('division','company','company.type','surveyors')
                         ->with('surveyors.employee','surveyors.employee.position','surveyors.employee.level')
                         ->find($id);
 
-        return response()->json($surveying);
+        return response()->json($measurement);
     }
 
     public function getInitialFormData()
@@ -50,37 +50,38 @@ class EnvMeasurementController extends Controller
     public function store(Request $request) 
     {
         try {
-            $surveying = new EnvMeasurement;
-            $surveying->survey_date         = $request['survey_date'];
-            $surveying->objective_id        = $request['objective_id'];
-            $surveying->division_id         = $request['division_id'];
-            $surveying->company_id          = $request['company_id'];
-            $surveying->num_of_departs      = $request['num_of_departs'];
-            $surveying->num_of_employees    = $request['num_of_employees'];
-            $surveying->num_of_health_items = $request['num_of_health_items'];
-            $surveying->is_found_threat     = $request['is_found_threat'] ? '1' : '0';
-            $surveying->have_hra            = $request['have_hra'];
-            $surveying->have_report         = $request['have_report'];
-            $surveying->is_adviced          = $request['is_adviced'];
-            $surveying->is_returned_data    = $request['is_returned_data'];
-            $surveying->guidelines          = !empty($request['guidelines']) ? implode(',', $request['guidelines']) : '';
-            $surveying->remark              = $request['remark'];
-
-            /** Upload file and pictures */
+            $measurement = new EnvMeasurement;
+            $measurement->measure_date        = $request['measure_date'];
+            $measurement->objective_id        = $request['objective_id'];
+            $measurement->objective_text      = $request['objective_text'];
+            $measurement->division_id         = $request['division_id'];
+            $measurement->company_id          = $request['company_id'];
+            $measurement->num_of_departs      = $request['num_of_departs'];
+            $measurement->num_of_employees    = $request['num_of_employees'];
+            $measurement->job_desc_id         = $request['job_desc_id'];
+            $measurement->job_desc_text       = $request['job_desc_text'];
+            $measurement->environments        = $request['environments'];
+            $measurement->other_text          = $request['other_text'];
+            $measurement->have_report         = $request['have_report'];
+            $measurement->is_returned_data    = $request['is_returned_data'];
+            // $measurement->remark              = $request['remark'];
+            
+            /** Upload attachment files */
             if ($request->file('file_attachment')) {
                 $file = $request->file('file_attachment');
                 $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-                $destinationPath = 'uploads/wts/file/';
-
+                $destinationPath = 'uploads/env/file/';
+                
                 if ($file->move($destinationPath, $fileName)) {
-                    $surveying->file_attachment = $fileName;
+                    $measurement->file_attachment = $fileName;
                 }
             }
-
+            
+            /** Upload pictures */
             if ($request->file('pic_attachments')) {
                 $index = 0;
                 $picNames = '';
-                $destinationPath = 'uploads/wts/pic/';
+                $destinationPath = 'uploads/env/pic/';
 
                 foreach($request->file('pic_attachments') as $file) {
                     $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
@@ -96,13 +97,13 @@ class EnvMeasurementController extends Controller
                     $index++;
                 }
 
-                $surveying->pic_attachments = $picNames;
+                $measurement->pic_attachments = $picNames;
             }
 
-            if ($surveying->save()) {
+            if ($measurement->save()) {
                 if (count($request['surveyors']) > 0) {
                     foreach($request['surveyors'] as $surveyor) {
-                        $newSurveyor = new SurveyingSurveyor;
+                        $newSurveyor = new MeasurementSurveyor;
                         $newSurveyor->survey_id     = $surveying->id;
                         $newSurveyor->employee_id   = $surveyor['employee_id'];
                         $newSurveyor->save();
@@ -112,7 +113,7 @@ class EnvMeasurementController extends Controller
                 return [
                     'status'        => 1,
                     'message'       => 'Insertion successfully!!',
-                    "surveying"     => $surveying
+                    "measurement"   => $measurement
                 ];
             } else {
                 return [
@@ -131,21 +132,20 @@ class EnvMeasurementController extends Controller
     public function update(Request $request, $id) 
     {
         try {
-            $surveying = EnvMeasurement::find($id);
-            $surveying->survey_date         = $request['survey_date'];
-            $surveying->objective_id        = $request['objective_id'];
-            $surveying->division_id         = $request['division_id'];
-            $surveying->company_id          = $request['company_id'];
-            $surveying->num_of_departs      = $request['num_of_departs'];
-            $surveying->num_of_employees    = $request['num_of_employees'];
-            $surveying->num_of_health_items = $request['num_of_health_items'];
-            $surveying->is_found_threat     = $request['is_found_threat'] ? '1' : '0';
-            $surveying->have_hra            = $request['have_hra'];
-            $surveying->have_report         = $request['have_report'];
-            $surveying->is_adviced          = $request['is_adviced'];
-            $surveying->is_returned_data    = $request['is_returned_data'];
-            $surveying->guidelines          = implode(',', $request['guidelines']);
-            $surveying->remark              = $request['remark'];
+            $measurement = EnvMeasurement::find($id);
+            $measurement->measure_date        = $request['measure_date'];
+            $measurement->objective_id        = $request['objective_id'];
+            $measurement->objective_text      = $request['objective_text'];
+            $measurement->division_id         = $request['division_id'];
+            $measurement->company_id          = $request['company_id'];
+            $measurement->num_of_departs      = $request['num_of_departs'];
+            $measurement->num_of_employees    = $request['num_of_employees'];
+            $measurement->job_desc_id         = $request['job_desc_id'];
+            $measurement->job_desc_text       = $request['job_desc_text'];
+            $measurement->environments        = $request['environments'];
+            $measurement->other_text          = $request['other_text'];
+            $measurement->have_report         = $request['have_report'];
+            $measurement->is_returned_data    = $request['is_returned_data'];
 
             /** Upload file and pictures */
             if ($request->file('file_attachment')) {
@@ -154,13 +154,13 @@ class EnvMeasurementController extends Controller
                 $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
 
                 /** Check and remove uploaded file */
-                $existedFile = $destinationPath . $surveying->file_attachment;
+                $existedFile = $destinationPath . $measurement->file_attachment;
                 if (\File::exists($existedFile)) {
                     \File::delete($existedFile);
                 }
 
                 if ($file->move($destinationPath, $fileName)) {
-                    $surveying->file_attachment = $fileName;
+                    $measurement->file_attachment = $fileName;
                 }
             }
 
@@ -183,10 +183,10 @@ class EnvMeasurementController extends Controller
             //         $index++;
             //     }
 
-            //     $surveying->pic_attachments = $picNames;
+            //     $measurement->pic_attachments = $picNames;
             // }
 
-            if ($surveying->save()) {
+            if ($measurement->save()) {
                 if (count($request['surveyors']) > 0) {
                     foreach($request['surveyors'] as $surveyor) {
                         if (array_key_exists('id', $surveyor)) {
@@ -199,7 +199,7 @@ class EnvMeasurementController extends Controller
                         } else {
                             /** รายการใหม่ */
                             $newSurveyor = new SurveyingSurveyor;
-                            $newSurveyor->survey_id     = $surveying->id;
+                            $newSurveyor->survey_id     = $measurement->id;
                             $newSurveyor->employee_id   = $surveyor['employee_id'];
                             $newSurveyor->save();
                         }
@@ -209,9 +209,9 @@ class EnvMeasurementController extends Controller
                 }
 
                 return [
-                    'status'    => 1,
-                    'message'   => 'Updating successfully!!',
-                    "surveying" => $surveying
+                    'status'        => 1,
+                    'message'       => 'Updating successfully!!',
+                    "measurement"   => $measurement
                 ];
             } else {
                 return [
@@ -230,17 +230,17 @@ class EnvMeasurementController extends Controller
     public function destroy($id) 
     {
         try {
-            $surveying = EnvMeasurement::find($id);
+            $measurement = EnvMeasurement::find($id);
 
             /** Remove uploaded file */
             $destinationPath = 'uploads/wts/';
-            $existedFile = $destinationPath .'file/'. $surveying->file_attachment;
+            $existedFile = $destinationPath .'file/'. $measurement->file_attachment;
             if (\File::exists($existedFile)) {
                 \File::delete($existedFile);
             }
 
-            if ($surveying->pic_attachments != '') {
-                $pictures = explode(',', $surveying->pic_attachments);
+            if ($measurement->pic_attachments != '') {
+                $pictures = explode(',', $measurement->pic_attachments);
                 foreach($pictures as $pic) {
                     $existed = $destinationPath .'file/'. $pic;
 
@@ -250,7 +250,7 @@ class EnvMeasurementController extends Controller
                 }
             }
 
-            if ($surveying->delete()) {
+            if ($measurement->delete()) {
                 SurveyingSurveyor::where('survey_id', $id)->delete();
 
                 return [
