@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Surveying;
+use App\Models\WTSurveying;
 use App\Models\SurveyingSurveyor;
 use App\Models\Company;
 
-class SurveyingController extends Controller
+class WTSurveyingController extends Controller
 {
     public function search(Request $request)
     {
         $date = $request->get('date');
 
-        $surveyings = Surveying::with('division','company','company.type','surveyors')
+        $surveyings = WTSurveying::with('division','company','company.type','surveyors')
                         ->with('surveyors.employee','surveyors.employee.position','surveyors.employee.level')
                         // ->when(!empty($date), function($q) use ($date) {
                         //     $q->where('surver_date', $date);
@@ -26,7 +26,7 @@ class SurveyingController extends Controller
 
     public function getById($id)
     {
-        $surveying = Surveying::with('division','company','company.type','surveyors')
+        $surveying = WTSurveying::with('division','company','company.type','surveyors')
                         ->with('surveyors.employee','surveyors.employee.position','surveyors.employee.level')
                         ->find($id);
 
@@ -131,7 +131,7 @@ class SurveyingController extends Controller
     public function update(Request $request, $id) 
     {
         try {
-            $surveying = Surveying::find($id);
+            $surveying = WTSurveying::find($id);
             $surveying->survey_date         = $request['survey_date'];
             $surveying->objective_id        = $request['objective_id'];
             $surveying->division_id         = $request['division_id'];
@@ -230,7 +230,7 @@ class SurveyingController extends Controller
     public function destroy($id) 
     {
         try {
-            $surveying = Surveying::find($id);
+            $surveying = WTSurveying::find($id);
 
             /** Remove uploaded file */
             $destinationPath = 'uploads/wts/';

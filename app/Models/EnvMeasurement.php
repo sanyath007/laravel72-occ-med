@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Surveying extends Model
+class EnvMeasurement extends Model
 {
-    protected $table = "surveyings";
+    protected $table = "env_measurements";
 
     // protected $primaryKey = "id";
 

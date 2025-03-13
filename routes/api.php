@@ -111,13 +111,13 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::delete('/vaccinations/{id}', 'VaccinationController@destroy');
 
     /** Surveyings */
-    Route::get('/surveyings', 'SurveyingController@getAll');
-    Route::get('/surveyings/search', 'SurveyingController@search');
-    Route::get('/surveyings/{id}', 'SurveyingController@getById');
-    Route::get('/surveyings/init/form', 'SurveyingController@getInitialFormData');
-    Route::post('/surveyings', 'SurveyingController@store');
-    Route::post('/surveyings/{id}', 'SurveyingController@update');
-    Route::delete('/surveyings/{id}', 'SurveyingController@destroy');
+    Route::get('/surveyings', 'WTSurveyingController@getAll');
+    Route::get('/surveyings/search', 'WTSurveyingController@search');
+    Route::get('/surveyings/{id}', 'WTSurveyingController@getById');
+    Route::get('/surveyings/init/form', 'WTSurveyingController@getInitialFormData');
+    Route::post('/surveyings', 'WTSurveyingController@store');
+    Route::post('/surveyings/{id}', 'WTSurveyingController@update');
+    Route::delete('/surveyings/{id}', 'WTSurveyingController@destroy');
 
     /** Emergency Response Plans */
     Route::get('/er-plans', 'ERPlanController@getAll');

@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Environtment;
-use App\Models\EnvirontmentSurveyor;
+use App\Models\StdAssessment;
+use App\Models\SurveyingSurveyor;
 use App\Models\Company;
 
-class EnvirontmentController extends Controller
+class StdAssessmentController extends Controller
 {
     public function search(Request $request)
     {
         $date = $request->get('date');
 
-        $surveyings = Environtment::with('division','company','company.type','surveyors')
+        $surveyings = StdAssessment::with('division','company','company.type','surveyors')
                         ->with('surveyors.employee','surveyors.employee.position','surveyors.employee.level')
                         // ->when(!empty($date), function($q) use ($date) {
                         //     $q->where('surver_date', $date);
@@ -26,7 +26,7 @@ class EnvirontmentController extends Controller
 
     public function getById($id)
     {
-        $surveying = Environtment::with('division','company','company.type','surveyors')
+        $surveying = StdAssessment::with('division','company','company.type','surveyors')
                         ->with('surveyors.employee','surveyors.employee.position','surveyors.employee.level')
                         ->find($id);
 
@@ -50,7 +50,7 @@ class EnvirontmentController extends Controller
     public function store(Request $request) 
     {
         try {
-            $surveying = new Environtment;
+            $surveying = new StdAssessment;
             $surveying->survey_date         = $request['survey_date'];
             $surveying->objective_id        = $request['objective_id'];
             $surveying->division_id         = $request['division_id'];
@@ -102,7 +102,7 @@ class EnvirontmentController extends Controller
             if ($surveying->save()) {
                 if (count($request['surveyors']) > 0) {
                     foreach($request['surveyors'] as $surveyor) {
-                        $newSurveyor = new EnvirontmentSurveyor;
+                        $newSurveyor = new SurveyingSurveyor;
                         $newSurveyor->survey_id     = $surveying->id;
                         $newSurveyor->employee_id   = $surveyor['employee_id'];
                         $newSurveyor->save();
@@ -131,7 +131,7 @@ class EnvirontmentController extends Controller
     public function update(Request $request, $id) 
     {
         try {
-            $surveying = Environtment::find($id);
+            $surveying = StdAssessment::find($id);
             $surveying->survey_date         = $request['survey_date'];
             $surveying->objective_id        = $request['objective_id'];
             $surveying->division_id         = $request['division_id'];
@@ -191,21 +191,21 @@ class EnvirontmentController extends Controller
                     foreach($request['surveyors'] as $surveyor) {
                         if (array_key_exists('id', $surveyor)) {
                             /** รายการเดิม */
-                            if (EnvirontmentSurveyor::where('employee_id', $surveyor['employee_id'])->count() == 0) {
-                                $updatedSurveyor = EnvirontmentSurveyor::find($surveyor['id']);
+                            if (SurveyingSurveyor::where('employee_id', $surveyor['employee_id'])->count() == 0) {
+                                $updatedSurveyor = SurveyingSurveyor::find($surveyor['id']);
                                 $updatedSurveyor->employee_id = $surveyor['employee_id'];
                                 $updatedSurveyor->save();
                             }
                         } else {
                             /** รายการใหม่ */
-                            $newSurveyor = new EnvirontmentSurveyor;
+                            $newSurveyor = new SurveyingSurveyor;
                             $newSurveyor->survey_id     = $surveying->id;
                             $newSurveyor->employee_id   = $surveyor['employee_id'];
                             $newSurveyor->save();
                         }
                     }
                 } else {
-                    EnvirontmentSurveyor::where('survey_id', $id)->delete();
+                    SurveyingSurveyor::where('survey_id', $id)->delete();
                 }
 
                 return [
@@ -230,7 +230,7 @@ class EnvirontmentController extends Controller
     public function destroy($id) 
     {
         try {
-            $surveying = Environtment::find($id);
+            $surveying = StdAssessment::find($id);
 
             /** Remove uploaded file */
             $destinationPath = 'uploads/wts/';
@@ -251,7 +251,7 @@ class EnvirontmentController extends Controller
             }
 
             if ($surveying->delete()) {
-                EnvirontmentSurveyor::where('survey_id', $id)->delete();
+                SurveyingSurveyor::where('survey_id', $id)->delete();
 
                 return [
                     'status'    => 1,
