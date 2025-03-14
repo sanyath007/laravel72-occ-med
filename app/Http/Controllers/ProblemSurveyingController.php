@@ -53,18 +53,17 @@ class ProblemSurveyingController extends Controller
             $surveying = new ProblemSurveying;
             $surveying->survey_date         = $request['survey_date'];
             $surveying->objective_id        = $request['objective_id'];
+            $surveying->objective_text      = $request['objective_text'];
             $surveying->division_id         = $request['division_id'];
             $surveying->company_id          = $request['company_id'];
-            $surveying->num_of_departs      = $request['num_of_departs'];
-            $surveying->num_of_employees    = $request['num_of_employees'];
-            $surveying->num_of_health_items = $request['num_of_health_items'];
-            $surveying->is_found_threat     = $request['is_found_threat'] ? '1' : '0';
-            $surveying->have_hra            = $request['have_hra'];
-            $surveying->have_report         = $request['have_report'];
-            $surveying->is_adviced          = $request['is_adviced'];
-            $surveying->is_returned_data    = $request['is_returned_data'];
-            $surveying->guidelines          = !empty($request['guidelines']) ? implode(',', $request['guidelines']) : '';
-            $surveying->remark              = $request['remark'];
+            $surveying->source_id           = $request['source_id'];
+            $surveying->source_text         = $request['source_text'];
+            $surveying->problem_text        = $request['problem_text'];
+            $surveying->cause_id            = $request['cause_id'];
+            $surveying->cause_text          = $request['cause_text'];
+            $surveying->solution_id         = $request['solution_id'];
+            $surveying->solution_text       = $request['solution_text'];
+            // $surveying->remark              = $request['remark'];
 
             /** Upload file and pictures */
             if ($request->file('file_attachment')) {
@@ -134,18 +133,16 @@ class ProblemSurveyingController extends Controller
             $surveying = ProblemSurveying::find($id);
             $surveying->survey_date         = $request['survey_date'];
             $surveying->objective_id        = $request['objective_id'];
+            $surveying->objective_text      = $request['objective_text'];
             $surveying->division_id         = $request['division_id'];
             $surveying->company_id          = $request['company_id'];
-            $surveying->num_of_departs      = $request['num_of_departs'];
-            $surveying->num_of_employees    = $request['num_of_employees'];
-            $surveying->num_of_health_items = $request['num_of_health_items'];
-            $surveying->is_found_threat     = $request['is_found_threat'] ? '1' : '0';
-            $surveying->have_hra            = $request['have_hra'];
-            $surveying->have_report         = $request['have_report'];
-            $surveying->is_adviced          = $request['is_adviced'];
-            $surveying->is_returned_data    = $request['is_returned_data'];
-            $surveying->guidelines          = implode(',', $request['guidelines']);
-            $surveying->remark              = $request['remark'];
+            $surveying->source_id           = $request['source_id'];
+            $surveying->source_text         = $request['source_text'];
+            $surveying->problem_text        = $request['problem_text'];
+            $surveying->cause_id            = $request['cause_id'];
+            $surveying->cause_text          = $request['cause_text'];
+            $surveying->solution_id         = $request['solution_id'];
+            $surveying->solution_text       = $request['solution_text'];
 
             /** Upload file and pictures */
             if ($request->file('file_attachment')) {
