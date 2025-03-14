@@ -103,9 +103,10 @@ class EnvMeasurementController extends Controller
             if ($measurement->save()) {
                 if (count($request['surveyors']) > 0) {
                     foreach($request['surveyors'] as $surveyor) {
-                        $newSurveyor = new MeasurementSurveyor;
-                        $newSurveyor->survey_id     = $surveying->id;
-                        $newSurveyor->employee_id   = $surveyor['employee_id'];
+                        $newSurveyor = new SurveyingSurveyor;
+                        $newSurveyor->survey_type_id    = 2;
+                        $newSurveyor->survey_id         = $measurement->id;
+                        $newSurveyor->employee_id       = $surveyor['employee_id'];
                         $newSurveyor->save();
                     }
                 }
