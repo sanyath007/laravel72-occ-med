@@ -21,6 +21,9 @@ import erplanReducer from './slices/erplan'
 import trainingReducer from './slices/training'
 import screeningReducer from './slices/screening'
 import supervisionReducer from './slices/supervision'
+import environmentReducer from './slices/environment'
+import occupationReducer from './slices/occupation'
+import sanitationReducer from './slices/sanitation'
 import { patientsApi } from './services/patientsApi'
 import { reportBulletApi } from './services/reportBulletApi'
 import { vaccinationApi } from './services/vaccinationApi'
@@ -56,6 +59,9 @@ export default configureStore({
         erplan: erplanReducer,
         training: trainingReducer,
         screening: screeningReducer,
+        environment: environmentReducer,
+        occupation: occupationReducer,
+        sanitation: sanitationReducer,
         [patientsApi.reducerPath]: patientsApi.reducer,
         [reportBulletApi.reducerPath]: reportBulletApi.reducer,
         [vaccinationApi.reducerPath]: vaccinationApi.reducer,
