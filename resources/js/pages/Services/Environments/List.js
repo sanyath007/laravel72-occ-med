@@ -2,7 +2,8 @@ import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../../context/globalContext'
-import { getMeasurements } from '../../../store/slices/environment'
+import { getMeasurements, destroy } from '../../../store/slices/environment'
+import { toShortTHDate } from '../../../utils/formatter'
 import Pagination from '../../../components/Pagination'
 
 const EnvironmentList = () => {
@@ -27,7 +28,11 @@ const EnvironmentList = () => {
         dispatch(getMeasurements({ url: '/api/environments/search' }));
     }, []);
 
-    console.log(measurements);
+    const handleDelete = (id) => {
+        if (window.confirm('คุณต้องการลบรายการตรวจวัดสิ่งแวดล้อมใช่หรือไม่?')) {
+            dispatch(destroy(id));
+        }
+    };
 
     return (
         <section className="section">
@@ -53,12 +58,51 @@ const EnvironmentList = () => {
 
                             <div>
                                 <table className="table table-bordered mb-2">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th style={{ width: '10%', textAlign: 'center' }}>วันที่สำรวจ</th>
+                                            <th>สถานประกอบการ</th>
+                                            <th style={{ width: '6%', textAlign: 'center' }}>ไฟล์รายงาน</th>
+                                            <th style={{ width: '20%', textAlign: 'center' }}>ผู้ดำเนินการ</th>
+                                            <th style={{ width: '8%', textAlign: 'center' }}>สถานะ</th>
+                                            <th style={{ width: '10%', textAlign: 'center' }}>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {measurements && measurements.map((measurement, index) => (
+                                            <tr key={measurement.id}>
+                                                <td className="text-center">{pager && pager.from + index}</td>
+                                                <td className="text-center">{toShortTHDate(measurement.measure_date)}</td>
+                                                <td>{measurement.company?.name}</td>
+                                                <td></td>
+                                                <td>{measurement.division?.name}</td>
+                                                <td className="text-center">
+                                                    {measurement.is_returned_data !== 1 && <span className="badge rounded-pill bg-dark">ยังไม่คืนข้อมูล</span>}
+                                                    {measurement.is_returned_data === 1 && <span className="badge rounded-pill bg-success">คืนข้อมูลแล้ว</span>}
+                                                </td>
+                                                <td className="text-center">
+                                                    <div className="btn-group" role="group" aria-label="Basic mixed styles example">
+                                                        {/* <Link to={`/services/environments/${measurement.id}/detail`} className="btn btn-primary btn-sm">
+                                                            <i className="bi bi-search"></i>
+                                                        </Link> */}
+                                                        <Link to={`/services/environments/${measurement.id}/edit`} className="btn btn-warning btn-sm">
+                                                            <i className="bi bi-pencil-square"></i>
+                                                        </Link>
+                                                        <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(measurement.id)}>
+                                                            <i className="bi bi-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
                                 </table>
 
-                                {/* <Pagination
+                                <Pagination
                                     pager={pager}
                                     onPageClick={(url) => setEndpoint(url)}
-                                /> */}
+                                />
                             </div>
                         </div>
                     </div>
