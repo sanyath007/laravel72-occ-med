@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../../context/globalContext'
-import { resetSuccess, getSurveying } from '../../../store/slices/surveying'
+import { resetSuccess, getMeasurement } from '../../../store/slices/environment'
 import Loading from '../../../components/Loading'
 import EnvironmentForm from './Form'
 
@@ -12,7 +12,7 @@ const EditEnvironment = () => {
     const navigate = useNavigate()
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { surveying, loading, success } = useSelector(state => state.surveying);
+    const { measurement, isLoading, isSuccess } = useSelector(state => state.environment);
 
     /** Initial global states */
     useEffect(() => {
@@ -30,19 +30,19 @@ const EditEnvironment = () => {
 
     useEffect(() => {
         if (id) {
-            dispatch(getSurveying(id));
+            dispatch(getMeasurement(id));
         }
     }, [id]);
 
     useEffect(() => {
-        if (success) {
+        if (isSuccess) {
             toast.success('บันทึกการแก้ไขขอ้มูลเรียบร้อยแล้ว!!');
 
             dispatch(resetSuccess());
 
             navigate('/services/environments');
         }
-    }, [success]);
+    }, [isSuccess]);
 
     return (
         <section className="section">
@@ -52,10 +52,10 @@ const EditEnvironment = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขผลตรวจวัดสิ่งแวดล้อม</h5>
 
-                            {loading && <div className="text-center"><Loading /></div>}
+                            {isLoading && <div className="text-center"><Loading /></div>}
 
-                            {(!loading && surveying) && (
-                                <EnvironmentForm id={id} surveying={surveying} />
+                            {(!isLoading && measurement) && (
+                                <EnvironmentForm id={id} surveying={measurement} />
                             )}
                         </div>
                     </div>

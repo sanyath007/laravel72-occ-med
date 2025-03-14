@@ -54,7 +54,7 @@ const EnvironmentForm = ({ id, surveying }) => {
             setSelectedCompany(surveying.company);
             setSelectedSurveyDate(moment(surveying.survey_date));
             setUploadedFile(surveying.file_attachment);
-            setUploadedPics(imageString2UrlArray(surveying.pic_attachments, `${process.env.MIX_APP_URL}/uploads/wts/pic`));
+            setUploadedPics(imageString2UrlArray(surveying.pic_attachments, `${process.env.MIX_APP_URL}/uploads/env/pic`));
         }
     }, [surveying]);
 
@@ -105,7 +105,7 @@ const EnvironmentForm = ({ id, surveying }) => {
         <Formik
             enableReinitialize
             initialValues={{
-                measure_date: surveying ? surveying.survey_date : '',
+                measure_date: surveying ? surveying.measure_date : '',
                 objective_id: surveying ? surveying.objective_id : '',
                 objective_text: (surveying && surveying.objective_text) ? surveying.objective_text : '',
                 division_id: surveying ? surveying.division_id : '',
@@ -114,10 +114,10 @@ const EnvironmentForm = ({ id, surveying }) => {
                 num_of_employees: surveying ? surveying.num_of_employees : '',
                 job_desc_id: surveying ? surveying.job_desc_id : '',
                 job_desc_text: (surveying && surveying.job_desc_text) ? surveying.job_desc_text : '',
-                environments: surveying ? surveying.environments : [],
+                environments: surveying ? surveying.environments.split(',') : [],
                 other_text: (surveying && surveying.other_text) ? surveying.other_text : '',
                 have_report: (surveying && surveying.have_report) ? surveying.have_report : '',
-                is_returned_data: (surveying && surveying.is_adviced) ? surveying.is_adviced : '',
+                is_returned_data: (surveying && surveying.is_returned_data) ? surveying.is_returned_data : '',
                 // remark: (surveying && surveying.remark) ? surveying.remark : '',
                 file_attachment: '',
                 surveyors: surveying ? surveying.surveyors : [],
@@ -328,6 +328,7 @@ const EnvironmentForm = ({ id, surveying }) => {
                                                 <Checkbox
                                                     name="environments"
                                                     value="light"
+                                                    checked={formik.values.environments.includes("light")}
                                                     handleChange={(val) => handleCheckboxGroup(formik, 'light', val)}
                                                     label="แสงส่วาง"
                                                 />
@@ -335,6 +336,7 @@ const EnvironmentForm = ({ id, surveying }) => {
                                                 <Checkbox
                                                     name="environments"
                                                     value="heat"
+                                                    checked={formik.values.environments.includes("heat")}
                                                     handleChange={(val) => handleCheckboxGroup(formik, 'heat', val)}
                                                     label="ความร้อน"
                                                 />
@@ -342,6 +344,7 @@ const EnvironmentForm = ({ id, surveying }) => {
                                                 <Checkbox
                                                     name="environments"
                                                     value="sound"
+                                                    checked={formik.values.environments.includes("sound")}
                                                     handleChange={(val) => handleCheckboxGroup(formik, 'sound', val)}
                                                     label="เสียง"
                                                 />
@@ -349,6 +352,7 @@ const EnvironmentForm = ({ id, surveying }) => {
                                                 <Checkbox
                                                     name="environments"
                                                     value="chem"
+                                                    checked={formik.values.environments.includes("chem")}
                                                     handleChange={(val) => handleCheckboxGroup(formik, 'chem', val)}
                                                     label="สารเคมี"
                                                 />
@@ -358,6 +362,7 @@ const EnvironmentForm = ({ id, surveying }) => {
                                                 <Checkbox
                                                     name="environments"
                                                     value="aqi"
+                                                    checked={formik.values.environments.includes("aqi")}
                                                     handleChange={(val) => handleCheckboxGroup(formik, 'aqi', val)}
                                                     label="คุณภาพอากาศในอาคาร"
                                                 />
@@ -365,6 +370,7 @@ const EnvironmentForm = ({ id, surveying }) => {
                                                 <Checkbox
                                                     name="environments"
                                                     value="air"
+                                                    checked={formik.values.environments.includes("air")}
                                                     handleChange={(val) => handleCheckboxGroup(formik, 'air', val)}
                                                     label="การหมุนเวียนอากาศ"
                                                 />
@@ -372,6 +378,7 @@ const EnvironmentForm = ({ id, surveying }) => {
                                                 <Checkbox
                                                     name="environments"
                                                     value="oth"
+                                                    checked={formik.values.environments.includes("oth")}
                                                     handleChange={(val) => handleCheckboxGroup(formik, 'oth', val)}
                                                     label="อื่นๆ"
                                                 />
@@ -388,6 +395,7 @@ const EnvironmentForm = ({ id, surveying }) => {
                                             value={formik.values.other_text}
                                             onChange={formik.handleChange}
                                             className="form-control"
+                                            disabled={!formik.values.environments.includes("oth")}
                                         />
                                     </Col>
                                 </Row>
@@ -457,7 +465,7 @@ const EnvironmentForm = ({ id, surveying }) => {
                                         <label htmlFor=""></label>
                                         {uploadedFile && (
                                             <div className="d-flex align-items-center">
-                                                <a href={`${process.env.MIX_APP_URL}/uploads/wts/file/${uploadedFile}`} className="p-auto me-2" target="_blank">
+                                                <a href={`${process.env.MIX_APP_URL}/uploads/env/file/${uploadedFile}`} className="p-auto me-2" target="_blank">
                                                     <FaFilePdf size={'16px'} /> {uploadedFile}
                                                 </a>
                                                 {/* <span className="uploaded__close-btn"><FaTimesCircle /></span> */}
