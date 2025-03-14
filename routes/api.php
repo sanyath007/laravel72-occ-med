@@ -147,13 +147,31 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::delete('/screenings/{id}', 'ProactiveScreeningController@destroy');
 
     /** Environments */
-    Route::get('/environments', 'EnvironmentController@getAll');
-    Route::get('/environments/search', 'EnvironmentController@search');
-    Route::get('/environments/{id}', 'EnvironmentController@getById');
-    Route::get('/environments/init/form', 'EnvironmentController@getInitialFormData');
-    Route::post('/environments', 'EnvironmentController@store');
-    Route::post('/environments/{id}', 'EnvironmentController@update');
-    Route::delete('/environments/{id}', 'EnvironmentController@destroy');
+    Route::get('/environments', 'EnvMeasurementController@getAll');
+    Route::get('/environments/search', 'EnvMeasurementController@search');
+    Route::get('/environments/{id}', 'EnvMeasurementController@getById');
+    Route::get('/environments/init/form', 'EnvMeasurementController@getInitialFormData');
+    Route::post('/environments', 'EnvMeasurementController@store');
+    Route::post('/environments/{id}', 'EnvMeasurementController@update');
+    Route::delete('/environments/{id}', 'EnvMeasurementController@destroy');
+
+    /** Occupations */
+    Route::get('/occupations', 'ProblemSurveyingController@getAll');
+    Route::get('/occupations/search', 'ProblemSurveyingController@search');
+    Route::get('/occupations/{id}', 'ProblemSurveyingController@getById');
+    Route::get('/occupations/init/form', 'ProblemSurveyingController@getInitialFormData');
+    Route::post('/occupations', 'ProblemSurveyingController@store');
+    Route::post('/occupations/{id}', 'ProblemSurveyingController@update');
+    Route::delete('/occupations/{id}', 'ProblemSurveyingController@destroy');
+
+    /** Sanitations */
+    Route::get('/sanitations', 'StdAssessmentController@getAll');
+    Route::get('/sanitations/search', 'StdAssessmentController@search');
+    Route::get('/sanitations/{id}', 'StdAssessmentController@getById');
+    Route::get('/sanitations/init/form', 'StdAssessmentController@getInitialFormData');
+    Route::post('/sanitations', 'StdAssessmentController@store');
+    Route::post('/sanitations/{id}', 'StdAssessmentController@update');
+    Route::delete('/sanitations/{id}', 'StdAssessmentController@destroy');
 
     /** ICD-10 */
     Route::get('/icd10s', 'Icd10Controller@getIcd10s');
