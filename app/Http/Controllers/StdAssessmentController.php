@@ -13,8 +13,7 @@ class StdAssessmentController extends Controller
     {
         $date = $request->get('date');
 
-        $surveyings = StdAssessment::with('division','company','company.type','surveyors')
-                        ->with('surveyors.employee','surveyors.employee.position','surveyors.employee.level')
+        $surveyings = StdAssessment::with('division','company','company.type')
                         // ->when(!empty($date), function($q) use ($date) {
                         //     $q->where('surver_date', $date);
                         // })
@@ -26,9 +25,7 @@ class StdAssessmentController extends Controller
 
     public function getById($id)
     {
-        $surveying = StdAssessment::with('division','company','company.type','surveyors')
-                        ->with('surveyors.employee','surveyors.employee.position','surveyors.employee.level')
-                        ->find($id);
+        $surveying = StdAssessment::with('division','company','company.type')->find($id);
 
         return response()->json($surveying);
     }
@@ -50,21 +47,19 @@ class StdAssessmentController extends Controller
     public function store(Request $request) 
     {
         try {
-            $surveying = new StdAssessment;
-            $surveying->survey_date         = $request['survey_date'];
-            $surveying->objective_id        = $request['objective_id'];
-            $surveying->division_id         = $request['division_id'];
-            $surveying->company_id          = $request['company_id'];
-            $surveying->num_of_departs      = $request['num_of_departs'];
-            $surveying->num_of_employees    = $request['num_of_employees'];
-            $surveying->num_of_health_items = $request['num_of_health_items'];
-            $surveying->is_found_threat     = $request['is_found_threat'] ? '1' : '0';
-            $surveying->have_hra            = $request['have_hra'];
-            $surveying->have_report         = $request['have_report'];
-            $surveying->is_adviced          = $request['is_adviced'];
-            $surveying->is_returned_data    = $request['is_returned_data'];
-            $surveying->guidelines          = !empty($request['guidelines']) ? implode(',', $request['guidelines']) : '';
-            $surveying->remark              = $request['remark'];
+            $assessment = new StdAssessment;
+            $assessment->assess_date         = $request['assess_date'];
+            $assessment->objective_id        = $request['objective_id'];
+            $assessment->objective_text      = $request['objective_text'];
+            $assessment->division_id         = $request['division_id'];
+            $assessment->company_id          = $request['company_id'];
+            $assessment->num_of_departs      = $request['num_of_departs'];
+            $assessment->num_of_employees    = $request['num_of_employees'];
+            $assessment->agency_id           = $request['agency_id'];
+            $assessment->agency_text         = $request['agency_text'];
+            $assessment->result_id           = $request['result_id'];
+            $assessment->result_text         = $request['result_text'];
+            // $assessment->remark              = $request['remark'];
 
             /** Upload file and pictures */
             if ($request->file('file_attachment')) {
@@ -73,7 +68,7 @@ class StdAssessmentController extends Controller
                 $destinationPath = 'uploads/wts/file/';
 
                 if ($file->move($destinationPath, $fileName)) {
-                    $surveying->file_attachment = $fileName;
+                    $assessment->file_attachment = $fileName;
                 }
             }
 
@@ -96,23 +91,14 @@ class StdAssessmentController extends Controller
                     $index++;
                 }
 
-                $surveying->pic_attachments = $picNames;
+                $assessment->pic_attachments = $picNames;
             }
 
-            if ($surveying->save()) {
-                if (count($request['surveyors']) > 0) {
-                    foreach($request['surveyors'] as $surveyor) {
-                        $newSurveyor = new SurveyingSurveyor;
-                        $newSurveyor->survey_id     = $surveying->id;
-                        $newSurveyor->employee_id   = $surveyor['employee_id'];
-                        $newSurveyor->save();
-                    }
-                }
-
+            if ($assessment->save()) {
                 return [
                     'status'        => 1,
                     'message'       => 'Insertion successfully!!',
-                    "surveying"     => $surveying
+                    "assessment"    => $assessment
                 ];
             } else {
                 return [
@@ -131,21 +117,19 @@ class StdAssessmentController extends Controller
     public function update(Request $request, $id) 
     {
         try {
-            $surveying = StdAssessment::find($id);
-            $surveying->survey_date         = $request['survey_date'];
-            $surveying->objective_id        = $request['objective_id'];
-            $surveying->division_id         = $request['division_id'];
-            $surveying->company_id          = $request['company_id'];
-            $surveying->num_of_departs      = $request['num_of_departs'];
-            $surveying->num_of_employees    = $request['num_of_employees'];
-            $surveying->num_of_health_items = $request['num_of_health_items'];
-            $surveying->is_found_threat     = $request['is_found_threat'] ? '1' : '0';
-            $surveying->have_hra            = $request['have_hra'];
-            $surveying->have_report         = $request['have_report'];
-            $surveying->is_adviced          = $request['is_adviced'];
-            $surveying->is_returned_data    = $request['is_returned_data'];
-            $surveying->guidelines          = implode(',', $request['guidelines']);
-            $surveying->remark              = $request['remark'];
+            $assessment = StdAssessment::find($id);
+            $assessment->assess_date         = $request['assess_date'];
+            $assessment->objective_id        = $request['objective_id'];
+            $assessment->objective_text      = $request['objective_text'];
+            $assessment->division_id         = $request['division_id'];
+            $assessment->company_id          = $request['company_id'];
+            $assessment->num_of_departs      = $request['num_of_departs'];
+            $assessment->num_of_employees    = $request['num_of_employees'];
+            $assessment->agency_id           = $request['agency_id'];
+            $assessment->agency_text         = $request['agency_text'];
+            $assessment->result_id           = $request['result_id'];
+            $assessment->result_text         = $request['result_text'];
+            // $assessment->remark              = $request['remark'];
 
             /** Upload file and pictures */
             if ($request->file('file_attachment')) {
@@ -154,13 +138,13 @@ class StdAssessmentController extends Controller
                 $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
 
                 /** Check and remove uploaded file */
-                $existedFile = $destinationPath . $surveying->file_attachment;
+                $existedFile = $destinationPath . $assessment->file_attachment;
                 if (\File::exists($existedFile)) {
                     \File::delete($existedFile);
                 }
 
                 if ($file->move($destinationPath, $fileName)) {
-                    $surveying->file_attachment = $fileName;
+                    $assessment->file_attachment = $fileName;
                 }
             }
 
@@ -183,35 +167,14 @@ class StdAssessmentController extends Controller
             //         $index++;
             //     }
 
-            //     $surveying->pic_attachments = $picNames;
+            //     $assessment->pic_attachments = $picNames;
             // }
 
-            if ($surveying->save()) {
-                if (count($request['surveyors']) > 0) {
-                    foreach($request['surveyors'] as $surveyor) {
-                        if (array_key_exists('id', $surveyor)) {
-                            /** รายการเดิม */
-                            if (SurveyingSurveyor::where('employee_id', $surveyor['employee_id'])->count() == 0) {
-                                $updatedSurveyor = SurveyingSurveyor::find($surveyor['id']);
-                                $updatedSurveyor->employee_id = $surveyor['employee_id'];
-                                $updatedSurveyor->save();
-                            }
-                        } else {
-                            /** รายการใหม่ */
-                            $newSurveyor = new SurveyingSurveyor;
-                            $newSurveyor->survey_id     = $surveying->id;
-                            $newSurveyor->employee_id   = $surveyor['employee_id'];
-                            $newSurveyor->save();
-                        }
-                    }
-                } else {
-                    SurveyingSurveyor::where('survey_id', $id)->delete();
-                }
-
+            if ($assessment->save()) {
                 return [
-                    'status'    => 1,
-                    'message'   => 'Updating successfully!!',
-                    "surveying" => $surveying
+                    'status'        => 1,
+                    'message'       => 'Updating successfully!!',
+                    "assessment"    => $assessment
                 ];
             } else {
                 return [
@@ -230,17 +193,17 @@ class StdAssessmentController extends Controller
     public function destroy($id) 
     {
         try {
-            $surveying = StdAssessment::find($id);
+            $assessment = StdAssessment::find($id);
 
             /** Remove uploaded file */
             $destinationPath = 'uploads/wts/';
-            $existedFile = $destinationPath .'file/'. $surveying->file_attachment;
+            $existedFile = $destinationPath .'file/'. $assessment->file_attachment;
             if (\File::exists($existedFile)) {
                 \File::delete($existedFile);
             }
 
-            if ($surveying->pic_attachments != '') {
-                $pictures = explode(',', $surveying->pic_attachments);
+            if ($assessment->pic_attachments != '') {
+                $pictures = explode(',', $assessment->pic_attachments);
                 foreach($pictures as $pic) {
                     $existed = $destinationPath .'file/'. $pic;
 
@@ -250,9 +213,7 @@ class StdAssessmentController extends Controller
                 }
             }
 
-            if ($surveying->delete()) {
-                SurveyingSurveyor::where('survey_id', $id)->delete();
-
+            if ($assessment->delete()) {
                 return [
                     'status'    => 1,
                     'message'   => 'Deleting successfully!!',
