@@ -7,7 +7,7 @@ import { FaFilePdf, FaPlus, FaSave, FaSearch, FaTimesCircle } from 'react-icons/
 import { DatePicker } from '@mui/x-date-pickers'
 import { toast } from 'react-toastify'
 import moment from 'moment'
-import { store, update } from '../../../../store/slices/surveying'
+import { store, update } from '../../../../store/slices/environment'
 import { validateFile, isExistedItem, string2Array, imageString2UrlArray } from '../../../../utils'
 import ModalCompanies from '../../../../components/Modals/ModalCompanies'
 import ModalCompanyForm from '../../../../components/Modals/ModalCompanyForm'
@@ -68,6 +68,17 @@ const EnvironmentForm = ({ id, surveying }) => {
         }
 
         formik.setFieldValue('environments', Array.from(set));
+    };
+
+    const handleAddSurveyor = (formik, surveyor) => {
+        if (isExistedItem(formik.values.surveyors, surveyor.id)) {
+            toast.error('คุณเลือกรายการซ้ำ!!');
+            return;
+        }
+
+        const newSurveyors = [ ...formik.values.surveyors, { employee_id: surveyor.id, employee: surveyor }];
+
+        formik.setFieldValue('surveyors', newSurveyors);
     };
 
     const handleSubmit = (values, formik) => {
@@ -154,16 +165,16 @@ const EnvironmentForm = ({ id, surveying }) => {
                                             value={selectedSurveyDate}
                                             onChange={(date) => {
                                                 setSelectedSurveyDate(date);
-                                                formik.setFieldValue('survey_date', date.format('YYYY-MM-DD'));
+                                                formik.setFieldValue('measure_date', date.format('YYYY-MM-DD'));
                                             }}
                                             sx={{
                                                 '& .MuiInputBase-root.MuiOutlinedInput-root': {
-                                                    border: `${(formik.errors.survey_date && formik.touched.survey_date) ? '1px solid red' : 'inherit'}`
+                                                    border: `${(formik.errors.measure_date && formik.touched.measure_date) ? '1px solid red' : 'inherit'}`
                                                 }
                                             }}
                                         />
-                                        {(formik.errors.survey_date && formik.touched.survey_date) && (
-                                            <span className="text-danger text-sm">{formik.errors.survey_date}</span>
+                                        {(formik.errors.measure_date && formik.touched.measure_date) && (
+                                            <span className="text-danger text-sm">{formik.errors.measure_date}</span>
                                         )}
                                     </Col>
                                     <Col>
@@ -282,13 +293,13 @@ const EnvironmentForm = ({ id, surveying }) => {
                                             className="form-control"
                                         >
                                             <option value="">-- เลือก --</option>
-                                            <option value="">มีแหล่งกำเนิดความร้อนในกระบวนการทำงาน</option>
-                                            <option value="">มีสารเคมีในกระบวนการทำงาน</option>
-                                            <option value="">มีแหล่งกำเนิดเสียงดังในกระบวนการทำงาน</option>
-                                            <option value="">ทำงานร่วมกับเอกสาร,บันทึกข้อมูลทางคอมพิวเตอร์</option>
-                                            <option value="">คุณภาพอากาศในที่ทำงาน</option>
-                                            <option value="">ห้องปรับอากาศ/ห้องลักษณะเปิด</option>
-                                            <option value="">อื่นๆ</option>
+                                            <option value="1">มีแหล่งกำเนิดความร้อนในกระบวนการทำงาน</option>
+                                            <option value="2">มีสารเคมีในกระบวนการทำงาน</option>
+                                            <option value="3">มีแหล่งกำเนิดเสียงดังในกระบวนการทำงาน</option>
+                                            <option value="4">ทำงานร่วมกับเอกสาร,บันทึกข้อมูลทางคอมพิวเตอร์</option>
+                                            <option value="5">คุณภาพอากาศในที่ทำงาน</option>
+                                            <option value="6">ห้องปรับอากาศ/ห้องลักษณะเปิด</option>
+                                            <option value="99">อื่นๆ</option>
                                         </select>
                                         {(formik.errors.job_desc_id && formik.touched.job_desc_id) && (
                                             <span className="text-danger text-sm">{formik.errors.job_desc_id}</span>
@@ -302,6 +313,7 @@ const EnvironmentForm = ({ id, surveying }) => {
                                             value={formik.values.job_desc_text}
                                             onChange={formik.handleChange}
                                             className="form-control"
+                                            disabled={formik.values.job_desc_id !== '99'}
                                         />
                                         {(formik.errors.job_desc_text && formik.touched.job_desc_text) && (
                                             <span className="text-danger text-sm">{formik.errors.job_desc_text}</span>

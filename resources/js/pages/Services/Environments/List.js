@@ -1,10 +1,14 @@
 import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../../context/globalContext'
+import { getMeasurements } from '../../../store/slices/environment'
 import Pagination from '../../../components/Pagination'
 
 const EnvironmentList = () => {
+    const dispatch = useDispatch()
     const { setGlobal } = useContext(GlobalContext)
+    const { measurements, pager, loading } = useSelector(state => state.environment)
 
     /** Initial global states */
     useEffect(() => {
@@ -18,6 +22,12 @@ const EnvironmentList = () => {
             ]
         }))
     }, []);
+
+    useEffect(() => {
+        dispatch(getMeasurements({ url: '/api/environments/search' }));
+    }, []);
+
+    console.log(measurements);
 
     return (
         <section className="section">

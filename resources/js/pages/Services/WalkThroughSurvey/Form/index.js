@@ -89,13 +89,13 @@ const SurveyingForm = ({ id, surveying }) => {
 
         formik.setFieldValue('surveyors', newSurveyors);
     };
-    
+
     const handleDeleteSurveyor = (formik, id) => {
         const updatedSurveyors = formik.values.surveyors.filter(surveyor => surveyor.employee_id !== id);
 
         formik.setFieldValue('surveyors', updatedSurveyors);
     };
-    
+
     const handleAddGuideline = (formik, guideline) => {
         formik.setFieldValue('guidelines', [...formik.values.guidelines, guideline]);
     };

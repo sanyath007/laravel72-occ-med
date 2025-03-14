@@ -10,7 +10,7 @@ const initialState = {
     error: null
 }
 
-export const getMeasurements = createAsyncThunk('enviroment/getMeasurements', async ({ url }, { rejectWithValue }) => {
+export const getMeasurements = createAsyncThunk('environment/getMeasurements', async ({ url }, { rejectWithValue }) => {
     try {
         const res = await api.get(url)
 
@@ -21,9 +21,9 @@ export const getMeasurements = createAsyncThunk('enviroment/getMeasurements', as
     }
 })
 
-export const getMeasurement = createAsyncThunk('enviroment/getMeasurement', async (id, { rejectWithValue }) => {
+export const getMeasurement = createAsyncThunk('environment/getMeasurement', async (id, { rejectWithValue }) => {
     try {
-        const res = await api.get(`/api/enviroments/${id}`)
+        const res = await api.get(`/api/environments/${id}`)
 
         return res.data
     } catch (error) {
@@ -32,9 +32,9 @@ export const getMeasurement = createAsyncThunk('enviroment/getMeasurement', asyn
     }
 })
 
-export const store = createAsyncThunk('enviroment/store', async (data, { rejectWithValue }) => {
+export const store = createAsyncThunk('environment/store', async (data, { rejectWithValue }) => {
     try {
-        const res = await api.post('/api/enviroments', data, {
+        const res = await api.post('/api/environments', data, {
             headers: { "Content-Type": "multipart/form-data" }
         })
 
@@ -45,9 +45,9 @@ export const store = createAsyncThunk('enviroment/store', async (data, { rejectW
     }
 })
 
-export const update = createAsyncThunk('enviroment/update', async ({ id, data }, { rejectWithValue }) => {
+export const update = createAsyncThunk('environment/update', async ({ id, data }, { rejectWithValue }) => {
     try {
-        const res = await api.post(`/api/enviroments/${id}`, data, {
+        const res = await api.post(`/api/environments/${id}`, data, {
             headers: { "Content-Type": "multipart/form-data" }
         })
 
@@ -58,9 +58,9 @@ export const update = createAsyncThunk('enviroment/update', async ({ id, data },
     }
 })
 
-export const destroy = createAsyncThunk('enviroment/destroy', async (id, { rejectWithValue, dispatch }) => {
+export const destroy = createAsyncThunk('environment/destroy', async (id, { rejectWithValue, dispatch }) => {
     try {
-        const res = await api.delete(`/api/enviroments/${id}`)
+        const res = await api.delete(`/api/environments/${id}`)
 
         if (res.data.status === 1) dispatch(updateSurveyings(id));
 

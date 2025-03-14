@@ -18,7 +18,7 @@ class EnvMeasurementController extends Controller
                         // ->when(!empty($date), function($q) use ($date) {
                         //     $q->where('surver_date', $date);
                         // })
-                        ->orderBy('survey_date', 'DESC')
+                        ->orderBy('measure_date', 'DESC')
                         ->paginate(10);
 
         return response()->json($measurements);
@@ -60,7 +60,7 @@ class EnvMeasurementController extends Controller
             $measurement->num_of_employees    = $request['num_of_employees'];
             $measurement->job_desc_id         = $request['job_desc_id'];
             $measurement->job_desc_text       = $request['job_desc_text'];
-            $measurement->environments        = $request['environments'];
+            $measurement->environments        = implode(',', $request['environments']);
             $measurement->other_text          = $request['other_text'];
             $measurement->have_report         = $request['have_report'];
             $measurement->is_returned_data    = $request['is_returned_data'];
