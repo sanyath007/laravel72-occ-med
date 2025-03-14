@@ -25,8 +25,8 @@ class StdAssessment extends Model
         return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 
-    public function surveyors()
-    {
-        return $this->hasMany(SurveyingSurveyor::class, 'survey_id', 'id');
-    }
+    // public function surveyors()
+    // {
+    //     return $this->hasMany(SurveyingSurveyor::class, 'survey_id', 'id');
+    // }
 }

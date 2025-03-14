@@ -27,6 +27,6 @@ class WTSurveying extends Model
 
     public function surveyors()
     {
-        return $this->hasMany(SurveyingSurveyor::class, 'survey_id', 'id');
+        return $this->hasMany(SurveyingSurveyor::class, 'survey_id', 'id')->where('survey_type_id', 1);
     }
 }
