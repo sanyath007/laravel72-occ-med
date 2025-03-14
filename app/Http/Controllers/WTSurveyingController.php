@@ -103,8 +103,9 @@ class WTSurveyingController extends Controller
                 if (count($request['surveyors']) > 0) {
                     foreach($request['surveyors'] as $surveyor) {
                         $newSurveyor = new SurveyingSurveyor;
-                        $newSurveyor->survey_id     = $surveying->id;
-                        $newSurveyor->employee_id   = $surveyor['employee_id'];
+                        $newSurveyor->survey_type_id    = 1;
+                        $newSurveyor->survey_id         = $surveying->id;
+                        $newSurveyor->employee_id       = $surveyor['employee_id'];
                         $newSurveyor->save();
                     }
                 }
