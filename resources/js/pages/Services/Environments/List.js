@@ -1,15 +1,17 @@
 import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 import { GlobalContext } from '../../../context/globalContext'
-import { getMeasurements, destroy } from '../../../store/slices/environment'
+import { getMeasurements, destroy, resetDeleted } from '../../../store/slices/environment'
 import { toShortTHDate } from '../../../utils/formatter'
 import Pagination from '../../../components/Pagination'
+import Loading from '../../../components/Loading'
 
 const EnvironmentList = () => {
     const dispatch = useDispatch()
     const { setGlobal } = useContext(GlobalContext)
-    const { measurements, pager, loading } = useSelector(state => state.environment)
+    const { measurements, pager, isLoading, isDeleted } = useSelector(state => state.environment)
 
     /** Initial global states */
     useEffect(() => {
@@ -27,6 +29,13 @@ const EnvironmentList = () => {
     useEffect(() => {
         dispatch(getMeasurements({ url: '/api/environments/search' }));
     }, []);
+
+    useEffect(() => {
+        if (isDeleted) {
+            toast.success('ลบรายการตรวจวัดสิ่งแวดล้อมสำเร็จ!!');
+            dispatch(resetDeleted());
+        }
+    }, [isDeleted]);
 
     const handleDelete = (id) => {
         if (window.confirm('คุณต้องการลบรายการตรวจวัดสิ่งแวดล้อมใช่หรือไม่?')) {
@@ -70,7 +79,13 @@ const EnvironmentList = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {measurements && measurements.map((measurement, index) => (
+                                        {isLoading && (
+                                            <tr>
+                                                <td colSpan={7} className="text-center"><Loading /></td>
+                                            </tr>
+                                        )}
+
+                                        {(!isLoading && measurements) && measurements.map((measurement, index) => (
                                             <tr key={measurement.id}>
                                                 <td className="text-center">{pager && pager.from + index}</td>
                                                 <td className="text-center">{toShortTHDate(measurement.measure_date)}</td>

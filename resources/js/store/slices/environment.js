@@ -5,8 +5,9 @@ const initialState = {
     measurements: [],
     measurement: null,
     pager: null,
-    loading: false,
-    success: false,
+    isLoading: false,
+    isSuccess: false,
+    isDeleted: false,
     error: null
 }
 
@@ -76,7 +77,10 @@ export const environmentSlice = createSlice({
     initialState,
     reducers: {
         resetSuccess(state) {
-            state.success = false
+            state.isSuccess = false
+        },
+        resetDeleted(state) {
+            state.isDeleted = false
         },
         updateSurveyings(state, { payload }) {
             const updated = state.measurements.filter(s => s.id !== payload);
@@ -87,89 +91,83 @@ export const environmentSlice = createSlice({
     extraReducers: {
         [getMeasurements.pending]: (state) => {
             state.measurements = []
-            state.loading = true
+            state.isLoading = true
         },
         [getMeasurements.fulfilled]: (state, { payload }) => {
             const { data, ...pager } = payload
 
             state.measurements = data
             state.pager = pager
-            state.loading = false
+            state.isLoading = false
         },
         [getMeasurements.rejected]: (state, { payload }) => {
-            state.loading = false
+            state.isLoading = false
             state.error = payload
         },
         [getMeasurement.pending]: (state) => {
-            state.loading = true
+            state.isLoading = true
             state.measurement = null
             state.error = null
         },
         [getMeasurement.fulfilled]: (state, { payload }) => {
             state.measurement = payload
-            state.loading = false
+            state.isLoading = false
         },
         [getMeasurement.rejected]: (state, { payload }) => {
-            state.loading = false
+            state.isLoading = false
             state.error = payload
         },
         [store.pending]: (state) => {
-            state.success = true
+            state.isSuccess = false
             state.error = null
         },
         [store.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isSuccess = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [store.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         },
         [update.pending]: (state) => {
-            state.success = true
+            state.isSuccess = false
             state.error = null
         },
         [update.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isSuccess = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [update.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         },
         [destroy.pending]: (state) => {
-            state.success = true
+            state.isDeleted = false
             state.error = null
         },
         [destroy.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isDeleted = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [destroy.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         }
     }
 })
 
-export const { resetSuccess, updateSurveyings } = environmentSlice.actions
+export const { resetSuccess, resetDeleted, updateSurveyings } = environmentSlice.actions
 
 export default environmentSlice.reducer
