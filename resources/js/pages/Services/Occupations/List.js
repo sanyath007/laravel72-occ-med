@@ -88,11 +88,19 @@ const OccupationList = () => {
                                                 <td className="text-center">{pager && pager.from + index}</td>
                                                 <td className="text-center">{toShortTHDate(surveying.survey_date)}</td>
                                                 <td>{surveying.company?.name}</td>
-                                                <td></td>
+                                                <td>
+                                                    {surveying.source_id === 1 && 'รับแจ้งจากสถานประกอบการ/หน่วยงาน'}
+                                                    {surveying.source_id === 2 && 'ร้องเรียนจากผู้รับบริการ'}
+                                                    {surveying.source_id === 3 && 'รายงานความเสี่ยง'}
+                                                    {surveying.source_id === 99 && surveying.source_text}
+                                                </td>
                                                 <td>{surveying.division?.name}</td>
                                                 <td className="text-center">
-                                                    {/* {surveying.is_returned_data !== 1 && <span className="badge rounded-pill bg-dark">ยังไม่คืนข้อมูล</span>}
-                                                    {surveying.is_returned_data === 1 && <span className="badge rounded-pill bg-success">คืนข้อมูลแล้ว</span>} */}
+                                                    {surveying.file_attachment && (
+                                                        <a href={`${process.env.MIX_APP_URL}/uploads/problem/file/${surveying.file_attachment}`} target="_blank" className="text-danger">
+                                                            <FaFilePdf size={"20px"} />
+                                                        </a>
+                                                    )}
                                                 </td>
                                                 <td className="text-center">
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
