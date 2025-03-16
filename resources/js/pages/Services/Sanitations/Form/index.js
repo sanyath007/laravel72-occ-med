@@ -38,7 +38,7 @@ const surveySchema = Yup.object().shape({
     }),
 });
 
-const SanitationForm = ({ id, surveying }) => {
+const SanitationForm = ({ id, data }) => {
     const dispatch = useDispatch();
     const [showCompanyForm, setShowCompanyForm] = useState(false);
     const [showCompanyList, setShowCompanyList] = useState(false);
@@ -48,13 +48,13 @@ const SanitationForm = ({ id, surveying }) => {
     const [uploadedPics, setUploadedPics] = useState([]);
 
     useEffect(() => {
-        if (surveying) {
-            setSelectedCompany(surveying.company);
-            setSelectedSurveyDate(moment(surveying.survey_date));
-            setUploadedFile(surveying.file_attachment);
-            setUploadedPics(imageString2UrlArray(surveying.pic_attachments, `${process.env.MIX_APP_URL}/uploads/sanitation/pic`));
+        if (data) {
+            setSelectedCompany(data.company);
+            setSelectedSurveyDate(moment(data.survey_date));
+            setUploadedFile(data.file_attachment);
+            setUploadedPics(imageString2UrlArray(data.pic_attachments, `${process.env.MIX_APP_URL}/uploads/sanitation/pic`));
         }
-    }, [surveying]);
+    }, [data]);
 
     const handleSubmit = (values, formik) => {
         // let data = new FormData();
@@ -67,7 +67,7 @@ const SanitationForm = ({ id, surveying }) => {
         //     }
         // }
 
-        if (surveying) {
+        if (data) {
             dispatch(update({ id, data: values }));
         } else {
             dispatch(store(values));
@@ -80,20 +80,20 @@ const SanitationForm = ({ id, surveying }) => {
         <Formik
             enableReinitialize
             initialValues={{
-                assess_date: surveying ? surveying.assess_date : '',
-                objective_id: surveying ? surveying.objective_id : '',
-                objective_text: (surveying && surveying.objective_text) ? surveying.objective_text : '',
-                division_id: surveying ? surveying.division_id : '',
-                company_id: surveying ? surveying.company_id : '',
-                num_of_departs: surveying ? surveying.num_of_departs : '',
-                num_of_employees: surveying ? surveying.num_of_employees : '',
-                agency_id: (surveying && surveying.agency_id) ? surveying.agency_id : '',
-                agency_text: (surveying && surveying.agency_text) ? surveying.agency_text : '',
-                result_id: (surveying && surveying.result_id) ? surveying.result_id : '',
-                result_text: (surveying && surveying.result_text) ? surveying.result_text : '',
-                // remark: (surveying && surveying.remark) ? surveying.remark : '',
+                assess_date: data ? data.assess_date : '',
+                objective_id: data ? data.objective_id : '',
+                objective_text: (data && data.objective_text) ? data.objective_text : '',
+                division_id: data ? data.division_id : '',
+                company_id: data ? data.company_id : '',
+                num_of_departs: data ? data.num_of_departs : '',
+                num_of_employees: data ? data.num_of_employees : '',
+                agency_id: (data && data.agency_id) ? data.agency_id : '',
+                agency_text: (data && data.agency_text) ? data.agency_text : '',
+                result_id: (data && data.result_id) ? data.result_id : '',
+                result_text: (data && data.result_text) ? data.result_text : '',
+                // remark: (data && data.remark) ? data.remark : '',
                 file_attachment: '',
-                // surveyors: surveying ? surveying.surveyors : [],
+                // surveyors: data ? data.surveyors : [],
                 pic_attachments: []
             }}
             validationSchema={surveySchema}
@@ -424,9 +424,9 @@ const SanitationForm = ({ id, surveying }) => {
                         </Tabs>
 
                         <div className="text-center">
-                            <button type="submit" className={`btn ${surveying ? 'btn-warning' : 'btn-primary'}`}>
+                            <button type="submit" className={`btn ${data ? 'btn-warning' : 'btn-primary'}`}>
                                 <FaSave className="me-1" />
-                                {surveying ? 'บันทึกการแก้ไข' : 'บันทึก'}
+                                {data ? 'บันทึกการแก้ไข' : 'บันทึก'}
                             </button>
                         </div>
                     </Form>

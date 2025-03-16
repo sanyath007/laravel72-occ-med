@@ -5,14 +5,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../../context/globalContext'
 import { resetSuccess, getAssessment } from '../../../store/slices/sanitation'
 import Loading from '../../../components/Loading'
-import EnvironmentForm from './Form'
+import SanitationForm from './Form'
 
 const EditSanitation = () => {
     const { id } = useParams();
     const navigate = useNavigate()
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { assessment, loading, success } = useSelector(state => state.sanitation);
+    const { sanitation, isLoading, isSuccess } = useSelector(state => state.sanitation);
 
     /** Initial global states */
     useEffect(() => {
@@ -22,7 +22,7 @@ const EditSanitation = () => {
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'environments', name: 'รายการตรวจประเมินมาตรฐาน', path: '/services/environments' },
+                { id: 'sanitations', name: 'รายการตรวจประเมินมาตรฐาน', path: '/services/sanitations' },
                 { id: 'edit', name: 'แก้ไขตรวจประเมินมาตรฐาน', path: null, active: true }
             ]
         }))
@@ -30,19 +30,19 @@ const EditSanitation = () => {
 
     useEffect(() => {
         if (id) {
-            dispatch(getSurveying(id));
+            dispatch(getAssessment(id));
         }
     }, [id]);
 
     useEffect(() => {
-        if (success) {
+        if (isSuccess) {
             toast.success('บันทึกการแก้ไขขอ้มูลเรียบร้อยแล้ว!!');
 
             dispatch(resetSuccess());
 
-            navigate('/services/environments');
+            navigate('/services/sanitations');
         }
-    }, [success]);
+    }, [isSuccess]);
 
     return (
         <section className="section">
@@ -52,10 +52,10 @@ const EditSanitation = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขตรวจประเมินมาตรฐาน</h5>
 
-                            {loading && <div className="text-center"><Loading /></div>}
+                            {isLoading && <div className="text-center"><Loading /></div>}
 
-                            {(!loading && surveying) && (
-                                <EnvironmentForm id={id} surveying={surveying} />
+                            {(!isLoading && sanitation) && (
+                                <SanitationForm id={id} data={sanitation} />
                             )}
                         </div>
                     </div>
