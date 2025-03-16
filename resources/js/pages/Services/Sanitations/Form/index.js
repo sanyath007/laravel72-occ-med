@@ -5,33 +5,32 @@ import * as Yup from 'yup'
 import { Col, Row, Tab, Tabs } from 'react-bootstrap'
 import { FaFilePdf, FaPlus, FaSave, FaSearch, FaTimesCircle } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
-import { toast } from 'react-toastify'
 import moment from 'moment'
-import { store, update } from '../../../../store/slices/surveying'
+import { store, update } from '../../../../store/slices/sanitation'
 import { validateFile, isExistedItem, string2Array, imageString2UrlArray } from '../../../../utils'
 import ModalCompanies from '../../../../components/Modals/ModalCompanies'
 import ModalCompanyForm from '../../../../components/Modals/ModalCompanyForm'
 import MultipleFileUpload from '../../../../components/Forms/MultipleFileUpload'
 import UploadGallery from '../../../../components/UploadGallery'
-import SurveyorForm from './SurveyorForm'
-import SurveyorList from './SurveyorList'
+// import SurveyorForm from './SurveyorForm'
+// import SurveyorList from './SurveyorList'
 
 const ACCEPT_FILE_TYPE = ['pdf', 'doc', 'docx'];
 const ACCEPT_PIC_TYPE = ['jpg','jpeg','png'];
 
 const surveySchema = Yup.object().shape({
-    survey_date: Yup.string().required('กรุณาเลือกวันที่คัดกรองก่อน'),
+    assess_date: Yup.string().required('กรุณาเลือกวันที่คัดกรองก่อน'),
     objective_id: Yup.string().required('กรุณาเลือกวัตถุประสงค์ก่อน'),
     division_id: Yup.string().required('กรุณาเลือกผู้ดำเนินการก่อน'),
     company_id: Yup.string().required('กรุณาเลือกสถานประกอบการ/สถานที่ก่อน'),
-    surveyors: Yup.mixed().test('surveyors-not-empty', 'กรุณาระบุผู้เดินสำรวจอย่างน้อย 1 ราย', (val) => val.length > 0),
     num_of_departs: Yup.string().required('กรุณาระบุจำนวนแผนกที่สำรวจก่อน'),
     num_of_employees: Yup.string().required('กรุณาระบุจำนวนพนักงาน/ประชาชนก่อน'),
     file_attachment: Yup.mixed().test('is-valid-file-type', 'คุณเลือกประเภทไฟล์ไม่ถูกต้อง!!' , (file) => {
         if (!file) return true;
-
+        
         return validateFile(file, ACCEPT_FILE_TYPE);
     }),
+    // surveyors: Yup.mixed().test('surveyors-not-empty', 'กรุณาระบุผู้เดินสำรวจอย่างน้อย 1 ราย', (val) => val.length > 0),
     pic_attachments: Yup.mixed().test('is-valid-pic-type', 'คุณเลือกประเภทไฟล์รูปภาพไม่ถูกต้อง!!', (pics) => {
         if (pics.length === 0) return true;
 
@@ -53,7 +52,7 @@ const SanitationForm = ({ id, surveying }) => {
             setSelectedCompany(surveying.company);
             setSelectedSurveyDate(moment(surveying.survey_date));
             setUploadedFile(surveying.file_attachment);
-            setUploadedPics(imageString2UrlArray(surveying.pic_attachments, `${process.env.MIX_APP_URL}/uploads/wts/pic`));
+            setUploadedPics(imageString2UrlArray(surveying.pic_attachments, `${process.env.MIX_APP_URL}/uploads/sanitation/pic`));
         }
     }, [surveying]);
 
@@ -81,7 +80,7 @@ const SanitationForm = ({ id, surveying }) => {
         <Formik
             enableReinitialize
             initialValues={{
-                survey_date: surveying ? surveying.survey_date : '',
+                assess_date: surveying ? surveying.assess_date : '',
                 objective_id: surveying ? surveying.objective_id : '',
                 objective_text: (surveying && surveying.objective_text) ? surveying.objective_text : '',
                 division_id: surveying ? surveying.division_id : '',
@@ -139,16 +138,16 @@ const SanitationForm = ({ id, surveying }) => {
                                             value={selectedSurveyDate}
                                             onChange={(date) => {
                                                 setSelectedSurveyDate(date);
-                                                formik.setFieldValue('survey_date', date.format('YYYY-MM-DD'));
+                                                formik.setFieldValue('assess_date', date.format('YYYY-MM-DD'));
                                             }}
                                             sx={{
                                                 '& .MuiInputBase-root.MuiOutlinedInput-root': {
-                                                    border: `${(formik.errors.survey_date && formik.touched.survey_date) ? '1px solid red' : 'inherit'}`
+                                                    border: `${(formik.errors.assess_date && formik.touched.assess_date) ? '1px solid red' : 'inherit'}`
                                                 }
                                             }}
                                         />
-                                        {(formik.errors.survey_date && formik.touched.survey_date) && (
-                                            <span className="text-danger text-sm">{formik.errors.survey_date}</span>
+                                        {(formik.errors.assess_date && formik.touched.assess_date) && (
+                                            <span className="text-danger text-sm">{formik.errors.assess_date}</span>
                                         )}
                                     </Col>
                                     <Col>
@@ -162,14 +161,14 @@ const SanitationForm = ({ id, surveying }) => {
                                             <option value="">-- เลือก --</option>
                                             <option value="1">ประเมินมาตรฐานด้านอาชีวอนามัย</option>
                                             <option value="2">ประเมินมาตรฐานสุขาภิบาลอาหาร</option>
-                                            <option value="2">ประเมินมาตรฐานทางอนามัยสิ่งแวดล้อม</option>
-                                            <option value="3">อื่นๆ ระบุ</option>
+                                            <option value="3">ประเมินมาตรฐานทางอนามัยสิ่งแวดล้อม</option>
+                                            <option value="99">อื่นๆ ระบุ</option>
                                         </select>
                                         {(formik.errors.objective_id && formik.touched.objective_id) && (
                                             <span className="text-danger text-sm">{formik.errors.objective_id}</span>
                                         )}
                                     </Col>
-                                    {formik.values.objective_id === '3' && (
+                                    {formik.values.objective_id === '99' && (
                                         <Col>
                                             <label htmlFor="">ระบุ (วัตถุประสงค์อื่นๆ)</label>
                                             <input
@@ -271,12 +270,12 @@ const SanitationForm = ({ id, surveying }) => {
                                             className="form-control"
                                         >
                                             <option value="">-- เลือก --</option>
-                                            <option value="">สาธารณสุขจังหวัดนครราชสีมา</option>
-                                            <option value="">สำนักงานป้องกันควบคุมโรคที่ 9 นครราชสีมา (สคร.9)</option>
-                                            <option value="">ศูนย์อนามัยที่ 9 นครราชสีมา</option>
-                                            <option value="">โรคจากการประกอบอาชีพและสิ่งแวดล้อม</option>
-                                            <option value="">คณะกรรมการ ENV</option>
-                                            <option value="">อื่นๆ</option>
+                                            <option value="1">สาธารณสุขจังหวัดนครราชสีมา</option>
+                                            <option value="2">สำนักงานป้องกันควบคุมโรคที่ 9 นครราชสีมา (สคร.9)</option>
+                                            <option value="3">ศูนย์อนามัยที่ 9 นครราชสีมา</option>
+                                            <option value="4">โรคจากการประกอบอาชีพและสิ่งแวดล้อม</option>
+                                            <option value="5">คณะกรรมการ ENV</option>
+                                            <option value="99">อื่นๆ</option>
                                         </select>
                                         {(formik.errors.agency_id && formik.touched.agency_id) && (
                                             <span className="text-danger text-sm">{formik.errors.agency_id}</span>
@@ -306,10 +305,10 @@ const SanitationForm = ({ id, surveying }) => {
                                             className="form-control"
                                         >
                                             <option value="">-- เลือก --</option>
-                                            <option value="">ผ่านเกณฑ์มาตรฐาน</option>
-                                            <option value="">ไม่ผ่านเกณฑ์มาตรฐาน</option>
-                                            <option value="">อยู่ระหว่างจัดทำรายงาน</option>
-                                            <option value="">อื่นๆ</option>
+                                            <option value="1">ผ่านเกณฑ์มาตรฐาน</option>
+                                            <option value="2">ไม่ผ่านเกณฑ์มาตรฐาน</option>
+                                            <option value="3">อยู่ระหว่างจัดทำรายงาน</option>
+                                            <option value="99">อื่นๆ</option>
                                         </select>
                                         {(formik.errors.result_id && formik.touched.result_id) && (
                                             <span className="text-danger text-sm">{formik.errors.result_id}</span>
