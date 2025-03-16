@@ -5,8 +5,9 @@ const initialState = {
     sanitations: [],
     sanitation: null,
     pager: null,
-    loading: false,
-    success: false,
+    isLoading: false,
+    isSuccess: false,
+    isDeleted: false,
     error: null
 }
 
@@ -76,7 +77,10 @@ export const sanitationSlice = createSlice({
     initialState,
     reducers: {
         resetSuccess(state) {
-            state.success = false
+            state.isSuccess = false
+        },
+        resetDeleted(ate) {
+            state.isDeleted = false
         },
         updateSurveyings(state, { payload }) {
             const updated = state.sanitations.filter(s => s.id !== payload);
@@ -87,89 +91,83 @@ export const sanitationSlice = createSlice({
     extraReducers: {
         [getAssessments.pending]: (state) => {
             state.sanitations = []
-            state.loading = true
+            state.isLoading = true
         },
         [getAssessments.fulfilled]: (state, { payload }) => {
             const { data, ...pager } = payload
 
             state.sanitations = data
             state.pager = pager
-            state.loading = false
+            state.isLoading = false
         },
         [getAssessments.rejected]: (state, { payload }) => {
-            state.loading = false
+            state.isLoading = false
             state.error = payload
         },
         [getAssessment.pending]: (state) => {
-            state.loading = true
+            state.isLoading = true
             state.sanitation = null
             state.error = null
         },
         [getAssessment.fulfilled]: (state, { payload }) => {
             state.sanitation = payload
-            state.loading = false
+            state.isLoading = false
         },
         [getAssessment.rejected]: (state, { payload }) => {
-            state.loading = false
+            state.isLoading = false
             state.error = payload
         },
         [store.pending]: (state) => {
-            state.success = true
+            state.isSuccess = false
             state.error = null
         },
         [store.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isSuccess = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [store.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         },
         [update.pending]: (state) => {
-            state.success = true
+            state.isSuccess = false
             state.error = null
         },
         [update.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isSuccess = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [update.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         },
         [destroy.pending]: (state) => {
-            state.success = true
+            state.isDeleted = false
             state.error = null
         },
         [destroy.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isDeleted = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [destroy.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         }
     }
 })
 
-export const { resetSuccess, updateSurveyings } = sanitationSlice.actions
+export const { resetSuccess, resetDeleted, updateSurveyings } = sanitationSlice.actions
 
 export default sanitationSlice.reducer

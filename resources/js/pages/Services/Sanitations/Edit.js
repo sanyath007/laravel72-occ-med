@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../../context/globalContext'
-import { resetSuccess, getSurveying } from '../../../store/slices/surveying'
+import { resetSuccess, getAssessment } from '../../../store/slices/sanitation'
 import Loading from '../../../components/Loading'
 import EnvironmentForm from './Form'
 
@@ -12,7 +12,7 @@ const EditSanitation = () => {
     const navigate = useNavigate()
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { surveying, loading, success } = useSelector(state => state.surveying);
+    const { assessment, loading, success } = useSelector(state => state.sanitation);
 
     /** Initial global states */
     useEffect(() => {
