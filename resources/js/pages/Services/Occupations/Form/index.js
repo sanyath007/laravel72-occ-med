@@ -7,7 +7,7 @@ import { FaFilePdf, FaPlus, FaSave, FaSearch, FaTimesCircle } from 'react-icons/
 import { DatePicker } from '@mui/x-date-pickers'
 import { toast } from 'react-toastify'
 import moment from 'moment'
-import { store, update } from '../../../../store/slices/surveying'
+import { store, update } from '../../../../store/slices/occupation'
 import { validateFile, isExistedItem, string2Array, imageString2UrlArray } from '../../../../utils'
 import ModalCompanies from '../../../../components/Modals/ModalCompanies'
 import ModalCompanyForm from '../../../../components/Modals/ModalCompanyForm'
@@ -24,14 +24,14 @@ const surveySchema = Yup.object().shape({
     objective_id: Yup.string().required('กรุณาเลือกวัตถุประสงค์ก่อน'),
     division_id: Yup.string().required('กรุณาเลือกผู้ดำเนินการก่อน'),
     company_id: Yup.string().required('กรุณาเลือกสถานประกอบการ/สถานที่ก่อน'),
-    surveyors: Yup.mixed().test('surveyors-not-empty', 'กรุณาระบุผู้เดินสำรวจอย่างน้อย 1 ราย', (val) => val.length > 0),
-    num_of_departs: Yup.string().required('กรุณาระบุจำนวนแผนกที่สำรวจก่อน'),
-    num_of_employees: Yup.string().required('กรุณาระบุจำนวนพนักงาน/ประชาชนก่อน'),
+    source_id: Yup.string().required('กรุณาระบุจำนวนแผนกที่สำรวจก่อน'),
+    problem_text: Yup.string().required('กรุณาระบุจำนวนพนักงาน/ประชาชนก่อน'),
     file_attachment: Yup.mixed().test('is-valid-file-type', 'คุณเลือกประเภทไฟล์ไม่ถูกต้อง!!' , (file) => {
         if (!file) return true;
-
+        
         return validateFile(file, ACCEPT_FILE_TYPE);
     }),
+    surveyors: Yup.mixed().test('surveyors-not-empty', 'กรุณาระบุผู้เดินสำรวจอย่างน้อย 1 ราย', (val) => val.length > 0),
     pic_attachments: Yup.mixed().test('is-valid-pic-type', 'คุณเลือกประเภทไฟล์รูปภาพไม่ถูกต้อง!!', (pics) => {
         if (pics.length === 0) return true;
 
@@ -56,6 +56,17 @@ const OccupationForm = ({ id, surveying }) => {
             setUploadedPics(imageString2UrlArray(surveying.pic_attachments, `${process.env.MIX_APP_URL}/uploads/wts/pic`));
         }
     }, [surveying]);
+
+    const handleAddSurveyor = (formik, surveyor) => {
+        if (isExistedItem(formik.values.surveyors, surveyor.id)) {
+            toast.error('คุณเลือกรายการซ้ำ!!');
+            return;
+        }
+
+        const newSurveyors = [ ...formik.values.surveyors, { employee_id: surveyor.id, employee: surveyor }];
+
+        formik.setFieldValue('surveyors', newSurveyors);
+    };
 
     const handleSubmit = (values, formik) => {
         // let data = new FormData();
@@ -173,8 +184,14 @@ const OccupationForm = ({ id, surveying }) => {
                                             <label htmlFor="">ระบุ (วัตถุประสงค์อื่นๆ)</label>
                                             <input
                                                 type="text"
+                                                name="objective_text"
+                                                value={formik.values.objective_text}
+                                                onChange={formik.handleChange}
                                                 className="form-control"
                                             />
+                                            {(formik.errors.objective_text && formik.touched.objective_text) && (
+                                                <span className="text-danger text-sm">{formik.errors.objective_text}</span>
+                                            )}
                                         </Col>
                                     )}
                                 </Row>
@@ -233,10 +250,10 @@ const OccupationForm = ({ id, surveying }) => {
                                             className={`form-control ${(formik.errors.source_id && formik.touched.source_id) ? 'is-invalid' : ''}`}
                                         >
                                             <option value="">-- เลือก --</option>
-                                            <option value="">รับแจ้งจากสถานประกอบการ/หน่วยงาน</option>
-                                            <option value="">ร้องเรียนจากผู้รับบริการ</option>
-                                            <option value="">รายงานความเสี่ยง</option>
-                                            <option value="">อื่นๆ</option>
+                                            <option value="1">รับแจ้งจากสถานประกอบการ/หน่วยงาน</option>
+                                            <option value="2">ร้องเรียนจากผู้รับบริการ</option>
+                                            <option value="3">รายงานความเสี่ยง</option>
+                                            <option value="99">อื่นๆ</option>
                                         </select>
                                         {(formik.errors.source_id && formik.touched.source_id) && (
                                             <span className="text-danger text-sm">{formik.errors.source_id}</span>
@@ -246,13 +263,13 @@ const OccupationForm = ({ id, surveying }) => {
                                         <label htmlFor="">ระบุ</label>
                                         <input
                                             type="text"
-                                            name="num_of_employees"
-                                            value={formik.values.num_of_employees}
+                                            name="source_text"
+                                            value={formik.values.source_text}
                                             onChange={formik.handleChange}
-                                            className={`form-control ${(formik.errors.num_of_employees && formik.touched.num_of_employees) ? 'is-invalid' : ''}`}
+                                            className={`form-control ${(formik.errors.source_text && formik.touched.source_text) ? 'is-invalid' : ''}`}
                                         />
-                                        {(formik.errors.is_returned_data && formik.touched.is_returned_data) && (
-                                            <span className="text-danger text-sm">{formik.errors.is_returned_data}</span>
+                                        {(formik.errors.source_text && formik.touched.source_text) && (
+                                            <span className="text-danger text-sm">{formik.errors.source_text}</span>
                                         )}
                                     </Col>
                                 </Row>
@@ -281,9 +298,9 @@ const OccupationForm = ({ id, surveying }) => {
                                             className={`form-control ${(formik.errors.cause_id && formik.touched.cause_id) ? 'is-invalid' : ''}`}
                                         >
                                             <option value="">-- เลือก --</option>
-                                            <option value="">สิ่งแวดล้อมในการทำงานไม่เหมาะสม</option>
-                                            <option value="">เหตุรำคาญจากสิ่งแวดล้อม</option>
-                                            <option value="">อื่นๆ</option>
+                                            <option value="1">สิ่งแวดล้อมในการทำงานไม่เหมาะสม</option>
+                                            <option value="2">เหตุรำคาญจากสิ่งแวดล้อม</option>
+                                            <option value="99">อื่นๆ</option>
                                         </select>
                                         {(formik.errors.cause_id && formik.touched.cause_id) && (
                                             <span className="text-danger text-sm">{formik.errors.cause_id}</span>
@@ -293,13 +310,13 @@ const OccupationForm = ({ id, surveying }) => {
                                         <label htmlFor="">ระบุ</label>
                                         <input
                                             type="text"
-                                            name="num_of_employees"
-                                            value={formik.values.num_of_employees}
+                                            name="cause_text"
+                                            value={formik.values.cause_text}
                                             onChange={formik.handleChange}
-                                            className={`form-control ${(formik.errors.num_of_employees && formik.touched.num_of_employees) ? 'is-invalid' : ''}`}
+                                            className={`form-control ${(formik.errors.cause_text && formik.touched.cause_text) ? 'is-invalid' : ''}`}
                                         />
-                                        {(formik.errors.is_returned_data && formik.touched.is_returned_data) && (
-                                            <span className="text-danger text-sm">{formik.errors.is_returned_data}</span>
+                                        {(formik.errors.cause_text && formik.touched.cause_text) && (
+                                            <span className="text-danger text-sm">{formik.errors.cause_text}</span>
                                         )}
                                     </Col>
                                 </Row>
@@ -313,9 +330,9 @@ const OccupationForm = ({ id, surveying }) => {
                                             className={`form-control ${(formik.errors.solution_id && formik.touched.solution_id) ? 'is-invalid' : ''}`}
                                         >
                                             <option value="">-- เลือก --</option>
-                                            <option value="">วางแผนการตรวจวัดสิ่งแวดล้อม</option>
-                                            <option value="">แก้ไขปัญหาร่วมกับหน่วยงาน</option>
-                                            <option value="">อื่นๆ</option>
+                                            <option value="1">วางแผนการตรวจวัดสิ่งแวดล้อม</option>
+                                            <option value="2">แก้ไขปัญหาร่วมกับหน่วยงาน</option>
+                                            <option value="99">อื่นๆ</option>
                                         </select>
                                         {(formik.errors.solution_id && formik.touched.solution_id) && (
                                             <span className="text-danger text-sm">{formik.errors.solution_id}</span>
@@ -371,7 +388,11 @@ const OccupationForm = ({ id, surveying }) => {
                                 <Row className="mb-2">
                                     <Col>
                                         <div className="p-2 pb-3">
-                                            <SurveyorForm onAdd={(surveyor) => handleAddSurveyor(formik, surveyor)} />
+                                            <SurveyorForm
+                                                onAdd={(surveyor) => {
+                                                    handleAddSurveyor(formik, surveyor);
+                                                }}
+                                            />
 
                                             <SurveyorList
                                                 surveyors={formik.values.surveyors}

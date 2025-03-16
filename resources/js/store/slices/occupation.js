@@ -24,7 +24,7 @@ export const getSurveyings = createAsyncThunk('occupation/getSurveyings', async 
 
 export const getSurveying = createAsyncThunk('occupation/getSurveying', async (id, { rejectWithValue }) => {
     try {
-        const res = await api.get(`/api/surveyings/${id}`)
+        const res = await api.get(`/api/occupations/${id}`)
 
         return res.data
     } catch (error) {
@@ -35,7 +35,7 @@ export const getSurveying = createAsyncThunk('occupation/getSurveying', async (i
 
 export const store = createAsyncThunk('occupation/store', async (data, { rejectWithValue }) => {
     try {
-        const res = await api.post('/api/surveyings', data, {
+        const res = await api.post('/api/occupations', data, {
             headers: { "Content-Type": "multipart/form-data" }
         })
 
@@ -48,7 +48,7 @@ export const store = createAsyncThunk('occupation/store', async (data, { rejectW
 
 export const update = createAsyncThunk('occupation/update', async ({ id, data }, { rejectWithValue }) => {
     try {
-        const res = await api.post(`/api/surveyings/${id}`, data, {
+        const res = await api.post(`/api/occupations/${id}`, data, {
             headers: { "Content-Type": "multipart/form-data" }
         })
 
@@ -61,7 +61,7 @@ export const update = createAsyncThunk('occupation/update', async ({ id, data },
 
 export const destroy = createAsyncThunk('occupation/destroy', async (id, { rejectWithValue, dispatch }) => {
     try {
-        const res = await api.delete(`/api/surveyings/${id}`)
+        const res = await api.delete(`/api/occupations/${id}`)
 
         if (res.data.status === 1) dispatch(updateSurveyings(id));
 
