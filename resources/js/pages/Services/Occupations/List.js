@@ -38,7 +38,9 @@ const OccupationList = () => {
     }, []);
 
     const handleDelete = (id) => {
-
+        if (window.confirm('คุณต้องการลบรายการสำรวจสภาพปัญหาใช่หรือไม่?')) {
+            dispatch(destroy(id));
+        }
     };
 
     return (
