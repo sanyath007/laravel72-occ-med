@@ -65,7 +65,7 @@ const OccupationList = () => {
 
                             <div>
                                 <table className="table table-bordered mb-2">
-                                <thead>
+                                    <thead>
                                         <tr>
                                             <th style={{ width: '5%', textAlign: 'center' }}>#</th>
                                             <th style={{ width: '10%', textAlign: 'center' }}>วันที่สำรวจ</th>
