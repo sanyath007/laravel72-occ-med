@@ -1,9 +1,16 @@
 import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../../context/globalContext'
+import { toShortTHDate } from '../../../utils/formatter'
+import { getSurveyings, destroy, resetDeleted } from '../../../store/slices/occupation'
 import Pagination from '../../../components/Pagination'
+import Loading from '../../../components/Loading'
 
 const OccupationList = () => {
+    const dispatch = useDispatch()
+    const { surveyings, pager, isLoading, isDeleted } = useSelector(state => state.occupation)
     const { setGlobal } = useContext(GlobalContext)
 
     /** Initial global states */
@@ -18,6 +25,21 @@ const OccupationList = () => {
             ]
         }))
     }, []);
+
+    useEffect(() => {
+        if (isDeleted) {
+            toast.success('ลบรายการสำรวจสภาพปัญหาสำเร็จ!!');
+            dispatch(resetDeleted());
+        }
+    }, [isDeleted]);
+
+    useEffect(() => {
+        dispatch(getSurveyings({ url: '/api/occupations/search' }));
+    }, []);
+
+    const handleDelete = (id) => {
+
+    };
 
     return (
         <section className="section">
@@ -43,12 +65,57 @@ const OccupationList = () => {
 
                             <div>
                                 <table className="table table-bordered mb-2">
+                                <thead>
+                                        <tr>
+                                            <th style={{ width: '5%', textAlign: 'center' }}>#</th>
+                                            <th style={{ width: '10%', textAlign: 'center' }}>วันที่สำรวจ</th>
+                                            <th>สถานประกอบการ</th>
+                                            <th style={{ width: '15%', textAlign: 'center' }}>ที่มา</th>
+                                            <th style={{ width: '20%', textAlign: 'center' }}>ผู้ดำเนินการ</th>
+                                            <th style={{ width: '8%', textAlign: 'center' }}>ผลตรวจ</th>
+                                            <th style={{ width: '10%', textAlign: 'center' }}>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {isLoading && (
+                                            <tr>
+                                                <td colSpan={7} className="text-center"><Loading /></td>
+                                            </tr>
+                                        )}
+
+                                        {(!isLoading && surveyings) && surveyings.map((surveying, index) => (
+                                            <tr key={surveying.id}>
+                                                <td className="text-center">{pager && pager.from + index}</td>
+                                                <td className="text-center">{toShortTHDate(surveying.survey_date)}</td>
+                                                <td>{surveying.company?.name}</td>
+                                                <td></td>
+                                                <td>{surveying.division?.name}</td>
+                                                <td className="text-center">
+                                                    {/* {surveying.is_returned_data !== 1 && <span className="badge rounded-pill bg-dark">ยังไม่คืนข้อมูล</span>}
+                                                    {surveying.is_returned_data === 1 && <span className="badge rounded-pill bg-success">คืนข้อมูลแล้ว</span>} */}
+                                                </td>
+                                                <td className="text-center">
+                                                    <div className="btn-group" role="group" aria-label="Basic mixed styles example">
+                                                        {/* <Link to={`/services/occupations/${surveying.id}/detail`} className="btn btn-primary btn-sm">
+                                                            <i className="bi bi-search"></i>
+                                                        </Link> */}
+                                                        <Link to={`/services/occupations/${surveying.id}/edit`} className="btn btn-warning btn-sm">
+                                                            <i className="bi bi-pencil-square"></i>
+                                                        </Link>
+                                                        <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(surveying.id)}>
+                                                            <i className="bi bi-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
                                 </table>
 
-                                {/* <Pagination
+                                <Pagination
                                     pager={pager}
                                     onPageClick={(url) => setEndpoint(url)}
-                                /> */}
+                                />
                             </div>
                         </div>
                     </div>

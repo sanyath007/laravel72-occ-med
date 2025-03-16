@@ -168,6 +168,6 @@ export const occupationSlice = createSlice({
     }
 })
 
-export const { resetSuccess, isDeleted, updateSurveyings } = occupationSlice.actions
+export const { resetSuccess, resetDeleted, updateSurveyings } = occupationSlice.actions
 
 export default occupationSlice.reducer
