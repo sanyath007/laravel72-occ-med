@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../../context/globalContext'
-import { resetSuccess, getSurveying } from '../../../store/slices/surveying'
+import { resetSuccess, getSurveying } from '../../../store/slices/occupation'
 import Loading from '../../../components/Loading'
 import OccupationForm from './Form'
 
@@ -12,7 +12,7 @@ const EditOccupation = () => {
     const navigate = useNavigate()
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { surveying, loading, success } = useSelector(state => state.surveying);
+    const { surveying, isLoading, isSuccess } = useSelector(state => state.occupation);
 
     /** Initial global states */
     useEffect(() => {
@@ -35,14 +35,14 @@ const EditOccupation = () => {
     }, [id]);
 
     useEffect(() => {
-        if (success) {
+        if (isSuccess) {
             toast.success('บันทึกการแก้ไขขอ้มูลเรียบร้อยแล้ว!!');
 
             dispatch(resetSuccess());
 
             navigate('/services/occupations');
         }
-    }, [success]);
+    }, [isSuccess]);
 
     return (
         <section className="section">
@@ -52,9 +52,9 @@ const EditOccupation = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขรายการสำรวจสภาพปัญหา</h5>
 
-                            {loading && <div className="text-center"><Loading /></div>}
+                            {isLoading && <div className="text-center"><Loading /></div>}
 
-                            {(!loading && surveying) && (
+                            {(!isLoading && surveying) && (
                                 <OccupationForm id={id} surveying={surveying} />
                             )}
                         </div>
