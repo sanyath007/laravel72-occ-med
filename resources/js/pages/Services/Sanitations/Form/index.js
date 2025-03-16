@@ -289,6 +289,7 @@ const SanitationForm = ({ id, data }) => {
                                             value={formik.values.agency_text}
                                             onChange={formik.handleChange}
                                             className={`form-control ${(formik.errors.agency_text && formik.touched.agency_text) ? 'is-invalid' : ''}`}
+                                            disabled={formik.values.agency_id !== '99'}
                                         />
                                         {(formik.errors.agency_text && formik.touched.agency_text) && (
                                             <span className="text-danger text-sm">{formik.errors.agency_text}</span>
@@ -322,6 +323,7 @@ const SanitationForm = ({ id, data }) => {
                                             value={formik.values.result_text}
                                             onChange={formik.handleChange}
                                             className={`form-control ${(formik.errors.result_text && formik.touched.result_text) ? 'is-invalid' : ''}`}
+                                            disabled={formik.values.result_id !== '99'}
                                         />
                                         {(formik.errors.result_text && formik.touched.result_text) && (
                                             <span className="text-danger text-sm">{formik.errors.result_text}</span>
