@@ -267,6 +267,7 @@ const OccupationForm = ({ id, surveying }) => {
                                             value={formik.values.source_text}
                                             onChange={formik.handleChange}
                                             className={`form-control ${(formik.errors.source_text && formik.touched.source_text) ? 'is-invalid' : ''}`}
+                                            disabled={formik.values.solution_id !== '99'}
                                         />
                                         {(formik.errors.source_text && formik.touched.source_text) && (
                                             <span className="text-danger text-sm">{formik.errors.source_text}</span>
@@ -314,6 +315,7 @@ const OccupationForm = ({ id, surveying }) => {
                                             value={formik.values.cause_text}
                                             onChange={formik.handleChange}
                                             className={`form-control ${(formik.errors.cause_text && formik.touched.cause_text) ? 'is-invalid' : ''}`}
+                                            disabled={formik.values.cause_id !== '99'}
                                         />
                                         {(formik.errors.cause_text && formik.touched.cause_text) && (
                                             <span className="text-danger text-sm">{formik.errors.cause_text}</span>
@@ -346,6 +348,7 @@ const OccupationForm = ({ id, surveying }) => {
                                             value={formik.values.solution_text}
                                             onChange={formik.handleChange}
                                             className={`form-control ${(formik.errors.solution_text && formik.touched.solution_text) ? 'is-invalid' : ''}`}
+                                            disabled={formik.values.solution_id !== '99'}
                                         />
                                         {(formik.errors.solution_text && formik.touched.solution_text) && (
                                             <span className="text-danger text-sm">{formik.errors.solution_text}</span>
