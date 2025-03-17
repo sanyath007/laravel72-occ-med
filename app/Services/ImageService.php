@@ -2,29 +2,29 @@
 
 namespace App\Services;
 
-// use App\Models\
 use App\Traits\SaveImage;
 
 class ImageService
 {
     use SaveImage;
 
-    public function updateImage($id, $image)
+    public function uploadImage($file, $destPath)
     {
-        $asset = $this->assetRepo->getAsset($id);
-        $destPath = 'assets';
+        return $this->saveImage($file, $destPath);
+    }
 
-        /** Remove old uploaded file */
-        if (\File::exists($destPath . $asset->img_url)) {
-            \File::delete($destPath . $asset->img_url);
+    public function uploadMultipleImage($files, $destPath)
+    {
+        $index = 0;
+        $picNames = '';
+        foreach($files as $file) {
+            if ($fileName = $this->saveImage($file, $destPath)) {
+                $picNames .= ($index < count($files) - 1) ? $fileName.',' : $fileName;
+            }
+
+            $index++;
         }
 
-        $asset->img_url = $this->saveImage($image, $destPath);
-
-        if (!empty($asset->img_url) && $asset->save()) {
-            return $asset;
-        } else {
-            return false;
-        }
+        return $picNames;
     }
 }

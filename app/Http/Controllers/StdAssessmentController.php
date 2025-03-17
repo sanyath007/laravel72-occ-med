@@ -6,9 +6,17 @@ use Illuminate\Http\Request;
 use App\Models\StdAssessment;
 use App\Models\SurveyingSurveyor;
 use App\Models\Company;
+use App\Services\ImageService;
 
 class StdAssessmentController extends Controller
 {
+    protected $imgService;
+
+    public function __construct(ImageService $imgService)
+    {
+        $this->imgService = $imgService;
+    }
+
     public function search(Request $request)
     {
         $date = $request->get('date');
@@ -61,38 +69,19 @@ class StdAssessmentController extends Controller
             $assessment->result_text         = $request['result_text'];
             // $assessment->remark              = $request['remark'];
 
-            /** Upload file and pictures */
+            /** Upload file */
             if ($request->file('file_attachment')) {
                 $file = $request->file('file_attachment');
                 $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-                $destinationPath = 'uploads/wts/file/';
+                $destPath = 'uploads/sanitation/file/';
 
-                if ($file->move($destinationPath, $fileName)) {
+                if ($file->move($destPath, $fileName)) {
                     $assessment->file_attachment = $fileName;
                 }
             }
 
-            if ($request->file('pic_attachments')) {
-                $index = 0;
-                $picNames = '';
-                $destinationPath = 'uploads/wts/pic/';
-
-                foreach($request->file('pic_attachments') as $file) {
-                    $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-
-                    if ($file->move($destinationPath, $fileName)) {
-                        if ($index < count($request->file('pic_attachments')) - 1) {
-                            $picNames .= $fileName.',';
-                        } else {
-                            $picNames .= $fileName;
-                        }
-                    }
-
-                    $index++;
-                }
-
-                $assessment->pic_attachments = $picNames;
-            }
+            /** Upload pictures */
+            $assessment->pic_attachments = $this->imgService->uploadMultipleImage($request->file('pic_attachments'), 'uploads/sanitation/pic/');
 
             if ($assessment->save()) {
                 return [
@@ -133,7 +122,7 @@ class StdAssessmentController extends Controller
 
             /** Upload file and pictures */
             if ($request->file('file_attachment')) {
-                $destinationPath = 'uploads/wts/file/';
+                $destinationPath = 'uploads/sanitation/file/';
                 $file = $request->file('file_attachment');
                 $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
 
@@ -151,7 +140,7 @@ class StdAssessmentController extends Controller
             // if ($request->file('pic_attachments')) {
             //     $index = 0;
             //     $picNames = '';
-            //     $destinationPath = 'uploads/wts/pic/';
+            //     $destinationPath = 'uploads/sanitation/pic/';
 
             //     foreach($request->file('pic_attachments') as $file) {
             //         $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
@@ -196,7 +185,7 @@ class StdAssessmentController extends Controller
             $assessment = StdAssessment::find($id);
 
             /** Remove uploaded file */
-            $destinationPath = 'uploads/wts/';
+            $destinationPath = 'uploads/sanitation/';
             $existedFile = $destinationPath .'file/'. $assessment->file_attachment;
             if (\File::exists($existedFile)) {
                 \File::delete($existedFile);
