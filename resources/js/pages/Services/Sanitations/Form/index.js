@@ -7,7 +7,7 @@ import { FaFilePdf, FaPlus, FaSave, FaSearch, FaTimesCircle } from 'react-icons/
 import { DatePicker } from '@mui/x-date-pickers'
 import moment from 'moment'
 import { store, update } from '../../../../store/slices/sanitation'
-import { validateFile, isExistedItem, string2Array, imageString2UrlArray } from '../../../../utils'
+import { validateFile, isExistedItem, string2Array, imageString2UrlArray, getFilenameFormUrl } from '../../../../utils'
 import ModalCompanies from '../../../../components/Modals/ModalCompanies'
 import ModalCompanyForm from '../../../../components/Modals/ModalCompanyForm'
 import MultipleFileUpload from '../../../../components/Forms/MultipleFileUpload'
@@ -52,7 +52,7 @@ const SanitationForm = ({ id, data }) => {
             setSelectedCompany(data.company);
             setSelectedSurveyDate(moment(data.survey_date));
             setUploadedFile(data.file_attachment);
-            setUploadedPics(imageString2UrlArray(data.pic_attachments, `${process.env.MIX_APP_URL}/uploads/sanitation/pic`));
+            setUploadedPics(imageString2UrlArray(data.pic_attachments, `${process.env.MIX_APP_URL}/storage`));
         }
     }, [data]);
 
@@ -348,8 +348,8 @@ const SanitationForm = ({ id, data }) => {
                                         <label htmlFor=""></label>
                                         {uploadedFile && (
                                             <div className="d-flex align-items-center">
-                                                <a href={`${process.env.MIX_APP_URL}/uploads/wts/file/${uploadedFile}`} className="p-auto me-2" target="_blank">
-                                                    <FaFilePdf size={'16px'} /> {uploadedFile}
+                                                <a href={`${process.env.MIX_APP_URL}/storage/${uploadedFile}`} className="p-auto me-2" target="_blank">
+                                                    <FaFilePdf size={'16px'} /> {getFilenameFormUrl(`${process.env.MIX_APP_URL}/storage/${uploadedFile}`)}
                                                 </a>
                                                 {/* <span className="uploaded__close-btn"><FaTimesCircle /></span> */}
                                             </div>
