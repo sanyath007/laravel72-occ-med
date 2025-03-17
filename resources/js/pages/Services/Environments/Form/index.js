@@ -14,8 +14,8 @@ import ModalCompanyForm from '../../../../components/Modals/ModalCompanyForm'
 import MultipleFileUpload from '../../../../components/Forms/MultipleFileUpload'
 import UploadGallery from '../../../../components/UploadGallery'
 import Checkbox from '../../../../components/Forms/Checkbox'
-import SurveyorForm from './SurveyorForm'
-import SurveyorList from './SurveyorList'
+import SurveyorForm from '../../../../components/Surveyor/SurveyorForm'
+import SurveyorList from '../../../../components/Surveyor/SurveyorList'
 
 const ACCEPT_FILE_TYPE = ['pdf', 'doc', 'docx'];
 const ACCEPT_PIC_TYPE = ['jpg','jpeg','png'];

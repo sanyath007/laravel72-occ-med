@@ -9,7 +9,7 @@ import { toShortTHDate } from '../../../utils/formatter'
 import { string2Array, imageString2UrlArray } from '../../../utils'
 import UploadGallery from '../../../components/UploadGallery'
 import Loading from '../../../components/Loading'
-import SurveyorList from './Form/SurveyorList'
+import SurveyorList from '../../../components/Surveyor/SurveyorList'
 import GuidelineList from './Form/GuidelineList'
 
 const OBJECTIVES = [

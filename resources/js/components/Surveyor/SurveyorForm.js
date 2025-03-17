@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { FaSearch, FaPlus } from 'react-icons/fa'
-import ModalEmployees from '../../../../components/Modals/ModalEmployees';
-import ModalAddEmployee from '../../../../components/Modals/ModalEmployeeForm';
+import ModalEmployees from '../Modals/ModalEmployees';
+import ModalAddEmployee from '../Modals/ModalEmployeeForm';
 
 const SurveyorForm = ({ onAdd }) => {
     const [surveyor, setSurveyor] = useState(null);
