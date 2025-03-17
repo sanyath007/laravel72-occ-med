@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Traits\SaveFile;
 
-class ImageService
+class FileService
 {
     use SaveFile;
 

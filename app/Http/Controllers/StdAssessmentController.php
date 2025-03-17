@@ -6,15 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\StdAssessment;
 use App\Models\SurveyingSurveyor;
 use App\Models\Company;
-use App\Services\ImageService;
+use App\Services\FileService;
 
 class StdAssessmentController extends Controller
 {
-    protected $imgService;
+    protected $fileService;
 
-    public function __construct(ImageService $imgService)
+    public function __construct(FileService $fileService)
     {
-        $this->imgService = $imgService;
+        $this->fileService = $fileService;
     }
 
     public function search(Request $request)
@@ -81,7 +81,7 @@ class StdAssessmentController extends Controller
             }
 
             /** Upload pictures */
-            $assessment->pic_attachments = $this->imgService->uploadMultipleImage($request->file('pic_attachments'), 'uploads/sanitation/pic/');
+            $assessment->pic_attachments = $this->fileService->uploadMultipleImage($request->file('pic_attachments'), 'uploads/sanitation/pic/');
 
             if ($assessment->save()) {
                 return [
