@@ -32,7 +32,7 @@ export const createFileFromUrl = async (url, filename, defaultType) => {
     let data = await res.blob();
 
     return new File([data], filename, { type: 'image/jpeg' });
-}
+};
 
 export const string2Array = (str) => {
     if (!str || str === '') return [];
@@ -57,7 +57,7 @@ export const filesizes = (bytes, decimals = 2) => {
 
 export const getFilenameFormUrl = (url) => {
     return new URL(url).pathname.split('/').pop()
-}
+};
 
 export const generateBudgetYear = () => {
     if (moment().month() > 9) {
@@ -65,4 +65,37 @@ export const generateBudgetYear = () => {
     }
 
     return moment().year();
-}
+};
+
+export const isExisted = (items, fieldName = 'id', id) => {
+    return items.some(item => item[fieldName] === id);
+};
+
+export const getFormDataItem = (data, dataName, id) => {
+    if (!data) return null;
+
+    return data[dataName].find(item => item.id === id);
+};
+
+export const removeItemWithFlag = (items, id, isNew) => {
+    if (isNew) {
+        return items.filter(item => item.id !== id);
+    } else {
+        /** Create new items array by setting removed flag if item is removed by user */
+        return items.map(item => {
+            if (item.id === id) return { ...item, removed: true };
+
+            return item;
+        });
+    }
+};
+
+export const getUrlParam = (url, paramName) => {
+    const params = new URLSearchParams(url);
+
+    return params.get(paramName);
+};
+
+export const setFieldTouched = (formik, fieldName) => {
+    setTimeout(() => formik.setFieldTouched(fieldName, true));
+};
