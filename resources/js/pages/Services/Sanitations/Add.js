@@ -10,7 +10,7 @@ const AddSanitation = () => {
     const navigate = useNavigate()
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { success } = useSelector(state => state.surveying);
+    const { isSuccess } = useSelector(state => state.surveying);
 
     /** Initial global states */
     useEffect(() => {
@@ -27,14 +27,14 @@ const AddSanitation = () => {
     }, []);
 
     useEffect(() => {
-        if (success) {
+        if (isSuccess) {
             toast.success('บันทึกขอ้มูลเรียบร้อยแล้ว!!');
 
             dispatch(resetSuccess());
 
             navigate('/services/sanitations');
         }
-    }, [success]);
+    }, [isSuccess]);
 
     return (
         <section className="section">
