@@ -10,7 +10,7 @@ const AddOccupation = () => {
     const navigate = useNavigate()
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { success } = useSelector(state => state.surveying);
+    const { isSuccess } = useSelector(state => state.surveying);
 
     /** Initial global states */
     useEffect(() => {
@@ -27,14 +27,14 @@ const AddOccupation = () => {
     }, []);
 
     useEffect(() => {
-        if (success) {
+        if (isSuccess) {
             toast.success('บันทึกขอ้มูลเรียบร้อยแล้ว!!');
 
             dispatch(resetSuccess());
 
             navigate('/services/occupations');
         }
-    }, [success]);
+    }, [isSuccess]);
 
     return (
         <section className="section">
