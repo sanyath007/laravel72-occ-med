@@ -70,18 +70,10 @@ class StdAssessmentController extends Controller
             // $assessment->remark              = $request['remark'];
 
             /** Upload file */
-            if ($request->file('file_attachment')) {
-                $file = $request->file('file_attachment');
-                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-                $destPath = 'uploads/sanitation/file/';
-
-                if ($file->move($destPath, $fileName)) {
-                    $assessment->file_attachment = $fileName;
-                }
-            }
+            $assessment->file_attachment = $this->fileService->uploadFile($request->file('file_attachment'), 'uploads/sanitation/file/');
 
             /** Upload pictures */
-            $assessment->pic_attachments = $this->fileService->uploadMultipleImage($request->file('pic_attachments'), 'uploads/sanitation/pic/');
+            $assessment->pic_attachments = $this->fileService->uploadMultipleImages($request->file('pic_attachments'), 'uploads/sanitation/pic/');
 
             if ($assessment->save()) {
                 return [
