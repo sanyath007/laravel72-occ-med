@@ -20,7 +20,7 @@ const AddSanitation = () => {
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
                 { id: 'services', name: 'งานบริการ', path: '/services' },
-                { id: 'environments', name: 'รายการตรวจประเมินมาตรฐาน', path: '/services/environments' },
+                { id: 'sanitations', name: 'รายการตรวจประเมินมาตรฐาน', path: '/services/sanitations' },
                 { id: 'new', name: 'บันทึกตรวจประเมินมาตรฐาน', path: null, active: true }
             ]
         }))
@@ -32,7 +32,7 @@ const AddSanitation = () => {
 
             dispatch(resetSuccess());
 
-            navigate('/services/environments');
+            navigate('/services/sanitations');
         }
     }, [success]);
 
