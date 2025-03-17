@@ -100,7 +100,7 @@ const SanitationList = () => {
                                                 <td>{sanitation.division?.name}</td>
                                                 <td className="text-center">
                                                     {sanitation.file_attachment && (
-                                                        <a href={`${process.env.MIX_APP_URL}/uploads/sanitation/file/${sanitation.file_attachment}`} target="_blank" className="text-danger">
+                                                        <a href={`${process.env.MIX_APP_URL}/storage/${sanitation.file_attachment}`} target="_blank" className="text-danger">
                                                             <FaFilePdf size={"20px"} />
                                                         </a>
                                                     )}

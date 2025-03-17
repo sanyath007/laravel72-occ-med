@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { FaFilePdf } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../../context/globalContext'
 import { toShortTHDate } from '../../../utils/formatter'
@@ -99,7 +100,7 @@ const OccupationList = () => {
                                                 <td>{surveying.division?.name}</td>
                                                 <td className="text-center">
                                                     {surveying.file_attachment && (
-                                                        <a href={`${process.env.MIX_APP_URL}/uploads/problem/file/${surveying.file_attachment}`} target="_blank" className="text-danger">
+                                                        <a href={`${process.env.MIX_APP_URL}/storage/${surveying.file_attachment}`} target="_blank" className="text-danger">
                                                             <FaFilePdf size={"20px"} />
                                                         </a>
                                                     )}

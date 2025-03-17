@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import { FaFilePdf } from 'react-icons/fa'
 import { GlobalContext } from '../../../context/globalContext'
 import { getMeasurements, destroy, resetDeleted } from '../../../store/slices/environment'
 import { toShortTHDate } from '../../../utils/formatter'
@@ -90,7 +91,13 @@ const EnvironmentList = () => {
                                                 <td className="text-center">{pager && pager.from + index}</td>
                                                 <td className="text-center">{toShortTHDate(measurement.measure_date)}</td>
                                                 <td>{measurement.company?.name}</td>
-                                                <td></td>
+                                                <td className="text-center">
+                                                    {measurement.file_attachment && (
+                                                        <a href={`${process.env.MIX_APP_URL}/storage/${measurement.file_attachment}`} target="_blank" className="text-danger">
+                                                            <FaFilePdf size={"20px"} />
+                                                        </a>
+                                                    )}
+                                                </td>
                                                 <td>{measurement.division?.name}</td>
                                                 <td className="text-center">
                                                     {measurement.is_returned_data !== 1 && <span className="badge rounded-pill bg-dark">ยังไม่คืนข้อมูล</span>}
