@@ -3,14 +3,14 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../../context/globalContext'
-import { resetSuccess } from '../../../store/slices/surveying'
+import { resetSuccess } from '../../../store/slices/sanitation'
 import EnvironmentForm from './Form'
 
 const AddSanitation = () => {
     const navigate = useNavigate()
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { isSuccess } = useSelector(state => state.surveying);
+    const { isSuccess } = useSelector(state => state.sanitation);
 
     /** Initial global states */
     useEffect(() => {
