@@ -47,7 +47,7 @@ const Navbar = () => {
                             <i className="bi bi-search"></i>
                         </a>
                     </li>
-                    <li className="nav-item dropdown">
+                    {/* <li className="nav-item dropdown">
                         <a className="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
                             <i className="bi bi-bell"></i>
                             <span className="badge bg-primary badge-number">4</span>
@@ -161,7 +161,7 @@ const Navbar = () => {
                             </li>
                             <li className="dropdown-footer"> <a href="#">Show all messages</a></li>
                         </ul>
-                    </li>
+                    </li> */}
                     <li className="nav-item dropdown pe-3">
                         <a className="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                             <img src={`${process.env.MIX_APP_URL}/img/profile-img.jpg`} alt="Profile" className="rounded-circle" />
