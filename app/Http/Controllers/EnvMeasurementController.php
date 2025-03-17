@@ -6,9 +6,17 @@ use Illuminate\Http\Request;
 use App\Models\EnvMeasurement;
 use App\Models\SurveyingSurveyor;
 use App\Models\Company;
+use App\Services\FileService;
 
 class EnvMeasurementController extends Controller
 {
+    protected $fileService;
+
+    public function __construct(FileService $fileService)
+    {
+        $this->fileService = $fileService;
+    }
+
     public function search(Request $request)
     {
         $date = $request->get('date');
@@ -65,40 +73,10 @@ class EnvMeasurementController extends Controller
             $measurement->have_report         = $request['have_report'];
             $measurement->is_returned_data    = $request['is_returned_data'];
             // $measurement->remark              = $request['remark'];
-            
-            /** Upload attachment files */
-            if ($request->file('file_attachment')) {
-                $file = $request->file('file_attachment');
-                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-                $destinationPath = 'uploads/env/file/';
-                
-                if ($file->move($destinationPath, $fileName)) {
-                    $measurement->file_attachment = $fileName;
-                }
-            }
-            
+            /** Upload file */
+            $measurement->file_attachment = $this->fileService->uploadFile($request->file('file_attachment'), 'uploads/env/file');
             /** Upload pictures */
-            if ($request->file('pic_attachments')) {
-                $index = 0;
-                $picNames = '';
-                $destinationPath = 'uploads/env/pic/';
-
-                foreach($request->file('pic_attachments') as $file) {
-                    $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-
-                    if ($file->move($destinationPath, $fileName)) {
-                        if ($index < count($request->file('pic_attachments')) - 1) {
-                            $picNames .= $fileName.',';
-                        } else {
-                            $picNames .= $fileName;
-                        }
-                    }
-
-                    $index++;
-                }
-
-                $measurement->pic_attachments = $picNames;
-            }
+            $measurement->pic_attachments = $this->fileService->uploadMultipleImages($request->file('pic_attachments'), 'uploads/env/pic');
 
             if ($measurement->save()) {
                 if (count($request['surveyors']) > 0) {

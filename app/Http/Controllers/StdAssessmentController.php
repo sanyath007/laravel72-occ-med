@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\StdAssessment;
-use App\Models\SurveyingSurveyor;
 use App\Models\Company;
 use App\Services\FileService;
 
@@ -68,12 +67,10 @@ class StdAssessmentController extends Controller
             $assessment->result_id           = $request['result_id'];
             $assessment->result_text         = $request['result_text'];
             // $assessment->remark              = $request['remark'];
-
             /** Upload file */
-            $assessment->file_attachment = $this->fileService->uploadFile($request->file('file_attachment'), 'uploads/sanitation/file/');
-
+            $assessment->file_attachment = $this->fileService->uploadFile($request->file('file_attachment'), 'uploads/sanitation/file');
             /** Upload pictures */
-            $assessment->pic_attachments = $this->fileService->uploadMultipleImages($request->file('pic_attachments'), 'uploads/sanitation/pic/');
+            $assessment->pic_attachments = $this->fileService->uploadMultipleImages($request->file('pic_attachments'), 'uploads/sanitation/pic');
 
             if ($assessment->save()) {
                 return [

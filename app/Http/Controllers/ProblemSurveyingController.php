@@ -6,9 +6,17 @@ use Illuminate\Http\Request;
 use App\Models\ProblemSurveying;
 use App\Models\SurveyingSurveyor;
 use App\Models\Company;
+use App\Services\FileService;
 
 class ProblemSurveyingController extends Controller
 {
+    protected $fileService;
+
+    public function __construct(FileService $fileService)
+    {
+        $this->fileService = $fileService;
+    }
+
     public function search(Request $request)
     {
         $date = $request->get('date');
@@ -64,39 +72,10 @@ class ProblemSurveyingController extends Controller
             $surveying->solution_id         = $request['solution_id'];
             $surveying->solution_text       = $request['solution_text'];
             // $surveying->remark              = $request['remark'];
-
-            /** Upload file and pictures */
-            if ($request->file('file_attachment')) {
-                $file = $request->file('file_attachment');
-                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-                $destinationPath = 'uploads/wts/file/';
-
-                if ($file->move($destinationPath, $fileName)) {
-                    $surveying->file_attachment = $fileName;
-                }
-            }
-
-            if ($request->file('pic_attachments')) {
-                $index = 0;
-                $picNames = '';
-                $destinationPath = 'uploads/wts/pic/';
-
-                foreach($request->file('pic_attachments') as $file) {
-                    $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-
-                    if ($file->move($destinationPath, $fileName)) {
-                        if ($index < count($request->file('pic_attachments')) - 1) {
-                            $picNames .= $fileName.',';
-                        } else {
-                            $picNames .= $fileName;
-                        }
-                    }
-
-                    $index++;
-                }
-
-                $surveying->pic_attachments = $picNames;
-            }
+            /** Upload file */
+            $surveying->file_attachment = $this->fileService->uploadFile($request->file('file_attachment'), 'uploads/occupation/file');
+            /** Upload pictures */
+            $surveying->pic_attachments = $this->fileService->uploadMultipleImages($request->file('pic_attachments'), 'uploads/occupation/pic');
 
             if ($surveying->save()) {
                 if (count($request['surveyors']) > 0) {
