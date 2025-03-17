@@ -2,15 +2,15 @@
 
 namespace App\Services;
 
-use App\Traits\SaveImage;
+use App\Traits\SaveFile;
 
 class ImageService
 {
-    use SaveImage;
+    use SaveFile;
 
     public function uploadImage($file, $destPath)
     {
-        return $this->saveImage($file, $destPath);
+        return $this->saveFile($file, $destPath);
     }
 
     public function uploadMultipleImage($files, $destPath)
@@ -18,7 +18,7 @@ class ImageService
         $index = 0;
         $picNames = '';
         foreach($files as $file) {
-            if ($fileName = $this->saveImage($file, $destPath)) {
+            if ($fileName = $this->saveFile($file, $destPath)) {
                 $picNames .= ($index < count($files) - 1) ? $fileName.',' : $fileName;
             }
 
