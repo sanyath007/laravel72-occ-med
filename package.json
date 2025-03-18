@@ -55,6 +55,7 @@
         "react-toastify": "^7.0.4",
         "react-tooltip": "^5.15.0",
         "thaidatepicker-react": "^0.2.2",
+        "uuid": "^11.1.0",
         "yup": "^0.32.11"
     },
     "browserslist": [
