@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\ProblemSurveying;
 use App\Models\SurveyingSurveyor;
 use App\Models\Company;
 use App\Services\FileService;
+use Ramsey\Uuid\Uuid;
 
 class ProblemSurveyingController extends Controller
 {
     protected $fileService;
+
+    protected $uploadDestPath = 'uploads/occupation/';
 
     public function __construct(FileService $fileService)
     {
@@ -21,7 +25,7 @@ class ProblemSurveyingController extends Controller
     {
         $date = $request->get('date');
 
-        $surveyings = ProblemSurveying::with('division','company','company.type','surveyors')
+        $surveyings = ProblemSurveying::with('division','company','company.type','surveyors','galleries')
                         ->with('surveyors.employee','surveyors.employee.position','surveyors.employee.level')
                         // ->when(!empty($date), function($q) use ($date) {
                         //     $q->where('surver_date', $date);
@@ -73,9 +77,15 @@ class ProblemSurveyingController extends Controller
             $surveying->solution_text       = $request['solution_text'];
             // $surveying->remark              = $request['remark'];
             /** Upload file */
-            $surveying->file_attachment = $this->fileService->uploadFile($request->file('file_attachment'), 'uploads/occupation/file');
-            /** Upload pictures */
-            $surveying->pic_attachments = $this->fileService->uploadMultipleImages($request->file('pic_attachments'), 'uploads/occupation/pic');
+            $surveying->file_attachment = $this->fileService->uploadFile(
+                $request->file('file_attachment'),
+                $this->uploadDestPath . 'file'
+            );
+            // /** Upload pictures */
+            $surveying->pic_attachments = $this->fileService->uploadMultipleImages(
+                $request->file('pic_attachments'),
+                $this->uploadDestPath . 'pic'
+            );
 
             if ($surveying->save()) {
                 if (count($request['surveyors']) > 0) {
@@ -123,66 +133,51 @@ class ProblemSurveyingController extends Controller
             $surveying->cause_text          = $request['cause_text'];
             $surveying->solution_id         = $request['solution_id'];
             $surveying->solution_text       = $request['solution_text'];
+            // $surveying->remark              = $request['remark'];
 
-            /** Upload file and pictures */
-            if ($request->file('file_attachment')) {
-                $destinationPath = 'uploads/wts/file/';
-                $file = $request->file('file_attachment');
-                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-
-                /** Check and remove uploaded file */
-                $existedFile = $destinationPath . $surveying->file_attachment;
-                if (\File::exists($existedFile)) {
-                    \File::delete($existedFile);
+            /** Check and remove uploaded file */
+            if ($request['is_file_updated']) {
+                if (Storage::disk('public')->exists($surveying->file_attachment)) {
+                    Storage::disk('public')->delete($surveying->file_attachment);
                 }
 
-                if ($file->move($destinationPath, $fileName)) {
-                    $surveying->file_attachment = $fileName;
-                }
+                $surveying->file_attachment = '';
             }
 
+            /** Upload file */
+            if ($request->file('file_attachment')) {
+                $surveying->file_attachment = $this->fileService->uploadFile(
+                    $request->file('file_attachment'),
+                    $this->uploadDestPath . 'file'
+                );
+            }
+
+            /** Upload pictures */
             // if ($request->file('pic_attachments')) {
-            //     $index = 0;
-            //     $picNames = '';
-            //     $destinationPath = 'uploads/wts/pic/';
-
-            //     foreach($request->file('pic_attachments') as $file) {
-            //         $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-
-            //         if ($file->move($destinationPath, $fileName)) {
-            //             if ($index < count($request->file('pic_attachments'))) {
-            //                 $picNames .= $fileName.',';
-            //             } else {
-            //                 $picNames .= $fileName;
-            //             }
-            //         }
-
-            //         $index++;
-            //     }
-
-            //     $surveying->pic_attachments = $picNames;
+                // $surveying->pic_attachments = $this->fileService->uploadMultipleImages(
+                //     $request->file('pic_attachments'),
+                //     $this->uploadDestPath . 'pic'
+                // );
             // }
 
             if ($surveying->save()) {
-                if (count($request['surveyors']) > 0) {
-                    foreach($request['surveyors'] as $surveyor) {
-                        if (array_key_exists('id', $surveyor)) {
-                            /** รายการเดิม */
-                            if (SurveyingSurveyor::where('employee_id', $surveyor['employee_id'])->count() == 0) {
-                                $updatedSurveyor = SurveyingSurveyor::find($surveyor['id']);
-                                $updatedSurveyor->employee_id = $surveyor['employee_id'];
-                                $updatedSurveyor->save();
-                            }
-                        } else {
-                            /** รายการใหม่ */
-                            $newSurveyor = new SurveyingSurveyor;
-                            $newSurveyor->survey_id     = $surveying->id;
-                            $newSurveyor->employee_id   = $surveyor['employee_id'];
-                            $newSurveyor->save();
+                foreach($request['surveyors'] as $surveyor) {
+                    if (array_key_exists('survey_id', $surveyor)) {
+                        /** 
+                         * รายการเดิม
+                         * ถ้าเป็นรายการเดิมให้ตรวจสอบว่ามี property flag removed หรือไม่
+                         */
+                        if (array_key_exists('removed', $surveyor) && $surveyor['removed']) {
+                            SurveyingSurveyor::find($surveyor['id'])->delete();
                         }
+                    } else {
+                        /** รายการใหม่ */
+                        $newSurveyor = new SurveyingSurveyor;
+                        $newSurveyor->survey_type_id    = 3;
+                        $newSurveyor->survey_id         = $surveying->id;
+                        $newSurveyor->employee_id       = $surveyor['employee_id'];
+                        $newSurveyor->save();
                     }
-                } else {
-                    SurveyingSurveyor::where('survey_id', $id)->delete();
                 }
 
                 return [

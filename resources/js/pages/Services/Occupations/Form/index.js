@@ -60,7 +60,7 @@ const OccupationForm = ({ id, surveying }) => {
         if (surveying) {
             setSelectedCompany(surveying.company);
             setSelectedSurveyDate(moment(surveying.survey_date));
-            setUploadedFile(surveying.file_attachment);
+            setUploadedFile(surveying.file_attachment ? `${process.env.MIX_APP_URL}/storage/${surveying.file_attachment}` : '');
             setUploadedPics(imageString2UrlArray(surveying.pic_attachments, `${process.env.MIX_APP_URL}/storage`));
         }
     }, [surveying]);
@@ -82,6 +82,11 @@ const OccupationForm = ({ id, surveying }) => {
     
             formik.setFieldValue('surveyors', newSurveyors);
         }
+    };
+
+    const handleRemoveFile = (formik) => {
+        setUploadedFile('');
+        formik.setFieldValue('is_file_updated', true);
     };
 
     const handleSubmit = (values, formik) => {
@@ -121,6 +126,7 @@ const OccupationForm = ({ id, surveying }) => {
                 solution_id: (surveying && surveying.solution_id) ? surveying.solution_id : '',
                 solution_text: (surveying && surveying.solution_text) ? surveying.solution_text : '',
                 file_attachment: '',
+                is_file_updated: false,
                 surveyors: surveying ? surveying.surveyors : [],
                 pic_attachments: []
             }}
@@ -372,7 +378,7 @@ const OccupationForm = ({ id, surveying }) => {
                                     </Col>
                                 </Row>
                                 <Row className="mb-2">
-                                    <Col>
+                                    {!uploadedFile && <Col>
                                         <label htmlFor="">แนบไฟล์ผลการตรวจวัดสิ่งแวดล้อม</label>
                                         <input
                                             type="file"
@@ -384,18 +390,18 @@ const OccupationForm = ({ id, surveying }) => {
                                         {(formik.errors.file_attachment && formik.touched.file_attachment) && (
                                             <span className="invalid-feedback">{formik.errors.file_attachment}</span>
                                         )}
-                                    </Col>
-                                    <Col>
-                                        <label htmlFor=""></label>
-                                        {uploadedFile && (
-                                            <div className="d-flex align-items-center">
-                                                <a href={`${process.env.MIX_APP_URL}/storage/${uploadedFile}`} className="p-auto me-2" target="_blank">
-                                                    <FaFilePdf size={'16px'} /> {getFilenameFormUrl(`${process.env.MIX_APP_URL}/storage/${uploadedFile}`)}
+                                    </Col>}
+                                    {uploadedFile && <Col>
+                                        <label htmlFor="">แนบไฟล์ผลการตรวจวัดสิ่งแวดล้อม</label>
+                                            <div className="d-flex align-items-center" style={{ minHeight: '34px' }}>
+                                                <a href={uploadedFile} className="p-auto me-2" target="_blank">
+                                                    <FaFilePdf size={'16px'} /> {getFilenameFormUrl(uploadedFile)}
                                                 </a>
-                                                {/* <span className="uploaded__close-btn"><FaTimesCircle /></span> */}
+                                                <span className="uploaded__close-btn">
+                                                    <FaTimesCircle onClick={() => handleRemoveFile(formik)} />
+                                                </span>
                                             </div>
-                                        )}
-                                    </Col>
+                                    </Col>}
                                 </Row>
                             </Tab>
                             <Tab
@@ -434,15 +440,6 @@ const OccupationForm = ({ id, surveying }) => {
                             >
                                 <Row className="mb-2">
                                     <Col>
-                                        {/* <input
-                                            type="file"
-                                            onChange={(e) => {
-                                                formik.setFieldValue('pic_attachments', [...formik.values.pic_attachments, e.target.files[0]])
-                                            }}
-                                            
-                                            className={`form-control ${(formik.errors.pic_attachments && formik.touched.pic_attachments) ? 'is-invalid' : ''}`}
-                                        /> */}
-
                                         <MultipleFileUpload
                                             files={formik.values.pic_attachments}
                                             onSelect={(files) => {

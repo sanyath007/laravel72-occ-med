@@ -15,7 +15,8 @@
         "laravel/framework": "^7.29",
         "laravel/sanctum": "^2.15",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^2.5"
+        "laravel/ui": "^2.5",
+        "ramsey/uuid": "^4.2"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

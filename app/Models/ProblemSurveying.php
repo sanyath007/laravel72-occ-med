@@ -27,6 +27,11 @@ class ProblemSurveying extends Model
 
     public function surveyors()
     {
-        return $this->hasMany(SurveyingSurveyor::class, 'survey_id', 'id')->where('survey_type_id', 3);;
+        return $this->hasMany(SurveyingSurveyor::class, 'survey_id', 'id')->where('survey_type_id', 3);
+    }
+
+    public function galleries()
+    {
+        return $this->hasMany(Gallery::class, 'guuid', 'guuid');
     }
 }
