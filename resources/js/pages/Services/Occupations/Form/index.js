@@ -414,7 +414,7 @@ const OccupationForm = ({ id, surveying }) => {
                                             />
 
                                             <SurveyorList
-                                                surveyors={formik.values.surveyors}
+                                                surveyors={formik.values.surveyors.filter(surveyor => !surveyor.removed)}
                                                 onDelete={(id, isNew) => handleRemoveSurveyor(formik, id, isNew)}
                                             />
                                             {(formik.errors.surveyors && formik.touched.surveyors) && (
