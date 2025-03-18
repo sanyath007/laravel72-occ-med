@@ -85,6 +85,14 @@ const OccupationForm = ({ id, surveying }) => {
         }
     };
 
+    const handleRemoveGallery = (formik, id, isNew) => {
+        if (window.confirm('คุณต้องการลบรูปกิจจกรรมใช่หรือไหม?')) {
+            const newGalleries = removeItemWithFlag(formik.values.galleries, id, isNew);
+
+            formik.setFieldValue('galleries', newGalleries);
+        }
+    };
+
     const handleRemoveFile = (formik) => {
         setUploadedFile('');
         formik.setFieldValue('is_file_updated', true);
@@ -119,7 +127,8 @@ const OccupationForm = ({ id, surveying }) => {
                 file_attachment: '',
                 is_file_updated: false,
                 surveyors: surveying ? surveying.surveyors : [],
-                pictures: []
+                pictures: [],
+                galleries: surveying ? surveying.galleries : [],
             }}
             validationSchema={surveySchema}
             onSubmit={handleSubmit}
@@ -450,6 +459,7 @@ const OccupationForm = ({ id, surveying }) => {
                                             <h4>รูปที่อัพโหลดแล้ว</h4>
                                             <UploadGallery
                                                 images={galleries.map(gallery => gallery.path)}
+                                                onDelete={(id, isNew) => handleRemoveGallery(formik, id, isNew)}
                                                 minHeight={'200px'}
                                             />
                                         </div>
