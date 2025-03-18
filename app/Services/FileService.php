@@ -16,35 +16,35 @@ class FileService
     public function uploadMultipleFiles($files, $destPath)
     {
         $index = 0;
-        $picNames = '';
+        $arrFiles = [];
         foreach($files as $file) {
             if ($fileName = $this->saveFile($file, $destPath)) {
-                $picNames .= ($index < count($files) - 1) ? $fileName.',' : $fileName;
+                array_push($arrFiles, $fileName);
             }
 
             $index++;
         }
 
-        return $picNames;
+        return $arrFiles;
     }
 
-    public function uploadImage($file, $destPath)
+    public function uploadImage($image, $destPath)
     {
-        return $this->saveFile($file, $destPath);
+        return $this->saveFile($image, $destPath);
     }
 
-    public function uploadMultipleImages($files, $destPath)
+    public function uploadMultipleImages($images, $destPath)
     {
         $index = 0;
-        $picNames = '';
-        foreach($files as $file) {
-            if ($fileName = $this->saveFile($file, $destPath)) {
-                $picNames .= ($index < count($files) - 1) ? $fileName.',' : $fileName;
+        $arrImages = [];
+        foreach($images as $image) {
+            if ($fileName = $this->saveFile($image, $destPath)) {
+                array_push($arrImages, $fileName);
             }
 
             $index++;
         }
 
-        return $picNames;
+        return $arrImages;
     }
 }

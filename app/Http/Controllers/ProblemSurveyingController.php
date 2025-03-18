@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\ProblemSurveying;
 use App\Models\SurveyingSurveyor;
 use App\Models\Company;
+use App\Models\Gallery;
 use App\Services\FileService;
 use Ramsey\Uuid\Uuid;
 
@@ -84,12 +85,13 @@ class ProblemSurveyingController extends Controller
             );
 
             // /** Upload pictures */
-            $surveying->pic_attachments = $this->fileService->uploadMultipleImages(
+            $pictures = $this->fileService->uploadMultipleImages(
                 $request->file('pic_attachments'),
                 $this->uploadDestPath . 'pic'
             );
 
             if ($surveying->save()) {
+                /** Insert surveyors */
                 if (count($request['surveyors']) > 0) {
                     foreach($request['surveyors'] as $surveyor) {
                         $newSurveyor = new SurveyingSurveyor;
@@ -98,6 +100,14 @@ class ProblemSurveyingController extends Controller
                         $newSurveyor->employee_id       = $surveyor['employee_id'];
                         $newSurveyor->save();
                     }
+                }
+
+                /** Insert galleries */
+                foreach($pictures as $key => $pic) {
+                    $gallery = new Gallery;
+                    $gallery->path  = $pic;
+                    $gallery->guuid = $surveying->guuid;
+                    $gallery->save();
                 }
 
                 return [
