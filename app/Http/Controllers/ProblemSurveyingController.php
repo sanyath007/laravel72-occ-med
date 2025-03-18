@@ -38,7 +38,7 @@ class ProblemSurveyingController extends Controller
 
     public function getById($id)
     {
-        $surveying = ProblemSurveying::with('division','company','company.type','surveyors')
+        $surveying = ProblemSurveying::with('division','company','company.type','surveyors','galleries')
                         ->with('surveyors.employee','surveyors.employee.position','surveyors.employee.level')
                         ->find($id);
 
@@ -75,12 +75,14 @@ class ProblemSurveyingController extends Controller
             $surveying->cause_text          = $request['cause_text'];
             $surveying->solution_id         = $request['solution_id'];
             $surveying->solution_text       = $request['solution_text'];
-            // $surveying->remark              = $request['remark'];
+            $surveying->guuid               = Uuid::uuid4();
+
             /** Upload file */
             $surveying->file_attachment = $this->fileService->uploadFile(
                 $request->file('file_attachment'),
                 $this->uploadDestPath . 'file'
             );
+
             // /** Upload pictures */
             $surveying->pic_attachments = $this->fileService->uploadMultipleImages(
                 $request->file('pic_attachments'),
