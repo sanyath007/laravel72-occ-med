@@ -40,7 +40,7 @@ const surveySchema = Yup.object().shape({
         return validateFile(file, ACCEPT_FILE_TYPE);
     }),
     surveyors: Yup.mixed().test('surveyors-not-empty', 'กรุณาระบุผู้เดินสำรวจอย่างน้อย 1 ราย', (val) => val.length > 0),
-    pic_attachments: Yup.mixed().test('is-valid-pic-type', 'คุณเลือกประเภทไฟล์รูปภาพไม่ถูกต้อง!!', (pics) => {
+    pictures: Yup.mixed().test('is-valid-pic-type', 'คุณเลือกประเภทไฟล์รูปภาพไม่ถูกต้อง!!', (pics) => {
         if (pics.length === 0) return true;
 
         return pics.every(pic => validateFile(pic, ACCEPT_PIC_TYPE));
@@ -54,16 +54,17 @@ const OccupationForm = ({ id, surveying }) => {
     const [selectedCompany, setSelectedCompany] = useState(null);
     const [selectedSurveyDate, setSelectedSurveyDate] = useState(moment());
     const [uploadedFile, setUploadedFile] = useState('');
-    const [uploadedPics, setUploadedPics] = useState([]);
+    const [galleries, setGalleries] = useState([]);
 
     useEffect(() => {
         if (surveying) {
             setSelectedCompany(surveying.company);
             setSelectedSurveyDate(moment(surveying.survey_date));
             setUploadedFile(surveying.file_attachment ? `${process.env.MIX_APP_URL}/storage/${surveying.file_attachment}` : '');
-            setUploadedPics(imageString2UrlArray(surveying.pic_attachments, `${process.env.MIX_APP_URL}/storage`));
+            setGalleries(surveying.galleries.map(gallery => ({ ...gallery, path: `${process.env.MIX_APP_URL}/storage/${gallery.path}` })));
         }
     }, [surveying]);
+
 
     const handleAddSurveyor = (formik, surveyor) => {
         if (isExistedItem(formik.values.surveyors, surveyor.id)) {
@@ -75,11 +76,11 @@ const OccupationForm = ({ id, surveying }) => {
 
         formik.setFieldValue('surveyors', newSurveyors);
     };
-    
+
     const handleRemoveSurveyor = (formik, id, isNew) => {
         if (window.confirm('คุณต้องการลบรายการใช่หรือไหม?')) {
             const newSurveyors = removeItemWithFlag(formik.values.surveyors, id, isNew);
-    
+
             formik.setFieldValue('surveyors', newSurveyors);
         }
     };
@@ -90,16 +91,6 @@ const OccupationForm = ({ id, surveying }) => {
     };
 
     const handleSubmit = (values, formik) => {
-        // let data = new FormData();
-
-        // for(const [key, val] of Object.entries(values)) {
-        //     if (key === 'surveyors' || key === 'guidelines') {
-        //         data.append(key, JSON.stringify(val));
-        //     } else {
-        //         data.append(key, val);
-        //     }
-        // }
-
         if (surveying) {
             dispatch(update({ id, data: values }));
         } else {
@@ -128,7 +119,7 @@ const OccupationForm = ({ id, surveying }) => {
                 file_attachment: '',
                 is_file_updated: false,
                 surveyors: surveying ? surveying.surveyors : [],
-                pic_attachments: []
+                pictures: []
             }}
             validationSchema={surveySchema}
             onSubmit={handleSubmit}
@@ -441,24 +432,24 @@ const OccupationForm = ({ id, surveying }) => {
                                 <Row className="mb-2">
                                     <Col>
                                         <MultipleFileUpload
-                                            files={formik.values.pic_attachments}
+                                            files={formik.values.pictures}
                                             onSelect={(files) => {
-                                                formik.setFieldValue('pic_attachments', files);
+                                                formik.setFieldValue('pictures', files);
                                             }}
                                             onDelete={(index) => {
-                                                const updatedPics = formik.values.pic_attachments.filter((pic, i) => i !== index);
+                                                const updatedPics = formik.values.pictures.filter((pic, i) => i !== index);
                                                 
-                                                formik.setFieldValue('pic_attachments', updatedPics);
+                                                formik.setFieldValue('pictures', updatedPics);
                                             }}
                                         />
-                                        {(formik.errors.pic_attachments && formik.touched.pic_attachments) && (
-                                            <span className="text-danger text-sm">{formik.errors.pic_attachments}</span>
+                                        {(formik.errors.pictures && formik.touched.pictures) && (
+                                            <span className="text-danger text-sm">{formik.errors.pictures}</span>
                                         )}
 
                                         <div className="mt-4">
                                             <h4>รูปที่อัพโหลดแล้ว</h4>
                                             <UploadGallery
-                                                images={uploadedPics}
+                                                images={galleries.map(gallery => gallery.path)}
                                                 minHeight={'200px'}
                                             />
                                         </div>
