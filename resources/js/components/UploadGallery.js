@@ -46,13 +46,13 @@ const UploadGallery = ({ images = [], onDelete, minHeight }) => {
                                 </>
                             )}
 
-                            {typeof pic === 'object' && (
+                            {/* {typeof pic === 'object' && ( */}
                                 <div className="text-end mt-1">
                                     <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(index)}>
                                         ลบ
                                     </button>
                                 </div>
-                            )}
+                            {/* )} */}
                         </div>
                     </div>
                 </Col>
