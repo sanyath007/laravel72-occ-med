@@ -86,7 +86,7 @@ class ProblemSurveyingController extends Controller
 
             // /** Upload pictures */
             $pictures = $this->fileService->uploadMultipleImages(
-                $request->file('pic_attachments'),
+                $request->file('pictures'),
                 $this->uploadDestPath . 'pic'
             );
 
@@ -165,9 +165,9 @@ class ProblemSurveyingController extends Controller
             }
 
             /** Upload pictures */
-            // if ($request->file('pic_attachments')) {
-                // $surveying->pic_attachments = $this->fileService->uploadMultipleImages(
-                //     $request->file('pic_attachments'),
+            // if ($request->file('pictures')) {
+                // $pictures = $this->fileService->uploadMultipleImages(
+                //     $request->file('pictures'),
                 //     $this->uploadDestPath . 'pic'
                 // );
             // }
