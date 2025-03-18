@@ -29,4 +29,9 @@ class StdAssessment extends Model
     // {
     //     return $this->hasMany(SurveyingSurveyor::class, 'survey_id', 'id');
     // }
+
+    public function galleries()
+    {
+        return $this->hasMany(Gallery::class, 'guuid', 'guuid');
+    }
 }

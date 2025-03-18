@@ -29,4 +29,9 @@ class EnvMeasurement extends Model
     {
         return $this->hasMany(SurveyingSurveyor::class, 'survey_id', 'id')->where('survey_type_id', 2);
     }
+
+    public function galleries()
+    {
+        return $this->hasMany(Gallery::class, 'guuid', 'guuid');
+    }
 }
