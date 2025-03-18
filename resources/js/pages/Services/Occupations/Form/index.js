@@ -8,7 +8,14 @@ import { DatePicker } from '@mui/x-date-pickers'
 import { toast } from 'react-toastify'
 import moment from 'moment'
 import { store, update } from '../../../../store/slices/occupation'
-import { validateFile, isExistedItem, string2Array, imageString2UrlArray, getFilenameFormUrl } from '../../../../utils'
+import {
+    getFilenameFormUrl,
+    imageString2UrlArray,
+    isExistedItem,
+    removeItemWithFlag,
+    string2Array,
+    validateFile
+} from '../../../../utils'
 import ModalCompanies from '../../../../components/Modals/ModalCompanies'
 import ModalCompanyForm from '../../../../components/Modals/ModalCompanyForm'
 import MultipleFileUpload from '../../../../components/Forms/MultipleFileUpload'
@@ -67,9 +74,13 @@ const OccupationForm = ({ id, surveying }) => {
 
         formik.setFieldValue('surveyors', newSurveyors);
     };
-
-    const handleRemoveSurveyor = (formik, id) => {
-
+    
+    const handleRemoveSurveyor = (formik, id, isNew) => {
+        if (window.confirm('คุณต้องการลบรายการใช่หรือไหม?')) {
+            const newSurveyors = removeItemWithFlag(formik.values.surveyors, id, isNew);
+    
+            formik.setFieldValue('surveyors', newSurveyors);
+        }
     };
 
     const handleSubmit = (values, formik) => {
@@ -403,7 +414,7 @@ const OccupationForm = ({ id, surveying }) => {
 
                                             <SurveyorList
                                                 surveyors={formik.values.surveyors}
-                                                onDelete={(id) => handleDeleteSurveyor(formik, id)}
+                                                onDelete={(id, isNew) => handleRemoveSurveyor(formik, id, isNew)}
                                             />
                                             {(formik.errors.surveyors && formik.touched.surveyors) && (
                                                 <span className="text-danger text-sm">{formik.errors.surveyors}</span>

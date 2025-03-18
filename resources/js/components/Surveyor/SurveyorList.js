@@ -30,7 +30,7 @@ const SurveyorList = ({ surveyors = [], onDelete }) => {
                             </td>
                             <td className="text-center">
                                 <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                    <button type="button" className="btn btn-danger btn-sm" onClick={() => onDelete(surveyor.employee_id)}>
+                                    <button type="button" className="btn btn-danger btn-sm" onClick={() => onDelete(surveyor.id, !surveyor.survey_id)}>
                                         <i className="bi bi-trash"></i>
                                     </button>
                                 </div>
