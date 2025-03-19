@@ -20,7 +20,7 @@ import {
 import ModalCompanies from '../../../../components/Modals/ModalCompanies'
 import ModalCompanyForm from '../../../../components/Modals/ModalCompanyForm'
 import MultipleFileUpload from '../../../../components/Forms/MultipleFileUpload'
-import UploadGallery from '../../../../components/UploadGallery'
+import UploadedGalleries from '../../../../components/UploadedGalleries'
 import SurveyorForm from '../../../../components/Surveyor/SurveyorForm'
 import SurveyorList from '../../../../components/Surveyor/SurveyorList'
 
@@ -90,6 +90,7 @@ const OccupationForm = ({ id, surveying }) => {
             const newGalleries = removeItemWithFlag(formik.values.galleries, id, isNew);
 
             formik.setFieldValue('galleries', newGalleries);
+            setGalleries(newGalleries.map(gallery => ({ ...gallery, path: `${process.env.MIX_APP_URL}/storage/${gallery.path}` })));
         }
     };
 
@@ -134,6 +135,8 @@ const OccupationForm = ({ id, surveying }) => {
             onSubmit={handleSubmit}
         >
             {(formik) => {
+                console.log(formik.values.galleries);
+                
                 return (
                     <Form>
                         <ModalCompanies
@@ -457,8 +460,8 @@ const OccupationForm = ({ id, surveying }) => {
 
                                         <div className="mt-4">
                                             <h4>รูปที่อัพโหลดแล้ว</h4>
-                                            <UploadGallery
-                                                images={galleries.map(gallery => gallery.path)}
+                                            <UploadedGalleries
+                                                images={galleries.filter(pic => !pic.removed)}
                                                 onDelete={(id, isNew) => handleRemoveGallery(formik, id, isNew)}
                                                 minHeight={'200px'}
                                             />

@@ -2,12 +2,12 @@ import React, { useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import ModalImageViewer from './Modals/ModalImageViewer';
 
-const UploadGallery = ({ images = [], onDelete, minHeight }) => {
+const UploadedGalleries = ({ images = [], onDelete, minHeight }) => {
     const [selectedImage, setSelectedImage] = useState('');
     const [showImage, setShowImage] = useState(false);
 
-    const handleDelete = (index) => {
-        onDelete(index);
+    const handleDelete = (id) => {
+        onDelete(id);
     };
 
     return (
@@ -29,7 +29,7 @@ const UploadGallery = ({ images = [], onDelete, minHeight }) => {
                             }}
                         >
                             <img
-                                src={typeof pic === 'object' ? URL.createObjectURL(pic) : pic}
+                                src={pic.path}
                                 alt="uploaded_pic"
                                 style={{ width: '100%', cursor: 'pointer' }}
                                 onClick={() => {
@@ -39,20 +39,11 @@ const UploadGallery = ({ images = [], onDelete, minHeight }) => {
                             />
                         </div>
                         <div className="d-flax flex-col p-1">
-                            {typeof pic === 'object' && (
-                                <>
-                                    <p className="text-sm m-0"><b>ชื่อไฟล์</b> {pic?.name}</p>
-                                    <p className="text-sm m-0"><b>ขนาด</b> {Math.round(pic?.size/1024)} KB</p>
-                                </>
-                            )}
-
-                            {typeof pic === 'object' && (
-                                <div className="text-end mt-1">
-                                    <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(index)}>
-                                        ลบ
-                                    </button>
-                                </div>
-                            )}
+                            <div className="text-end mt-1">
+                                <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(pic.id)}>
+                                    ลบ
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </Col>
@@ -61,4 +52,4 @@ const UploadGallery = ({ images = [], onDelete, minHeight }) => {
     )
 }
 
-export default UploadGallery
+export default UploadedGalleries
