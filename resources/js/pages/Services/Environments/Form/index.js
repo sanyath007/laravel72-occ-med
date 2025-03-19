@@ -59,8 +59,8 @@ const EnvironmentForm = ({ id, surveying }) => {
         if (surveying) {
             setSelectedCompany(surveying.company);
             setSelectedSurveyDate(moment(surveying.survey_date));
-            setUploadedFile(surveying.file_attachment);
-            setGalleries(imageString2UrlArray(surveying.galleries, `${process.env.MIX_APP_URL}/storage`));
+            setUploadedFile(surveying.file_attachment ? `${process.env.MIX_APP_URL}/storage/${surveying.file_attachment}` : '');
+            setGalleries(surveying.galleries.map(gallery => ({ ...gallery, path: `${process.env.MIX_APP_URL}/storage/${gallery.path}` })));
         }
     }, [surveying]);
 
@@ -85,6 +85,28 @@ const EnvironmentForm = ({ id, surveying }) => {
         const newSurveyors = [ ...formik.values.surveyors, { employee_id: surveyor.id, employee: surveyor }];
 
         formik.setFieldValue('surveyors', newSurveyors);
+    };
+
+    const handleRemoveSurveyor = (formik, id, isNew) => {
+        if (window.confirm('คุณต้องการลบรายการใช่หรือไหม?')) {
+            const newSurveyors = removeItemWithFlag(formik.values.surveyors, id, isNew);
+
+            formik.setFieldValue('surveyors', newSurveyors);
+        }
+    };
+
+    const handleRemoveGallery = (formik, id, isNew) => {
+        if (window.confirm('คุณต้องการลบรูปกิจจกรรมใช่หรือไหม?')) {
+            const newGalleries = removeItemWithFlag(formik.values.galleries, id, isNew);
+
+            formik.setFieldValue('galleries', newGalleries);
+            setGalleries(newGalleries.map(gallery => ({ ...gallery, path: `${process.env.MIX_APP_URL}/storage/${gallery.path}` })));
+        }
+    };
+
+    const handleRemoveFile = (formik) => {
+        setUploadedFile('');
+        formik.setFieldValue('is_file_updated', true);
     };
 
     const handleSubmit = (values, formik) => {
@@ -521,7 +543,8 @@ const EnvironmentForm = ({ id, surveying }) => {
                                         <div className="mt-4">
                                             <h4>รูปที่อัพโหลดแล้ว</h4>
                                             <UploadedGalleries
-                                                images={galleries}
+                                                images={galleries.filter(pic => !pic.removed)}
+                                                onDelete={(id, isNew) => handleRemoveGallery(formik, id, isNew)}
                                                 minHeight={'200px'}
                                             />
                                         </div>
