@@ -151,7 +151,7 @@ class EnvMeasurementController extends Controller
             $measurement->is_returned_data    = $request['is_returned_data'];
 
             /** Check and remove uploaded file */
-            if ($request['is_file_updated']) {
+            if ($request['is_file_updated'] == 'true') {
                 if (Storage::disk('public')->exists($measurement->file_attachment)) {
                     Storage::disk('public')->delete($measurement->file_attachment);
                 }

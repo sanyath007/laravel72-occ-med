@@ -132,7 +132,7 @@ class StdAssessmentController extends Controller
             $assessment->result_text         = $request['result_text'];
 
             /** Check and remove uploaded file */
-            if ($request['is_file_updated']) {
+            if ($request['is_file_updated'] == 'true') {
                 if (Storage::disk('public')->exists($assessment->file_attachment)) {
                     Storage::disk('public')->delete($assessment->file_attachment);
                 }
