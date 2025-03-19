@@ -104,11 +104,13 @@ class EnvMeasurementController extends Controller
                 }
 
                 /** Insert galleries */
-                foreach($pictures as $key => $pic) {
-                    $gallery = new Gallery;
-                    $gallery->path  = $pic;
-                    $gallery->guuid = $measurement->guuid;
-                    $gallery->save();
+                if (count($pictures) > 0) {
+                    foreach($pictures as $key => $pic) {
+                        $gallery = new Gallery;
+                        $gallery->path  = $pic;
+                        $gallery->guuid = $measurement->guuid;
+                        $gallery->save();
+                    }
                 }
 
                 return [

@@ -131,46 +131,50 @@ class StdAssessmentController extends Controller
             $assessment->result_id           = $request['result_id'];
             $assessment->result_text         = $request['result_text'];
 
-            /** Upload file and pictures */
-            if ($request->file('file_attachment')) {
-                $destinationPath = 'uploads/sanitation/file/';
-                $file = $request->file('file_attachment');
-                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-
-                /** Check and remove uploaded file */
-                $existedFile = $destinationPath . $assessment->file_attachment;
-                if (\File::exists($existedFile)) {
-                    \File::delete($existedFile);
+            /** Check and remove uploaded file */
+            if ($request['is_file_updated']) {
+                if (Storage::disk('public')->exists($assessment->file_attachment)) {
+                    Storage::disk('public')->delete($assessment->file_attachment);
                 }
 
-                if ($file->move($destinationPath, $fileName)) {
-                    $assessment->file_attachment = $fileName;
-                }
+                $assessment->file_attachment = '';
             }
 
-            // if ($request->file('pic_attachments')) {
-            //     $index = 0;
-            //     $picNames = '';
-            //     $destinationPath = 'uploads/sanitation/pic/';
+            /** Upload file */
+            if ($request->file('file_attachment')) {
+                $assessment->file_attachment = $this->fileService->uploadFile(
+                    $request->file('file_attachment'),
+                    $this->uploadDestPath . 'file'
+                );
+            }
 
-            //     foreach($request->file('pic_attachments') as $file) {
-            //         $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-
-            //         if ($file->move($destinationPath, $fileName)) {
-            //             if ($index < count($request->file('pic_attachments'))) {
-            //                 $picNames .= $fileName.',';
-            //             } else {
-            //                 $picNames .= $fileName;
-            //             }
-            //         }
-
-            //         $index++;
-            //     }
-
-            //     $assessment->pic_attachments = $picNames;
-            // }
+            /** Upload new pictures */
+            $pictures = [];
+            if ($request->file('pictures')) {
+                $pictures = $this->fileService->uploadMultipleImages(
+                    $request->file('pictures'),
+                    $this->uploadDestPath . 'pic'
+                );
+            }
 
             if ($assessment->save()) {
+                /** Insert new galleries */
+                if (count($pictures) > 0) {
+                    foreach($pictures as $key => $pic) {
+                        $gallery = new Gallery;
+                        $gallery->path  = $pic;
+                        $gallery->guuid = $surveying->guuid;
+                        $gallery->save();
+                    }
+                }
+
+                /** ถ้าเป็นรายการเดิมให้ตรวจสอบว่ามี property flag removed หรือไม่ */
+                foreach($request['galleries'] as $gallery) {
+                    if (array_key_exists('removed', $gallery) && $gallery['removed']) {
+                        Gallery::find($gallery['id'])->delete();
+                    }
+                }
+
                 return [
                     'status'        => 1,
                     'message'       => 'Updating successfully!!',
