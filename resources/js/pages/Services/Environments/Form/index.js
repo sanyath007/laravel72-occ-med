@@ -12,6 +12,7 @@ import {
     getFilenameFormUrl,
     imageString2UrlArray,
     isExistedItem,
+    removeItemWithFlag,
     string2Array,
     validateFile
 } from '../../../../utils'
@@ -505,8 +506,8 @@ const EnvironmentForm = ({ id, surveying }) => {
                                             <SurveyorForm onAdd={(surveyor) => handleAddSurveyor(formik, surveyor)} />
 
                                             <SurveyorList
-                                                surveyors={formik.values.surveyors}
-                                                onDelete={(id) => handleDeleteSurveyor(formik, id)}
+                                                surveyors={formik.values.surveyors.filter(surveyor => !surveyor.removed)}
+                                                onDelete={(id, isNew) => handleRemoveSurveyor(formik, id, isNew)}
                                             />
                                             {(formik.errors.surveyors && formik.touched.surveyors) && (
                                                 <span className="text-danger text-sm">{formik.errors.surveyors}</span>
