@@ -28,12 +28,16 @@ const ACCEPT_FILE_TYPE = ['pdf', 'doc', 'docx'];
 const ACCEPT_PIC_TYPE = ['jpg','jpeg','png'];
 
 const measurementSchema = Yup.object().shape({
-    measure_date: Yup.string().required('กรุณาเลือกวันที่คัดกรองก่อน'),
-    objective_id: Yup.string().required('กรุณาเลือกวัตถุประสงค์ก่อน'),
-    division_id: Yup.string().required('กรุณาเลือกผู้ดำเนินการก่อน'),
-    company_id: Yup.string().required('กรุณาเลือกสถานประกอบการ/สถานที่ก่อน'),
-    num_of_departs: Yup.string().required('กรุณาระบุจำนวนแผนกที่สำรวจก่อน'),
-    num_of_employees: Yup.string().required('กรุณาระบุจำนวนพนักงาน/ประชาชนก่อน'),
+    measure_date: Yup.string().required('กรุณาเลือกวันที่คัดกรอง'),
+    objective_id: Yup.string().required('กรุณาเลือกวัตถุประสงค์'),
+    division_id: Yup.string().required('กรุณาเลือกผู้ดำเนินการ'),
+    company_id: Yup.string().required('กรุณาเลือกสถานประกอบการ/สถานที่'),
+    num_of_departs: Yup.string().required('กรุณาระบุจำนวนแผนกที่สำรวจ'),
+    num_of_employees: Yup.string().required('กรุณาระบุจำนวนพนักงาน/ประชาชน'),
+    job_desc_id: Yup.string().required('กรุณาระบุเลือกลักษณะงาน'),
+    environments: Yup.mixed().test('environments-not-empty', 'กรุณาเลือกรายการสิ่งแวดล้อมอย่างน้อย 1 ราย', (val) => val.length > 0),
+    have_report: Yup.string().required('กรุณาระบุเลือกสถานะการจัดทำรายงาน'),
+    is_returned_data: Yup.string().required('กรุณาระบุเลือกสถานะการคืนข้อมูล'),
     file_attachment: Yup.mixed().test('is-valid-file-type', 'คุณเลือกประเภทไฟล์ไม่ถูกต้อง!!' , (file) => {
         if (!file) return true;
         
@@ -264,7 +268,7 @@ const EnvironmentForm = ({ id, surveying }) => {
                                     </Col>
                                     <Col>
                                         <label htmlFor="">ประเภทสถานประกอบการ</label>
-                                        <div type="text" className="form-control" style={{ minHeight: '34px', padding: '0.375rem 0.75rem' }}>
+                                        <div type="text" className="form-control" style={{ minHeight: '34px', padding: '0.375rem 0.75rem', backgroundColor: '#e9ecef' }}>
                                             {selectedCompany?.type?.name}
                                         </div>
                                     </Col>
@@ -310,7 +314,7 @@ const EnvironmentForm = ({ id, surveying }) => {
                                             name="job_desc_id"
                                             value={formik.values.job_desc_id}
                                             onChange={formik.handleChange}
-                                            className="form-control"
+                                            className={`form-control ${(formik.errors.job_desc_id && formik.touched.job_desc_id) ? 'is-invalid' : ''}`}
                                         >
                                             <option value="">-- เลือก --</option>
                                             <option value="1">มีแหล่งกำเนิดความร้อนในกระบวนการทำงาน</option>
@@ -343,7 +347,10 @@ const EnvironmentForm = ({ id, surveying }) => {
                                 <Row className="mb-2">
                                     <Col>
                                         <label htmlFor="">รายการสิ่งแวดล้อม</label>
-                                        <div className="form-control" style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <div 
+                                            className={`form-control ${(formik.errors.environments && formik.touched.environments) ? 'is-invalid' : ''}`}
+                                            style={{ display: 'flex', flexDirection: 'column' }}
+                                        >
                                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                                 <Checkbox
                                                     name="environments"
@@ -422,7 +429,7 @@ const EnvironmentForm = ({ id, surveying }) => {
                                 <Row className="mb-2">
                                     <Col>
                                         <label htmlFor="">สถานะการจัดทำรายงานตรวจวัด</label>
-                                        <label htmlFor="" className="form-control" style={{ display: 'flex' }}>
+                                        <label className={`form-control ${(formik.errors.have_report && formik.touched.have_report) ? 'is-invalid' : ''}`} style={{ display: 'flex' }}>
                                             <Field
                                                 type="radio"
                                                 name="have_report"
@@ -445,7 +452,7 @@ const EnvironmentForm = ({ id, surveying }) => {
                                     </Col>
                                     <Col>
                                         <label htmlFor="">สถานะการคืนข้อมูลแก่หน่วยงาน</label>
-                                        <label htmlFor="" className="form-control" style={{ display: 'flex' }}>
+                                        <label className={`form-control ${(formik.errors.is_returned_data && formik.touched.is_returned_data) ? 'is-invalid' : ''}`} style={{ display: 'flex' }}>
                                             <Field
                                                 type="radio"
                                                 name="is_returned_data"
