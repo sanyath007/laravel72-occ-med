@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\EnvMeasurement;
 use App\Models\SurveyingSurveyor;
 use App\Models\Company;
+use App\Models\Gallery;
 use App\Services\FileService;
 use Ramsey\Uuid\Uuid;
 
@@ -24,7 +25,7 @@ class EnvMeasurementController extends Controller
     {
         $date = $request->get('date');
 
-        $measurements = EnvMeasurement::with('division','company','company.type','surveyors')
+        $measurements = EnvMeasurement::with('division','company','company.type','surveyors','galleries')
                         ->with('surveyors.employee','surveyors.employee.position','surveyors.employee.level')
                         // ->when(!empty($date), function($q) use ($date) {
                         //     $q->where('surver_date', $date);
@@ -37,7 +38,7 @@ class EnvMeasurementController extends Controller
 
     public function getById($id)
     {
-        $measurement = EnvMeasurement::with('division','company','company.type','surveyors')
+        $measurement = EnvMeasurement::with('division','company','company.type','surveyors','galleries')
                         ->with('surveyors.employee','surveyors.employee.position','surveyors.employee.level')
                         ->find($id);
 
