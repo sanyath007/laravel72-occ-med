@@ -484,8 +484,8 @@ const EnvironmentForm = ({ id, surveying }) => {
                                     {uploadedFile && <Col>
                                         <label htmlFor="">แนบไฟล์ผลการตรวจวัดสิ่งแวดล้อม</label>
                                         <div className="d-flex align-items-center">
-                                            <a href={`${process.env.MIX_APP_URL}/storage/${uploadedFile}`} className="p-auto me-2" target="_blank">
-                                                <FaFilePdf size={'16px'} /> {getFilenameFormUrl(`${process.env.MIX_APP_URL}/storage/${uploadedFile}`)}
+                                            <a href={uploadedFile} className="p-auto me-2" target="_blank">
+                                                <FaFilePdf size={'16px'} /> {getFilenameFormUrl(uploadedFile)}
                                             </a>
                                             <span className="uploaded__close-btn">
                                                 <FaTimesCircle onClick={() => handleRemoveFile(formik)} />

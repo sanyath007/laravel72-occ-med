@@ -7,11 +7,18 @@ import { FaFilePdf, FaPlus, FaSave, FaSearch, FaTimesCircle } from 'react-icons/
 import { DatePicker } from '@mui/x-date-pickers'
 import moment from 'moment'
 import { store, update } from '../../../../store/slices/sanitation'
-import { validateFile, isExistedItem, string2Array, imageString2UrlArray, getFilenameFormUrl } from '../../../../utils'
+import {
+    getFilenameFormUrl,
+    imageString2UrlArray,
+    isExistedItem,
+    removeItemWithFlag,
+    string2Array,
+    validateFile
+} from '../../../../utils'
 import ModalCompanies from '../../../../components/Modals/ModalCompanies'
 import ModalCompanyForm from '../../../../components/Modals/ModalCompanyForm'
 import MultipleFileUpload from '../../../../components/Forms/MultipleFileUpload'
-import UploadGallery from '../../../../components/UploadGallery'
+import UploadedGalleries from '../../../../components/UploadedGalleries'
 // import SurveyorForm from './SurveyorForm'
 // import SurveyorList from './SurveyorList'
 
@@ -31,7 +38,7 @@ const surveySchema = Yup.object().shape({
         return validateFile(file, ACCEPT_FILE_TYPE);
     }),
     // surveyors: Yup.mixed().test('surveyors-not-empty', 'กรุณาระบุผู้เดินสำรวจอย่างน้อย 1 ราย', (val) => val.length > 0),
-    pic_attachments: Yup.mixed().test('is-valid-pic-type', 'คุณเลือกประเภทไฟล์รูปภาพไม่ถูกต้อง!!', (pics) => {
+    pictures: Yup.mixed().test('is-valid-pic-type', 'คุณเลือกประเภทไฟล์รูปภาพไม่ถูกต้อง!!', (pics) => {
         if (pics.length === 0) return true;
 
         return pics.every(pic => validateFile(pic, ACCEPT_PIC_TYPE));
@@ -45,28 +52,32 @@ const SanitationForm = ({ id, data }) => {
     const [selectedCompany, setSelectedCompany] = useState(null);
     const [selectedSurveyDate, setSelectedSurveyDate] = useState(moment());
     const [uploadedFile, setUploadedFile] = useState('');
-    const [uploadedPics, setUploadedPics] = useState([]);
+    const [galleries, setGalleries] = useState([]);
 
     useEffect(() => {
         if (data) {
             setSelectedCompany(data.company);
             setSelectedSurveyDate(moment(data.survey_date));
-            setUploadedFile(data.file_attachment);
-            setUploadedPics(imageString2UrlArray(data.pic_attachments, `${process.env.MIX_APP_URL}/storage`));
+            setUploadedFile(data.file_attachment ? `${process.env.MIX_APP_URL}/storage/${data.file_attachment}` : '');
+            setGalleries(data.galleries.map(gallery => ({ ...gallery, path: `${process.env.MIX_APP_URL}/storage/${gallery.path}` })));
         }
     }, [data]);
 
+    const handleRemoveGallery = (formik, id, isNew) => {
+        if (window.confirm('คุณต้องการลบรูปกิจจกรรมใช่หรือไหม?')) {
+            const newGalleries = removeItemWithFlag(formik.values.galleries, id, isNew);
+
+            formik.setFieldValue('galleries', newGalleries);
+            setGalleries(newGalleries.map(gallery => ({ ...gallery, path: `${process.env.MIX_APP_URL}/storage/${gallery.path}` })));
+        }
+    };
+
+    const handleRemoveFile = (formik) => {
+        setUploadedFile('');
+        formik.setFieldValue('is_file_updated', true);
+    };
+
     const handleSubmit = (values, formik) => {
-        // let data = new FormData();
-
-        // for(const [key, val] of Object.entries(values)) {
-        //     if (key === 'surveyors' || key === 'guidelines') {
-        //         data.append(key, JSON.stringify(val));
-        //     } else {
-        //         data.append(key, val);
-        //     }
-        // }
-
         if (data) {
             dispatch(update({ id, data: values }));
         } else {
@@ -94,7 +105,8 @@ const SanitationForm = ({ id, data }) => {
                 // remark: (data && data.remark) ? data.remark : '',
                 file_attachment: '',
                 // surveyors: data ? data.surveyors : [],
-                pic_attachments: []
+                pictures: [],
+                galleries: data ? data.galleries : [],
             }}
             validationSchema={surveySchema}
             onSubmit={handleSubmit}
@@ -331,7 +343,7 @@ const SanitationForm = ({ id, data }) => {
                                     </Col>
                                 </Row>
                                 <Row className="mb-2">
-                                    <Col>
+                                    {!uploadedFile && <Col>
                                         <label htmlFor="">แนบไฟล์ผลการตรวจวัดสิ่งแวดล้อม</label>
                                         <input
                                             type="file"
@@ -343,18 +355,18 @@ const SanitationForm = ({ id, data }) => {
                                         {(formik.errors.file_attachment && formik.touched.file_attachment) && (
                                             <span className="invalid-feedback">{formik.errors.file_attachment}</span>
                                         )}
-                                    </Col>
-                                    <Col>
-                                        <label htmlFor=""></label>
-                                        {uploadedFile && (
-                                            <div className="d-flex align-items-center">
-                                                <a href={`${process.env.MIX_APP_URL}/storage/${uploadedFile}`} className="p-auto me-2" target="_blank">
-                                                    <FaFilePdf size={'16px'} /> {getFilenameFormUrl(`${process.env.MIX_APP_URL}/storage/${uploadedFile}`)}
-                                                </a>
-                                                {/* <span className="uploaded__close-btn"><FaTimesCircle /></span> */}
-                                            </div>
-                                        )}
-                                    </Col>
+                                    </Col>}
+                                    {uploadedFile && <Col>
+                                        <label htmlFor="">แนบไฟล์ผลการตรวจวัดสิ่งแวดล้อม</label>
+                                        <div className="d-flex align-items-center">
+                                            <a href={uploadedFile} className="p-auto me-2" target="_blank">
+                                                <FaFilePdf size={'16px'} /> {getFilenameFormUrl(uploadedFile)}
+                                            </a>
+                                            <span className="uploaded__close-btn">
+                                                <FaTimesCircle onClick={() => handleRemoveFile(formik)} />
+                                            </span>
+                                        </div>
+                                    </Col>}
                                 </Row>
                             </Tab>
                             {/* <Tab
@@ -389,34 +401,26 @@ const SanitationForm = ({ id, data }) => {
                             >
                                 <Row className="mb-2">
                                     <Col>
-                                        {/* <input
-                                            type="file"
-                                            onChange={(e) => {
-                                                formik.setFieldValue('pic_attachments', [...formik.values.pic_attachments, e.target.files[0]])
-                                            }}
-                                            
-                                            className={`form-control ${(formik.errors.pic_attachments && formik.touched.pic_attachments) ? 'is-invalid' : ''}`}
-                                        /> */}
-
                                         <MultipleFileUpload
-                                            files={formik.values.pic_attachments}
+                                            files={formik.values.pictures}
                                             onSelect={(files) => {
-                                                formik.setFieldValue('pic_attachments', files);
+                                                formik.setFieldValue('pictures', files);
                                             }}
                                             onDelete={(index) => {
-                                                const updatedPics = formik.values.pic_attachments.filter((pic, i) => i !== index);
+                                                const updatedPics = formik.values.pictures.filter((pic, i) => i !== index);
                                                 
-                                                formik.setFieldValue('pic_attachments', updatedPics);
+                                                formik.setFieldValue('pictures', updatedPics);
                                             }}
                                         />
-                                        {(formik.errors.pic_attachments && formik.touched.pic_attachments) && (
-                                            <span className="text-danger text-sm">{formik.errors.pic_attachments}</span>
+                                        {(formik.errors.pictures && formik.touched.pictures) && (
+                                            <span className="text-danger text-sm">{formik.errors.pictures}</span>
                                         )}
 
                                         <div className="mt-4">
                                             <h4>รูปที่อัพโหลดแล้ว</h4>
-                                            <UploadGallery
-                                                images={uploadedPics}
+                                            <UploadedGalleries
+                                                images={galleries}
+                                                onDelete={(id, isNew) => handleRemoveGallery(formik, id, isNew)}
                                                 minHeight={'200px'}
                                             />
                                         </div>
