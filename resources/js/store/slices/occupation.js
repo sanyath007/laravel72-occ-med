@@ -134,7 +134,7 @@ export const occupationSlice = createSlice({
             state.error = payload
         },
         [update.pending]: (state) => {
-            state.isSuccess = true
+            state.isSuccess = false
             state.error = null
         },
         [update.fulfilled]: (state, { payload }) => {

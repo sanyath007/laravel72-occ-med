@@ -149,7 +149,7 @@ class ProblemSurveyingController extends Controller
             $surveying->solution_text       = $request['solution_text'];
 
             /** Check and remove uploaded file */
-            if ($request['is_file_updated']) {
+            if ($request['is_file_updated'] == 'true') {
                 if (Storage::disk('public')->exists($surveying->file_attachment)) {
                     Storage::disk('public')->delete($surveying->file_attachment);
                 }
