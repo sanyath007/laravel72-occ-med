@@ -205,9 +205,16 @@ class ProblemSurveyingController extends Controller
                 }
 
                 /** ถ้าเป็นรายการเดิมให้ตรวจสอบว่ามี property flag removed หรือไม่ */
-                foreach($request['galleries'] as $gallery) {
-                    if (array_key_exists('removed', $gallery) && $gallery['removed']) {
-                        Gallery::find($gallery['id'])->delete();
+                if ($request['galleries'] && count($request['galleries']) > 0) {
+                    foreach($request['galleries'] as $gallery) {
+                        if (array_key_exists('removed', $gallery) && $gallery['removed']) {
+                            /** Remove physical file */
+                            if (Storage::disk('public')->exists($pic['path'])) {
+                                Storage::disk('public')->delete($pic['path']);
+                            }
+
+                            Gallery::find($gallery['id'])->delete();
+                        }
                     }
                 }
 
