@@ -207,9 +207,17 @@ class EnvMeasurementController extends Controller
                 }
 
                 /** ถ้าเป็นรายการเดิมให้ตรวจสอบว่ามี property flag removed หรือไม่ */
-                foreach($request['galleries'] as $gallery) {
-                    if (array_key_exists('removed', $gallery) && $gallery['removed']) {
-                        Gallery::find($gallery['id'])->delete();
+                
+                if ($request['galleries'] && count($request['galleries']) > 0) {
+                    foreach($request['galleries'] as $pic) {
+                        if (array_key_exists('removed', $pic) && $pic['removed']) {
+                            /** Remove physical file */
+                            if (Storage::disk('public')->exists($pic->path)) {
+                                Storage::disk('public')->delete($pic->path);
+                            }
+
+                            Gallery::find($pic['id'])->delete();
+                        }
                     }
                 }
 
@@ -235,22 +243,18 @@ class EnvMeasurementController extends Controller
     public function destroy($id) 
     {
         try {
-            $measurement = EnvMeasurement::find($id);
+            $measurement = EnvMeasurement::with('galleries')->find($id);
 
             /** Remove uploaded file */
-            $destinationPath = 'uploads/wts/';
-            $existedFile = $destinationPath .'file/'. $measurement->file_attachment;
-            if (\File::exists($existedFile)) {
-                \File::delete($existedFile);
+            if (Storage::disk('public')->exists($measurement->file_attachment)) {
+                Storage::disk('public')->delete($measurement->file_attachment);
             }
 
-            if ($measurement->pic_attachments != '') {
-                $pictures = explode(',', $measurement->pic_attachments);
-                foreach($pictures as $pic) {
-                    $existed = $destinationPath .'file/'. $pic;
-
-                    if (\File::exists($existed)) {
-                        \File::delete($existed);
+            if (count($measurement->galleries) > 0) {
+                foreach($measurement->galleries as $pic) {
+                    dd($pic->path);
+                    if (Storage::disk('public')->exists($pic->path)) {
+                        Storage::disk('public')->delete($pic->path);
                     }
                 }
             }
