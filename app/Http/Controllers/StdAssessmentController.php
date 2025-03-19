@@ -14,7 +14,7 @@ class StdAssessmentController extends Controller
 {
     protected $fileService;
 
-    protected $uploadDestPath = 'uploads/occupation/';
+    protected $uploadDestPath = 'uploads/sanitation/';
 
     public function __construct(FileService $fileService)
     {
@@ -163,7 +163,7 @@ class StdAssessmentController extends Controller
                     foreach($pictures as $key => $pic) {
                         $gallery = new Gallery;
                         $gallery->path  = $pic;
-                        $gallery->guuid = $surveying->guuid;
+                        $gallery->guuid = $assessment->guuid;
                         $gallery->save();
                     }
                 }
