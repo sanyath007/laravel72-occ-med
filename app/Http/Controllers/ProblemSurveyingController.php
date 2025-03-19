@@ -164,13 +164,13 @@ class ProblemSurveyingController extends Controller
                 );
             }
 
-            /** Upload pictures */
-            // if ($request->file('pictures')) {
-                // $pictures = $this->fileService->uploadMultipleImages(
-                //     $request->file('pictures'),
-                //     $this->uploadDestPath . 'pic'
-                // );
-            // }
+            /** Upload new pictures */
+            if ($request->file('pictures')) {
+                $pictures = $this->fileService->uploadMultipleImages(
+                    $request->file('pictures'),
+                    $this->uploadDestPath . 'pic'
+                );
+            }
 
             if ($surveying->save()) {
                 foreach($request['surveyors'] as $surveyor) {
@@ -189,6 +189,21 @@ class ProblemSurveyingController extends Controller
                         $newSurveyor->survey_id         = $surveying->id;
                         $newSurveyor->employee_id       = $surveyor['employee_id'];
                         $newSurveyor->save();
+                    }
+                }
+
+                /** Insert new galleries */
+                foreach($pictures as $key => $pic) {
+                    $gallery = new Gallery;
+                    $gallery->path  = $pic;
+                    $gallery->guuid = $surveying->guuid;
+                    $gallery->save();
+                }
+
+                /** ถ้าเป็นรายการเดิมให้ตรวจสอบว่ามี property flag removed หรือไม่ */
+                foreach($request['galleries'] as $gallery) {
+                    if (array_key_exists('removed', $gallery) && $gallery['removed']) {
+                        Gallery::find($gallery['id'])->delete();
                     }
                 }
 
