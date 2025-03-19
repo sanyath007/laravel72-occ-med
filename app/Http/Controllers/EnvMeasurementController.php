@@ -15,7 +15,7 @@ class EnvMeasurementController extends Controller
 {
     protected $fileService;
 
-    protected $uploadDestPath = 'uploads/env/';
+    protected $uploadDestPath = 'uploads/environment/';
 
     public function __construct(FileService $fileService)
     {
@@ -258,7 +258,7 @@ class EnvMeasurementController extends Controller
             }
 
             if ($measurement->delete()) {
-                SurveyingSurveyor::where('survey_id', $id)->delete();
+                SurveyingSurveyor::where(['survey_id' => $id, 'survey_type_id' => 2])->delete();
 
                 return [
                     'status'    => 1,

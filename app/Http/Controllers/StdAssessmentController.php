@@ -197,22 +197,17 @@ class StdAssessmentController extends Controller
     public function destroy($id) 
     {
         try {
-            $assessment = StdAssessment::find($id);
+            $assessment = StdAssessment::with('galleries')->find($id);
 
             /** Remove uploaded file */
-            $destinationPath = 'uploads/sanitation/';
-            $existedFile = $destinationPath .'file/'. $assessment->file_attachment;
-            if (\File::exists($existedFile)) {
-                \File::delete($existedFile);
+            if (Storage::disk('public')->exists($assessment->file_attachment)) {
+                Storage::disk('public')->delete($assessment->file_attachment);
             }
 
-            if ($assessment->pic_attachments != '') {
-                $pictures = explode(',', $assessment->pic_attachments);
-                foreach($pictures as $pic) {
-                    $existed = $destinationPath .'file/'. $pic;
-
-                    if (\File::exists($existed)) {
-                        \File::delete($existed);
+            if (count($assessment->galleries) > 0) {
+                foreach($assessment->galleries as $pic) {
+                    if (Storage::disk('public')->exists($pic->path)) {
+                        Storage::disk('public')->delete($pic->path);
                     }
                 }
             }

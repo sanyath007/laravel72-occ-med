@@ -233,28 +233,23 @@ class ProblemSurveyingController extends Controller
     public function destroy($id) 
     {
         try {
-            $surveying = ProblemSurveying::find($id);
+            $surveying = ProblemSurveying::with('galleries')->find($id);
 
             /** Remove uploaded file */
-            $destinationPath = 'uploads/wts/';
-            $existedFile = $destinationPath .'file/'. $surveying->file_attachment;
-            if (\File::exists($existedFile)) {
-                \File::delete($existedFile);
+            if (Storage::disk('public')->exists($surveying->file_attachment)) {
+                Storage::disk('public')->delete($surveying->file_attachment);
             }
 
-            if ($surveying->pic_attachments != '') {
-                $pictures = explode(',', $surveying->pic_attachments);
-                foreach($pictures as $pic) {
-                    $existed = $destinationPath .'file/'. $pic;
-
-                    if (\File::exists($existed)) {
-                        \File::delete($existed);
+            if (count($surveying->galleries) > 0) {
+                foreach($surveying->galleries as $pic) {
+                    if (Storage::disk('public')->exists($pic->path)) {
+                        Storage::disk('public')->delete($pic->path);
                     }
                 }
             }
 
             if ($surveying->delete()) {
-                SurveyingSurveyor::where('survey_id', $id)->delete();
+                SurveyingSurveyor::where(['survey_id' => $id, 'survey_type_id' => 3])->delete();
 
                 return [
                     'status'    => 1,
