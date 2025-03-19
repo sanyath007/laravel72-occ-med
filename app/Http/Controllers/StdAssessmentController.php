@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\StdAssessment;
 use App\Models\Company;
+use App\Models\Gallery;
 use App\Services\FileService;
+use Ramsey\Uuid\Uuid;
 
 class StdAssessmentController extends Controller
 {
@@ -20,7 +23,7 @@ class StdAssessmentController extends Controller
     {
         $date = $request->get('date');
 
-        $surveyings = StdAssessment::with('division','company','company.type')
+        $surveyings = StdAssessment::with('division','company','company.type','galleries')
                         // ->when(!empty($date), function($q) use ($date) {
                         //     $q->where('surver_date', $date);
                         // })
@@ -32,7 +35,7 @@ class StdAssessmentController extends Controller
 
     public function getById($id)
     {
-        $surveying = StdAssessment::with('division','company','company.type')->find($id);
+        $surveying = StdAssessment::with('division','company','company.type','galleries')->find($id);
 
         return response()->json($surveying);
     }
