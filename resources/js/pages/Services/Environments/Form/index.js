@@ -12,7 +12,7 @@ import { validateFile, isExistedItem, string2Array, imageString2UrlArray, getFil
 import ModalCompanies from '../../../../components/Modals/ModalCompanies'
 import ModalCompanyForm from '../../../../components/Modals/ModalCompanyForm'
 import MultipleFileUpload from '../../../../components/Forms/MultipleFileUpload'
-import UploadGallery from '../../../../components/UploadGallery'
+import UploadedGalleries from '../../../../components/UploadedGalleries'
 import Checkbox from '../../../../components/Forms/Checkbox'
 import SurveyorForm from '../../../../components/Surveyor/SurveyorForm'
 import SurveyorList from '../../../../components/Surveyor/SurveyorList'
@@ -506,15 +506,6 @@ const EnvironmentForm = ({ id, surveying }) => {
                             >
                                 <Row className="mb-2">
                                     <Col>
-                                        {/* <input
-                                            type="file"
-                                            onChange={(e) => {
-                                                formik.setFieldValue('pic_attachments', [...formik.values.pic_attachments, e.target.files[0]])
-                                            }}
-                                            
-                                            className={`form-control ${(formik.errors.pic_attachments && formik.touched.pic_attachments) ? 'is-invalid' : ''}`}
-                                        /> */}
-
                                         <MultipleFileUpload
                                             files={formik.values.pic_attachments}
                                             onSelect={(files) => {
@@ -532,7 +523,7 @@ const EnvironmentForm = ({ id, surveying }) => {
 
                                         <div className="mt-4">
                                             <h4>รูปที่อัพโหลดแล้ว</h4>
-                                            <UploadGallery
+                                            <UploadedGalleries
                                                 images={uploadedPics}
                                                 minHeight={'200px'}
                                             />
