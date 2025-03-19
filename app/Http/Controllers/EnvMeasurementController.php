@@ -161,7 +161,7 @@ class EnvMeasurementController extends Controller
 
             /** Upload file */
             if ($request->file('file_attachment')) {
-                $surveying->file_attachment = $this->fileService->uploadFile(
+                $measurement->file_attachment = $this->fileService->uploadFile(
                     $request->file('file_attachment'),
                     $this->uploadDestPath . 'file'
                 );
