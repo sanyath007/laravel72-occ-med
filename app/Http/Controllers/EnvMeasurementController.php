@@ -7,10 +7,13 @@ use App\Models\EnvMeasurement;
 use App\Models\SurveyingSurveyor;
 use App\Models\Company;
 use App\Services\FileService;
+use Ramsey\Uuid\Uuid;
 
 class EnvMeasurementController extends Controller
 {
     protected $fileService;
+
+    protected $uploadDestPath = 'uploads/env/';
 
     public function __construct(FileService $fileService)
     {
@@ -72,13 +75,22 @@ class EnvMeasurementController extends Controller
             $measurement->other_text          = $request['other_text'];
             $measurement->have_report         = $request['have_report'];
             $measurement->is_returned_data    = $request['is_returned_data'];
-            // $measurement->remark              = $request['remark'];
+            $measurement->guuid               = Uuid::uuid4();
+
             /** Upload file */
-            $measurement->file_attachment = $this->fileService->uploadFile($request->file('file_attachment'), 'uploads/env/file');
+            $measurement->file_attachment = $this->fileService->uploadFile(
+                $request->file('file_attachment'),
+                $this->uploadDestPath . 'file'
+            );
+
             /** Upload pictures */
-            $measurement->pic_attachments = $this->fileService->uploadMultipleImages($request->file('pic_attachments'), 'uploads/env/pic');
+            $pictures = $this->fileService->uploadMultipleImages(
+                $request->file('pictures'),
+                $this->uploadDestPath . 'pic'
+            );
 
             if ($measurement->save()) {
+                /** Insert surveyors */
                 if (count($request['surveyors']) > 0) {
                     foreach($request['surveyors'] as $surveyor) {
                         $newSurveyor = new SurveyingSurveyor;
@@ -87,6 +99,14 @@ class EnvMeasurementController extends Controller
                         $newSurveyor->employee_id       = $surveyor['employee_id'];
                         $newSurveyor->save();
                     }
+                }
+
+                /** Insert galleries */
+                foreach($pictures as $key => $pic) {
+                    $gallery = new Gallery;
+                    $gallery->path  = $pic;
+                    $gallery->guuid = $measurement->guuid;
+                    $gallery->save();
                 }
 
                 return [
