@@ -419,7 +419,7 @@ const SanitationForm = ({ id, data }) => {
                                         <div className="mt-4">
                                             <h4>รูปที่อัพโหลดแล้ว</h4>
                                             <UploadedGalleries
-                                                images={galleries}
+                                                images={galleries.filter(gallery => !gallery.removed)}
                                                 onDelete={(id, isNew) => handleRemoveGallery(formik, id, isNew)}
                                                 minHeight={'200px'}
                                             />
