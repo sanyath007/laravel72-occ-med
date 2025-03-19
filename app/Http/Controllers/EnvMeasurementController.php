@@ -166,6 +166,7 @@ class EnvMeasurementController extends Controller
             }
 
             /** Upload new pictures */
+            $pictures = [];
             if ($request->file('pictures')) {
                 $pictures = $this->fileService->uploadMultipleImages(
                     $request->file('pictures'),
@@ -194,11 +195,13 @@ class EnvMeasurementController extends Controller
                 }
 
                 /** Insert new galleries */
-                foreach($pictures as $key => $pic) {
-                    $gallery = new Gallery;
-                    $gallery->path  = $pic;
-                    $gallery->guuid = $measurement->guuid;
-                    $gallery->save();
+                if (count($pictures) > 0) {
+                    foreach($pictures as $key => $pic) {
+                        $gallery = new Gallery;
+                        $gallery->path  = $pic;
+                        $gallery->guuid = $measurement->guuid;
+                        $gallery->save();
+                    }
                 }
 
                 /** ถ้าเป็นรายการเดิมให้ตรวจสอบว่ามี property flag removed หรือไม่ */
