@@ -26,12 +26,14 @@ const ACCEPT_FILE_TYPE = ['pdf', 'doc', 'docx'];
 const ACCEPT_PIC_TYPE = ['jpg','jpeg','png'];
 
 const surveySchema = Yup.object().shape({
-    assess_date: Yup.string().required('กรุณาเลือกวันที่คัดกรองก่อน'),
-    objective_id: Yup.string().required('กรุณาเลือกวัตถุประสงค์ก่อน'),
-    division_id: Yup.string().required('กรุณาเลือกผู้ดำเนินการก่อน'),
-    company_id: Yup.string().required('กรุณาเลือกสถานประกอบการ/สถานที่ก่อน'),
-    num_of_departs: Yup.string().required('กรุณาระบุจำนวนแผนกที่สำรวจก่อน'),
-    num_of_employees: Yup.string().required('กรุณาระบุจำนวนพนักงาน/ประชาชนก่อน'),
+    assess_date: Yup.string().required('กรุณาเลือกวันที่ตรวจ'),
+    objective_id: Yup.string().required('กรุณาเลือกวัตถุประสงค์'),
+    division_id: Yup.string().required('กรุณาเลือกผู้ดำเนินการ'),
+    company_id: Yup.string().required('กรุณาเลือกสถานประกอบการ/สถานที่'),
+    num_of_departs: Yup.string().required('กรุณาระบุจำนวนแผนก'),
+    num_of_employees: Yup.string().required('กรุณาระบุจำนวนพนักงาน'),
+    agency_id: Yup.string().required('กรุณาเลือกหน่วยงานภายนอกที่ร่วมสำรวจ'),
+    result_id: Yup.string().required('กรุณาเลือกผลการตรวจประเมิน'),
     file_attachment: Yup.mixed().test('is-valid-file-type', 'คุณเลือกประเภทไฟล์ไม่ถูกต้อง!!' , (file) => {
         if (!file) return true;
         
@@ -144,7 +146,7 @@ const SanitationForm = ({ id, data }) => {
                             >
                                 <Row className="mb-2">
                                     <Col>
-                                        <label htmlFor="">วันที่ตรวจวัด</label>
+                                        <label htmlFor="">วันที่ตรวจ</label>
                                         <DatePicker
                                             format="DD/MM/YYYY"
                                             value={selectedSurveyDate}
@@ -233,7 +235,7 @@ const SanitationForm = ({ id, data }) => {
                                     </Col>
                                     <Col>
                                         <label htmlFor="">ประเภทสถานประกอบการ</label>
-                                        <div type="text" className="form-control" style={{ minHeight: '34px', padding: '0.375rem 0.75rem' }}>
+                                        <div type="text" className="form-control" style={{ minHeight: '34px', padding: '0.375rem 0.75rem', backgroundColor: '#e9ecef' }}>
                                             {selectedCompany?.type?.name}
                                         </div>
                                     </Col>
@@ -279,7 +281,7 @@ const SanitationForm = ({ id, data }) => {
                                             name="agency_id"
                                             value={formik.values.agency_id}
                                             onChange={formik.handleChange}
-                                            className="form-control"
+                                            className={`form-control ${(formik.errors.agency_id && formik.touched.agency_id) ? 'is-invalid' : ''}`}
                                         >
                                             <option value="">-- เลือก --</option>
                                             <option value="1">สาธารณสุขจังหวัดนครราชสีมา</option>
@@ -315,7 +317,7 @@ const SanitationForm = ({ id, data }) => {
                                             name="result_id"
                                             value={formik.values.result_id}
                                             onChange={formik.handleChange}
-                                            className="form-control"
+                                            className={`form-control ${(formik.errors.result_id && formik.touched.division_id) ? 'is-invalid' : ''}`}
                                         >
                                             <option value="">-- เลือก --</option>
                                             <option value="1">ผ่านเกณฑ์มาตรฐาน</option>

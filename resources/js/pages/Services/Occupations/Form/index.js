@@ -28,12 +28,14 @@ const ACCEPT_FILE_TYPE = ['pdf', 'doc', 'docx'];
 const ACCEPT_PIC_TYPE = ['jpg','jpeg','png'];
 
 const surveySchema = Yup.object().shape({
-    survey_date: Yup.string().required('กรุณาเลือกวันที่คัดกรองก่อน'),
-    objective_id: Yup.string().required('กรุณาเลือกวัตถุประสงค์ก่อน'),
-    division_id: Yup.string().required('กรุณาเลือกผู้ดำเนินการก่อน'),
-    company_id: Yup.string().required('กรุณาเลือกสถานประกอบการ/สถานที่ก่อน'),
-    source_id: Yup.string().required('กรุณาระบุจำนวนแผนกที่สำรวจก่อน'),
-    problem_text: Yup.string().required('กรุณาระบุจำนวนพนักงาน/ประชาชนก่อน'),
+    survey_date: Yup.string().required('กรุณาเลือกวันที่ตรวจวัด'),
+    objective_id: Yup.string().required('กรุณาเลือกวัตถุประสงค์'),
+    division_id: Yup.string().required('กรุณาเลือกผู้ดำเนินการ'),
+    company_id: Yup.string().required('กรุณาเลือกสถานประกอบการ/สถานที่'),
+    source_id: Yup.string().required('กรุณาระบุที่มาของปัญหา'),
+    problem_text: Yup.string().required('กรุณาระบุรายละเอียดของปัญหา'),
+    cause_id: Yup.string().required('กรุณาเลือกผลการสำรวจและสาเหตุของปัญหา'),
+    solution_id: Yup.string().required('กรุณาเลือกการเสนอแนะและการแก้ไขปัญหา'),
     file_attachment: Yup.mixed().test('is-valid-file-type', 'คุณเลือกประเภทไฟล์ไม่ถูกต้อง!!' , (file) => {
         if (!file) return true;
         
@@ -260,7 +262,7 @@ const OccupationForm = ({ id, surveying }) => {
                                     </Col>
                                     <Col>
                                         <label htmlFor="">ประเภทสถานประกอบการ</label>
-                                        <div type="text" className="form-control" style={{ minHeight: '34px', padding: '0.375rem 0.75rem' }}>
+                                        <div type="text" className="form-control" style={{ minHeight: '34px', padding: '0.375rem 0.75rem', backgroundColor: '#e9ecef' }}>
                                             {selectedCompany?.type?.name}
                                         </div>
                                     </Col>
