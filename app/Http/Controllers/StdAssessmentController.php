@@ -14,6 +14,8 @@ class StdAssessmentController extends Controller
 {
     protected $fileService;
 
+    protected $uploadDestPath = 'uploads/occupation/';
+
     public function __construct(FileService $fileService)
     {
         $this->fileService = $fileService;
@@ -69,13 +71,31 @@ class StdAssessmentController extends Controller
             $assessment->agency_text         = $request['agency_text'];
             $assessment->result_id           = $request['result_id'];
             $assessment->result_text         = $request['result_text'];
-            // $assessment->remark              = $request['remark'];
+            $surveying->guuid               = Uuid::uuid4();
+
             /** Upload file */
-            $assessment->file_attachment = $this->fileService->uploadFile($request->file('file_attachment'), 'uploads/sanitation/file');
+            $assessment->file_attachment = $this->fileService->uploadFile(
+                $request->file('file_attachment'),
+                $this->uploadDestPath . 'file'
+            );
+
             /** Upload pictures */
-            $assessment->pic_attachments = $this->fileService->uploadMultipleImages($request->file('pic_attachments'), 'uploads/sanitation/pic');
+            $pictures = $this->fileService->uploadMultipleImages(
+                $request->file('pictures'),
+                $this->uploadDestPath . 'pic'
+            );
 
             if ($assessment->save()) {
+                /** Insert galleries */
+                if (count($pictures) > 0) {
+                    foreach($pictures as $key => $pic) {
+                        $gallery = new Gallery;
+                        $gallery->path  = $pic;
+                        $gallery->guuid = $assessment->guuid;
+                        $gallery->save();
+                    }
+                }
+
                 return [
                     'status'        => 1,
                     'message'       => 'Insertion successfully!!',
@@ -110,7 +130,6 @@ class StdAssessmentController extends Controller
             $assessment->agency_text         = $request['agency_text'];
             $assessment->result_id           = $request['result_id'];
             $assessment->result_text         = $request['result_text'];
-            // $assessment->remark              = $request['remark'];
 
             /** Upload file and pictures */
             if ($request->file('file_attachment')) {

@@ -103,11 +103,13 @@ class ProblemSurveyingController extends Controller
                 }
 
                 /** Insert galleries */
-                foreach($pictures as $key => $pic) {
-                    $gallery = new Gallery;
-                    $gallery->path  = $pic;
-                    $gallery->guuid = $surveying->guuid;
-                    $gallery->save();
+                if (count($pictures) > 0) {
+                    foreach($pictures as $key => $pic) {
+                        $gallery = new Gallery;
+                        $gallery->path  = $pic;
+                        $gallery->guuid = $surveying->guuid;
+                        $gallery->save();
+                    }
                 }
 
                 return [
@@ -145,7 +147,6 @@ class ProblemSurveyingController extends Controller
             $surveying->cause_text          = $request['cause_text'];
             $surveying->solution_id         = $request['solution_id'];
             $surveying->solution_text       = $request['solution_text'];
-            // $surveying->remark              = $request['remark'];
 
             /** Check and remove uploaded file */
             if ($request['is_file_updated']) {
