@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\EnvMeasurement;
 use App\Models\SurveyingSurveyor;
 use App\Models\Company;
