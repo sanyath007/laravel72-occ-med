@@ -147,65 +147,64 @@ class EnvMeasurementController extends Controller
             $measurement->have_report         = $request['have_report'];
             $measurement->is_returned_data    = $request['is_returned_data'];
 
-            /** Upload file and pictures */
-            if ($request->file('file_attachment')) {
-                $destinationPath = 'uploads/wts/file/';
-                $file = $request->file('file_attachment');
-                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-
-                /** Check and remove uploaded file */
-                $existedFile = $destinationPath . $measurement->file_attachment;
-                if (\File::exists($existedFile)) {
-                    \File::delete($existedFile);
+            /** Check and remove uploaded file */
+            if ($request['is_file_updated']) {
+                if (Storage::disk('public')->exists($measurement->file_attachment)) {
+                    Storage::disk('public')->delete($measurement->file_attachment);
                 }
 
-                if ($file->move($destinationPath, $fileName)) {
-                    $measurement->file_attachment = $fileName;
-                }
+                $measurement->file_attachment = '';
             }
 
-            // if ($request->file('pic_attachments')) {
-            //     $index = 0;
-            //     $picNames = '';
-            //     $destinationPath = 'uploads/wts/pic/';
+            /** Upload file */
+            if ($request->file('file_attachment')) {
+                $surveying->file_attachment = $this->fileService->uploadFile(
+                    $request->file('file_attachment'),
+                    $this->uploadDestPath . 'file'
+                );
+            }
 
-            //     foreach($request->file('pic_attachments') as $file) {
-            //         $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-
-            //         if ($file->move($destinationPath, $fileName)) {
-            //             if ($index < count($request->file('pic_attachments'))) {
-            //                 $picNames .= $fileName.',';
-            //             } else {
-            //                 $picNames .= $fileName;
-            //             }
-            //         }
-
-            //         $index++;
-            //     }
-
-            //     $measurement->pic_attachments = $picNames;
-            // }
+            /** Upload new pictures */
+            if ($request->file('pictures')) {
+                $pictures = $this->fileService->uploadMultipleImages(
+                    $request->file('pictures'),
+                    $this->uploadDestPath . 'pic'
+                );
+            }
 
             if ($measurement->save()) {
-                if (count($request['surveyors']) > 0) {
-                    foreach($request['surveyors'] as $surveyor) {
-                        if (array_key_exists('id', $surveyor)) {
-                            /** รายการเดิม */
-                            if (SurveyingSurveyor::where('employee_id', $surveyor['employee_id'])->count() == 0) {
-                                $updatedSurveyor = SurveyingSurveyor::find($surveyor['id']);
-                                $updatedSurveyor->employee_id = $surveyor['employee_id'];
-                                $updatedSurveyor->save();
-                            }
-                        } else {
-                            /** รายการใหม่ */
-                            $newSurveyor = new SurveyingSurveyor;
-                            $newSurveyor->survey_id     = $measurement->id;
-                            $newSurveyor->employee_id   = $surveyor['employee_id'];
-                            $newSurveyor->save();
+                foreach($request['surveyors'] as $surveyor) {
+                    if (array_key_exists('survey_id', $surveyor)) {
+                        /** 
+                         * รายการเดิม
+                         * ถ้าเป็นรายการเดิมให้ตรวจสอบว่ามี property flag removed หรือไม่
+                         */
+                        if (array_key_exists('removed', $surveyor) && $surveyor['removed']) {
+                            SurveyingSurveyor::find($surveyor['id'])->delete();
                         }
+                    } else {
+                        /** รายการใหม่ */
+                        $newSurveyor = new SurveyingSurveyor;
+                        $newSurveyor->survey_type_id    = 2;
+                        $newSurveyor->survey_id         = $measurement->id;
+                        $newSurveyor->employee_id       = $surveyor['employee_id'];
+                        $newSurveyor->save();
                     }
-                } else {
-                    SurveyingSurveyor::where('survey_id', $id)->delete();
+                }
+
+                /** Insert new galleries */
+                foreach($pictures as $key => $pic) {
+                    $gallery = new Gallery;
+                    $gallery->path  = $pic;
+                    $gallery->guuid = $measurement->guuid;
+                    $gallery->save();
+                }
+
+                /** ถ้าเป็นรายการเดิมให้ตรวจสอบว่ามี property flag removed หรือไม่ */
+                foreach($request['galleries'] as $gallery) {
+                    if (array_key_exists('removed', $gallery) && $gallery['removed']) {
+                        Gallery::find($gallery['id'])->delete();
+                    }
                 }
 
                 return [
