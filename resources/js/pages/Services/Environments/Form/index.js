@@ -8,7 +8,13 @@ import { DatePicker } from '@mui/x-date-pickers'
 import { toast } from 'react-toastify'
 import moment from 'moment'
 import { store, update } from '../../../../store/slices/environment'
-import { validateFile, isExistedItem, string2Array, imageString2UrlArray, getFilenameFormUrl } from '../../../../utils'
+import {
+    getFilenameFormUrl,
+    imageString2UrlArray,
+    isExistedItem,
+    string2Array,
+    validateFile
+} from '../../../../utils'
 import ModalCompanies from '../../../../components/Modals/ModalCompanies'
 import ModalCompanyForm from '../../../../components/Modals/ModalCompanyForm'
 import MultipleFileUpload from '../../../../components/Forms/MultipleFileUpload'
@@ -33,7 +39,7 @@ const measurementSchema = Yup.object().shape({
         return validateFile(file, ACCEPT_FILE_TYPE);
     }),
     surveyors: Yup.mixed().test('surveyors-not-empty', 'กรุณาระบุผู้เดินสำรวจอย่างน้อย 1 ราย', (val) => val.length > 0),
-    pic_attachments: Yup.mixed().test('is-valid-pic-type', 'คุณเลือกประเภทไฟล์รูปภาพไม่ถูกต้อง!!', (pics) => {
+    pictures: Yup.mixed().test('is-valid-pic-type', 'คุณเลือกประเภทไฟล์รูปภาพไม่ถูกต้อง!!', (pics) => {
         if (pics.length === 0) return true;
 
         return pics.every(pic => validateFile(pic, ACCEPT_PIC_TYPE));
@@ -47,14 +53,14 @@ const EnvironmentForm = ({ id, surveying }) => {
     const [selectedCompany, setSelectedCompany] = useState(null);
     const [selectedSurveyDate, setSelectedSurveyDate] = useState(moment());
     const [uploadedFile, setUploadedFile] = useState('');
-    const [uploadedPics, setUploadedPics] = useState([]);
+    const [galleries, setGalleries] = useState([]);
 
     useEffect(() => {
         if (surveying) {
             setSelectedCompany(surveying.company);
             setSelectedSurveyDate(moment(surveying.survey_date));
             setUploadedFile(surveying.file_attachment);
-            setUploadedPics(imageString2UrlArray(surveying.pic_attachments, `${process.env.MIX_APP_URL}/storage`));
+            setGalleries(imageString2UrlArray(surveying.galleries, `${process.env.MIX_APP_URL}/storage`));
         }
     }, [surveying]);
 
@@ -82,16 +88,6 @@ const EnvironmentForm = ({ id, surveying }) => {
     };
 
     const handleSubmit = (values, formik) => {
-        // let data = new FormData();
-
-        // for(const [key, val] of Object.entries(values)) {
-        //     if (key === 'surveyors' || key === 'guidelines') {
-        //         data.append(key, JSON.stringify(val));
-        //     } else {
-        //         data.append(key, val);
-        //     }
-        // }
-
         if (surveying) {
             dispatch(update({ id, data: values }));
         } else {
@@ -121,7 +117,8 @@ const EnvironmentForm = ({ id, surveying }) => {
                 // remark: (surveying && surveying.remark) ? surveying.remark : '',
                 file_attachment: '',
                 surveyors: surveying ? surveying.surveyors : [],
-                pic_attachments: []
+                pictures: [],
+                galleries: surveying ? surveying.galleries : [],
             }}
             validationSchema={measurementSchema}
             onSubmit={handleSubmit}
@@ -507,24 +504,24 @@ const EnvironmentForm = ({ id, surveying }) => {
                                 <Row className="mb-2">
                                     <Col>
                                         <MultipleFileUpload
-                                            files={formik.values.pic_attachments}
+                                            files={formik.values.pictures}
                                             onSelect={(files) => {
-                                                formik.setFieldValue('pic_attachments', files);
+                                                formik.setFieldValue('pictures', files);
                                             }}
                                             onDelete={(index) => {
-                                                const updatedPics = formik.values.pic_attachments.filter((pic, i) => i !== index);
+                                                const updatedPics = formik.values.pictures.filter((pic, i) => i !== index);
                                                 
-                                                formik.setFieldValue('pic_attachments', updatedPics);
+                                                formik.setFieldValue('pictures', updatedPics);
                                             }}
                                         />
-                                        {(formik.errors.pic_attachments && formik.touched.pic_attachments) && (
-                                            <span className="text-danger text-sm">{formik.errors.pic_attachments}</span>
+                                        {(formik.errors.pictures && formik.touched.pictures) && (
+                                            <span className="text-danger text-sm">{formik.errors.pictures}</span>
                                         )}
 
                                         <div className="mt-4">
                                             <h4>รูปที่อัพโหลดแล้ว</h4>
                                             <UploadedGalleries
-                                                images={uploadedPics}
+                                                images={galleries}
                                                 minHeight={'200px'}
                                             />
                                         </div>
