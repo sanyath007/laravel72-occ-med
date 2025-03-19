@@ -71,7 +71,7 @@ class StdAssessmentController extends Controller
             $assessment->agency_text         = $request['agency_text'];
             $assessment->result_id           = $request['result_id'];
             $assessment->result_text         = $request['result_text'];
-            $surveying->guuid               = Uuid::uuid4();
+            $assessment->guuid               = Uuid::uuid4();
 
             /** Upload file */
             $assessment->file_attachment = $this->fileService->uploadFile(
