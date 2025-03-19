@@ -467,7 +467,7 @@ const EnvironmentForm = ({ id, surveying }) => {
                                     </Col>
                                 </Row>
                                 <Row className="mb-2">
-                                    <Col>
+                                    {!uploadedFile && <Col>
                                         <label htmlFor="">แนบไฟล์ผลการตรวจวัดสิ่งแวดล้อม</label>
                                         <input
                                             type="file"
@@ -479,18 +479,18 @@ const EnvironmentForm = ({ id, surveying }) => {
                                         {(formik.errors.file_attachment && formik.touched.file_attachment) && (
                                             <span className="invalid-feedback">{formik.errors.file_attachment}</span>
                                         )}
-                                    </Col>
-                                    <Col>
-                                        <label htmlFor=""></label>
-                                        {uploadedFile && (
-                                            <div className="d-flex align-items-center">
-                                                <a href={`${process.env.MIX_APP_URL}/storage/${uploadedFile}`} className="p-auto me-2" target="_blank">
-                                                    <FaFilePdf size={'16px'} /> {getFilenameFormUrl(`${process.env.MIX_APP_URL}/storage/${uploadedFile}`)}
-                                                </a>
-                                                {/* <span className="uploaded__close-btn"><FaTimesCircle /></span> */}
-                                            </div>
-                                        )}
-                                    </Col>
+                                    </Col>}
+                                    {uploadedFile && <Col>
+                                        <label htmlFor="">แนบไฟล์ผลการตรวจวัดสิ่งแวดล้อม</label>
+                                        <div className="d-flex align-items-center">
+                                            <a href={`${process.env.MIX_APP_URL}/storage/${uploadedFile}`} className="p-auto me-2" target="_blank">
+                                                <FaFilePdf size={'16px'} /> {getFilenameFormUrl(`${process.env.MIX_APP_URL}/storage/${uploadedFile}`)}
+                                            </a>
+                                            <span className="uploaded__close-btn">
+                                                <FaTimesCircle onClick={() => handleRemoveFile(formik)} />
+                                            </span>
+                                        </div>
+                                    </Col>}
                                 </Row>
                             </Tab>
                             <Tab
