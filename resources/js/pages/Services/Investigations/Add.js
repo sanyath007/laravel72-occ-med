@@ -9,7 +9,7 @@ import InvestigationForm from './Form'
 const AddInvestigation = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { success } = useSelector(state => state.investigation);
+    const { isSuccess } = useSelector(state => state.investigation);
     const { setGlobal } = useContext(GlobalContext);
 
     /** Initial global states */
@@ -27,14 +27,14 @@ const AddInvestigation = () => {
     }, []);
 
     useEffect(() => {
-        if (success) {
+        if (isSuccess) {
             toast.success('บันทึกข้อมูลเรียบร้อยแล้ว!!');
 
             dispatch(resetSuccess());
 
             navigate('/services/investigations');
         }
-    }, [success]);
+    }, [isSuccess]);
 
     return (
         <section className="section">

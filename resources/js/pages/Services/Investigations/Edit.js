@@ -12,7 +12,7 @@ const EditInvestigation = () => {
     const navigate = useNavigate()
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { investigation, loading, success } = useSelector(state => state.investigation);
+    const { investigation, isLoading, isSuccess } = useSelector(state => state.investigation);
 
     /** Initial global states */
     useEffect(() => {
@@ -35,14 +35,14 @@ const EditInvestigation = () => {
     }, [id]);
 
     useEffect(() => {
-        if (success) {
+        if (isSuccess) {
             toast.success('บันทึกการแก้ไขข้อมูลเรียบร้อยแล้ว!!');
 
             dispatch(resetSuccess());
 
             navigate('/services/investigations');
         }
-    }, [success]);
+    }, [isSuccess]);
 
     return (
         <section className="section">
@@ -52,9 +52,9 @@ const EditInvestigation = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขสอบสวนโรค/อุบัติเหตุจากงานและสิ่งแวดล้อม</h5>
 
-                            {loading && <div className="text-center"><Loading /></div>}
+                            {isLoading && <div className="text-center"><Loading /></div>}
 
-                            {(!loading && investigation) && (
+                            {(!isLoading && investigation) && (
                                 <InvestigationForm id={id} investigation={investigation} />
                             )}
                         </div>

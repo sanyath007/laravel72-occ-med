@@ -3,21 +3,34 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Investigation;
 use App\Models\InvestigationType;
+use App\Models\Gallery;
+use App\Services\FileService;
+use Ramsey\Uuid\Uuid;
 
 class InvestigationController extends Controller
 {
+    protected $fileService;
+
+    protected $uploadDestPath = 'uploads/investigation/';
+
+    public function __construct(FileService $fileService)
+    {
+        $this->fileService = $fileService;
+    }
+
     public function search(Request $request)
     {
-        $investigations = Investigation::with('type','division')->paginate(10);
+        $investigations = Investigation::with('type','division','galleries')->paginate(10);
 
         return response()->json($investigations);
     }
 
     public function getById($id)
     {
-        $investigation = Investigation::with('type','division')->find($id);
+        $investigation = Investigation::with('type','division','galleries')->find($id);
 
         return response()->json($investigation);
     }
@@ -33,33 +46,32 @@ class InvestigationController extends Controller
             $investigation->division_id         = $request['division_id'];
             $investigation->place               = $request['place'];
             $investigation->num_of_people       = $request['num_of_people'];
-            $investigation->file_attachment     = $request['file_attachment'];
-            $investigation->pic_attachment      = $request['pic_attachment'];
             $investigation->is_return_data      = $request['is_return_data'];
-            // $investigation->remark = $request['remark'];
+            $investigation->guuid               = Uuid::uuid4();
 
-            /** Upload file and pictures */
-            if ($request->file('file_attachment')) {
-                $file = $request->file('file_attachment');
-                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-                $destinationPath = 'uploads/investigation/file/';
+            /** Upload file */
+            $investigation->file_attachment = $this->fileService->uploadFile(
+                $request->file('file_attachment'),
+                $this->uploadDestPath . 'file'
+            );
 
-                if ($file->move($destinationPath, $fileName)) {
-                    $investigation->file_attachment = $fileName;
-                }
-            }
-
-            if ($request->file('pic_attachment')) {
-                $file = $request->file('pic_attachment');
-                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-                $destinationPath = 'uploads/investigation/pic/';
-
-                if ($file->move($destinationPath, $fileName)) {
-                    $investigation->pic_attachment = $fileName;
-                }
-            }
+            /** Upload pictures */
+            $pictures = $this->fileService->uploadMultipleImages(
+                $request->file('pictures'),
+                $this->uploadDestPath . 'pic'
+            );
 
             if ($investigation->save()) {
+                /** Insert galleries */
+                if (count($pictures) > 0) {
+                    foreach($pictures as $key => $pic) {
+                        $gallery = new Gallery;
+                        $gallery->path  = $pic;
+                        $gallery->guuid = $investigation->guuid;
+                        $gallery->save();
+                    }
+                }
+
                 return [
                     'status'        => 1,
                     'message'       => 'Insertion successfully!!',
@@ -90,45 +102,59 @@ class InvestigationController extends Controller
             $investigation->division_id     = $request['division_id'];
             $investigation->place           = $request['place'];
             $investigation->num_of_people   = $request['num_of_people'];
-            $investigation->file_attachment = $request['file_attachment'];
-            $investigation->pic_attachment  = $request['pic_attachment'];
             $investigation->is_return_data  = $request['is_return_data'];
-            // $investigation->remark = $request['remark'];
 
-            /** Upload file and pictures */
-            if ($request->file('file_attachment')) {
-                $file = $request->file('file_attachment');
-                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-                $destinationPath = 'uploads/investigation/file/';
-
-                /** Check and remove uploaded file */
-                $existedFile = $destinationPath . $investigation->file_attachment;
-                if (\File::exists($existedFile)) {
-                    \File::delete($existedFile);
+            /** Check and remove uploaded file */
+            if ($request['is_file_updated'] == 'true') {
+                if (Storage::disk('public')->exists($investigation->file_attachment)) {
+                    Storage::disk('public')->delete($investigation->file_attachment);
                 }
 
-                if ($file->move($destinationPath, $fileName)) {
-                    $investigation->file_attachment = $fileName;
-                }
+                $investigation->file_attachment = '';
             }
 
-            if ($request->file('pic_attachment')) {
-                $file = $request->file('pic_attachment');
-                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-                $destinationPath = 'uploads/investigation/pic/';
+            /** Upload file */
+            if ($request->file('file_attachment')) {
+                $investigation->file_attachment = $this->fileService->uploadFile(
+                    $request->file('file_attachment'),
+                    $this->uploadDestPath . 'file'
+                );
+            }
 
-                /** Check and remove uploaded picture */
-                $existedPic = $destinationPath . $investigation->pic_attachment;
-                if (\File::exists($existedPic)) {
-                    \File::delete($existedPic);
-                }
-
-                if ($file->move($destinationPath, $fileName)) {
-                    $investigation->pic_attachment = $fileName;
-                }
+            /** Upload new pictures */
+            $pictures = [];
+            if ($request->file('pictures')) {
+                $pictures = $this->fileService->uploadMultipleImages(
+                    $request->file('pictures'),
+                    $this->uploadDestPath . 'pic'
+                );
             }
 
             if ($investigation->save()) {
+                /** Insert new galleries */
+                if (count($pictures) > 0) {
+                    foreach($pictures as $key => $pic) {
+                        $gallery = new Gallery;
+                        $gallery->path  = $pic;
+                        $gallery->guuid = $investigation->guuid;
+                        $gallery->save();
+                    }
+                }
+
+                /** ถ้าเป็นรายการเดิมให้ตรวจสอบว่ามี property flag removed หรือไม่ */
+                if ($request['galleries'] && count($request['galleries']) > 0) {
+                    foreach($request['galleries'] as $pic) {
+                        if (array_key_exists('removed', $pic) && $pic['removed']) {
+                            /** Remove physical file */
+                            if (Storage::disk('public')->exists($pic['path'])) {
+                                Storage::disk('public')->delete($pic['path']);
+                            }
+
+                            Gallery::find($pic['id'])->delete();
+                        }
+                    }
+                }
+
                 return [
                     'status'        => 1,
                     'message'       => 'Updating successfully!!',
@@ -152,16 +178,19 @@ class InvestigationController extends Controller
         try {
             $investigation = Investigation::find($id);
 
-            /** Remove uploaded file and picture */
-            $destinationPath = 'uploads/investigation/';
-            $existedFile = $destinationPath .'file/'. $investigation->file_attachment;
-            if (\File::exists($existedFile)) {
-                \File::delete($existedFile);
+            /** Remove uploaded file */
+            if (Storage::disk('public')->exists($investigation->file_attachment)) {
+                Storage::disk('public')->delete($investigation->file_attachment);
             }
 
-            $existedPic = $destinationPath .'pic/'. $investigation->pic_attachment;
-            if (\File::exists($existedPic)) {
-                \File::delete($existedPic);
+            if (count($investigation->galleries) > 0) {
+                foreach($investigation->galleries as $pic) {
+                    if (Storage::disk('public')->exists($pic->path)) {
+                        Storage::disk('public')->delete($pic->path);
+
+                        Gallery::find($pic->id)->delete();
+                    }
+                }
             }
 
             if ($investigation->delete()) {

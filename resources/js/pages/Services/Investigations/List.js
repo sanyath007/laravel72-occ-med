@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { FaFilePdf } from 'react-icons/fa'
 import { GlobalContext } from '../../../context/globalContext'
-import { getInvestigations, resetSuccess, destroy } from '../../../store/slices/investigation'
+import { getInvestigations, resetDeleted, destroy } from '../../../store/slices/investigation'
 import { toShortTHDate } from '../../../utils/formatter'
 import Loading from '../../../components/Loading'
 import Pagination from '../../../components/Pagination'
@@ -12,7 +12,7 @@ import Pagination from '../../../components/Pagination'
 const InvestigationList = () => {
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { investigations, pager, loading, success } = useSelector(state => state.investigation);
+    const { investigations, pager, isLoading, isDeleted } = useSelector(state => state.investigation);
     const [endpoint, setEndpoint] = useState('');
     const [params, setParams] = useState('');
 
@@ -31,12 +31,12 @@ const InvestigationList = () => {
 
     /** If delete giudeline is succeed */
     useEffect(() => {
-        if (success) {
+        if (isDeleted) {
             toast.success('ลบข้อมูลเรียบร้อยแล้ว');
     
-            dispatch(resetSuccess());
+            dispatch(resetDeleted());
         }
-    }, [success]);
+    }, [isDeleted]);
 
     useEffect(() => {
         if (endpoint === '') {
@@ -88,13 +88,13 @@ const InvestigationList = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {loading && (
+                                        {isLoading && (
                                             <tr>
                                                 <td colSpan={7} className="text-center"><Loading /></td>
                                             </tr>
                                         )}
 
-                                        {!loading && investigations?.map((investigation, index) => (
+                                        {!isLoading && investigations?.map((investigation, index) => (
                                             <tr key={investigation.id}>
                                                 <td style={{ textAlign: 'center' }}>{pager && pager.from + index}</td>
                                                 <td style={{ textAlign: 'center' }}>{toShortTHDate(investigation.invest_date)}</td>

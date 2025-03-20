@@ -19,4 +19,9 @@ class Investigation extends Model
     {
         return $this->belongsTo(Division::class, 'division_id', 'id');
     }
+
+    public function galleries()
+    {
+        return $this->hasMany(Gallery::class, 'guuid', 'guuid');
+    }
 }
