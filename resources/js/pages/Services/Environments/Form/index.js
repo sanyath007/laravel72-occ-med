@@ -6,6 +6,7 @@ import { Col, Row, Tab, Tabs } from 'react-bootstrap'
 import { FaFilePdf, FaPlus, FaSave, FaSearch, FaTimesCircle } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
 import { toast } from 'react-toastify'
+import { v4 as uuid } from 'uuid'
 import moment from 'moment'
 import { store, update } from '../../../../store/slices/environment'
 import {
@@ -87,7 +88,7 @@ const EnvironmentForm = ({ id, surveying }) => {
             return;
         }
 
-        const newSurveyors = [ ...formik.values.surveyors, { employee_id: surveyor.id, employee: surveyor }];
+        const newSurveyors = [ ...formik.values.surveyors, { id: uuid(), employee_id: surveyor.id, employee: surveyor }];
 
         formik.setFieldValue('surveyors', newSurveyors);
     };
