@@ -108,7 +108,7 @@ const SurveyingList = () => {
                                                 </td>
                                                 <td className="text-center">
                                                     {surveying.file_attachment && (
-                                                        <a href={`${process.env.MIX_APP_URL}/uploads/wts/file/${surveying.file_attachment}`} target="_blank" className="text-danger">
+                                                        <a href={`${process.env.MIX_APP_URL}/storage/${surveying.file_attachment}`} target="_blank" className="text-danger">
                                                             <FaFilePdf size={"20px"} />
                                                         </a>
                                                     )}
