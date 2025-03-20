@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { FaFilePdf } from 'react-icons/fa'
 import { GlobalContext } from '../../../context/globalContext'
-import { getSurveyings, resetSuccess, destroy } from '../../../store/slices/surveying'
+import { getSurveyings, resetDeleted, destroy } from '../../../store/slices/surveying'
 import { toShortTHDate } from '../../../utils/formatter'
 import Loading from '../../../components/Loading'
 import Pagination from '../../../components/Pagination'
@@ -12,7 +12,7 @@ import Pagination from '../../../components/Pagination'
 const SurveyingList = () => {
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { surveyings, pager, loading, success } = useSelector(state => state.surveying);
+    const { surveyings, pager, isLoading, isDeleted } = useSelector(state => state.surveying);
     const [endpoint, setEndpoint] = useState('');
     const [params, setParams] = useState('');
 
@@ -31,12 +31,12 @@ const SurveyingList = () => {
 
     /** If delete giudeline is succeed */
     useEffect(() => {
-        if (success) {
+        if (isDeleted) {
             toast.success('ลบข้อมูลเรียบร้อยแล้ว');
     
-            dispatch(resetSuccess());
+            dispatch(resetDeleted());
         }
-    }, [success]);
+    }, [isDeleted]);
 
     useEffect(() => {
         if (endpoint === '') {
@@ -88,13 +88,13 @@ const SurveyingList = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {loading && (
+                                        {isLoading && (
                                             <tr>
                                                 <td colSpan={7} className="text-center"><Loading /></td>
                                             </tr>
                                         )}
 
-                                        {!loading && surveyings?.map((surveying, index) => (
+                                        {!isLoading && surveyings?.map((surveying, index) => (
                                             <tr key={surveying.id}>
                                                 <td className="text-center">{pager?.from+index}</td>
                                                 <td className="text-center">{toShortTHDate(surveying.survey_date)}</td>
