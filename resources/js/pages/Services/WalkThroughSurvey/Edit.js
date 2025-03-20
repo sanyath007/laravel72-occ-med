@@ -12,7 +12,7 @@ const EditSurveying = () => {
     const navigate = useNavigate()
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { surveying, loading, success } = useSelector(state => state.surveying);
+    const { surveying, isLoading, isSuccess } = useSelector(state => state.surveying);
 
     /** Initial global states */
     useEffect(() => {
@@ -35,14 +35,14 @@ const EditSurveying = () => {
     }, [id]);
 
     useEffect(() => {
-        if (success) {
+        if (isSuccess) {
             toast.success('บันทึกการแก้ไขขอ้มูลเรียบร้อยแล้ว!!');
 
             dispatch(resetSuccess());
 
             navigate('/services/surveyings');
         }
-    }, [success]);
+    }, [isSuccess]);
 
     return (
         <section className="section">
@@ -52,9 +52,9 @@ const EditSurveying = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไข Walk-through survey</h5>
 
-                            {loading && <div className="text-center"><Loading /></div>}
+                            {isLoading && <div className="text-center"><Loading /></div>}
 
-                            {(!loading && surveying) && (
+                            {(!isLoading && surveying) && (
                                 <SurveyingForm id={id} surveying={surveying} />
                             )}
                         </div>

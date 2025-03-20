@@ -5,8 +5,9 @@ const initialState = {
     surveyings: [],
     surveying: null,
     pager: null,
-    loading: false,
-    success: false,
+    isLoading: false,
+    isSuccess: false,
+    isDeleted: false,
     error: null
 }
 
@@ -76,7 +77,10 @@ export const surveyingSlice = createSlice({
     initialState,
     reducers: {
         resetSuccess(state) {
-            state.success = false
+            state.isSuccess = false
+        },
+        resetDeleted(state) {
+            state.isDeleted = false
         },
         updateSurveyings(state, { payload }) {
             const updated = state.surveyings.filter(s => s.id !== payload);
@@ -87,89 +91,83 @@ export const surveyingSlice = createSlice({
     extraReducers: {
         [getSurveyings.pending]: (state) => {
             state.surveyings = []
-            state.loading = true
+            state.isLoading = true
         },
         [getSurveyings.fulfilled]: (state, { payload }) => {
             const { data, ...pager } = payload
 
             state.surveyings = data
             state.pager = pager
-            state.loading = false
+            state.isLoading = false
         },
         [getSurveyings.rejected]: (state, { payload }) => {
-            state.loading = false
+            state.isLoading = false
             state.error = payload
         },
         [getSurveying.pending]: (state) => {
-            state.loading = true
+            state.isLoading = true
             state.surveying = null
             state.error = null
         },
         [getSurveying.fulfilled]: (state, { payload }) => {
             state.surveying = payload
-            state.loading = false
+            state.isLoading = false
         },
         [getSurveying.rejected]: (state, { payload }) => {
-            state.loading = false
+            state.isLoading = false
             state.error = payload
         },
         [store.pending]: (state) => {
-            state.success = true
+            state.isSuccess = false
             state.error = null
         },
         [store.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isSuccess = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [store.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         },
         [update.pending]: (state) => {
-            state.success = true
+            state.isSuccess = false
             state.error = null
         },
         [update.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isSuccess = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [update.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         },
         [destroy.pending]: (state) => {
-            state.success = true
+            state.isDeleted = false
             state.error = null
         },
         [destroy.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isDeleted = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [destroy.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         }
     }
 })
 
-export const { resetSuccess, updateSurveyings } = surveyingSlice.actions
+export const { resetDeleted, resetSuccess, updateSurveyings } = surveyingSlice.actions
 
 export default surveyingSlice.reducer

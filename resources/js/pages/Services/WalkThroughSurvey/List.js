@@ -122,9 +122,9 @@ const SurveyingList = () => {
                                                 </td>
                                                 <td className="text-center">
                                                     <div className="btn-group" role="group" aria-label="Basic mixed styles example">
-                                                        <Link to={`/services/surveyings/${surveying.id}/detail`} className="btn btn-primary btn-sm">
+                                                        {/* <Link to={`/services/surveyings/${surveying.id}/detail`} className="btn btn-primary btn-sm">
                                                             <i className="bi bi-search"></i>
-                                                        </Link>
+                                                        </Link> */}
                                                         <Link to={`/services/surveyings/${surveying.id}/edit`} className="btn btn-warning btn-sm">
                                                             <i className="bi bi-pencil-square"></i>
                                                         </Link>

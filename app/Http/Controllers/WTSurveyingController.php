@@ -63,7 +63,7 @@ class WTSurveyingController extends Controller
     public function store(Request $request) 
     {
         try {
-            $surveying = new Surveying;
+            $surveying = new WTSurveying;
             $surveying->survey_date         = $request['survey_date'];
             $surveying->objective_id        = $request['objective_id'];
             $surveying->division_id         = $request['division_id'];
@@ -149,7 +149,7 @@ class WTSurveyingController extends Controller
             $surveying->have_report         = $request['have_report'];
             $surveying->is_adviced          = $request['is_adviced'];
             $surveying->is_returned_data    = $request['is_returned_data'];
-            $surveying->guidelines          = implode(',', $request['guidelines']);
+            $surveying->guidelines          = !empty($request['guidelines']) ? implode(',', $request['guidelines']) : '';
             $surveying->remark              = $request['remark'];
 
             /** Check and remove uploaded file */
@@ -210,14 +210,14 @@ class WTSurveyingController extends Controller
 
                 /** ถ้าเป็นรายการเดิมให้ตรวจสอบว่ามี property flag removed หรือไม่ */
                 if ($request['galleries'] && count($request['galleries']) > 0) {
-                    foreach($request['galleries'] as $gallery) {
-                        if (array_key_exists('removed', $gallery) && $gallery['removed']) {
+                    foreach($request['galleries'] as $pic) {
+                        if (array_key_exists('removed', $pic) && $pic['removed']) {
                             /** Remove physical file */
                             if (Storage::disk('public')->exists($pic['path'])) {
                                 Storage::disk('public')->delete($pic['path']);
                             }
 
-                            Gallery::find($gallery['id'])->delete();
+                            Gallery::find($pic['id'])->delete();
                         }
                     }
                 }

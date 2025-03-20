@@ -6,13 +6,21 @@ import { Col, Row, Tab, Tabs } from 'react-bootstrap'
 import { FaFilePdf, FaPlus, FaSave, FaSearch, FaTimesCircle } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
 import { toast } from 'react-toastify'
+import { v4 as uuid } from 'uuid'
 import moment from 'moment'
 import { store, update } from '../../../../store/slices/surveying'
-import { validateFile, isExistedItem, string2Array, imageString2UrlArray } from '../../../../utils'
+import {
+    getFilenameFormUrl,
+    imageString2UrlArray,
+    isExistedItem,
+    removeItemWithFlag,
+    string2Array,
+    validateFile
+} from '../../../../utils'
 import ModalCompanies from '../../../../components/Modals/ModalCompanies'
 import ModalCompanyForm from '../../../../components/Modals/ModalCompanyForm'
 import MultipleFileUpload from '../../../../components/Forms/MultipleFileUpload'
-import UploadGallery from '../../../../components/UploadGallery'
+import UploadedGalleries from '../../../../components/UploadedGalleries'
 import SurveyorForm from '../../../../components/Surveyor/SurveyorForm'
 import SurveyorList from '../../../../components/Surveyor/SurveyorList'
 import GuidelineForm from './GuidelineForm'
@@ -34,7 +42,7 @@ const surveySchema = Yup.object().shape({
 
         return validateFile(file, ACCEPT_FILE_TYPE);
     }),
-    pic_attachments: Yup.mixed().test('is-valid-pic-type', 'คุณเลือกประเภทไฟล์รูปภาพไม่ถูกต้อง!!', (pics) => {
+    pictures: Yup.mixed().test('is-valid-pic-type', 'คุณเลือกประเภทไฟล์รูปภาพไม่ถูกต้อง!!', (pics) => {
         if (pics.length === 0) return true;
 
         return pics.every(pic => validateFile(pic, ACCEPT_PIC_TYPE));
@@ -48,54 +56,54 @@ const SurveyingForm = ({ id, surveying }) => {
     const [selectedCompany, setSelectedCompany] = useState(null);
     const [selectedSurveyDate, setSelectedSurveyDate] = useState(moment());
     const [uploadedFile, setUploadedFile] = useState('');
-    const [uploadedPics, setUploadedPics] = useState([]);
+    const [galleries, setGalleries] = useState([]);
 
     useEffect(() => {
         if (surveying) {
             setSelectedCompany(surveying.company);
             setSelectedSurveyDate(moment(surveying.survey_date));
-            setUploadedFile(surveying.file_attachment);
-            setUploadedPics(imageString2UrlArray(surveying.pic_attachments, `${process.env.MIX_APP_URL}/uploads/wts/pic`));
+            setUploadedFile(surveying.file_attachment ? `${process.env.MIX_APP_URL}/storage/${surveying.file_attachment}` : '');
+            setGalleries(surveying.galleries.map(gallery => ({ ...gallery, path: `${process.env.MIX_APP_URL}/storage/${gallery.path}` })));
         }
     }, [surveying]);
 
-    const handleSubmit = (values, formik) => {
-        // let data = new FormData();
-
-        // for(const [key, val] of Object.entries(values)) {
-        //     if (key === 'surveyors' || key === 'guidelines') {
-        //         data.append(key, JSON.stringify(val));
-        //     } else {
-        //         data.append(key, val);
-        //     }
-        // }
-
-        if (surveying) {
-            dispatch(update({ id, data: values }));
-        } else {
-            dispatch(store(values));
-        }
-
-        formik.resetForm();
-    };
-
+    /** Surveyors */
     const handleAddSurveyor = (formik, surveyor) => {
         if (isExistedItem(formik.values.surveyors, surveyor.id)) {
             toast.error('คุณเลือกรายการซ้ำ!!');
             return;
         }
 
-        const newSurveyors = [ ...formik.values.surveyors, { employee_id: surveyor.id, employee: surveyor }];
+        const newSurveyors = [ ...formik.values.surveyors, { id: uuid(), employee_id: surveyor.id, employee: surveyor }];
 
         formik.setFieldValue('surveyors', newSurveyors);
     };
 
-    const handleDeleteSurveyor = (formik, id) => {
-        const updatedSurveyors = formik.values.surveyors.filter(surveyor => surveyor.employee_id !== id);
+    const handleRemoveSurveyor = (formik, id, isNew) => {
+        if (window.confirm('คุณต้องการลบรายการใช่หรือไหม?')) {
+            const newSurveyors = removeItemWithFlag(formik.values.surveyors, id, isNew);
 
-        formik.setFieldValue('surveyors', updatedSurveyors);
+            formik.setFieldValue('surveyors', newSurveyors);
+        }
     };
 
+    /** Galleries */
+    const handleRemoveGallery = (formik, id, isNew) => {
+        if (window.confirm('คุณต้องการลบรูปกิจจกรรมใช่หรือไหม?')) {
+            const newGalleries = removeItemWithFlag(formik.values.galleries, id, isNew);
+
+            formik.setFieldValue('galleries', newGalleries);
+            setGalleries(newGalleries.map(gallery => ({ ...gallery, path: `${process.env.MIX_APP_URL}/storage/${gallery.path}` })));
+        }
+    };
+
+    /** File attachment */
+    const handleRemoveFile = (formik) => {
+        setUploadedFile('');
+        formik.setFieldValue('is_file_updated', true);
+    };
+
+    /** Guideline */
     const handleAddGuideline = (formik, guideline) => {
         formik.setFieldValue('guidelines', [...formik.values.guidelines, guideline]);
     };
@@ -104,6 +112,16 @@ const SurveyingForm = ({ id, surveying }) => {
         const updatedGuidelines = formik.values.guidelines.filter((gl, i) => i !== index);
 
         formik.setFieldValue('guidelines', updatedGuidelines);
+    };
+
+    const handleSubmit = (values, formik) => {
+        if (surveying) {
+            dispatch(update({ id, data: values }));
+        } else {
+            dispatch(store(values));
+        }
+
+        formik.resetForm();
     };
 
     return (
@@ -126,7 +144,9 @@ const SurveyingForm = ({ id, surveying }) => {
                 guidelines: (surveying && surveying.guidelines) ? string2Array(surveying.guidelines) : [],
                 remark: (surveying && surveying.remark) ? surveying.remark : '',
                 file_attachment: '',
-                pic_attachments: []
+                is_file_updated: false,
+                pictures: [],
+                galleries: (surveying && surveying.galleries) ? surveying.galleries : [],
             }}
             validationSchema={surveySchema}
             onSubmit={handleSubmit}
@@ -405,7 +425,7 @@ const SurveyingForm = ({ id, surveying }) => {
                                     </Col>
                                 </Row>
                                 <Row className="mb-2">
-                                    <Col>
+                                    {!uploadedFile && <Col>
                                         <label htmlFor="">แนบไฟล์รายงานเดินสำรวจ</label>
                                         <input
                                             type="file"
@@ -417,18 +437,18 @@ const SurveyingForm = ({ id, surveying }) => {
                                         {(formik.errors.file_attachment && formik.touched.file_attachment) && (
                                             <span className="invalid-feedback">{formik.errors.file_attachment}</span>
                                         )}
-                                    </Col>
-                                    <Col>
-                                        <label htmlFor=""></label>
-                                        {uploadedFile && (
+                                    </Col>}
+                                    {uploadedFile && <Col>
+                                        <label htmlFor="">แนบไฟล์รายงานเดินสำรวจ</label>
                                             <div className="d-flex align-items-center">
-                                                <a href={`${process.env.MIX_APP_URL}/uploads/wts/file/${uploadedFile}`} className="p-auto me-2" target="_blank">
-                                                    <FaFilePdf size={'16px'} /> {uploadedFile}
+                                                <a href={uploadedFile} className="p-auto me-2" target="_blank">
+                                                    <FaFilePdf size={'16px'} /> {getFilenameFormUrl(uploadedFile)}
                                                 </a>
-                                                {/* <span className="uploaded__close-btn"><FaTimesCircle /></span> */}
+                                                <span className="uploaded__close-btn">
+                                                    <FaTimesCircle onClick={() => handleRemoveFile(formik)} />
+                                                </span>
                                             </div>
-                                        )}
-                                    </Col>
+                                    </Col>}
                                 </Row>
                             </Tab>
                             <Tab
@@ -440,11 +460,15 @@ const SurveyingForm = ({ id, surveying }) => {
                                 <Row className="mb-2">
                                     <Col>
                                         <div className="p-2 pb-3">
-                                            <SurveyorForm onAdd={(surveyor) => handleAddSurveyor(formik, surveyor)} />
+                                            <SurveyorForm 
+                                                onAdd={(surveyor) => {
+                                                    handleAddSurveyor(formik, surveyor);
+                                                }}
+                                            />
 
                                             <SurveyorList
-                                                surveyors={formik.values.surveyors}
-                                                onDelete={(id) => handleDeleteSurveyor(formik, id)}
+                                                surveyors={formik.values.surveyors.filter(surveyor => !surveyor.removed)}
+                                                onDelete={(id, isNew) => handleRemoveSurveyor(formik, id, isNew)}
                                             />
                                             {(formik.errors.surveyors && formik.touched.surveyors) && (
                                                 <span className="text-danger text-sm">{formik.errors.surveyors}</span>
@@ -487,34 +511,26 @@ const SurveyingForm = ({ id, surveying }) => {
                             >
                                 <Row className="mb-2">
                                     <Col>
-                                        {/* <input
-                                            type="file"
-                                            onChange={(e) => {
-                                                formik.setFieldValue('pic_attachments', [...formik.values.pic_attachments, e.target.files[0]])
-                                            }}
-                                            
-                                            className={`form-control ${(formik.errors.pic_attachments && formik.touched.pic_attachments) ? 'is-invalid' : ''}`}
-                                        /> */}
-
                                         <MultipleFileUpload
-                                            files={formik.values.pic_attachments}
+                                            files={formik.values.pictures}
                                             onSelect={(files) => {
-                                                formik.setFieldValue('pic_attachments', files);
+                                                formik.setFieldValue('pictures', files);
                                             }}
                                             onDelete={(index) => {
-                                                const updatedPics = formik.values.pic_attachments.filter((pic, i) => i !== index);
+                                                const updatedPics = formik.values.pictures.filter((pic, i) => i !== index);
                                                 
-                                                formik.setFieldValue('pic_attachments', updatedPics);
+                                                formik.setFieldValue('pictures', updatedPics);
                                             }}
                                         />
-                                        {(formik.errors.pic_attachments && formik.touched.pic_attachments) && (
-                                            <span className="text-danger text-sm">{formik.errors.pic_attachments}</span>
+                                        {(formik.errors.pictures && formik.touched.pictures) && (
+                                            <span className="text-danger text-sm">{formik.errors.pictures}</span>
                                         )}
 
                                         <div className="mt-4">
                                             <h4>รูปที่อัพโหลดแล้ว</h4>
-                                            <UploadGallery
-                                                images={uploadedPics}
+                                            <UploadedGalleries
+                                                images={galleries.filter(pic => !pic.removed)}
+                                                onDelete={(id, isNew) => handleRemoveGallery(formik, id, isNew)}
                                                 minHeight={'200px'}
                                             />
                                         </div>
