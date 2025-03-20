@@ -212,17 +212,20 @@ const EnvironmentForm = ({ id, surveying }) => {
                                             <option value="">-- เลือก --</option>
                                             <option value="1">ประเมินความเสี่ยงและกำหนดรายการตรวจสุขภาพ</option>
                                             <option value="2">ประเมินความเสี่ยงประเมินความเสี่ยงด้านสุขภาพจากมลพิษ</option>
-                                            <option value="3">อื่นๆ ระบุ</option>
+                                            <option value="99">อื่นๆ ระบุ</option>
                                         </select>
                                         {(formik.errors.objective_id && formik.touched.objective_id) && (
                                             <span className="text-danger text-sm">{formik.errors.objective_id}</span>
                                         )}
                                     </Col>
-                                    {formik.values.objective_id === '3' && (
+                                    {parseInt(formik.values.objective_id, 10) === 99 && (
                                         <Col>
                                             <label htmlFor="">ระบุ (วัตถุประสงค์อื่นๆ)</label>
                                             <input
                                                 type="text"
+                                                name="objective_text"
+                                                value={formik.values.objective_text}
+                                                onChange={formik.handleChange}
                                                 className="form-control"
                                             />
                                         </Col>

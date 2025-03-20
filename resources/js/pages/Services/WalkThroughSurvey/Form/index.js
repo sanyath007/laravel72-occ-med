@@ -130,6 +130,7 @@ const SurveyingForm = ({ id, surveying }) => {
             initialValues={{
                 survey_date: surveying ? surveying.survey_date : '',
                 objective_id: surveying ? surveying.objective_id : '',
+                objective_text: surveying ? surveying.objective_text : '',
                 division_id: surveying ? surveying.division_id : '',
                 surveyors: surveying ? surveying.surveyors : [],
                 company_id: surveying ? surveying.company_id : '',
@@ -213,12 +214,26 @@ const SurveyingForm = ({ id, surveying }) => {
                                             <option value="">-- เลือก --</option>
                                             <option value="1">ประเมินความเสี่ยงและกำหนดรายการตรวจสุขภาพ</option>
                                             <option value="2">ประเมินความเสี่ยงประเมินความเสี่ยงด้านสุขภาพจากมลพิษ</option>
-                                            <option value="3">อื่นๆ ระบุ</option>
+                                            <option value="99">อื่นๆ ระบุ</option>
                                         </select>
                                         {(formik.errors.objective_id && formik.touched.objective_id) && (
                                             <span className="text-danger text-sm">{formik.errors.objective_id}</span>
                                         )}
                                     </Col>
+                                    {parseInt(formik.values.objective_id, 10) === 99 && (
+                                        <Col>
+                                            <label htmlFor="">ระบุ (วัตถุประสงค์อื่นๆ)</label>
+                                            <input
+                                                type="text"
+                                                name="objective_text"
+                                                value={formik.values.objective_text}
+                                                onChange={formik.handleChange}
+                                                className="form-control"
+                                            />
+                                        </Col>
+                                    )}
+                                </Row>
+                                <Row className="mb-2">
                                     <Col>
                                         <label htmlFor="">ผู้ดำเนินการ</label>
                                         <select
@@ -239,9 +254,7 @@ const SurveyingForm = ({ id, surveying }) => {
                                             <span className="text-danger text-sm">{formik.errors.division_id}</span>
                                         )}
                                     </Col>
-                                </Row>
-                                <Row className="mb-2">
-                                    <Col>
+                                    <Col md={6}>
                                         <label htmlFor="">สถานประกอบการ/สถานที่</label>
                                         <div className="input-group">
                                             <div className={`form-control ${(formik.errors.company_id && formik.touched.company_id) ? 'is-invalid' : ''}`}>
