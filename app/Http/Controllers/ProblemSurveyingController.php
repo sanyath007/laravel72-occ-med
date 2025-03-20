@@ -135,18 +135,19 @@ class ProblemSurveyingController extends Controller
     {
         try {
             $surveying = ProblemSurveying::find($id);
-            $surveying->survey_date         = $request['survey_date'];
-            $surveying->objective_id        = $request['objective_id'];
-            $surveying->objective_text      = $request['objective_text'];
-            $surveying->division_id         = $request['division_id'];
-            $surveying->company_id          = $request['company_id'];
-            $surveying->source_id           = $request['source_id'];
-            $surveying->source_text         = $request['source_text'];
-            $surveying->problem_text        = $request['problem_text'];
-            $surveying->cause_id            = $request['cause_id'];
-            $surveying->cause_text          = $request['cause_text'];
-            $surveying->solution_id         = $request['solution_id'];
-            $surveying->solution_text       = $request['solution_text'];
+            $surveying->survey_date     = $request['survey_date'];
+            $surveying->objective_id    = $request['objective_id'];
+            $surveying->objective_text  = $request['objective_text'];
+            $surveying->division_id     = $request['division_id'];
+            $surveying->company_id      = $request['company_id'];
+            $surveying->source_id       = $request['source_id'];
+            $surveying->source_text     = $request['source_text'];
+            $surveying->problem_text    = $request['problem_text'];
+            $surveying->cause_id        = $request['cause_id'];
+            $surveying->cause_text      = $request['cause_text'];
+            $surveying->solution_id     = $request['solution_id'];
+            $surveying->solution_text   = $request['solution_text'];
+            $surveying->guuid           = empty($surveying->guuid) ? Uuid::uuid4() : $surveying->guuid;
 
             /** Check and remove uploaded file */
             if ($request['is_file_updated'] == 'true') {

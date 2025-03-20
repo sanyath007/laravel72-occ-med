@@ -136,19 +136,20 @@ class EnvMeasurementController extends Controller
     {
         try {
             $measurement = EnvMeasurement::find($id);
-            $measurement->measure_date        = $request['measure_date'];
-            $measurement->objective_id        = $request['objective_id'];
-            $measurement->objective_text      = $request['objective_text'];
-            $measurement->division_id         = $request['division_id'];
-            $measurement->company_id          = $request['company_id'];
-            $measurement->num_of_departs      = $request['num_of_departs'];
-            $measurement->num_of_employees    = $request['num_of_employees'];
-            $measurement->job_desc_id         = $request['job_desc_id'];
-            $measurement->job_desc_text       = $request['job_desc_text'];
-            $measurement->environments        = $request['environments'];
-            $measurement->other_text          = $request['other_text'];
-            $measurement->have_report         = $request['have_report'];
-            $measurement->is_returned_data    = $request['is_returned_data'];
+            $measurement->measure_date      = $request['measure_date'];
+            $measurement->objective_id      = $request['objective_id'];
+            $measurement->objective_text    = $request['objective_text'];
+            $measurement->division_id       = $request['division_id'];
+            $measurement->company_id        = $request['company_id'];
+            $measurement->num_of_departs    = $request['num_of_departs'];
+            $measurement->num_of_employees  = $request['num_of_employees'];
+            $measurement->job_desc_id       = $request['job_desc_id'];
+            $measurement->job_desc_text     = $request['job_desc_text'];
+            $measurement->environments      = $request['environments'];
+            $measurement->other_text        = $request['other_text'];
+            $measurement->have_report       = $request['have_report'];
+            $measurement->is_returned_data  = $request['is_returned_data'];
+            $measurement->guuid             = empty($measurement->guuid) ? Uuid::uuid4() : $measurement->guuid;
 
             /** Check and remove uploaded file */
             if ($request['is_file_updated'] == 'true') {

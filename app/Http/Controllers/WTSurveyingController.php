@@ -150,6 +150,7 @@ class WTSurveyingController extends Controller
             $surveying->is_adviced          = $request['is_adviced'];
             $surveying->is_returned_data    = $request['is_returned_data'];
             $surveying->guidelines          = !empty($request['guidelines']) ? implode(',', $request['guidelines']) : '';
+            $surveying->guuid               = !empty($surveying->guuid) ? $surveying->guuid : Uuid::uuid4();
             $surveying->remark              = $request['remark'];
 
             /** Check and remove uploaded file */

@@ -119,17 +119,18 @@ class StdAssessmentController extends Controller
     {
         try {
             $assessment = StdAssessment::find($id);
-            $assessment->assess_date         = $request['assess_date'];
-            $assessment->objective_id        = $request['objective_id'];
-            $assessment->objective_text      = $request['objective_text'];
-            $assessment->division_id         = $request['division_id'];
-            $assessment->company_id          = $request['company_id'];
-            $assessment->num_of_departs      = $request['num_of_departs'];
-            $assessment->num_of_employees    = $request['num_of_employees'];
-            $assessment->agency_id           = $request['agency_id'];
-            $assessment->agency_text         = $request['agency_text'];
-            $assessment->result_id           = $request['result_id'];
-            $assessment->result_text         = $request['result_text'];
+            $assessment->assess_date        = $request['assess_date'];
+            $assessment->objective_id       = $request['objective_id'];
+            $assessment->objective_text     = $request['objective_text'];
+            $assessment->division_id        = $request['division_id'];
+            $assessment->company_id         = $request['company_id'];
+            $assessment->num_of_departs     = $request['num_of_departs'];
+            $assessment->num_of_employees   = $request['num_of_employees'];
+            $assessment->agency_id          = $request['agency_id'];
+            $assessment->agency_text        = $request['agency_text'];
+            $assessment->result_id          = $request['result_id'];
+            $assessment->result_text        = $request['result_text'];
+            $assessment->guuid              = empty($assessment->guuid) ? Uuid::uuid4() : $assessment->guuid;
 
             /** Check and remove uploaded file */
             if ($request['is_file_updated'] == 'true') {

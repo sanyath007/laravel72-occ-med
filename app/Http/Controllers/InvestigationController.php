@@ -103,6 +103,7 @@ class InvestigationController extends Controller
             $investigation->place           = $request['place'];
             $investigation->num_of_people   = $request['num_of_people'];
             $investigation->is_return_data  = $request['is_return_data'];
+            $investigation->guuid           = empty($investigation->guuid) ? Uuid::uuid4() : $investigation->guuid;
 
             /** Check and remove uploaded file */
             if ($request['is_file_updated'] == 'true') {
