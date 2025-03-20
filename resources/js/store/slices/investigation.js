@@ -5,8 +5,9 @@ const initialState = {
     investigations: [],
     investigation: null,
     pager: null,
-    loading: false,
-    success: false,
+    isLoading: false,
+    isSuccess: false,
+    isDeleted: false,
     error: null
 }
 
@@ -76,7 +77,10 @@ export const investigationSlice = createSlice({
     initialState,
     reducers: {
         resetSuccess(state) {
-            state.success = false
+            state.isSuccess = false
+        },
+        resetDeleted(state) {
+            state.isDeleted = false
         },
         updateInvestigations(state, { payload }) {
             const updated = state.investigations.filter(i => i.id !== payload);
@@ -87,88 +91,82 @@ export const investigationSlice = createSlice({
     extraReducers: {
         [getInvestigations.pending]: (state) => {
             state.investigations = []
-            state.loading = true
+            state.isLoading = true
         },
         [getInvestigations.fulfilled]: (state, { payload }) => {
             const { data, ...pager } = payload
 
             state.investigations = data
             state.pager = pager
-            state.loading = false
+            state.isLoading = false
         },
         [getInvestigations.rejected]: (state) => {
-            state.loading = false
+            state.isLoading = false
         },
         [getInvestigation.pending]: (state) => {
-            state.loading = true
+            state.isLoading = true
             state.investigation = null
             state.error = null
         },
         [getInvestigation.fulfilled]: (state, { payload }) => {
             state.investigation = payload
-            state.loading = false
+            state.isLoading = false
         },
         [getInvestigation.rejected]: (state, { payload }) => {
-            state.loading = false
+            state.isLoading = false
             state.error = payload
         },
         [store.pending]: (state) => {
-            state.success = false
+            state.isSuccess = false
             state.error = null
         },
         [store.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isSuccess = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [store.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         },
         [update.pending]: (state) => {
-            state.success = false
+            state.isSuccess = false
             state.error = null
         },
         [update.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isSuccess = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [update.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         },
         [destroy.pending]: (state) => {
-            state.success = false
+            state.isDeleted = false
             state.error = null
         },
         [destroy.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isDeleted = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [destroy.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         }
     }
 })
 
-export const { resetSuccess, updateInvestigations } = investigationSlice.actions
+export const { resetDeleted, resetSuccess, updateInvestigations } = investigationSlice.actions
 
 export default investigationSlice.reducer
