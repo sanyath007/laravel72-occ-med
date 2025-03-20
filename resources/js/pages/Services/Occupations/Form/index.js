@@ -200,13 +200,13 @@ const OccupationForm = ({ id, surveying }) => {
                                             <option value="">-- เลือก --</option>
                                             <option value="1">สำรวจปัญหาสภาพแวดล้อมในการทำงาน</option>
                                             <option value="2">สำรวจปัญหาทางอนามัยสิ่งแวดล้อมและสุขภิบาล</option>
-                                            <option value="3">อื่นๆ ระบุ</option>
+                                            <option value="99">อื่นๆ ระบุ</option>
                                         </select>
                                         {(formik.errors.objective_id && formik.touched.objective_id) && (
                                             <span className="text-danger text-sm">{formik.errors.objective_id}</span>
                                         )}
                                     </Col>
-                                    {formik.values.objective_id === '3' && (
+                                    {parseInt(formik.values.objective_id, 10) === 99 && (
                                         <Col>
                                             <label htmlFor="">ระบุ (วัตถุประสงค์อื่นๆ)</label>
                                             <input
@@ -294,7 +294,7 @@ const OccupationForm = ({ id, surveying }) => {
                                             value={formik.values.source_text}
                                             onChange={formik.handleChange}
                                             className={`form-control ${(formik.errors.source_text && formik.touched.source_text) ? 'is-invalid' : ''}`}
-                                            disabled={formik.values.solution_id !== '99'}
+                                            disabled={parseInt(formik.values.solution_id, 10) !== 99}
                                         />
                                         {(formik.errors.source_text && formik.touched.source_text) && (
                                             <span className="text-danger text-sm">{formik.errors.source_text}</span>
@@ -342,7 +342,7 @@ const OccupationForm = ({ id, surveying }) => {
                                             value={formik.values.cause_text}
                                             onChange={formik.handleChange}
                                             className={`form-control ${(formik.errors.cause_text && formik.touched.cause_text) ? 'is-invalid' : ''}`}
-                                            disabled={formik.values.cause_id !== '99'}
+                                            disabled={parseInt(formik.values.cause_id, 10) !== 99}
                                         />
                                         {(formik.errors.cause_text && formik.touched.cause_text) && (
                                             <span className="text-danger text-sm">{formik.errors.cause_text}</span>
@@ -375,7 +375,7 @@ const OccupationForm = ({ id, surveying }) => {
                                             value={formik.values.solution_text}
                                             onChange={formik.handleChange}
                                             className={`form-control ${(formik.errors.solution_text && formik.touched.solution_text) ? 'is-invalid' : ''}`}
-                                            disabled={formik.values.solution_id !== '99'}
+                                            disabled={parseInt(formik.values.solution_id, 10) !== 99}
                                         />
                                         {(formik.errors.solution_text && formik.touched.solution_text) && (
                                             <span className="text-danger text-sm">{formik.errors.solution_text}</span>
