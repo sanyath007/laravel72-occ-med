@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 /** Auth/login */
 Route::post('/login', 'Auth\LoginController@login');
 
+// Route::get('/surveyings/generate-guuid', 'WTSurveyingController@generateGuuid');
+
 /*
 |--------------------------------------------------------------------------
 | Protected routes
