@@ -33,7 +33,7 @@ const UploadedGalleries = ({ images = [], onDelete, minHeight }) => {
                                 alt="uploaded_pic"
                                 style={{ width: '100%', cursor: 'pointer' }}
                                 onClick={() => {
-                                    setSelectedImage(pic);
+                                    setSelectedImage(pic.path);
                                     setShowImage(true);
                                 }}
                             />
