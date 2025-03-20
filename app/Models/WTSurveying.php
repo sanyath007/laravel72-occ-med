@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class WTSurveying extends Model
 {
-    protected $table = "wt_surveyings";
+    protected $table = "surveyings";
 
     // protected $primaryKey = "id";
 
