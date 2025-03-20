@@ -251,6 +251,8 @@ class ProblemSurveyingController extends Controller
                 foreach($surveying->galleries as $pic) {
                     if (Storage::disk('public')->exists($pic->path)) {
                         Storage::disk('public')->delete($pic->path);
+
+                        Gallery::find($pic->id)->delete();
                     }
                 }
             }

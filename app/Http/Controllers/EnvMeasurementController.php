@@ -253,6 +253,8 @@ class EnvMeasurementController extends Controller
                 foreach($measurement->galleries as $pic) {
                     if (Storage::disk('public')->exists($pic->path)) {
                         Storage::disk('public')->delete($pic->path);
+
+                        Gallery::find($pic->id)->delete();
                     }
                 }
             }
