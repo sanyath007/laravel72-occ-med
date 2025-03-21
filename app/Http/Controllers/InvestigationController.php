@@ -23,7 +23,9 @@ class InvestigationController extends Controller
 
     public function search(Request $request)
     {
-        $investigations = Investigation::with('type','division','galleries')->paginate(10);
+        $investigations = Investigation::with('type','division','galleries')
+                                        ->orderBy('invest_date', 'DESC')
+                                        ->paginate(10);
 
         return response()->json($investigations);
     }
