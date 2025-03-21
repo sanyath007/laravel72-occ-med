@@ -30,7 +30,7 @@ const Navbar = () => {
             <div className="d-flex align-items-center justify-content-between">
                 <Link to="/" className="logo d-flex align-items-center">
                     <img src={`${process.env.MIX_APP_URL}/img/logo.png`} alt="" />
-                    <span className="d-none d-lg-block">OccMed</span>
+                    <span className="d-none d-lg-block">อาชีวเวชกรรม</span>
                 </Link>
                 <i className="bi bi-list toggle-sidebar-btn" onClick={handleToggleSidebarBtn}></i>
             </div>
