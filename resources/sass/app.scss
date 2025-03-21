@@ -72,12 +72,10 @@ a {
 /** ==================== File Upload ==================== */
 .upload__image-close-btn {
     position: absolute;
-    top: 0;
-    right: 0;
-    margin: 2px 4px 0 0;
     cursor: pointer;
-    color: var(--bg-light);
-    
+    color: var(--bs-light);
+    z-index: 999;
+
     &:hover {
         color: var(--bs-danger);
     }
@@ -85,9 +83,9 @@ a {
 
 .uploaded__close-btn {
     margin: 0 4px 0 0;
-    color: var(--bg-light);
+    color: var(--bs-gray-dark);
     cursor: pointer;
-    
+
     &:hover {
         color: var(--bs-danger);
     }

@@ -1,8 +1,11 @@
 import React, { useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
+import { FaTimesCircle } from 'react-icons/fa'
+import { useScreenSize } from '../hooks/useScreenSize'
 import ModalImageViewer from './Modals/ModalImageViewer';
 
 const UploadedGalleries = ({ images = [], onDelete, minHeight }) => {
+    const screenSize = useScreenSize();
     const [selectedImage, setSelectedImage] = useState('');
     const [showImage, setShowImage] = useState(false);
 
@@ -19,15 +22,9 @@ const UploadedGalleries = ({ images = [], onDelete, minHeight }) => {
             />
 
             {images?.map((pic, index) => (
-                <Col md={3} key={index}>
-                    <div className="border rounded-2">
-                        <div
-                            style={{
-                                position: 'relative',
-                                height: '200px',
-                                overflow: 'hidden',
-                            }}
-                        >
+                <Col md={4} key={index} style={{ marginBottom: '10px' }}>
+                    <div className="border rounded-3" style={{ position: 'relative', overflow: 'hidden' }}>
+                        <div style={{ height: screenSize.width <= 768 ? '100%' : '180px' }}>
                             <img
                                 src={pic.path}
                                 alt="uploaded_pic"
@@ -38,13 +35,18 @@ const UploadedGalleries = ({ images = [], onDelete, minHeight }) => {
                                 }}
                             />
                         </div>
-                        <div className="d-flax flex-col p-1">
-                            <div className="text-end mt-1">
-                                <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(pic.id)}>
-                                    ลบ
-                                </button>
-                            </div>
-                        </div>
+                        <span
+                            className="upload__image-close-btn"
+                            style={{
+                                top: screenSize.width <= 768 ? '8px' : '3px',
+                                right: screenSize.width <= 768 ? '8px' : '3px',
+                            }}
+                        >
+                            <FaTimesCircle
+                                size={screenSize.width <= 768 ? '25px' : '20px'}
+                                onClick={() => handleDelete(pic.id)}
+                            />
+                        </span>
                     </div>
                 </Col>
             ))}

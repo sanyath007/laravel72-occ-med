@@ -99,3 +99,9 @@ export const getUrlParam = (url, paramName) => {
 export const setFieldTouched = (formik, fieldName) => {
     setTimeout(() => formik.setFieldTouched(fieldName, true));
 };
+
+export const getWindowDimensions = () => {
+    const { innerWidth: width, innerHeight: height } = window;
+
+    return { width, height };
+}
