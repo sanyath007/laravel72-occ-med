@@ -5,8 +5,9 @@ const initialState = {
     erplans: [],
     erplan: null,
     pager: null,
-    loading: false,
-    success: false,
+    isLoading: false,
+    isSuccess: false,
+    isDeleted: false,
     error: null
 }
 
@@ -76,7 +77,10 @@ export const erplanSlice = createSlice({
     initialState,
     reducers: {
         resetSuccess(state) {
-            state.success = false
+            state.isSuccess = false
+        },
+        resetDeleted(state) {
+            state.isDeleted = false
         },
         updateErplans(state, { payload }) {
             const updated = state.erplans.filter(e => e.id !== payload);
@@ -87,88 +91,82 @@ export const erplanSlice = createSlice({
     extraReducers: {
         [getErplans.pending]: (state) => {
             state.erplans = []
-            state.loading = true
+            state.isLoading = true
         },
         [getErplans.fulfilled]: (state, { payload }) => {
             const { data, ...pager } = payload
 
             state.erplans = data
-            state.loading = false
+            state.isLoading = false
             state.pager = pager
         },
         [getErplans.rejected]: (state) => {
-            state.loading = false
+            state.isLoading = false
         },
         [getErplan.pending]: (state) => {
-            state.loading = true
+            state.isLoading = true
             state.erplan = null
             state.error = null
         },
         [getErplan.fulfilled]: (state, { payload }) => {
             state.erplan = payload
-            state.loading = false
+            state.isLoading = false
         },
         [getErplan.rejected]: (state, { payload }) => {
-            state.loading = false
+            state.isLoading = false
             state.error = payload
         },
         [store.pending]: (state) => {
-            state.success = false
+            state.isSuccess = false
             state.error = null
         },
         [store.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isSuccess = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [store.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         },
         [update.pending]: (state) => {
-            state.success = false
+            state.isSuccess = false
             state.error = null
         },
         [update.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isSuccess = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [update.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         },
         [destroy.pending]: (state) => {
-            state.success = false
+            state.isDeleted = false
             state.error = null
         },
         [destroy.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isDeleted = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [destroy.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         },
     }
 })
 
-export const { resetSuccess, updateErplans } = erplanSlice.actions
+export const { resetDeleted, resetSuccess, updateErplans } = erplanSlice.actions
 
 export default erplanSlice.reducer

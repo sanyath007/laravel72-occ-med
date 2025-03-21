@@ -69,7 +69,7 @@ const SurveyingForm = ({ id, surveying }) => {
 
     /** Surveyors */
     const handleAddSurveyor = (formik, surveyor) => {
-        if (isExistedItem(formik.values.surveyors, surveyor.id)) {
+        if (isExistedItem(formik.values.surveyors, 'employee_id', surveyor.id)) {
             toast.error('คุณเลือกรายการซ้ำ!!');
             return;
         }
@@ -453,14 +453,14 @@ const SurveyingForm = ({ id, surveying }) => {
                                     </Col>}
                                     {uploadedFile && <Col>
                                         <label htmlFor="">แนบไฟล์รายงานเดินสำรวจ</label>
-                                            <div className="d-flex align-items-center">
-                                                <a href={uploadedFile} className="p-auto me-2" target="_blank">
-                                                    <FaFilePdf size={'16px'} /> {getFilenameFormUrl(uploadedFile)}
-                                                </a>
-                                                <span className="uploaded__close-btn">
-                                                    <FaTimesCircle onClick={() => handleRemoveFile(formik)} />
-                                                </span>
-                                            </div>
+                                        <div className="d-flex align-items-center">
+                                            <a href={uploadedFile} className="p-auto me-2" target="_blank">
+                                                <FaFilePdf size={'16px'} /> {getFilenameFormUrl(uploadedFile)}
+                                            </a>
+                                            <span className="uploaded__close-btn">
+                                                <FaTimesCircle onClick={() => handleRemoveFile(formik)} />
+                                            </span>
+                                        </div>
                                     </Col>}
                                 </Row>
                             </Tab>

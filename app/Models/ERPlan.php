@@ -34,4 +34,14 @@ class ERPlan extends Model
     {
         return $this->hasMany(ERPlanExpert::class, 'plan_id', 'id');
     }
+
+    public function surveyors()
+    {
+        return $this->hasMany(SurveyingSurveyor::class, 'survey_id', 'id')->where('survey_type_id', 5);
+    }
+
+    public function galleries()
+    {
+        return $this->hasMany(Gallery::class, 'guuid', 'guuid');
+    }
 }

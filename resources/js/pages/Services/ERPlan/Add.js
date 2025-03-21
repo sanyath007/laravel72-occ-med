@@ -10,7 +10,7 @@ const AddERPlan = () => {
     const navigate = useNavigate();
     const { setGlobal } = useContext(GlobalContext);
     const dispatch = useDispatch();
-    const { success } = useSelector(state => state.erplan);
+    const { isSuccess } = useSelector(state => state.erplan);
 
     /** Initial global states */
     useEffect(() => {
@@ -27,14 +27,14 @@ const AddERPlan = () => {
     }, []);
 
     useEffect(() => {
-        if (success) {
+        if (isSuccess) {
             toast.success('บันทึกการข้อมูลเรียบร้อยแล้ว!!');
 
             dispatch(resetSuccess());
 
             navigate('/services/er-plans');
         }
-    }, [success]);
+    }, [isSuccess]);
 
     return (
         <section className="section">

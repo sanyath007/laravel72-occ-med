@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { FaFilePdf } from 'react-icons/fa'
 import { GlobalContext } from '../../../context/globalContext'
-import { getErplans, resetSuccess, destroy } from '../../../store/slices/erplan'
+import { getErplans, resetDeleted, destroy } from '../../../store/slices/erplan'
 import { toShortTHDate } from '../../../utils/formatter'
 import Loading from '../../../components/Loading'
 import Pagination from '../../../components/Pagination'
@@ -24,7 +24,7 @@ const INCIDENTS = [
 const ERPlanList = () => {
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { erplans, pager, loading, success } = useSelector(state => state.erplan);
+    const { erplans, pager, isLoading, isDeleted } = useSelector(state => state.erplan);
     const [endpoint, setEndpoint] = useState('');
     const [params, setParams] = useState('');
 
@@ -43,12 +43,12 @@ const ERPlanList = () => {
 
     /** If delete giudeline is succeed */
     useEffect(() => {
-        if (success) {
+        if (isDeleted) {
             toast.success('ลบข้อมูลเรียบร้อยแล้ว');
     
-            dispatch(resetSuccess());
+            dispatch(resetDeleted());
         }
-    }, [success]);
+    }, [isDeleted]);
 
     useEffect(() => {
         if (endpoint === '') {
@@ -100,12 +100,12 @@ const ERPlanList = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {loading && (
+                                        {isLoading && (
                                             <tr>
                                                 <td colSpan={7} className="text-center"><Loading /></td>
                                             </tr>
                                         )}
-                                        {!loading && erplans?.map((plan, index) => (
+                                        {(!isLoading && erplans) && erplans?.map((plan, index) => (
                                             <tr key={plan.id}>
                                                 <td className="text-center">{pager?.from+index}</td>
                                                 <td className="text-center">{toShortTHDate(plan.plan_date)}</td>

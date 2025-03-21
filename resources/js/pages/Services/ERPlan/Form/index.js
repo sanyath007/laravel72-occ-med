@@ -3,12 +3,23 @@ import { useDispatch } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row, Tab, Tabs } from 'react-bootstrap'
-import { FaSave, FaSearch, FaTimesCircle, FaRegFilePdf } from 'react-icons/fa'
+import { FaSave, FaSearch, FaTimesCircle, FaFilePdf } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
+import { toast } from 'react-toastify'
+import { v4 as uuid } from 'uuid'
 import moment from 'moment'
+import {
+    getFilenameFormUrl,
+    imageString2UrlArray,
+    isExistedItem,
+    removeItemWithFlag,
+    string2Array,
+    validateFile
+} from '../../../../utils'
 import { store, update } from '../../../../store/slices/erplan'
-import UploadGallery from '../../../../components/UploadGallery'
 import ModalCompanies from '../../../../components/Modals/ModalCompanies'
+import MultipleFileUpload from '../../../../components/Forms/MultipleFileUpload'
+import UploadedGalleries from '../../../../components/UploadedGalleries'
 import PersonForm from './PersonForm'
 import PersonList from './PersonList'
 import ExpertForm from './ExpertForm'
@@ -28,6 +39,7 @@ const erplanSchema = Yup.object().shape({
         is: (target_group_id) => target_group_id === '6',
         then: Yup.string().required('กรุณาระบุกลุ่มเป้าหมายก่อน')
     }),
+    persons: Yup.mixed().test('persons-not-empty', 'กรุณาระบุผู้จัดกิจกรรมอย่างน้อย 1 ราย', (val) => val.length > 0),
     num_of_participants: Yup.number().required('กรุณาระบุจำนวนผู้เข้าร่วมก่อน'),
 });
 
@@ -37,37 +49,53 @@ const ERPlanForm = ({ id, erplan }) => {
     const [showCompanyModal, setShowCompanyModal] = useState(false);
     const [selectedCompany, setSelectedCompany] = useState(null);
     const [selectedFile, setSelectedFile] = useState('');
+    const [galleries, setGalleries] = useState([]);
 
     useEffect(() => {
         if (erplan) {
-            setSelectedPlanDate(moment(erplan.plan_date));
             if (erplan.company) setSelectedCompany(erplan.company);
+            setSelectedPlanDate(moment(erplan.plan_date));
+            setSelectedFile(erplan.file_attachment ? `${process.env.MIX_APP_URL}/storage/${erplan.file_attachment}` : '');
+            setGalleries(erplan.galleries.map(gallery => ({ ...gallery, path: `${process.env.MIX_APP_URL}/storage/${gallery.path}` })));
         }
     }, [erplan]);
 
     const handleAddPerson = (formik, person) => {
-        formik.setFieldValue('persons', [...formik.values.persons, { employee_id: person.id, employee: person }]);
+        console.log(person);
+        
+        if (isExistedItem(formik.values.persons, 'employee_id', person.id)) {
+            toast.error('คุณเลือกรายการซ้ำ!!');
+            return;
+        }
+
+        formik.setFieldValue('persons', [...formik.values.persons, { id: uuid(), employee_id: person.id, employee: person }]);
     };
 
-    const handleDeletePerson = (formik, id) => {
-        const updatedPersons = formik.values.persons.filter(person => person.employee_id !== id);
+    const handleDeletePerson = (formik, id, isNew) => {
+        if (window.confirm('คุณต้องการลบรายการใช่หรือไหม?')) {
+            const updatedPersons = removeItemWithFlag(formik.values.persons, id, isNew);
 
-        formik.setFieldValue('persons', updatedPersons);
+            formik.setFieldValue('persons', updatedPersons);
+        }
+    };
+
+    /** Galleries */
+    const handleRemoveGallery = (formik, id, isNew) => {
+        if (window.confirm('คุณต้องการลบรูปกิจจกรรมใช่หรือไหม?')) {
+            const newGalleries = removeItemWithFlag(formik.values.galleries, id, isNew);
+
+            formik.setFieldValue('galleries', newGalleries);
+            setGalleries(newGalleries.map(gallery => ({ ...gallery, path: `${process.env.MIX_APP_URL}/storage/${gallery.path}` })));
+        }
+    };
+
+    /** File attachment */
+    const handleRemoveFile = (formik) => {
+        setSelectedFile('');
+        formik.setFieldValue('is_file_updated', true);
     };
 
     const handleSubmit = (values, formik) => {
-        // const data = new FormData();
-
-        // for(const [key, val] of Object.entries(values)) {
-        //     if (key === 'pic_attachments') {
-        //         [...val].forEach((file, i) => {
-        //             data.append(key, file[0]);
-        //         })
-        //     } else {
-        //         data.append(key, val);
-        //     }
-        // }
-
         if (erplan) {
             dispatch(update({ id, data: values }));
         } else {
@@ -84,7 +112,6 @@ const ERPlanForm = ({ id, erplan }) => {
                 division_id: erplan ? erplan.division_id : '',
                 company_id: (erplan && erplan.company_id) ? erplan.company_id : '',
                 place: (erplan && erplan.place) ? erplan.place : '',
-                persons: erplan ? erplan.persons : [],
                 topic: erplan ? erplan.topic : '',
                 background: erplan ? erplan.background : '',
                 drill_hour: erplan ? erplan.drill_hour : '',
@@ -97,15 +124,19 @@ const ERPlanForm = ({ id, erplan }) => {
                 equipment_foot: erplan ? erplan.equipment_foot : '',
                 equipment_ear: erplan ? erplan.equipment_ear : '',
                 chemical_source: (erplan && erplan.chemical_source) ? erplan.chemical_source : '',
-                experts: erplan ? erplan.experts : [],
-                file_attachment: '',
-                pic_attachments: [],
                 remark: (erplan && erplan.remark) ? erplan.remark : '',
+                file_attachment: '',is_file_updated: false,
+                persons: erplan ? erplan.persons : [],
+                experts: erplan ? erplan.experts : [],
+                pictures: [],
+                galleries: (erplan && erplan.galleries) ? erplan.galleries : [],
             }}
             validationSchema={erplanSchema}
             onSubmit={handleSubmit}
         >
             {(formik) => {
+                console.log(formik.values);
+                
                 return (
                     <Form>
                         <ModalCompanies
@@ -500,26 +531,25 @@ const ERPlanForm = ({ id, erplan }) => {
                                     </Col>
                                 </Row>
                                 <Row className="mb-3">
-                                    <Col>
+                                    {!selectedFile && <Col>
                                         <label htmlFor="">แนบไฟล์สรุปรายงานการฝึกซ้อม</label>
-                                        <div className="d-flex flex-row">
-                                            <input
-                                                type="file"
-                                                onChange={(e) => {
-                                                    setSelectedFile(e.target.files[0]?.name);
-                                                    formik.setFieldValue('file_attachment', e.target.files[0]);
-                                                }}
-                                                className="form-control w-50 me-4"
-                                            />
-                                            <div className="d-flex flex-row align-items-center w-50">
-                                                {selectedFile && (
-                                                    <a href={`${process.env.MIX_APP_URL}/uploads/uploads/erp/file/${selectedFile}`} target="_blank">
-                                                        <FaRegFilePdf size={'16px'} /> {selectedFile}
-                                                    </a>
-                                                )}
-                                            </div>
+                                        <input
+                                            type="file"
+                                            onChange={(e) => formik.setFieldValue('file_attachment', e.target.files[0])}
+                                            className="form-control"
+                                        />
+                                    </Col>}
+                                    {selectedFile && <Col>
+                                        <label htmlFor="">แนบไฟล์สรุปรายงานการฝึกซ้อม</label>
+                                        <div className="d-flex flex-row align-items-center w-50">
+                                            <a href={selectedFile} className="p-auto me-2" target="_blank">
+                                                <FaFilePdf size={'16px'} /> {getFilenameFormUrl(selectedFile)}
+                                            </a>
+                                            <span className="uploaded__close-btn">
+                                                <FaTimesCircle onClick={() => handleRemoveFile(formik)} />
+                                            </span>
                                         </div>
-                                    </Col>
+                                    </Col>}
                                 </Row>
                             </Tab>
                             <Tab
@@ -535,7 +565,13 @@ const ERPlanForm = ({ id, erplan }) => {
                                         <div className="pb-3">
                                             <PersonForm onAdd={(person) => handleAddPerson(formik, person)} />
 
-                                            <PersonList persons={formik.values.persons} onDelete={(id) => handleDeletePerson(formik, id)} />
+                                            <PersonList
+                                                persons={formik.values.persons.filter(person => !person.removed)}
+                                                onDelete={(id) => handleDeletePerson(formik, id)}
+                                            />
+                                            {(formik.errors.persons && formik.touched.persons) && (
+                                                <span className="text-danger text-sm">{formik.errors.persons}</span>
+                                            )}
                                         </div>
                                     </Col>
                                 </Row>
@@ -573,22 +609,29 @@ const ERPlanForm = ({ id, erplan }) => {
                             >
                                 <Row className="mb-2">
                                     <Col md={12}>
-                                        <input
-                                            type="file"
-                                            onChange={(e) => {
-                                                formik.setFieldValue('pic_attachments', [...formik.values.pic_attachments, e.target.files[0]])
+                                        <MultipleFileUpload
+                                            files={formik.values.pictures}
+                                            onSelect={(files) => {
+                                                formik.setFieldValue('pictures', files);
                                             }}
-                                            className="form-control"
-                                        />
-
-                                        <UploadGallery
-                                            images={formik.values.pic_attachments}
                                             onDelete={(index) => {
-                                                const updatedPics = formik.values.pic_attachments.filter((pic, i) => i !== index);
-
-                                                formik.setFieldValue('pic_attachments', updatedPics);
+                                                const updatedPics = formik.values.pictures.filter((pic, i) => i !== index);
+                                                
+                                                formik.setFieldValue('pictures', updatedPics);
                                             }}
                                         />
+                                        {(formik.errors.pictures && formik.touched.pictures) && (
+                                            <span className="text-danger text-sm">{formik.errors.pictures}</span>
+                                        )}
+
+                                        <div className="mt-4">
+                                            <h4>รูปที่อัพโหลดแล้ว</h4>
+                                            <UploadedGalleries
+                                                images={galleries.filter(pic => !pic.removed)}
+                                                onDelete={(id, isNew) => handleRemoveGallery(formik, id, isNew)}
+                                                minHeight={'200px'}
+                                            />
+                                        </div>
                                     </Col>
                                 </Row>
                             </Tab>

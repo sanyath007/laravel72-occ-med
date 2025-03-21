@@ -12,7 +12,7 @@ const EditERPlan = () => {
     const navigate = useNavigate()
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { erplan, loading, success } = useSelector(state => state.erplan);
+    const { erplan, isLoading, isSuccess } = useSelector(state => state.erplan);
 
     /** Initial global states */
     useEffect(() => {
@@ -35,14 +35,14 @@ const EditERPlan = () => {
     }, [id]);
 
     useEffect(() => {
-        if (success) {
+        if (isSuccess) {
             toast.success('บันทึกการแก้ไขข้อมูลเรียบร้อยแล้ว!!');
 
             dispatch(resetSuccess());
 
             navigate('/services/er-plans');
         }
-    }, [success]);
+    }, [isSuccess]);
 
     return (
         <section className="section">
@@ -52,9 +52,9 @@ const EditERPlan = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขจัดทำแผนตอบโต้เหตุฉุกเฉิน</h5>
 
-                            {loading && <div className="text-center"><Loading /></div>}
+                            {isLoading && <div className="text-center"><Loading /></div>}
 
-                            {(!loading && erplan) && (
+                            {(!isLoading && erplan) && (
                                 <ERPlanForm id={id} erplan={erplan} />
                             )}
                         </div>

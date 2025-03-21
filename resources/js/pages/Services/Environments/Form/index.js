@@ -83,7 +83,7 @@ const EnvironmentForm = ({ id, surveying }) => {
     };
 
     const handleAddSurveyor = (formik, surveyor) => {
-        if (isExistedItem(formik.values.surveyors, surveyor.id)) {
+        if (isExistedItem(formik.values.surveyors, 'employee_id', surveyor.id)) {
             toast.error('คุณเลือกรายการซ้ำ!!');
             return;
         }

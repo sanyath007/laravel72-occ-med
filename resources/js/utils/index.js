@@ -9,8 +9,12 @@ export const generateQueryString = (inputs) => {
     return queryStr;
 };
 
-export const isExistedItem = (items, id) => {
+export const isExisted = (items, id) => {
     return items.some(item => item.id === id);
+};
+
+export const isExistedItem = (items, fieldName = 'id', checkVal) => {
+    return items.some(item => item[fieldName] === checkVal);
 };
 
 export const getFileExtension = (file) => {
@@ -65,10 +69,6 @@ export const generateBudgetYear = () => {
     }
 
     return moment().year();
-};
-
-export const isExisted = (items, fieldName = 'id', id) => {
-    return items.some(item => item[fieldName] === id);
 };
 
 export const getFormDataItem = (data, dataName, id) => {
