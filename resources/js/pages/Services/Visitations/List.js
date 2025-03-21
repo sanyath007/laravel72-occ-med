@@ -10,7 +10,7 @@ import Pagination from '../../../components/Pagination'
 
 const VisitationList = () => {
     const dispatch = useDispatch();
-    const { visitations, pager, loading, success } = useSelector(state => state.visitation);
+    const { visitations, pager, isLoading, isDeleted } = useSelector(state => state.visitation);
     const { setGlobal } = useContext(GlobalContext);
     const [endpoint, setEndpoint] = useState('');
     const [params, setParams] = useState('');
@@ -30,12 +30,12 @@ const VisitationList = () => {
 
     /** If delete giudeline is succeed */
     useEffect(() => {
-        if (success) {
+        if (isDeleted) {
             toast.success('ลบข้อมูลเรียบร้อยแล้ว');
     
             dispatch(resetSuccess());
         }
-    }, [success]);
+    }, [isDeleted]);
 
     useEffect(() => {
         if (endpoint === '') {
@@ -85,13 +85,13 @@ const VisitationList = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {loading && (
+                                        {isLoading && (
                                             <tr>
                                                 <td colSpan={5} className="text-center"><Loading /></td>
                                             </tr>
                                         )}
 
-                                        {visitations && visitations.map((visit, index) => (
+                                        {(!isLoading && visitations) && visitations.map((visit, index) => (
                                             <tr key={visit.id}>
                                                 <td style={{ textAlign: 'center' }}>{pager && pager.from+index}</td>
                                                 <td style={{ textAlign: 'center' }}>{toShortTHDate(visit.visit_date)}</td>

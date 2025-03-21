@@ -4,13 +4,24 @@ import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row, Tabs, Tab } from 'react-bootstrap'
 import { DatePicker } from '@mui/x-date-pickers'
-import { FaSave, FaSearch, FaFileImage, FaPlus } from 'react-icons/fa'
+import { FaSave, FaSearch, FaFilePdf, FaPlus, FaTimesCircle } from 'react-icons/fa'
+import { v4 as uuid } from 'uuid'
 import moment from 'moment'
 import { store, update } from '../../../../store/slices/visitation'
+import {
+    getFilenameFormUrl,
+    imageString2UrlArray,
+    isExistedItem,
+    removeItemWithFlag,
+    string2Array,
+    validateFile
+} from '../../../../utils'
 import ModalCompanies from '../../../../components/Modals/ModalCompanies'
 import ModalCompanyForm from '../../../../components/Modals/ModalCompanyForm'
-import VisitorForm from './VisitorForm'
-import VisitorList from './VisitorList'
+import MultipleFileUpload from '../../../../components/Forms/MultipleFileUpload'
+import UploadedGalleries from '../../../../components/UploadedGalleries'
+import SurveyorForm from '../../../../components/Surveyor/SurveyorForm'
+import SurveyorList from '../../../../components/Surveyor/SurveyorList'
 
 const visitationSchema = Yup.object().shape({
     visit_date: Yup.string().required('กรุณาเลือกวันที่เยี่ยมก่อน'),
@@ -25,40 +36,55 @@ const VisitationForm = ({ id, visitation }) => {
     const [showCompanyForm, setShowCompanyForm] = useState(false);
     const [showCompanyList, setShowCompanyList] = useState(false);
     const [selecedCompany, setSelectedCompany] = useState(null);
-    const [selecedFile, setSelectedFile] = useState(null);
     const [selectedVisitDate, setSelectedVisitDate] = useState(moment())
+    const [selecedFile, setSelectedFile] = useState(null);
+    const [galleries, setGalleries] = useState([]);
 
     /** Initial local state on mounted if it is in editting mode */
     useEffect(() => {
         if (visitation) {
-            setSelectedFile(visitation.file_attachment);
-            setSelectedVisitDate(moment(visitation.visit_date));
             setSelectedCompany(visitation.company);
+            setSelectedVisitDate(moment(visitation.visit_date));
+            setSelectedFile(visitation.file_attachment ? `${process.env.MIX_APP_URL}/storage/${visitation.file_attachment}` : '');
+            setGalleries(visitation.galleries.map(gallery => ({ ...gallery, path: `${process.env.MIX_APP_URL}/storage/${gallery.path}` })));
         }
     }, [visitation]);
 
     const handleAddVisitor = (formik, visitor) => {
-        formik.setFieldValue('visitors', [...formik.values.visitors, { employee_id: visitor.id, employee: visitor }]);
+        if (isExistedItem(formik.values.visitors, visitor.id)) {
+            toast.error('คุณเลือกรายการซ้ำ!!');
+            return;
+        }
+        
+        const newVisitors = [...formik.values.visitors, { id: uuid(), employee_id: visitor.id, employee: visitor }];
+        console.log(newVisitors);
+
+        formik.setFieldValue('visitors', newVisitors);
     };
 
-    const handleDeleteVisitor = (formik, id) => {
-        const updatedVisitors = formik.values.visitors.filter(visitor => visitor.employee_id !== id);
+    const handleRemoveVisitor = (formik, id, isNew) => {
+        if (window.confirm('คุณต้องการลบรายการใช่หรือไหม?')) {
+            const newVisitors = removeItemWithFlag(formik.values.visitors, id, isNew);
 
-        formik.setFieldValue('visitors', updatedVisitors);
+            formik.setFieldValue('visitors', newVisitors);
+        }
+    };
+
+    const handleRemoveGallery = (formik, id, isNew) => {
+        if (window.confirm('คุณต้องการลบรูปกิจจกรรมใช่หรือไหม?')) {
+            const newGalleries = removeItemWithFlag(formik.values.galleries, id, isNew);
+
+            formik.setFieldValue('galleries', newGalleries);
+            setGalleries(newGalleries.map(gallery => ({ ...gallery, path: `${process.env.MIX_APP_URL}/storage/${gallery.path}` })));
+        }
+    };
+
+    const handleRemoveFile = (formik) => {
+        setSelectedFile('');
+        formik.setFieldValue('is_file_updated', true);
     };
 
     const handleSubmit = (values, formik) => {
-        // const data = new FormData();
-        // data.append('file_attachment', selecedFile);
-
-        // for(const [key, val] of Object.entries(values)) {
-        //     if (key === 'visitors') {
-        //         data.append(key, JSON.stringify(val));
-        //     } else {
-        //         data.append(key, val);
-        //     }
-        // }
-
         /** Dispatch redux action to storing or updating data */
         if (visitation) {
             dispatch(update({ id, data: values }));
@@ -77,8 +103,11 @@ const VisitationForm = ({ id, visitation }) => {
                 place: (visitation && visitation.place) ? visitation.place : '',
                 num_of_patients: visitation ? visitation.num_of_patients : '',
                 is_returned_data: visitation ? visitation.is_returned_data : '',
-                visitors: visitation ? visitation.visitors : [],
                 file_attachment: '',
+                is_file_updated: false,
+                visitors: visitation ? visitation.visitors : [],
+                pictures: [],
+                galleries: visitation ? visitation.galleries : [],
             }}
             validationSchema={visitationSchema}
             onSubmit={handleSubmit}
@@ -236,30 +265,25 @@ const VisitationForm = ({ id, visitation }) => {
                                     </Col>
                                 </Row>
                                 <Row className="mb-2">
-                                    <Col>
-                                        <div className="d-flex flex-row align-items-center">
-                                            <div className="w-50 me-4">
-                                                <label htmlFor="">แนบไฟล์รูปภาพกิจกรรม</label>
-                                                <input
-                                                    type="file"
-                                                    className="form-control"
-                                                    onChange={(e) => {
-                                                        setSelectedFile(e.target.files[0]?.name);
-                                                        formik.setFieldValue('file_attachment', e.target.files[0]);
-                                                    }}
-                                                />
-                                            </div>
-                                            <div className="mt-2 w-50">
-                                                {selecedFile && (
-                                                    <span className="d-flex flex-row align-items-center">
-                                                        <a href={`${process.env.MIX_APP_URL}/uploads/visitaion/${selecedFile}`} target="_blank">
-                                                            <FaFileImage size={'16px'} /> {selecedFile}
-                                                        </a>
-                                                    </span>
-                                                )}
-                                            </div>
+                                    {!selecedFile && <Col>
+                                        <label htmlFor="">แนบไฟล์เอกสาร</label>
+                                        <input
+                                            type="file"
+                                            className="form-control"
+                                            onChange={(e) => formik.setFieldValue('file_attachment', e.target.files[0])}
+                                        />
+                                    </Col>}
+                                    {selecedFile && <Col>
+                                        <label htmlFor="">แนบไฟล์เอกสาร</label>
+                                        <div className="d-flex align-items-center" style={{ minHeight: '34px' }}>
+                                            <a href={selecedFile} className="p-auto me-2" target="_blank">
+                                                <FaFilePdf size={'16px'} /> {getFilenameFormUrl(selecedFile)}
+                                            </a>
+                                            <span className="uploaded__close-btn">
+                                                <FaTimesCircle onClick={() => handleRemoveFile(formik)} />
+                                            </span>
                                         </div>
-                                    </Col>
+                                    </Col>}
                                 </Row>
                             </Tab>
                             <Tab
@@ -270,11 +294,47 @@ const VisitationForm = ({ id, visitation }) => {
                                 <Row className="mb-3">
                                     <Col>
                                         <div className="p-2">
-                                            <VisitorForm onAdd={(visitor) => handleAddVisitor(formik, visitor)} />
+                                            <SurveyorForm onAdd={(visitor) => handleAddVisitor(formik, visitor)} />
 
-                                            <VisitorList
-                                                visitors={formik.values.visitors}
-                                                onDelete={(id) => handleDeleteVisitor(formik, id)}
+                                            <SurveyorList
+                                                surveyors={formik.values.visitors.filter(visitor => !visitor.removed)}
+                                                onDelete={(id, isNew) => handleRemoveVisitor(formik, id, isNew)}
+                                            />
+                                        </div>
+                                    </Col>
+                                </Row>
+                            </Tab>
+                            <Tab
+                                eventKey="pictures"
+                                title="รูปภาพกิจกรรม"
+                                className="border border-top-0 p-4 mb-3"
+                                style={{
+                                    minHeight: '50vh'
+                                }}
+                            >
+                                <Row className="mb-2">
+                                    <Col>
+                                        <MultipleFileUpload
+                                            files={formik.values.pictures}
+                                            onSelect={(files) => {
+                                                formik.setFieldValue('pictures', files);
+                                            }}
+                                            onDelete={(index) => {
+                                                const updatedPics = formik.values.pictures.filter((pic, i) => i !== index);
+                                                
+                                                formik.setFieldValue('pictures', updatedPics);
+                                            }}
+                                        />
+                                        {(formik.errors.pictures && formik.touched.pictures) && (
+                                            <span className="text-danger text-sm">{formik.errors.pictures}</span>
+                                        )}
+
+                                        <div className="mt-4">
+                                            <h4>รูปที่อัพโหลดแล้ว</h4>
+                                            <UploadedGalleries
+                                                images={galleries.filter(gallery => !gallery.removed)}
+                                                onDelete={(id, isNew) => handleRemoveGallery(formik, id, isNew)}
+                                                minHeight={'200px'}
                                             />
                                         </div>
                                     </Col>

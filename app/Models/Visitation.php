@@ -25,8 +25,18 @@ class Visitation extends Model
         return $this->belongsTo(Company::class, 'company_id', 'id');
     }
 
+    // public function visitors()
+    // {
+    //     return $this->hasMany(VisitationVisitor::class, 'visitation_id', 'id');
+    // }
+
     public function visitors()
     {
-        return $this->hasMany(VisitationVisitor::class, 'visitation_id', 'id');
+        return $this->hasMany(SurveyingSurveyor::class, 'survey_id', 'id')->where('survey_type_id', 4);
+    }
+
+    public function galleries()
+    {
+        return $this->hasMany(Gallery::class, 'guuid', 'guuid');
     }
 }

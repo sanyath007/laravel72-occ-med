@@ -67,7 +67,6 @@ const OccupationForm = ({ id, surveying }) => {
         }
     }, [surveying]);
 
-
     const handleAddSurveyor = (formik, surveyor) => {
         if (isExistedItem(formik.values.surveyors, surveyor.id)) {
             toast.error('คุณเลือกรายการซ้ำ!!');
@@ -398,14 +397,14 @@ const OccupationForm = ({ id, surveying }) => {
                                     </Col>}
                                     {uploadedFile && <Col>
                                         <label htmlFor="">แนบไฟล์ผลการตรวจวัดสิ่งแวดล้อม</label>
-                                            <div className="d-flex align-items-center" style={{ minHeight: '34px' }}>
-                                                <a href={uploadedFile} className="p-auto me-2" target="_blank">
-                                                    <FaFilePdf size={'16px'} /> {getFilenameFormUrl(uploadedFile)}
-                                                </a>
-                                                <span className="uploaded__close-btn">
-                                                    <FaTimesCircle onClick={() => handleRemoveFile(formik)} />
-                                                </span>
-                                            </div>
+                                        <div className="d-flex align-items-center" style={{ minHeight: '34px' }}>
+                                            <a href={uploadedFile} className="p-auto me-2" target="_blank">
+                                                <FaFilePdf size={'16px'} /> {getFilenameFormUrl(uploadedFile)}
+                                            </a>
+                                            <span className="uploaded__close-btn">
+                                                <FaTimesCircle onClick={() => handleRemoveFile(formik)} />
+                                            </span>
+                                        </div>
                                     </Col>}
                                 </Row>
                             </Tab>

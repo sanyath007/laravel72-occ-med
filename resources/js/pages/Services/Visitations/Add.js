@@ -10,7 +10,7 @@ const AddVisitation = () => {
     const navigate = useNavigate()
     const { setGlobal } = useContext(GlobalContext);
     const dispatch = useDispatch();
-    const { success } = useSelector(state => state.visitation);
+    const { isSuccess } = useSelector(state => state.visitation);
 
     /** Initial global states */
     useEffect(() => {
@@ -27,14 +27,14 @@ const AddVisitation = () => {
     }, []);
 
     useEffect(() => {
-        if (success) {
+        if (isSuccess) {
             toast.success('บันทึกข้อมูลเรียบร้อยแล้ว!!');
 
             dispatch(resetSuccess());
 
             navigate('/services/visitations');
         }
-    }, [success]);
+    }, [isSuccess]);
 
     return (
         <section className="section">

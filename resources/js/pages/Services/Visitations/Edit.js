@@ -12,7 +12,7 @@ const EditVisitation = () => {
     const navigate = useNavigate()
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { visitation, loading, success } = useSelector(state => state.visitation);
+    const { visitation, isLoading, isSuccess } = useSelector(state => state.visitation);
 
     /** Initial global states */
     useEffect(() => {
@@ -35,14 +35,14 @@ const EditVisitation = () => {
     }, [id]);
 
     useEffect(() => {
-        if (success) {
+        if (isSuccess) {
             toast.success('บันทึกการแก้ไขข้อมูลเรียบร้อยแล้ว!!');
 
             dispatch(resetSuccess());
 
             navigate('/services/visitations');
         }
-    }, [success]);
+    }, [isSuccess]);
 
     return (
         <section className="section">
@@ -52,9 +52,9 @@ const EditVisitation = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขการติดตามเยี่ยมบ้าน</h5>
 
-                            {loading && <div className="text-center"><Loading /></div>}
+                            {isLoading && <div className="text-center"><Loading /></div>}
 
-                            {(!loading && visitation) && (
+                            {(!isLoading && visitation) && (
                                 <VisitationForm id={id} visitation={visitation} />
                             )}
                         </div>

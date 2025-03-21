@@ -5,8 +5,9 @@ const initialState = {
     visitations: [],
     visitation: null,
     pager: null,
-    loading: false,
-    success: false,
+    isLoading: false,
+    isSuccess: false,
+    isDeleted: false,
     error: null
 }
 
@@ -76,7 +77,10 @@ export const visitationSlice = createSlice({
     initialState,
     reducers: {
         resetSuccess(state) {
-            state.success = false
+            state.isSuccess = false
+        },
+        resetDeleted(state) {
+            state.isDeleted = false
         },
         updateVisitations(state, { payload }) {
             const updated = state.visitations.filter(v => v.id !== payload);
@@ -87,88 +91,82 @@ export const visitationSlice = createSlice({
     extraReducers: {
         [getVisitations.pending]: (state) => {
             state.visitations = []
-            state.loading = true
+            state.isLoading = true
         },
         [getVisitations.fulfilled]: (state, { payload }) => {
             const { data, ...pager } = payload
 
             state.visitations = data
             state.pager = pager
-            state.loading = false
+            state.isLoading = false
         },
         [getVisitations.rejected]: (state) => {
-            state.loading = false
+            state.isLoading = false
         },
         [getVisitation.pending]: (state) => {
-            state.loading = true
+            state.isLoading = true
             state.visitation = null
             state.error = null
         },
         [getVisitation.fulfilled]: (state, { payload }) => {
             state.visitation = payload
-            state.loading = false
+            state.isLoading = false
         },
         [getVisitation.rejected]: (state, { payload }) => {
-            state.loading = false
+            state.isLoading = false
             state.error = payload
         },
         [store.pending]: (state) => {
-            state.success = false
+            state.isSuccess = false
             state.error = null
         },
         [store.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isSuccess = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [store.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         },
         [update.pending]: (state) => {
-            state.success = false
+            state.isSuccess = false
             state.error = null
         },
         [update.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isSuccess = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [update.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         },
         [destroy.pending]: (state) => {
-            state.success = false
+            state.isDeleted = false
             state.error = null
         },
         [destroy.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isDeleted = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [destroy.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         }
     }
 })
 
-export const { resetSuccess, updateVisitations } = visitationSlice.actions
+export const { resetDeleted, resetSuccess, updateVisitations } = visitationSlice.actions
 
 export default visitationSlice.reducer
