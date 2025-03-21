@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', 'Auth\LoginController@login');
 
 // Route::get('/surveyings/generate-guuid', 'WTSurveyingController@generateGuuid');
+Route::get('/er-plans/generate-guuid', 'ERPlanController@generateGuuid');
 
 /*
 |--------------------------------------------------------------------------

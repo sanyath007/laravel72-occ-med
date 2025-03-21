@@ -312,7 +312,7 @@ class ERPlanController extends Controller
             if ($plan->delete()) {
                 /** ผู้จัดกิจกรรม */
                 ERPlanPerson::where('plan_id', $id)->delete();
-                // SurveyingSurveyor::where(['survey_id' => $id, 'survey_type_id' => 5])->delete();
+                SurveyingSurveyor::where(['survey_id' => $id, 'survey_type_id' => 5])->delete();
 
                 /** ผู้เชี่ยวชาญ */
                 ERPlanExpert::where('plan_id', $id)->delete();
@@ -327,6 +327,42 @@ class ERPlanController extends Controller
                     'message'   => 'Something went wrong!!'
                 ];
             }
+        } catch (\Exception $ex) {
+            return [
+                'status'    => 0,
+                'message'   => $ex->getMessage()
+            ];
+        }
+    }
+
+    public function generateGuuid()
+    {
+        try {
+            $plans = ERPlan::all();
+
+            foreach($plans as $plan) {
+                if ($plan->pic_attachments) {
+                    $pictures = explode(',', $plan->pic_attachments);
+
+                    /** update plans data */
+                    $updated = ERPlan::find($plan->id);
+                    $updated->guuid = Uuid::uuid4();
+                    $updated->save();
+                    
+                    /** insert new galleries data */
+                    foreach($pictures as $key => $pic) {
+                        $gallery = new Gallery;
+                        $gallery->path  = $this->uploadDestPath . 'pic/' . $pic;
+                        $gallery->guuid = $updated->guuid;
+                        $gallery->save();
+                    }
+                }
+            }
+
+            return [
+                'status'    => 'ok',
+                'message'   => 'Processing successfully!!',
+            ];
         } catch (\Exception $ex) {
             return [
                 'status'    => 0,

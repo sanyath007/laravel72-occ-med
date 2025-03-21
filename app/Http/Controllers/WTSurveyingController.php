@@ -285,25 +285,37 @@ class WTSurveyingController extends Controller
 
     public function generateGuuid()
     {
-        $surveyings = WTSurveying::all();
+        try {
+            $surveyings = WTSurveying::all();
 
-        foreach($surveyings as $survey) {
-            if ($survey->pic_attachments) {
-                $pictures = explode(',', $survey->pic_attachments);
+            foreach($surveyings as $survey) {
+                if ($survey->pic_attachments) {
+                    $pictures = explode(',', $survey->pic_attachments);
 
-                /** update surveyings data */
-                $surveying = WTSurveying::find($survey->id);
-                $surveying->guuid = Uuid::uuid4();
-                $surveying->save();
-                
-                /** insert new galleries data */
-                foreach($pictures as $key => $pic) {
-                    $gallery = new Gallery;
-                    $gallery->path  = $this->uploadDestPath . 'pic/' . $pic;
-                    $gallery->guuid = $surveying->guuid;
-                    $gallery->save();
+                    /** update surveyings data */
+                    $surveying = WTSurveying::find($survey->id);
+                    $surveying->guuid = Uuid::uuid4();
+                    $surveying->save();
+                    
+                    /** insert new galleries data */
+                    foreach($pictures as $key => $pic) {
+                        $gallery = new Gallery;
+                        $gallery->path  = $this->uploadDestPath . 'pic/' . $pic;
+                        $gallery->guuid = $surveying->guuid;
+                        $gallery->save();
+                    }
                 }
             }
+
+            return [
+                'status'    => 'ok',
+                'message'   => 'Processing successfully!!',
+            ];
+        } catch (\Exception $ex) {
+            return [
+                'status'    => 0,
+                'message'   => $ex->getMessage()
+            ];
         }
     }
 }
