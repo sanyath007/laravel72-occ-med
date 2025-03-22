@@ -9,7 +9,7 @@ import TrainingForm from './Form'
 const AddTraining = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { success } = useSelector(state => state.training);
+    const { isSuccess } = useSelector(state => state.training);
     const { setGlobal } = useContext(GlobalContext);
 
     /** Initial global states */
@@ -27,14 +27,14 @@ const AddTraining = () => {
     }, []);
 
     useEffect(() => {
-        if (success) {
+        if (isSuccess) {
             toast.success('บันทึกข้อมูลเรียบร้อยแล้ว!!');
 
             dispatch(resetSuccess());
 
             navigate('/services/trainings');
         }
-    }, [success]);
+    }, [isSuccess]);
 
     return (
         <section className="section">

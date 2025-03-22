@@ -5,12 +5,22 @@ import * as Yup from 'yup'
 import { Col, Row, Tab, Tabs } from 'react-bootstrap'
 import { FaSave } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
+import { toast } from 'react-toastify'
+import { v4 as uuid } from 'uuid'
 import moment from 'moment'
 import { store, update } from '../../../../store/slices/training'
-import { imageString2UrlArray } from '../../../../utils'
-import UploadGallery from '../../../../components/UploadGallery'
-import PersonList from './PersonList'
-import PersonForm from './PersonForm'
+import {
+    getFilenameFormUrl,
+    imageString2UrlArray,
+    isExistedItem,
+    removeItemWithFlag,
+    string2Array,
+    validateFile
+} from '../../../../utils'
+import MultipleFileUpload from '../../../../components/Forms/MultipleFileUpload'
+import UploadedGalleries from '../../../../components/UploadedGalleries'
+import SurveyorForm from '../../../../components/Surveyor/SurveyorForm'
+import SurveyorList from '../../../../components/Surveyor/SurveyorList'
 
 const trainingSchema = Yup.object().shape({
     train_date: Yup.string().required('กรุณาเลือกวันที่จัดกิจกรรมก่อน'),
@@ -34,41 +44,55 @@ const trainingSchema = Yup.object().shape({
         is: (have_kpi) => have_kpi === '1',
         then: Yup.string().required('กรุณาเลือกผลการดำเนินงานก่อน')
     }),
+    persons: Yup.mixed().test('persons-not-empty', 'กรุณาระบุผู้จัดกิจกรรมอย่างน้อย 1 ราย', (val) => val.length > 0),
 });
 
 const TrainingForm = ({ id, training }) => {
     const dispatch = useDispatch();
     const [selectedDate, setSelectedDate] = useState(moment());
-    const [uploadedTrainPics, setUploadedTrainPics] = useState('');
-    const [uploadedPrPics, setUploadedPrPics] = useState('');
+    const [galleries, setGalleries] = useState([]);
 
     useEffect(() => {
         if (training) {
             setSelectedDate(moment(training.train_date));
-            setUploadedTrainPics(imageString2UrlArray(training.training_pictures, `${process.env.MIX_APP_URL}/uploads/training/pic`));
-            setUploadedPrPics(imageString2UrlArray(training.pr_pictures, `${process.env.MIX_APP_URL}/uploads/training/pic`));
+            setGalleries(training.galleries.map(gallery => ({ ...gallery, path: `${process.env.MIX_APP_URL}/storage/${gallery.path}` })));
         }
     }, [training]);
 
-    const handleDeletePerson = (formik, index) => {
-        const newPersons = formik.values.persons.filter((person, i) => i !== index);
+    const handleAddPerson = (formik, person) => {
+        if (isExistedItem(formik.values.persons, 'employee_id', person.id)) {
+            toast.error('คุณเลือกรายการซ้ำ!!');
+            return;
+        }
+
+        const newPersons = [...formik.values.persons, { id: uuid(), employee_id: person.id, employee: person }];
 
         formik.setFieldValue('persons', newPersons);
     };
 
+    const handleRemovePerson = (formik, id, isNew) => {
+        if (window.confirm('คุณต้องการลบรายการใช่หรือไหม?')) {
+            const newPersons = removeItemWithFlag(formik.values.persons, id, isNew);
+
+            formik.setFieldValue('persons', newPersons);
+        }
+    };
+
+    const handleRemoveGallery = (formik, id, isNew) => {
+        if (window.confirm('คุณต้องการลบรูปกิจจกรรมใช่หรือไหม?')) {
+            const newGalleries = removeItemWithFlag(formik.values.galleries, id, isNew);
+
+            formik.setFieldValue('galleries', newGalleries);
+            setGalleries(newGalleries.map(gallery => ({ ...gallery, path: `${process.env.MIX_APP_URL}/storage/${gallery.path}` })));
+        }
+    };
+
+    const handleRemoveFile = (formik) => {
+        setUploadedFile('');
+        formik.setFieldValue('is_file_updated', true);
+    };
+
     const handleSubmit = (values, formik) => {
-        // const data = new FormData();
-
-        // for(const [key, val] of Object.entries(values)) {
-        //     if (key === 'training_pictures' || key === 'pr_pictures') {
-        //         [...val].forEach((file, i) => {
-        //             data.append(key, file[0]);
-        //         })
-        //     } else {
-        //         data.append(key, val);
-        //     }
-        // }
-
         if (training) {
             dispatch(update({ id, data: values }));
         } else {
@@ -83,7 +107,6 @@ const TrainingForm = ({ id, training }) => {
             initialValues={{
                 train_date: training ? training.train_date : '',
                 division_id: training ? training.division_id : '',
-                persons: training ? training.persons : [],
                 place: training ? training.place : '',
                 topic: training ? training.topic : '',
                 background: training ? training.background : '',
@@ -106,14 +129,16 @@ const TrainingForm = ({ id, training }) => {
                 campaign: training ? training.campaign : '',
                 campaign_name: (training && training.campaign_name) ? training.campaign_name : '',
                 campaign_num: (training && training.campaign_num) ? training.campaign_num : '',
-                training_pictures: [],
-                pr_pictures: []
+                persons: training ? training.persons : [],
+                pictures: [],
+                galleries: training ? training.galleries : [],
             }}
             validationSchema={trainingSchema}
             onSubmit={handleSubmit}
         >
             {(formik) => {
                 console.log(formik.errors);
+
                 return (
                     <Form>
                         <Tabs defaultActiveKey="home">
@@ -239,7 +264,7 @@ const TrainingForm = ({ id, training }) => {
                                                 <option value="3">เจ้าหน้าที่ รพ.</option>
                                                 <option value="4">เจ้าหน้าที่ รพ.สต.</option>
                                                 <option value="5">นักเรียน/นักศึกษา</option>
-                                                <option value="6">อื่นๆ (ระบุ)</option>
+                                                <option value="99">อื่นๆ (ระบุ)</option>
                                             </select>
                                             <input
                                                 type="text"
@@ -277,7 +302,10 @@ const TrainingForm = ({ id, training }) => {
                                 <Row className="mb-2">
                                     <Col md={3}>
                                         <label htmlFor="">มีตัวชี้วัดก่อน/หลัง</label>
-                                        <label htmlFor="" className="form-control" style={{ display: 'flex' }}>
+                                        <label
+                                            className={`form-control ${(formik.errors.have_kpi && formik.touched.have_kpi) ? 'is-invalid' : ''}`}
+                                            style={{ display: 'flex' }}
+                                        >
                                             <Field
                                                 type="radio"
                                                 name="have_kpi"
@@ -313,7 +341,10 @@ const TrainingForm = ({ id, training }) => {
                                     </Col>
                                     <Col md={3}>
                                         <label htmlFor="">ผลการดำเนินงาน</label>
-                                        <label htmlFor="" className="form-control" style={{ display: 'flex' }}>
+                                        <label
+                                            className={`form-control ${(formik.errors.is_succeed && formik.touched.is_succeed) ? 'is-invalid' : ''}`}
+                                            style={{ display: 'flex' }}
+                                        >
                                             <Field
                                                 type="radio"
                                                 name="is_succeed"
@@ -347,16 +378,15 @@ const TrainingForm = ({ id, training }) => {
                                 <Row className="mb-2">
                                     <Col>
                                         <div className="pb-3">
-                                            <PersonForm
-                                                onAdd={(person) => {
-                                                    formik.setFieldValue('persons', [ ...formik.values.persons, person]);
-                                                }}
-                                            />
+                                            <SurveyorForm onAdd={(person) => handleAddPerson(formik, person)} />
 
-                                            <PersonList
-                                                persons={formik.values.persons}
-                                                onDelete={(index) => handleDeletePerson(formik, index)}
+                                            <SurveyorList
+                                                surveyors={formik.values.persons.filter(person => !person.removed)}
+                                                onDelete={(id, isNew) => handleRemovePerson(formik, id, isNew)}
                                             />
+                                            {(formik.errors.persons && formik.touched.persons) && (
+                                                <span className="text-danger text-sm">{formik.errors.persons}</span>
+                                            )}
                                         </div>
                                     </Col>
                                 </Row>
@@ -582,47 +612,30 @@ const TrainingForm = ({ id, training }) => {
                                 }}
                             >
                                 <Row className="mb-2">
-                                    <Col md={12}>
-                                        <label htmlFor="">กิจกรรมอบรมให้ความรู้</label>
-                                        <input
-                                            type="file"
-                                            onChange={(e) => {
-                                                formik.setFieldValue('training_pictures', [...formik.values.training_pictures, e.target.files[0]]);
-                                                setUploadedTrainPics([...uploadedTrainPics, e.target.files[0]]);
+                                    <Col>
+                                        <MultipleFileUpload
+                                            files={formik.values.pictures}
+                                            onSelect={(files) => {
+                                                formik.setFieldValue('pictures', files);
                                             }}
-                                            className="form-control"
-                                        />
-
-                                        <UploadGallery
-                                            images={uploadedTrainPics ? uploadedTrainPics : []}
                                             onDelete={(index) => {
-                                                const updatedPics = formik.values.training_pictures.filter((pic, i) => i !== index);
-
-                                                formik.setFieldValue('training_pictures', updatedPics);
+                                                const updatedPics = formik.values.pictures.filter((pic, i) => i !== index);
+                                                
+                                                formik.setFieldValue('pictures', updatedPics);
                                             }}
-                                            minHeight={'200px'}
                                         />
-                                    </Col>
-                                    <Col md={12}>
-                                        <label htmlFor="">กิจกรรมอบรมอื่นๆ</label>
-                                        <input
-                                            type="file"
-                                            onChange={(e) => {
-                                                formik.setFieldValue('pr_pictures', [...formik.values.pr_pictures, e.target.files[0]]);
-                                                setUploadedPrPics([...uploadedPrPics, e.target.files[0]])
-                                            }}
-                                            className="form-control"
-                                        />
+                                        {(formik.errors.pictures && formik.touched.pictures) && (
+                                            <span className="text-danger text-sm">{formik.errors.pictures}</span>
+                                        )}
 
-                                        <UploadGallery
-                                            images={uploadedPrPics ? uploadedPrPics : []}
-                                            onDelete={(index) => {
-                                                const updatedPics = formik.values.pr_pictures.filter((pic, i) => i !== index);
-
-                                                formik.setFieldValue('pr_pictures', updatedPics);
-                                            }}
-                                            minHeight={'200px'}
-                                        />
+                                        <div className="mt-4">
+                                            <h4>รูปที่อัพโหลดแล้ว</h4>
+                                            <UploadedGalleries
+                                                images={galleries.filter(pic => !pic.removed)}
+                                                onDelete={(id, isNew) => handleRemoveGallery(formik, id, isNew)}
+                                                minHeight={'200px'}
+                                            />
+                                        </div>
                                     </Col>
                                 </Row>
                             </Tab>

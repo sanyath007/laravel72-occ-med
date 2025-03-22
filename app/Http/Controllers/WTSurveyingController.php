@@ -182,10 +182,7 @@ class WTSurveyingController extends Controller
             if ($surveying->save()) {
                 foreach($request['surveyors'] as $surveyor) {
                     if (array_key_exists('survey_id', $surveyor)) {
-                        /** 
-                         * รายการเดิม
-                         * ถ้าเป็นรายการเดิมให้ตรวจสอบว่ามี property flag removed หรือไม่
-                         */
+                        /** รายการเดิม ถ้าเป็นรายการเดิมให้ตรวจสอบว่ามี property flag removed หรือไม่ */
                         if (array_key_exists('removed', $surveyor) && $surveyor['removed']) {
                             SurveyingSurveyor::find($surveyor['id'])->delete();
                         }
@@ -252,6 +249,7 @@ class WTSurveyingController extends Controller
                 Storage::disk('public')->delete($surveying->file_attachment);
             }
 
+            /** Remove uploaded pictures */
             if (count($surveying->galleries) > 0) {
                 foreach($surveying->galleries as $pic) {
                     if (Storage::disk('public')->exists($pic->path)) {

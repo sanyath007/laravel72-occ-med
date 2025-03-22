@@ -20,8 +20,18 @@ class Training extends Model
         return $this->belongsTo(Division::class, 'division_id', 'id');
     }
 
+    // public function persons()
+    // {
+    //     return $this->hasMany(TrainingPerson::class, 'train_id', 'id');
+    // }
+
     public function persons()
     {
-        return $this->hasMany(TrainingPerson::class, 'train_id', 'id');
+        return $this->hasMany(SurveyingSurveyor::class, 'survey_id', 'id')->where('survey_type_id', 6);
+    }
+
+    public function galleries()
+    {
+        return $this->hasMany(Gallery::class, 'guuid', 'guuid');
     }
 }

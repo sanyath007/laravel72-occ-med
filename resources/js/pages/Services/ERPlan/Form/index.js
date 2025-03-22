@@ -135,8 +135,6 @@ const ERPlanForm = ({ id, erplan }) => {
             onSubmit={handleSubmit}
         >
             {(formik) => {
-                console.log(formik.values);
-                
                 return (
                     <Form>
                         <ModalCompanies

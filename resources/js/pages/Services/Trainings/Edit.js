@@ -12,7 +12,7 @@ const EditTraining = () => {
     const navigate = useNavigate()
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { training, loading, success } = useSelector(state => state.training);
+    const { training, isLoading, isSuccess } = useSelector(state => state.training);
 
     /** Initial global states */
     useEffect(() => {
@@ -35,14 +35,14 @@ const EditTraining = () => {
     }, [id]);
 
     useEffect(() => {
-        if (success) {
+        if (isSuccess) {
             toast.success('บันทึกการแก้ไขข้อมูลเรียบร้อยแล้ว!!');
 
             dispatch(resetSuccess());
 
             navigate('/services/trainings');
         }
-    }, [success]);
+    }, [isSuccess]);
 
     return (
         <section className="section">
@@ -52,9 +52,9 @@ const EditTraining = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขอบรมให้ความรู้</h5>
 
-                            {loading && <div className="text-center"><Loading /></div>}
+                            {isLoading && <div className="text-center"><Loading /></div>}
 
-                            {(!loading && training) && (
+                            {(!isLoading && training) && (
                                 <TrainingForm id={id} training={training} />
                             )}
                         </div>

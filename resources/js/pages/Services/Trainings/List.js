@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { GlobalContext } from '../../../context/globalContext'
-import { getTrainings, resetSuccess, destroy } from '../../../store/slices/training'
+import { getTrainings, resetDeleted, destroy } from '../../../store/slices/training'
 import { toShortTHDate } from '../../../utils/formatter'
 import Loading from '../../../components/Loading'
 import Pagination from '../../../components/Pagination'
@@ -11,7 +11,7 @@ import Pagination from '../../../components/Pagination'
 const TrainingList = () => {
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { trainings, pager, loading, success } = useSelector(state => state.training);
+    const { trainings, pager, isLoading, isDeleted } = useSelector(state => state.training);
     const [endpoint, setEndpoint] = useState('');
     const [params, setParams] = useState('');
 
@@ -30,12 +30,12 @@ const TrainingList = () => {
 
     /** If delete giudeline is succeed */
     useEffect(() => {
-        if (success) {
+        if (isDeleted) {
             toast.success('ลบข้อมูลเรียบร้อยแล้ว');
     
-            dispatch(resetSuccess());
+            dispatch(resetDeleted());
         }
-    }, [success]);
+    }, [isDeleted]);
 
     useEffect(() => {
         if (endpoint === '') {
@@ -85,12 +85,12 @@ const TrainingList = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {loading && (
+                                        {isLoading && (
                                             <tr>
                                                 <td colSpan={5} className="text-center"><Loading /></td>
                                             </tr>
                                         )}
-                                        {!loading && trainings?.map((training, index) => (
+                                        {(!isLoading && trainings) && trainings?.map((training, index) => (
                                             <tr key={training.id}>
                                                 <td className="text-center">{pager?.from+index}</td>
                                                 <td className="text-center">{toShortTHDate(training.train_date)}</td>

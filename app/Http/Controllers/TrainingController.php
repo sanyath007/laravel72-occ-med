@@ -3,29 +3,46 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Training;
 use App\Models\TrainingPerson;
+use App\Models\SurveyingSurveyor;
 use App\Models\Company;
+use App\Models\Gallery;
+use App\Services\FileService;
+use Ramsey\Uuid\Uuid;
 
 class TrainingController extends Controller
 {
+    protected $fileService;
+
+    protected $uploadDestPath = 'uploads/training/';
+
+    public function __construct(FileService $fileService)
+    {
+        $this->fileService = $fileService;
+    }
+
     public function search(Request $request)
     {
         $date = $request->get('date');
 
-        $trainings = Training::with('division','persons')
-                        // ->when(!empty($date), function($q) use ($date) {
-                        //     $q->where('surver_date', $date);
-                        // })
-                        ->orderBy('train_date', 'desc')
-                        ->paginate(10);
+        $trainings = Training::with('division','persons','galleries')
+                            ->with('persons.employee','persons.employee.position','persons.employee.level')
+                            // ->when(!empty($date), function($q) use ($date) {
+                            //     $q->where('surver_date', $date);
+                            // })
+                            ->orderBy('train_date', 'desc')
+                            ->paginate(10);
 
         return response()->json($trainings);
     }
 
     public function getById($id)
     {
-        $training = Training::with('division','persons')->find($id);
+        $training = Training::with('division','persons','galleries')
+                            ->with('persons.employee','persons.employee.position','persons.employee.level')
+                            ->find($id);
 
         return response()->json($training);
     }
@@ -48,85 +65,64 @@ class TrainingController extends Controller
     {
         try {
             $training = new Training;
-            $training->train_date       = $request['train_date'];
-            $training->division_id      = $request['division_id'];
-            $training->place            = $request['place'];
-            $training->topic            = $request['topic'];
-            $training->background       = $request['background'];
-            $training->train_hour       = $request['train_hour'];
-            $training->target_group_id  = $request['target_group_id'];
-            $training->target_group_text = $request['target_group_text'];
-            $training->num_of_participants = $request['num_of_participants'];
-            $training->have_kpi         = $request['have_kpi'];
-            $training->key_success      = $request['key_success'];
-            $training->is_succeed       = $request['is_succeed'];
-            $training->exhibition       = $request['exhibition'];
-            $training->exhibition_name  = $request['exhibition_name'];
-            $training->exhibition_num   = $request['exhibition_num'];
-            $training->demonstration    = $request['demonstration'];
-            $training->demonstration_name = $request['demonstration_name'];
-            $training->demonstration_num = $request['demonstration_num'];
-            $training->consultation     = $request['consultation'];
-            $training->education        = $request['education'];
-            $training->brochure         = $request['brochure'];
-            $training->campaign         = $request['campaign'];
-            $training->campaign_num     = $request['campaign_num'];
-            $training->campaign_num     = $request['campaign_num'];
-            // $training->remark           = $request['remark'];
+            $training->train_date           = $request['train_date'];
+            $training->division_id          = $request['division_id'];
+            $training->place                = $request['place'];
+            $training->topic                = $request['topic'];
+            $training->background           = $request['background'];
+            $training->train_hour           = $request['train_hour'];
+            $training->target_group_id      = $request['target_group_id'];
+            $training->target_group_text    = $request['target_group_text'];
+            $training->num_of_participants  = $request['num_of_participants'];
+            $training->have_kpi             = $request['have_kpi'];
+            $training->key_success          = $request['key_success'];
+            $training->is_succeed           = $request['is_succeed'];
+            $training->exhibition           = $request['exhibition'];
+            $training->exhibition_name      = $request['exhibition_name'];
+            $training->exhibition_num       = $request['exhibition_num'];
+            $training->demonstration        = $request['demonstration'];
+            $training->demonstration_name   = $request['demonstration_name'];
+            $training->demonstration_num    = $request['demonstration_num'];
+            $training->consultation         = $request['consultation'];
+            $training->education            = $request['education'];
+            $training->brochure             = $request['brochure'];
+            $training->campaign             = $request['campaign'];
+            $training->campaign_num         = $request['campaign_num'];
+            $training->campaign_num         = $request['campaign_num'];
+            $training->guuid                = Uuid::uuid4();
 
-            if ($request->file('training_pictures')) {
-                $index = 0;
-                $picNames = '';
-                $destinationPath = 'uploads/training/pic/';
-
-                foreach($request->file('training_pictures') as $file) {
-                    $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-
-                    if ($file->move($destinationPath, $fileName)) {
-                        if ($index < count($request->file('training_pictures')) - 1) {
-                            $picNames .= $fileName.',';
-                        } else {
-                            $picNames .= $fileName;
-                        }
-                    }
-
-                    $index++;
-                }
-
-                $training->training_pictures = $picNames;
-            }
-
-            if ($request->file('pr_pictures')) {
-                $index = 0;
-                $picNames = '';
-                $destinationPath = 'uploads/training/pic/';
-
-                foreach($request->file('pr_pictures') as $file) {
-                    $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-
-                    if ($file->move($destinationPath, $fileName)) {
-                        if ($index < count($request->file('pr_pictures')) - 1) {
-                            $picNames .= $fileName.',';
-                        } else {
-                            $picNames .= $fileName;
-                        }
-                    }
-
-                    $index++;
-                }
-
-                $plan->pr_pictures = $picNames;
-            }
+            /** Upload pictures */
+            $pictures = $this->fileService->uploadMultipleImages(
+                $request->file('pictures'),
+                $this->uploadDestPath . 'pic'
+            );
 
             if ($training->save()) {
                 if (array_key_exists('persons', $request) && count($request['persons']) > 0) {
                     foreach($request['persons'] as $person) {
                         $newPerson = new TrainingPerson;
                         $newPerson->train_id    = $training->id;
-                        $newPerson->name        = $person['name'];
-                        $newPerson->position    = $person['position'];
-                        $newPerson->company     = $person['company'];
+                        $newPerson->employee_id = $person['employee_id'];
+                        // $newPerson->name        = $person['name'];
+                        // $newPerson->position    = $person['position'];
+                        // $newPerson->company     = $person['company'];
                         $newPerson->save();
+
+                        $newSurveyor = new SurveyingSurveyor;
+                        $newSurveyor->survey_type_id    = 6;
+                        $newSurveyor->survey_id         = $training->id;
+                        $newSurveyor->employee_id       = $person['employee_id'];
+                        $newSurveyor->save();
+                    }
+                }
+
+                /** Insert galleries */
+                if (count($pictures) > 0) {
+                    foreach($pictures as $key => $pic) {
+                        $gallery = new Gallery;
+                        $gallery->path  = $pic;
+                        $gallery->guuid = $training->guuid;
+                        $gallery->save();
                     }
                 }
 
@@ -153,98 +149,80 @@ class TrainingController extends Controller
     {
         try {
             $training = Training::find($id);
-            $training->train_date       = $request['train_date'];
-            $training->division_id      = $request['division_id'];
-            $training->place            = $request['place'];
-            $training->topic            = $request['topic'];
-            $training->background       = $request['background'];
-            $training->train_hour       = $request['train_hour'];
-            $training->target_group_id  = $request['target_group_id'];
-            $training->target_group_text = $request['target_group_text'];
-            $training->num_of_participants = $request['num_of_participants'];
-            $training->have_kpi         = $request['have_kpi'];
-            $training->key_success      = $request['key_success'];
-            $training->is_succeed       = $request['is_succeed'];
-            $training->exhibition       = $request['exhibition'];
-            $training->exhibition_name  = $request['exhibition_name'];
-            $training->exhibition_num   = $request['exhibition_num'];
-            $training->demonstration    = $request['demonstration'];
-            $training->demonstration_name = $request['demonstration_name'];
-            $training->demonstration_num = $request['demonstration_num'];
-            $training->consultation     = $request['consultation'];
-            $training->education        = $request['education'];
-            $training->brochure         = $request['brochure'];
-            $training->campaign         = $request['campaign'];
-            $training->campaign_num     = $request['campaign_num'];
-            $training->campaign_num     = $request['campaign_num'];
-            // $training->remark           = $request['remark'];
+            $training->train_date           = $request['train_date'];
+            $training->division_id          = $request['division_id'];
+            $training->place                = $request['place'];
+            $training->topic                = $request['topic'];
+            $training->background           = $request['background'];
+            $training->train_hour           = $request['train_hour'];
+            $training->target_group_id      = $request['target_group_id'];
+            $training->target_group_text    = $request['target_group_text'];
+            $training->num_of_participants  = $request['num_of_participants'];
+            $training->have_kpi             = $request['have_kpi'];
+            $training->key_success          = $request['key_success'];
+            $training->is_succeed           = $request['is_succeed'];
+            $training->exhibition           = $request['exhibition'];
+            $training->exhibition_name      = $request['exhibition_name'];
+            $training->exhibition_num       = $request['exhibition_num'];
+            $training->demonstration        = $request['demonstration'];
+            $training->demonstration_name   = $request['demonstration_name'];
+            $training->demonstration_num    = $request['demonstration_num'];
+            $training->consultation         = $request['consultation'];
+            $training->education            = $request['education'];
+            $training->brochure             = $request['brochure'];
+            $training->campaign             = $request['campaign'];
+            $training->campaign_num         = $request['campaign_num'];
+            $training->campaign_num         = $request['campaign_num'];
+            $training->guuid                = !empty($training->guuid) ? $training->guuid : Uuid::uuid4();
 
-            // if ($request->file('training_pictures')) {
-            //     $index = 0;
-            //     $picNames = '';
-            //     $destinationPath = 'uploads/training/pic/';
-
-            //     foreach($request->file('training_pictures') as $file) {
-            //         $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-
-            //         if ($file->move($destinationPath, $fileName)) {
-            //             if ($index < count($request->file('training_pictures'))) {
-            //                 $picNames .= $fileName.',';
-            //             } else {
-            //                 $picNames .= $fileName;
-            //             }
-            //         }
-
-            //         $index++;
-            //     }
-
-            //     $training->training_pictures = $picNames;
-            // }
-
-            // if ($request->file('pr_pictures')) {
-            //     $index = 0;
-            //     $picNames = '';
-            //     $destinationPath = 'uploads/training/pic/';
-
-            //     foreach($request->file('pr_pictures') as $file) {
-            //         $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-
-            //         if ($file->move($destinationPath, $fileName)) {
-            //             if ($index < count($request->file('pr_pictures'))) {
-            //                 $picNames .= $fileName.',';
-            //             } else {
-            //                 $picNames .= $fileName;
-            //             }
-            //         }
-
-            //         $index++;
-            //     }
-
-            //     $plan->pr_pictures = $picNames;
-            // }
+            /** Upload new pictures */
+            $pictures = [];
+            if ($request->file('pictures')) {
+                $pictures = $this->fileService->uploadMultipleImages(
+                    $request->file('pictures'),
+                    $this->uploadDestPath . 'pic'
+                );
+            }
 
             if ($training->save()) {
                 if (count($request['persons']) > 0) {
                     foreach($request['persons'] as $person) {
-                        if (array_key_exists('id', $person)) {
-                            /** รายการเดิม */
-                            // if (TrainingPerson::where('employee_id', $person['employee_id'])->count() == 0) {
-                                $updatedPerson = TrainingPerson::find($person['id']);
-                                // $updatedPerson->employee_id = $person['employee_id'];
-                                $updatedPerson->name        = $person['name'];
-                                $updatedPerson->position    = $person['position'];
-                                $updatedPerson->company     = $person['company'];
-                                $updatedPerson->save();
-                            // }
+                        if (array_key_exists('survey_id', $person)) {
+                            /** รายการเดิม ถ้าเป็นรายการเดิมให้ตรวจสอบว่ามี property flag removed หรือไม่ */
+                            if (array_key_exists('removed', $person) && $person['removed']) {
+                                SurveyingSurveyor::find($person['id'])->delete();
+                            }
                         } else {
                             /** รายการใหม่ */
-                            $newPerson = new TrainingPerson;
-                            $newPerson->train_id    = $training->id;
-                            // $newPerson->employee_id = $person['employee_id'];
-                            $newPerson->name        = $person['name'];
-                            $newPerson->position    = $person['position'];
-                            $newPerson->company     = $person['company'];
-                            $newPerson->save();
+                            $newSurveyor = new SurveyingSurveyor;
+                            $newSurveyor->survey_type_id    = 6;
+                            $newSurveyor->survey_id         = $training->id;
+                            $newSurveyor->employee_id       = $person['employee_id'];
+                            $newSurveyor->save();
+                        }
+                    }
+                }
+
+                /** Insert new galleries */
+                if (count($pictures) > 0) {
+                    foreach($pictures as $key => $pic) {
+                        $gallery = new Gallery;
+                        $gallery->path  = $pic;
+                        $gallery->guuid = $training->guuid;
+                        $gallery->save();
+                    }
+                }
+
+                /** ถ้าเป็นรายการเดิมให้ตรวจสอบว่ามี property flag removed หรือไม่ */
+                if ($request['galleries'] && count($request['galleries']) > 0) {
+                    foreach($request['galleries'] as $pic) {
+                        if (array_key_exists('removed', $pic) && $pic['removed']) {
+                            /** Remove physical file */
+                            if (Storage::disk('public')->exists($pic['path'])) {
+                                Storage::disk('public')->delete($pic['path']);
+                            }
+
+                            Gallery::find($pic['id'])->delete();
                         }
                     }
                 }
@@ -271,37 +249,22 @@ class TrainingController extends Controller
     public function destroy($id) 
     {
         try {
-            $training = Training::find($id);
+            $training = Training::with('galleries')->find($id);
 
-            /** Remove uploaded file */
-            $destinationPath = 'uploads/training/pic/';
-            if ($training->training_pictures != '') {
-                $pictures = explode(',', $training->training_pictures);
+            /** Remove uploaded pictures */
+            if (count($surveying->galleries) > 0) {
+                foreach($surveying->galleries as $pic) {
+                    if (Storage::disk('public')->exists($pic->path)) {
+                        Storage::disk('public')->delete($pic->path);
 
-                foreach($pictures as $pic) {
-                    $existed = $destinationPath . $pic;
-
-                    if (\File::exists($existed)) {
-                        \File::delete($existed);
-                    }
-                }
-            }
-
-            if ($training->pr_pictures != '') {
-                $pictures = explode(',', $training->pr_pictures);
-
-                foreach($pictures as $pic) {
-                    $existed = $destinationPath . $pic;
-
-                    if (\File::exists($existed)) {
-                        \File::delete($existed);
+                        Gallery::find($pic->id)->delete();
                     }
                 }
             }
 
             if ($training->delete()) {
                 /** ลบผู้จัดกิจกรรมทั้งหมด */
-                TrainingPerson::where('train_id', $id)->delete();
+                SurveyingSurveyor::where(['survey_id' => $id, 'survey_type_id' => 6])->delete();
 
                 return [
                     'status'        => 1,
@@ -313,6 +276,42 @@ class TrainingController extends Controller
                     'message'   => 'Something went wrong!!'
                 ];
             }
+        } catch (\Exception $ex) {
+            return [
+                'status'    => 0,
+                'message'   => $ex->getMessage()
+            ];
+        }
+    }
+
+    public function generateGuuid()
+    {
+        try {
+            $trainings = Training::all();
+
+            foreach($trainings as $train) {
+                if ($train->pic_attachments) {
+                    $pictures = explode(',', $train->pic_attachments);
+
+                    /** update trainings data */
+                    $updating = Training::find($train->id);
+                    $updating->guuid = Uuid::uuid4();
+                    $updating->save();
+                    
+                    /** insert new galleries data */
+                    foreach($pictures as $key => $pic) {
+                        $gallery = new Gallery;
+                        $gallery->path  = $this->uploadDestPath . 'pic/' . $pic;
+                        $gallery->guuid = $updating->guuid;
+                        $gallery->save();
+                    }
+                }
+            }
+
+            return [
+                'status'    => 'ok',
+                'message'   => 'Processing successfully!!',
+            ];
         } catch (\Exception $ex) {
             return [
                 'status'    => 0,

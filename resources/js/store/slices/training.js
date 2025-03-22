@@ -5,8 +5,9 @@ const initialState = {
     trainings: [],
     training: null,
     pager: null,
-    loading: false,
-    success: false,
+    isLoading: false,
+    isSuccess: false,
+    isDeleted: false,
     error: null
 }
 
@@ -76,7 +77,10 @@ export const trainingSlice = createSlice({
     initialState,
     reducers: {
         resetSuccess(state) {
-            state.success = false
+            state.isLoading = false
+        },
+        resetDeleted(state) {
+            state.isDeleted = false
         },
         updateTrainings(state, { payload }) {
             const updated = state.trainings.filter(t => t.id !== payload);
@@ -87,89 +91,83 @@ export const trainingSlice = createSlice({
     extraReducers: {
         [getTrainings.pending]: (state) => {
             state.trainings = []
-            state.loading = true
+            state.isLoading = true
         },
         [getTrainings.fulfilled]: (state, { payload }) => {
             const { data, ...pager } = payload
 
             state.trainings = data
             state.pager = pager
-            state.loading = false
+            state.isLoading = false
         },
         [getTrainings.rejected]: (state, { payload }) => {
-            state.loading = false
+            state.isLoading = false
             state.error = payload
         },
         [getTraining.pending]: (state) => {
-            state.loading = true
+            state.isLoading = true
             state.training = null
             state.error = null
         },
         [getTraining.fulfilled]: (state, { payload }) => {
-            state.loading = false
+            state.isLoading = false
             state.training = payload
         },
         [getTraining.rejected]: (state, { payload }) => {
-            state.loading = false
+            state.isLoading = false
             state.error = payload
         },
         [store.pending]: (state) => {
-            state.success = false
+            state.isSuccess = false
             state.error = null
         },
         [store.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isSuccess = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [store.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         },
         [update.pending]: (state) => {
-            state.success = false
+            state.isSuccess = false
             state.error = null
         },
         [update.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isSuccess = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [update.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         },
         [destroy.pending]: (state) => {
-            state.success = false
+            state.isDeleted = false
             state.error = null
         },
         [destroy.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isDeleted = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [destroy.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         }
     }
 })
 
-export const { resetSuccess, updateTrainings } = trainingSlice.actions
+export const { resetDeleted, resetSuccess, updateTrainings } = trainingSlice.actions
 
 export default trainingSlice.reducer

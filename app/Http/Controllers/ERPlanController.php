@@ -205,19 +205,13 @@ class ERPlanController extends Controller
             if ($plan->save()) {
                 /** ผู้จัดกิจกรรม */
                 foreach($request['persons'] as $person) {
-                    if (array_key_exists('plan_id', $person)) {
+                    if (array_key_exists('survey_id', $person)) {
                         /** รายการเดิม ถ้าเป็นรายการเดิมให้ตรวจสอบว่ามี property flag removed หรือไม่ */
                         if (array_key_exists('removed', $person) && $person['removed']) {
-                            ERPlanPerson::find($person['id'])->delete();
                             SurveyingSurveyor::find($person['id'])->delete();
                         }
                     } else {
                         /** รายการใหม่ */
-                        $newPerson = new ERPlanPerson;
-                        $newPerson->plan_id     = $plan->id;
-                        $newPerson->employee_id = $person['employee_id'];
-                        $newPerson->save();
-
                         $newSurveyor = new SurveyingSurveyor;
                         $newSurveyor->survey_type_id = 5;
                         $newSurveyor->survey_id      = $plan->id;
@@ -311,7 +305,6 @@ class ERPlanController extends Controller
 
             if ($plan->delete()) {
                 /** ผู้จัดกิจกรรม */
-                ERPlanPerson::where('plan_id', $id)->delete();
                 SurveyingSurveyor::where(['survey_id' => $id, 'survey_type_id' => 5])->delete();
 
                 /** ผู้เชี่ยวชาญ */
