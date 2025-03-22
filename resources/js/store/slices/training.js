@@ -77,7 +77,7 @@ export const trainingSlice = createSlice({
     initialState,
     reducers: {
         resetSuccess(state) {
-            state.isLoading = false
+            state.isSuccess = false
         },
         resetDeleted(state) {
             state.isDeleted = false

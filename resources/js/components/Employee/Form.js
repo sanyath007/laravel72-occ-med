@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
-import { FaSave } from 'react-icons/fa'
+import { FaPlus, FaSave, FaSearch } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
+import { Col, Row } from 'react-bootstrap'
 import moment from 'moment'
 import { useGetInitialFormDataQuery } from '../../store/services/employeeApi'
 import { store, update } from '../../store/slices/employee'
 import DropdownAutocomplete from '../Forms/DropdownAutocomplete'
-import Loading from '../../components/Loading'
+import ModalCompanies from '../Modals/ModalCompanies'
+import ModalCompanyForm from '../Modals/ModalCompanyForm'
+import Loading from '../Loading'
 
 const employeeSchema = Yup.object().shape({
     prefix: Yup.string().required('กรุณาเลือกคำนำหน้าก่อน'),
@@ -38,6 +41,9 @@ const EmployeeForm = ({ id, employee }) => {
     // const [changwats, setChangwats] = useState([])
     // const [amphur, setAmphur] = useState({ amphurs: [], filteredAmphurs: [] })
     // const [tambon, setTambon] = useState({ tambons: [], filteredTambons: [] })
+    const [showCompanyForm, setShowCompanyForm] = useState(false);
+    const [showCompanyList, setShowCompanyList] = useState(false);
+    const [selectedCompany, setSelectedCompany] = useState(null);
 
     // useEffect(() => {
     //     if (employee) {
@@ -79,37 +85,60 @@ const EmployeeForm = ({ id, employee }) => {
             enableReinitialize
             initialValues={{
                 id: employee ? employee.id : '',
-                cid: employee ? employee.cid : '',
-                prefix: employee ? employee.prefix || '' : '',
-                fname: employee ? employee.fame || '' : '',
-                lname: employee ? employee.lname || '' : '',
-                sex: employee ? employee.sex || '' : '',
-                birthdate: employee ? employee.birthdate || '' : '',
-                position_type_id: employee ? employee.position_type_id || '' : '',
-                position_id: employee ? employee.position_id || '' : '',
-                position_level_id: employee ? employee.position_level_id || '' : '',
-                // address: employee ? employee.address || '' : '',
-                // moo: employee ? employee.moo || '' : '',
-                // road: employee ? employee.road || '' : '',
-                // tambon_id: employee ? employee.tambon_id || '' : '',
-                // amphur_id: employee ? employee.amphur_id || '' : '',
-                // changwat_id: employee ? employee.changwat_id || '' : '',
-                // zipcode: employee ? employee.zipcode || '' : '',
-                tel1: employee ? employee.tel1 || '' : '',
-                tel2: employee ? employee.tel2 || '' : '',
-                // email: employee ? employee.email || '' : '',
-                assigned_date: employee ? employee.assigned_date || '' : '',
-                stared_date: employee ? employee.start_date || '' : '',
-                is_employee: employee ? employee.is_employee : '',
-                is_expert: employee ? employee.is_expert : '',
-                remark: employee ? employee.remark || '' : ''
+                cid: (employee && employee.cid) ? employee.cid : '',
+                prefix: employee ? employee.prefix : '',
+                fname: employee ? employee.fname : '',
+                lname: employee ? employee.lname : '',
+                sex: employee ? employee.sex : '',
+                birthdate: employee ? employee.birthdate : '',
+                company_id: employee ? employee.company_id : '',
+                position_type_id: employee ? employee.position_type_id : '',
+                position_id: employee ? employee.position_id : '',
+                position_level_id: employee ? employee.position_level_id : '',
+                // address: employee ? employee.address : '',
+                // moo: employee ? employee.moo : '',
+                // road: employee ? employee.road : '',
+                // tambon_id: employee ? employee.tambon_id : '',
+                // amphur_id: employee ? employee.amphur_id : '',
+                // changwat_id: employee ? employee.changwat_id : '',
+                // zipcode: employee ? employee.zipcode : '',
+                tel1: (employee && employee.tel1) ? employee.tel1 : '',
+                tel2: (employee && employee.tel2) ? employee.tel2 : '',
+                email: (employee && employee.email) ? employee.email : '',
+                assigned_date: (employee && employee.assigned_date) ? employee.assigned_date : '',
+                stared_date: (employee && employee.stared_date) ? employee.start_date : '',
+                is_employee: (employee && employee.is_employee) ? employee.is_employee : '',
+                is_expert: (employee && employee.is_expert) ? employee.is_expert : '',
+                remark: (employee && employee.remark) ? employee.remark : ''
             }}
             validationSchema={employeeSchema}
             onSubmit={handleSubmit}
         >
             {(formik) => (
                 <Form>
-                    <div className="row mb-3">
+                    <ModalCompanies
+                        isOpen={showCompanyList}
+                        hideModal={() => setShowCompanyList(false)}
+                        onSelected={(company) => {
+                            setSelectedCompany(company);
+
+                            formik.setFieldValue('company_id', company.id);
+                        }}
+                    />
+
+                    <ModalCompanyForm
+                        isOpen={showCompanyForm}
+                        hideModal={() => setShowCompanyForm(false)}
+                        onSuccess={(company) => {
+                            setSelectedCompany(company);
+
+                            formik.setFieldValue('company_id', company.id);
+
+                            setShowCompanyForm(false);
+                        }}
+                    />
+
+                    <Row className="mb-3">
                         <div className="col-md-2 form-group mb-2">
                             <label htmlFor="">คำนำหน้า</label>
                             {/* <select
@@ -130,9 +159,13 @@ const EmployeeForm = ({ id, employee }) => {
                                 <DropdownAutocomplete
                                     label={'คำนำหน้า'}
                                     options={formData?.prefixes?.map(prefix => ({ label: prefix.name, id: prefix.provis_code }))}
-                                    onSelect={(prefix) => {
-                                        formik.setFieldValue('prefix', prefix.label);
-                                    }}
+                                    defaultVal={
+                                        (formData && formData?.prefixes) &&
+                                            formData.prefixes
+                                                    .map(prefix => ({ label: prefix.name, id: prefix.provis_code }))
+                                                    .find(opt => opt.label === formik.values.prefix)
+                                    }
+                                    onSelect={(prefix) => formik.setFieldValue('prefix', prefix.label)}
                                     isInvalid={formik.errors.prefix && formik.touched.prefix}
                                 />
                             )}
@@ -493,7 +526,25 @@ const EmployeeForm = ({ id, employee }) => {
                                 <span className="text-danger text-sm">{formik.errors.started_date}</span>
                             )}
                         </div>
-                        <div className="col-md-6 form-group mt-3 mb-2">
+                        <Col md={6}>
+                            <label htmlFor="">หน่วยงาน</label>
+                            <div className="input-group">
+                                <div className={`form-control ${(formik.errors.company_id && formik.touched.company_id) ? 'is-invalid' : ''}`}>
+                                    {selectedCompany?.name}
+                                </div>
+                                <button type="button" className="btn btn-primary" onClick={() => setShowCompanyForm(true)}>
+                                    <FaPlus />
+                                </button>
+                                <button type="button" className="btn btn-secondary" onClick={() => setShowCompanyList(true)}>
+                                    <FaSearch />
+                                </button>
+                            </div>
+                            {(formik.errors.company_id && formik.touched.company_id) && (
+                                <span className="text-danger text-sm">{formik.errors.company_id}</span>
+                            )}
+                        </Col>
+                        <div className="col-md-3 form-group mb-2">
+                            <label htmlFor=""></label>
                             <label className="form-control">
                                 <Field
                                     type="checkbox"
@@ -502,7 +553,8 @@ const EmployeeForm = ({ id, employee }) => {
                                 <span className="ms-1">เป็นเจ้าหน้าที่ รพ.</span>
                             </label>
                         </div>
-                        <div className="col-md-6 form-group mt-3 mb-2">
+                        <div className="col-md-3 form-group mb-2">
+                            <label htmlFor=""></label>
                             <label className="form-control">
                                 <Field
                                     type="checkbox"
@@ -516,10 +568,12 @@ const EmployeeForm = ({ id, employee }) => {
                             <Field
                                 as="textarea"
                                 name="remark"
+                                value={formik.values.remark}
+                                onChange={formik.handleChange}
                                 className="form-control"
                             />
                         </div>
-                    </div>
+                    </Row>
                     <div className="text-center">
                         <button type="submit" className={`btn ${employee ? 'btn-warning' : 'btn-primary'}`}>
                             <FaSave className="me-1" />

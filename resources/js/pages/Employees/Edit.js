@@ -26,7 +26,7 @@ const EditEmployee = () => {
 
     useEffect(() => {
         if (id && id != '') {
-            dispatch(getEmployee({ id }))
+            dispatch(getEmployee(id))
         }
     }, [id])
 
