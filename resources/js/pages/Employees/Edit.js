@@ -1,15 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { GlobalContext } from '../../context/globalContext'
-import { getEmployee, update } from '../../store/slices/employee'
+import { getEmployee, resetSuccess, update } from '../../store/slices/employee'
+import Loading from '../../components/Loading'
 import EmployeeForm from '../../components/Employee/Form'
 
 const EditEmployee = () => {
     const { id } = useParams()
-    const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch()
-    const { employee } = useSelector(state => state.employee)
+    const navigate = useNavigate()
+    const { setGlobal } = useContext(GlobalContext)
+    const { employee, isLoading, isSuccess } = useSelector(state => state.employee)
 
     /** Initial global states */
     useEffect(() => {
@@ -18,7 +21,7 @@ const EditEmployee = () => {
             title: 'แก้ไขรายการเจ้าหน้าที่',
             breadcrumbs: [
                 { id: 'home', name: 'Home', path: '/' },
-                { id: 'companies', name: 'รายการเจ้าหน้าที่', path: '/companies' },
+                { id: 'employees', name: 'รายการเจ้าหน้าที่', path: '/employees' },
                 { id: 'new', name: 'แก้ไขรายการเจ้าหน้าที่', path: null, active: true }
             ]
         }))
@@ -29,6 +32,14 @@ const EditEmployee = () => {
             dispatch(getEmployee(id))
         }
     }, [id])
+
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success('บันทึกการแก้ไขข้อมูลสำเร็จ!!')
+            dispatch(resetSuccess())
+            navigate('/employees')
+        }
+    }, [isSuccess])
 
     const handleSubmit = async (data) => {
         console.log(data);
@@ -43,7 +54,11 @@ const EditEmployee = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขรายการเจ้าหน้าที่ : ID {id}</h5>
 
-                            <EmployeeForm onSubmit={handleSubmit} employee={employee} />
+                            {isLoading && <div className="text-center"><Loading /></div>}
+
+                            {(!isLoading && employee) && (
+                                <EmployeeForm onSubmit={handleSubmit} employee={employee} />
+                            )}
                         </div>
                     </div>
                 </div>

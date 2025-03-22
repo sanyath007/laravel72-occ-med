@@ -60,24 +60,25 @@ class EmployeeController extends Controller
     {
         try {
             $employee = new Employee;
-            $employee->cid          = $request['cid'];
-            $employee->prefix       = $request['prefix'];
-            $employee->fname        = $request['fname'];
-            $employee->lname        = $request['lname'];
-            $employee->sex          = $request['sex'];
-            $employee->birthdate    = $request[''];
-            $employee->tel1         = $request['tel1'];
-            $employee->tel2         = $request['tel2'];
-            // $employee->email      = $request['email'];
+            $employee->cid              = $request['cid'];
+            $employee->prefix           = $request['prefix'];
+            $employee->fname            = $request['fname'];
+            $employee->lname            = $request['lname'];
+            $employee->sex              = $request['sex'];
+            $employee->birthdate        = $request['birthdate'];
+            $employee->tel1             = $request['tel1'];
+            $employee->tel2             = $request['tel2'];
+            $employee->email            = $request['email'];
+            $employee->company_id       = $request['company_id'];
             $employee->position_type_id = $request['position_type_id'];
-            $employee->position_id  = $request['position_id'];
+            $employee->position_id      = $request['position_id'];
             $employee->position_level_id = $request['position_level_id'];
-            $employee->assigned_date = $request['assigned_date'];
-            $employee->started_date = $request['started_date'];
-            $employee->is_employee  = $request['is_employee'];
-            $employee->is_expert    = $request['is_expert' ];
-            $employee->remark       = $request['remark'];
-            $employee->status       = 1;
+            $employee->assigned_date    = $request['assigned_date'];
+            $employee->started_date     = $request['started_date'];
+            $employee->is_employee      = $request['is_employee'];
+            $employee->is_expert        = $request['is_expert' ];
+            $employee->remark           = $request['remark'];
+            $employee->status           = 1;
 
             if ($employee->save()) {
                 return [
@@ -103,23 +104,24 @@ class EmployeeController extends Controller
     {
         try {
             $employee = Employee::find($id);
-            $employee->cid          = $request['cid'];
-            $employee->prefix       = $request['prefix'];
-            $employee->fname        = $request['fname'];
-            $employee->lname        = $request['lname'];
-            $employee->sex          = $request['sex'];
-            $employee->birthdate    = $request[''];
-            $employee->tel1         = $request['tel1'];
-            $employee->tel2         = $request['tel2'];
-            // $employee->email      = $request['email'];
+            $employee->cid              = $request['cid'];
+            $employee->prefix           = $request['prefix'];
+            $employee->fname            = $request['fname'];
+            $employee->lname            = $request['lname'];
+            $employee->sex              = $request['sex'];
+            $employee->birthdate        = $request['birthdate'];
+            $employee->tel1             = $request['tel1'];
+            $employee->tel2             = $request['tel2'];
+            $employee->email            = $request['email'];
+            $employee->company_id       = $request['company_id'];
             $employee->position_type_id = $request['position_type_id'];
-            $employee->position_id  = $request['position_id'];
+            $employee->position_id      = $request['position_id'];
             $employee->position_level_id = $request['position_level_id'];
-            $employee->assigned_date = $request['assigned_date'];
-            $employee->started_date = $request['started_date'];
-            $employee->is_employee  = $request['is_employee'];
-            $employee->is_expert    = $request['is_expert' ];
-            $employee->remark       = $request['remark'];
+            $employee->assigned_date    = $request['assigned_date'];
+            $employee->started_date     = $request['started_date'];
+            $employee->is_employee      = $request['is_employee'];
+            $employee->is_expert        = $request['is_expert' ];
+            $employee->remark           = $request['remark'];
 
             if ($employee->save()) {
                 return [
