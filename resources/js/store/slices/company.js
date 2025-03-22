@@ -5,8 +5,9 @@ const initialState = {
     companies: [],
     company: null,
     pager: null,
-    loading: false,
-    success: false,
+    isLoading: false,
+    isSuccess: false,
+    isDeleted: false,
     error: null
 }
 
@@ -54,13 +55,27 @@ export const update = createAsyncThunk('company/update', async ({ id, data }, { 
     }
 })
 
+export const destroy = createAsyncThunk('company/destroy', async (id, { rejectWithValue }) => {
+    try {
+        const res = await api.delete(`/api/companies/${id}`)
+
+        return res.data
+    } catch (error) {
+        console.log(error);
+        rejectWithValue(error.message)
+    }
+})
+
 export const companySlice = createSlice({
     name: 'company',
     initialState,
     reducers: {
         resetSuccess(state) {
-            state.success = false
-        }
+            state.isSuccess = false
+        },
+        resetDeleted(state) {
+            state.isDeleted = false
+        },
     },
     extraReducers: {
         [getCompanies.pending]: (state) => {
@@ -88,7 +103,7 @@ export const companySlice = createSlice({
             state.loading = false
         },
         [store.pending]: (state) => {
-            state.success = false
+            state.isSuccess = false
             state.company = null
             state.error = null
         },
@@ -96,36 +111,50 @@ export const companySlice = createSlice({
             const { status, message, company } = payload;
 
             if (status === 1) {
-                state.success = true
+                state.isSuccess = true
                 state.company = company
             } else {
                 state.error = { message }
             }
         },
         [store.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         },
         [update.pending]: (state) => {
-            state.success = false
+            state.isSuccess = false
             state.error = null
         },
         [update.fulfilled]: (state, { payload }) => {
             const { status, message } = payload;
 
             if (status === 1) {
-                state.success = true
+                state.isSuccess = true
             } else {
                 state.error = { message }
             }
         },
         [update.rejected]: (state, { payload }) => {
-            state.success = false
+            state.error = payload
+        },
+        [destroy.pending]: (state) => {
+            state.isDeleted = false
+            state.error = null
+        },
+        [destroy.fulfilled]: (state, { payload }) => {
+            const { status, message } = payload;
+
+            if (status === 1) {
+                state.isDeleted = true
+            } else {
+                state.error = { message }
+            }
+        },
+        [destroy.rejected]: (state, { payload }) => {
             state.error = payload
         }
     }
 })
 
-export const { resetSuccess } = companySlice.actions
+export const { resetDeleted, resetSuccess } = companySlice.actions
 
 export const companyReducer = companySlice.reducer
