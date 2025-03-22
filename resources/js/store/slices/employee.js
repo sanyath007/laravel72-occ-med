@@ -33,7 +33,7 @@ export const getEmployee = createAsyncThunk('employee/getEmployee', async (id, {
     }
 })
 
-export const store = createAsyncThunk('company/store', async (data, { rejectWithValue }) => {
+export const store = createAsyncThunk('employee/store', async (data, { rejectWithValue }) => {
     try {
         const res = await api.post('/api/employees', data)
 
@@ -44,7 +44,7 @@ export const store = createAsyncThunk('company/store', async (data, { rejectWith
     }
 })
 
-export const update = createAsyncThunk('company/update', async ({ id, data }, { rejectWithValue }) => {
+export const update = createAsyncThunk('employee/update', async ({ id, data }, { rejectWithValue }) => {
     try {
         const res = await api.put(`/api/employees/${id}`, data)
 
@@ -55,7 +55,7 @@ export const update = createAsyncThunk('company/update', async ({ id, data }, { 
     }
 })
 
-export const destroy = createAsyncThunk('company/destroy', async (id, { rejectWithValue }) => {
+export const destroy = createAsyncThunk('employee/destroy', async (id, { rejectWithValue }) => {
     try {
         const res = await api.delete(`/api/employees/${id}`)
 

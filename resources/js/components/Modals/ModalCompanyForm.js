@@ -7,17 +7,17 @@ import CompanyForm from '../Company/Form'
 
 const ModalCompanyForm = ({ isOpen, hideModal, onSuccess }) => {
     const dispatch = useDispatch();
-    const { company, success } = useSelector(state => state.company);
+    const { company, isSuccess } = useSelector(state => state.company);
 
     useEffect(() => {
-        if (success) {
+        if (isSuccess) {
             toast.success('บันทึกข้อมูลสถานประกอบการเรียบร้อยแล้ว!!');
 
             dispatch(resetSuccess());
 
             onSuccess(company);
         }
-    }, [success]);
+    }, [isSuccess]);
 
     return (
         <Modal

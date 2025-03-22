@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { FaSave, FaMapMarkedAlt } from 'react-icons/fa'
@@ -6,7 +7,6 @@ import { useGetInitialFormDataQuery } from '../../store/services/companyApi'
 import { store, update } from '../../store/slices/company'
 import Loading from '../Loading'
 import ModalMapSelection from '../Modals/ModalMapSelection'
-import { useDispatch } from 'react-redux'
 
 const companySchema = Yup.object().shape({
     name: Yup.string().required('กรุณาระบุชื่อสถานประกอบการก่อน!!'),
@@ -57,7 +57,7 @@ const CompanyForm = ({ id, company, ...props }) => {
 
     const handleSubmit = async (values, props) => {
         if (company) {
-            dispatch(update(values));
+            dispatch(update({ id, data: values }));
         } else {
             dispatch(store(values));
         }

@@ -127,9 +127,8 @@ const EmployeeForm = ({ id, employee }) => {
                             isOpen={showCompanyList}
                             hideModal={() => setShowCompanyList(false)}
                             onSelected={(company) => {
-                                setSelectedCompany(company);
-
                                 formik.setFieldValue('company_id', company.id);
+                                setSelectedCompany(company);
                             }}
                         />
 
@@ -137,10 +136,8 @@ const EmployeeForm = ({ id, employee }) => {
                             isOpen={showCompanyForm}
                             hideModal={() => setShowCompanyForm(false)}
                             onSuccess={(company) => {
-                                setSelectedCompany(company);
-
                                 formik.setFieldValue('company_id', company?.id);
-
+                                setSelectedCompany(company);
                                 setShowCompanyForm(false);
                             }}
                         />
