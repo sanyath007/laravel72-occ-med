@@ -5,8 +5,9 @@ const initialState = {
     employees: [],
     employee: null,
     pager: null,
-    loading: false,
-    success: false,
+    isLoading: false,
+    isSuccess: false,
+    isDeleted: false,
     error: null
 }
 
@@ -70,94 +71,94 @@ export const employeeSlice = createSlice({
     initialState,
     reducers: {
         resetSuccess(state) {
-            state.success = false
-        }
+            state.isSuccess = false
+        },
+        resetDeleted(state) {
+            state.isDeleted = false
+        },
     },
     extraReducers: {
         [getEmployees.pending]: (state) => {
             state.employees = []
             state.pager = null
-            state.loading = true
+            state.isLoading = true
         },
         [getEmployees.fulfilled]: (state, { payload }) => {
             const { data, ...pager } = payload
 
             state.employees = data
             state.pager = pager
-            state.loading = false
+            state.isLoading = false
         },
         [getEmployees.rejected]: (state, { payload }) => {
             state.error = payload
-            state.loading = false
+            state.isLoading = false
         },
         [getEmployee.pending]: (state) => {
             state.employee = null
-            state.loading = true
+            state.isLoading = true
         },
         [getEmployee.fulfilled]: (state, { payload }) => {
             state.employee = payload
-            state.loading = false
+            state.isLoading = false
         },
         [getEmployee.rejected]: (state, { payload }) => {
             state.error = payload
-            state.loading = false
+            state.isLoading = false
         },
         [store.pending]: (state) => {
             state.employee = null
-            state.success = false
+            state.isSuccess = false
             state.error = null
         },
         [store.fulfilled]: (state, { payload }) => {
             const { status, message, employee } = payload
             
             if (status === 1) {
-                state.success = true
+                state.isSuccess = true
                 state.employee = employee
             } else {
                 state.error = { message }
             }
         },
         [store.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         },
         [update.pending]: (state) => {
-            state.success = false
+            state.isSuccess = false
             state.error = null
         },
         [update.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status === 1) {
-                state.success = true
+                state.isSuccess = true
             } else {
                 state.error = { message }
             }
         },
         [update.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         },
         [destroy.pending]: (state) => {
-            state.success = false
+            state.isDeleted = false
             state.error = null
         },
         [destroy.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status === 1) {
-                state.success = true
+                state.isDeleted = true
             } else {
                 state.error = { message }
             }
         },
         [destroy.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         }
     }
 })
 
-export const { resetSuccess } = employeeSlice.actions
+export const { resetDeleted, resetSuccess } = employeeSlice.actions
 
 export default employeeSlice.reducer
