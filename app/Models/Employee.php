@@ -22,4 +22,9 @@ class Employee extends Model
     {
         return $this->belongsTo(PositionType::class, 'position_type_id', 'id');
     }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class, 'company_id', 'id');
+    }
 }

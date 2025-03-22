@@ -9,7 +9,7 @@ import EmployeeForm from '../../components/Employee/Form'
 const EmployeeNew = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const { success, error } = useSelector(state => state.employee)
+    const { isSuccess, error } = useSelector(state => state.employee)
     const { setGlobal } = useContext(GlobalContext)
 
     /** Initial global states */
@@ -26,16 +26,12 @@ const EmployeeNew = () => {
     }, [])
 
     useEffect(() => {
-        if (success) {
+        if (isSuccess) {
             toast.success('บันทึกข้อมูลเรียบร้อย !!!', { autoClose: 1000, hideProgressBar: true });
             dispatch(resetSuccess())
             navigate('/employees')
         }
-    }, [success])
-
-    const handleSubmit = async (data) => {
-        dispatch(store(data));
-    }
+    }, [isSuccess])
 
     return (
         <section className="section">
@@ -45,7 +41,7 @@ const EmployeeNew = () => {
                         <div className="card-body">
                             <h5 className="card-title">เพิ่มเจ้าหน้าที่</h5>
 
-                            <EmployeeForm onSubmit={handleSubmit} />
+                            <EmployeeForm />
 
                         </div>
                     </div>

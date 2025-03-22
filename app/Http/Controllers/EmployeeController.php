@@ -17,7 +17,7 @@ class EmployeeController extends Controller
         $name       = $request->get('name');
         $limit      = empty($request->get('limit')) ? 10 : $request->get('limit');
 
-        $employees = Employee::with('position','level','type')
+        $employees = Employee::with('position','level','type','company')
                         // ->whereNotIn('position_id', [1])
                         ->when(!empty($position), function($query) use ($position) {
                             $query->where('position_id', $position);
@@ -32,7 +32,7 @@ class EmployeeController extends Controller
 
     public function getAll(Request $request)
     {
-        $employees = Employee::with('position', 'level', 'type')
+        $employees = Employee::with('position', 'level', 'type','company')
                         // ->whereNotIn('position_id', [1])
                         ->get();
 
@@ -41,7 +41,7 @@ class EmployeeController extends Controller
 
     public function getById(Request $request, $id)
     {
-        $employee = Employee::find($id);
+        $employee = Employee::with('position', 'level', 'type','company')->find($id);
 
         return response()->json($employee);
     }

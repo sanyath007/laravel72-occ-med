@@ -41,11 +41,6 @@ const EditEmployee = () => {
         }
     }, [isSuccess])
 
-    const handleSubmit = async (data) => {
-        console.log(data);
-        dispatch(update({ id, data }))
-    }
-
     return (
         <section className="section">
             <div className="row">
@@ -57,7 +52,7 @@ const EditEmployee = () => {
                             {isLoading && <div className="text-center"><Loading /></div>}
 
                             {(!isLoading && employee) && (
-                                <EmployeeForm onSubmit={handleSubmit} employee={employee} />
+                                <EmployeeForm id={employee.id} employee={employee} />
                             )}
                         </div>
                     </div>
