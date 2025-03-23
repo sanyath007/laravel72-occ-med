@@ -252,8 +252,8 @@ class TrainingController extends Controller
             $training = Training::with('galleries')->find($id);
 
             /** Remove uploaded pictures */
-            if (count($surveying->galleries) > 0) {
-                foreach($surveying->galleries as $pic) {
+            if (count($training->galleries) > 0) {
+                foreach($training->galleries as $pic) {
                     if (Storage::disk('public')->exists($pic->path)) {
                         Storage::disk('public')->delete($pic->path);
 
@@ -304,6 +304,36 @@ class TrainingController extends Controller
                         $gallery->path  = $this->uploadDestPath . 'pic/' . $pic;
                         $gallery->guuid = $updating->guuid;
                         $gallery->save();
+                    }
+                }
+            }
+
+            return [
+                'status'    => 'ok',
+                'message'   => 'Processing successfully!!',
+            ];
+        } catch (\Exception $ex) {
+            return [
+                'status'    => 0,
+                'message'   => $ex->getMessage()
+            ];
+        }
+    }
+
+    public function generateSurveyors()
+    {
+        try {
+            $trainings = Training::with('persons')->get();
+
+            foreach($trainings as $train) {
+                if(count($train->persons) > 0) {
+                    /** Create new SurveyingSurveyor from training's persons data */
+                    foreach($train->persons as $person) {
+                        $newSurveyor = new SurveyingSurveyor;
+                        $newSurveyor->survey_type_id    = 6;
+                        $newSurveyor->survey_id         = $train->id;
+                        $newSurveyor->employee_id       = $person->employee_id;
+                        $newSurveyor->save();
                     }
                 }
             }
