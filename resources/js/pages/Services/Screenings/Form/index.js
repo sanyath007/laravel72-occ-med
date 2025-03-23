@@ -3,9 +3,10 @@ import { useDispatch } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row, Tab, Tabs } from 'react-bootstrap'
-import { FaSave, FaRegFilePdf } from 'react-icons/fa'
+import { FaSave, FaRegFilePdf, FaTimesCircle } from 'react-icons/fa'
 import { DatePicker } from '@mui/x-date-pickers'
 import moment from 'moment'
+import { getFilenameFormUrl } from '../../../../utils'
 import { store, update } from '../../../../store/slices/screening'
 
 const screeningSchema = Yup.object().shape({
@@ -42,10 +43,20 @@ const ScreeningForm = ({ id, screening }) => {
     useEffect(() => {
         if (screening) {
             setSelectedDate(moment(screening.screen_date));
-            setSelectedPlanFile(screening.plan_file);
-            setSelectedSumFile(screening.summary_file);
+            setSelectedPlanFile(screening.plan_file ? `${process.env.MIX_APP_URL}/storage/${screening.plan_file}` : '');
+            setSelectedSumFile(screening.summary_file ? `${process.env.MIX_APP_URL}/storage/${screening.summary_file}` : '');
         }
     }, [screening]);
+
+    const handleRemoveFile = (formik, type) => {
+        if (type === 1) {
+            setSelectedPlanFile('');
+            formik.setFieldValue('is_plan_file_updated', true);
+        } else {
+            setSelectedSumFile('');
+            formik.setFieldValue('is_summary_file_updated', true);
+        }
+    };
 
     const handleSubmit = (values, formik) => {
         if (screening) {
@@ -106,8 +117,10 @@ const ScreeningForm = ({ id, screening }) => {
                 surveillance: screening ? screening.surveillance : '',
                 have_plan: screening ? screening.have_plan : '',
                 plan_file: '',
+                is_plan_file_updated: false,
                 have_summary: screening ? screening.have_summary : '',
                 summary_file: '',
+                is_summary_file_updated: false,
                 is_returned_data: screening ? screening.is_returned_data : '',
             }}
             validationSchema={screeningSchema}
@@ -268,7 +281,7 @@ const ScreeningForm = ({ id, screening }) => {
                                     </Col>
                                 </Row>
                                 <Row className="mb-2">
-                                    <Col md={4}>
+                                    <Col md={6}>
                                         <label htmlFor="">จัดทำแผน/การดำเนินการเฝ้าระวังสุขภาพ</label>
                                         <label className={`form-control ${(formik.errors.have_plan && formik.touched.summary_file) ? 'is-invalid' : ''}`}>
                                             <Field
@@ -291,29 +304,33 @@ const ScreeningForm = ({ id, screening }) => {
                                             <span className="text-danger text-sm">{formik.errors.have_plan}</span>
                                         )}
                                     </Col>
-                                    <Col>
+                                    {!selectedPlanFile && <Col>
                                         <label htmlFor="">แนบไฟล์</label>
                                         <div className="d-flex flex-row align-items-center">
                                             <input
                                                 type="file"
                                                 onChange={(e) => formik.setFieldValue('plan_file', e.target.files[0])}
-                                                className={`form-control w-50 ${(formik.errors.plan_file && formik.touched.plan_file) ? 'is-invalid' : ''}`}
+                                                className={`form-control ${(formik.errors.plan_file && formik.touched.plan_file) ? 'is-invalid' : ''}`}
                                             />
-                                            <div className="ms-2">
-                                                {selectedPlanFile && (
-                                                    <a href={`${process.env.MIX_APP_URL}/uploads/screening/file/${selectedPlanFile}`} target="_blank">
-                                                        <FaRegFilePdf size={'16px'} /> {selectedPlanFile}
-                                                    </a>
-                                                )}
-                                            </div>
                                         </div>
                                         {(formik.errors.plan_file && formik.touched.plan_file) && (
                                             <span className="invalid-feedback">{formik.errors.plan_file}</span>
                                         )}
-                                    </Col>
+                                    </Col>}
+                                    {selectedPlanFile && <Col>
+                                        <label htmlFor="">แนบไฟล์</label>
+                                        <div className="ms-2">
+                                            <a href={selectedPlanFile} className="p-auto me-2" target="_blank">
+                                                <FaRegFilePdf size={'16px'} /> {getFilenameFormUrl(selectedPlanFile)}
+                                            </a>
+                                            <span className="uploaded__close-btn">
+                                                <FaTimesCircle onClick={() => handleRemoveFile(formik, 1)} />
+                                            </span>
+                                        </div>
+                                    </Col>}
                                 </Row>
                                 <Row className="mb-2">
-                                    <Col md={4}>
+                                    <Col md={6}>
                                         <label htmlFor="">สรุปผลและจัดทำรายงานการเฝ้าระวังสุขภาพ</label>
                                         <label className={`form-control ${(formik.errors.have_summary && formik.touched.have_summary) ? 'is-invalid' : ''}`}>
                                             <Field
@@ -336,29 +353,33 @@ const ScreeningForm = ({ id, screening }) => {
                                             <span className="text-danger text-sm">{formik.errors.have_summary}</span>
                                         )}
                                     </Col>
-                                    <Col>
+                                    {!selectedSumFile && <Col>
                                         <label htmlFor="">แนบไฟล์</label>
                                         <div className="d-flex flex-row align-items-center">
                                             <input
                                                 type="file"
                                                 onChange={(e) => formik.setFieldValue('summary_file', e.target.files[0])}
-                                                className={`form-control w-50 ${(formik.errors.summary_file && formik.touched.summary_file) ? 'is-invalid' : ''}`}
+                                                className={`form-control ${(formik.errors.summary_file && formik.touched.summary_file) ? 'is-invalid' : ''}`}
                                             />
-                                            <div className="ms-2">
-                                                {selectedSumFile && (
-                                                    <a href={`${process.env.MIX_APP_URL}/uploads/screening/file/${selectedSumFile}`} target="_blank">
-                                                        <FaRegFilePdf size={'16px'} /> {selectedSumFile}
-                                                    </a>
-                                                )}
-                                            </div>
                                         </div>
                                         {(formik.errors.summary_file && formik.touched.summary_file) && (
                                             <span className="invalid-feedback">{formik.errors.summary_file}</span>
                                         )}
-                                    </Col>
+                                    </Col>}
+                                    {selectedSumFile && <Col>
+                                        <label htmlFor="">แนบไฟล์</label>
+                                        <div className="d-flex align-items-center">
+                                            <a href={selectedSumFile} className="p-auto me-2" target="_blank">
+                                                <FaRegFilePdf size={'16px'} /> {getFilenameFormUrl(selectedSumFile)}
+                                            </a>
+                                            <span className="uploaded__close-btn">
+                                                <FaTimesCircle onClick={() => handleRemoveFile(formik, 2)} />
+                                            </span>
+                                        </div>
+                                    </Col>}
                                 </Row>
                                 <Row className="mb-2">
-                                    <Col md={4}>
+                                    <Col md={6}>
                                         <label htmlFor="">คืนข้อมูลแก่หน่วยงาน/คณะทำงาน</label>
                                         <label className={`form-control ${(formik.errors.is_returned_data && formik.touched.summary_file) ? 'is-invalid' : ''}`}>
                                             <Field
