@@ -3,10 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Guideline;
+use App\Services\FileService;
 
 class GuidelineController extends Controller
 {
+    protected $fileService;
+
+    protected $uploadDestPath = 'uploads/guideline/';
+
+    public function __construct(FileService $fileService)
+    {
+        $this->fileService = $fileService;
+    }
+
     public function search(Request $request)
     {
         $guidelines = Guideline::with('division')->orderBy('created_at', 'DESC')->paginate(10);
@@ -21,7 +32,8 @@ class GuidelineController extends Controller
         return response()->json($guideline);
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         try {
             $guideline = new Guideline;
             $guideline->topic = $request['topic'];
@@ -29,15 +41,10 @@ class GuidelineController extends Controller
             $guideline->remark = $request['remark'];
 
             /** Upload file */
-            if ($request->file('file_attachment')) {
-                $file = $request->file('file_attachment');
-                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-                $destinationPath = 'uploads/guideline/';
-
-                if ($file->move($destinationPath, $fileName)) {
-                    $guideline->file_attachment = $fileName;
-                }
-            }
+            $guideline->file_attachment = $this->fileService->uploadFile(
+                $request->file('file_attachment'),
+                $this->uploadDestPath . 'file'
+            );
 
             if ($guideline->save()) {
                 return [
@@ -59,28 +66,29 @@ class GuidelineController extends Controller
         }
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         try {
             $guideline = Guideline::find($id);
             $guideline->topic = $request['topic'];
             $guideline->division_id = $request['division_id'];
             $guideline->remark = $request['remark'];
 
-            /** Upload file and pictures */
+            /** Check and remove uploaded file */
+            if ($request['is_file_updated'] == 'true') {
+                if (Storage::disk('public')->exists($guideline->file_attachment)) {
+                    Storage::disk('public')->delete($guideline->file_attachment);
+                }
+
+                $guideline->file_attachment = '';
+            }
+
+            /** Upload file */
             if ($request->file('file_attachment')) {
-                $file = $request->file('file_attachment');
-                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-                $destinationPath = 'uploads/guideline/';
-
-                /** Check and remove uploaded file */
-                $existedFile = $destinationPath . $guideline->file_attachment;
-                if (\File::exists($existedFile)) {
-                    \File::delete($existedFile);
-                }
-
-                if ($file->move($destinationPath, $fileName)) {
-                    $guideline->file_attachment = $fileName;
-                }
+                $guideline->file_attachment = $this->fileService->uploadFile(
+                    $request->file('file_attachment'),
+                    $this->uploadDestPath . 'file'
+                );
             }
 
             if ($guideline->save()) {
@@ -103,15 +111,14 @@ class GuidelineController extends Controller
         }
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         try {
             $guideline = Guideline::find($id);
 
             /** Remove uploaded file */
-            $destinationPath = 'uploads/guideline/';
-            $existedFile = $destinationPath . $guideline->file_attachment;
-            if (\File::exists($existedFile)) {
-                \File::delete($existedFile);
+            if (Storage::disk('public')->exists($guideline->file_attachment)) {
+                Storage::disk('public')->delete($guideline->file_attachment);
             }
 
             if ($guideline->delete()) {
