@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { Col, Row } from 'react-bootstrap'
-import { FaSave, FaFilePdf } from 'react-icons/fa'
+import { FaSave, FaFilePdf, FaTimesCircle } from 'react-icons/fa'
+import { getFilenameFormUrl } from '../../../../utils'
 import { store, update } from '../../../../store/slices/guideline'
 
 const guidelineSchema = Yup.object().shape({
@@ -17,22 +18,17 @@ const GuidelineForm = ({ id, guideline }) => {
     const [fileAttachment, setFileAttachment] = useState('');
 
     useEffect(() => {
-        if (guideline) setFileAttachment(guideline.file_attachment);
+        if (guideline) {
+            setFileAttachment(guideline.file_attachment ? `${process.env.MIX_APP_URL}/storage/${guideline.file_attachment}` : '');
+        }
     }, [guideline]);
 
+    const handleRemoveFile = (formik) => {
+        setFileAttachment('');
+        formik.setFieldValue('is_file_updated', true);
+    };
+
     const handleSubmit = (values, formik) => {
-        // const data = new FormData();
-
-        // for(const [key, val] of Object.entries(values)) {
-        //     if (key === 'file_attachment') {
-        //         [...val].forEach((file, i) => {
-        //             data.append(key, file[0]);
-        //         })
-        //     } else {
-        //         data.append(key, val);
-        //     }
-        // }
-
         if (guideline) {
             dispatch(update({ id, data: values }));
         } else {
@@ -49,7 +45,8 @@ const GuidelineForm = ({ id, guideline }) => {
                 topic: guideline ? guideline.topic : '',
                 division_id: guideline ? guideline.division_id : '',
                 remark: (guideline && guideline.remark) ? guideline.remark : '',
-                file_attachment: ''
+                file_attachment: '',
+                is_file_updated: false,
             }}
             validationSchema={guidelineSchema}
             onSubmit={handleSubmit}
@@ -94,7 +91,7 @@ const GuidelineForm = ({ id, guideline }) => {
                                 </Col>
                             </Row>
                             <Row className="mb-2">
-                                <Col>
+                                {!fileAttachment && <Col>
                                     <label htmlFor="">ไฟล์เอกสาร</label>
                                     <input
                                         type="file"
@@ -104,14 +101,18 @@ const GuidelineForm = ({ id, guideline }) => {
                                     {(formik.errors.file_attachment && formik.touched.file_attachment) && (
                                         <span className="text-danger text-sm">{formik.errors.file_attachment}</span>
                                     )}
-                                    <div className="mt-2">
-                                        {fileAttachment && (
-                                            <a href={`${process.env.MIX_APP_URL}/uploads/guideline/${fileAttachment}`} target="_blank">
-                                                <FaFilePdf /> {fileAttachment}
-                                            </a>
-                                        )}
+                                </Col>}
+                                {fileAttachment && <Col>
+                                    <label htmlFor="">ไฟล์เอกสาร</label>
+                                    <div className="d-flex align-items-center">
+                                        <a href={fileAttachment} className="p-auto me-2" target="_blank">
+                                            <FaFilePdf /> {getFilenameFormUrl(fileAttachment)}
+                                        </a>
+                                        <span className="uploaded__close-btn">
+                                            <FaTimesCircle onClick={() => handleRemoveFile(formik)} />
+                                        </span>
                                     </div>
-                                </Col>
+                                </Col>}
                             </Row>
                             <Row className="mb-2">
                                 <Col>
