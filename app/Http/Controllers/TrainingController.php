@@ -290,8 +290,8 @@ class TrainingController extends Controller
             $trainings = Training::all();
 
             foreach($trainings as $train) {
-                if ($train->pic_attachments) {
-                    $pictures = explode(',', $train->pic_attachments);
+                if ($train->training_pictures) {
+                    $pictures = explode(',', $train->training_pictures);
 
                     /** update trainings data */
                     $updating = Training::find($train->id);
