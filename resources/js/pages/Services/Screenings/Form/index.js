@@ -22,13 +22,13 @@ const screeningSchema = Yup.object().shape({
     referal: Yup.string().required('กรุณาระบุจำนวนส่งต่อเพื่อรักษาก่อน'),
     surveillance: Yup.string().required('กรุณาระบุจำนวนเฝ้าระวังต่อเนื่องก่อน'),
     have_plan: Yup.string().required('กรุณาระบุสถานะการจัดทำแผน/การดำเนินการ'),
-    plan_file: Yup.string().when('have_plan', {
-        is: (have_plan) => have_plan === '1',
+    plan_file: Yup.string().when(['have_plan','is_plan_file_updated'], {
+        is: (have_plan, is_plan_file_updated) => have_plan === '1' || is_plan_file_updated,
         then: Yup.string().required('กรุณาแนบไฟล์การจัดทำแผน/การดำเนินการก่อน')
     }),
     have_summary: Yup.string().required('กรุณาระบุสถานะการสรุปผลและจัดทำรายงาน'),
-    summary_file: Yup.string().when('have_summary', {
-        is: (have_summary) => have_summary === '1',
+    summary_file: Yup.string().when(['have_summary','is_summary_file_updated'], {
+        is: (have_summary, is_summary_file_updated) => have_summary === '1' || is_summary_file_updated,
         then: Yup.string().required('กรุณาแนบไฟล์สรุปผลและจัดทำรายงานก่อน')
     }),
     is_returned_data: Yup.string().required('กรุณาระบุสถานะคืนข้อมูลแก่หน่วยงาน'),
@@ -115,13 +115,13 @@ const ScreeningForm = ({ id, screening }) => {
                 other_abnormal: (screening && screening.other_abnormal) ? screening.other_abnormal : '',
                 referal: screening ? screening.referal : '',
                 surveillance: screening ? screening.surveillance : '',
-                have_plan: screening ? screening.have_plan : '',
+                have_plan: (screening && screening.have_plan) ? screening.have_plan : '',
                 plan_file: '',
                 is_plan_file_updated: false,
-                have_summary: screening ? screening.have_summary : '',
+                have_summary: (screening && screening.have_summary) ? screening.have_summary : '',
                 summary_file: '',
                 is_summary_file_updated: false,
-                is_returned_data: screening ? screening.is_returned_data : '',
+                is_returned_data: (screening && screening.is_returned_data) ? screening.is_returned_data : '',
             }}
             validationSchema={screeningSchema}
             onSubmit={handleSubmit}
@@ -306,20 +306,18 @@ const ScreeningForm = ({ id, screening }) => {
                                     </Col>
                                     {!selectedPlanFile && <Col>
                                         <label htmlFor="">แนบไฟล์</label>
-                                        <div className="d-flex flex-row align-items-center">
-                                            <input
-                                                type="file"
-                                                onChange={(e) => formik.setFieldValue('plan_file', e.target.files[0])}
-                                                className={`form-control ${(formik.errors.plan_file && formik.touched.plan_file) ? 'is-invalid' : ''}`}
-                                            />
-                                        </div>
+                                        <input
+                                            type="file"
+                                            onChange={(e) => formik.setFieldValue('plan_file', e.target.files[0])}
+                                            className={`form-control ${(formik.errors.plan_file && formik.touched.plan_file) ? 'is-invalid' : ''}`}
+                                        />
                                         {(formik.errors.plan_file && formik.touched.plan_file) && (
                                             <span className="invalid-feedback">{formik.errors.plan_file}</span>
                                         )}
                                     </Col>}
                                     {selectedPlanFile && <Col>
                                         <label htmlFor="">แนบไฟล์</label>
-                                        <div className="ms-2">
+                                        <div className="d-flex align-items-center">
                                             <a href={selectedPlanFile} className="p-auto me-2" target="_blank">
                                                 <FaRegFilePdf size={'16px'} /> {getFilenameFormUrl(selectedPlanFile)}
                                             </a>
@@ -355,13 +353,11 @@ const ScreeningForm = ({ id, screening }) => {
                                     </Col>
                                     {!selectedSumFile && <Col>
                                         <label htmlFor="">แนบไฟล์</label>
-                                        <div className="d-flex flex-row align-items-center">
-                                            <input
-                                                type="file"
-                                                onChange={(e) => formik.setFieldValue('summary_file', e.target.files[0])}
-                                                className={`form-control ${(formik.errors.summary_file && formik.touched.summary_file) ? 'is-invalid' : ''}`}
-                                            />
-                                        </div>
+                                        <input
+                                            type="file"
+                                            onChange={(e) => formik.setFieldValue('summary_file', e.target.files[0])}
+                                            className={`form-control ${(formik.errors.summary_file && formik.touched.summary_file) ? 'is-invalid' : ''}`}
+                                        />
                                         {(formik.errors.summary_file && formik.touched.summary_file) && (
                                             <span className="invalid-feedback">{formik.errors.summary_file}</span>
                                         )}
