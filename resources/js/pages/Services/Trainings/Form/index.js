@@ -137,8 +137,6 @@ const TrainingForm = ({ id, training }) => {
             onSubmit={handleSubmit}
         >
             {(formik) => {
-                console.log(formik.errors);
-
                 return (
                     <Form>
                         <Tabs defaultActiveKey="home">

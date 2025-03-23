@@ -20,14 +20,17 @@ const screeningSchema = Yup.object().shape({
     }),
     referal: Yup.string().required('กรุณาระบุจำนวนส่งต่อเพื่อรักษาก่อน'),
     surveillance: Yup.string().required('กรุณาระบุจำนวนเฝ้าระวังต่อเนื่องก่อน'),
+    have_plan: Yup.string().required('กรุณาระบุสถานะการจัดทำแผน/การดำเนินการ'),
     plan_file: Yup.string().when('have_plan', {
         is: (have_plan) => have_plan === '1',
         then: Yup.string().required('กรุณาแนบไฟล์การจัดทำแผน/การดำเนินการก่อน')
     }),
+    have_summary: Yup.string().required('กรุณาระบุสถานะการสรุปผลและจัดทำรายงาน'),
     summary_file: Yup.string().when('have_summary', {
         is: (have_summary) => have_summary === '1',
         then: Yup.string().required('กรุณาแนบไฟล์สรุปผลและจัดทำรายงานก่อน')
     }),
+    is_returned_data: Yup.string().required('กรุณาระบุสถานะคืนข้อมูลแก่หน่วยงาน'),
 });
 
 const ScreeningForm = ({ id, screening }) => {
@@ -45,18 +48,6 @@ const ScreeningForm = ({ id, screening }) => {
     }, [screening]);
 
     const handleSubmit = (values, formik) => {
-        // const data = new FormData();
-
-        // for(const [key, val] of Object.entries(values)) {
-        //     if (key === 'training_pictures' || key === 'pr_pictures') {
-        //         [...val].forEach((file, i) => {
-        //             data.append(key, file[0]);
-        //         })
-        //     } else {
-        //         data.append(key, val);
-        //     }
-        // }
-
         if (screening) {
             dispatch(update({ id, data: values }));
         } else {
@@ -279,7 +270,7 @@ const ScreeningForm = ({ id, screening }) => {
                                 <Row className="mb-2">
                                     <Col md={4}>
                                         <label htmlFor="">จัดทำแผน/การดำเนินการเฝ้าระวังสุขภาพ</label>
-                                        <label htmlFor="" className="form-control" style={{ display: 'flex' }}>
+                                        <label className={`form-control ${(formik.errors.have_plan && formik.touched.summary_file) ? 'is-invalid' : ''}`}>
                                             <Field
                                                 type="radio"
                                                 name="have_plan"
@@ -297,7 +288,7 @@ const ScreeningForm = ({ id, screening }) => {
                                             <span className="ms-1">ไม่มี</span>
                                         </label>
                                         {(formik.errors.have_plan && formik.touched.have_plan) && (
-                                            <span className="text-danger text-sm">{formik.errors.have_kpi}</span>
+                                            <span className="text-danger text-sm">{formik.errors.have_plan}</span>
                                         )}
                                     </Col>
                                     <Col>
@@ -324,7 +315,7 @@ const ScreeningForm = ({ id, screening }) => {
                                 <Row className="mb-2">
                                     <Col md={4}>
                                         <label htmlFor="">สรุปผลและจัดทำรายงานการเฝ้าระวังสุขภาพ</label>
-                                        <label htmlFor="" className="form-control" style={{ display: 'flex' }}>
+                                        <label className={`form-control ${(formik.errors.have_summary && formik.touched.have_summary) ? 'is-invalid' : ''}`}>
                                             <Field
                                                 type="radio"
                                                 name="have_summary"
@@ -369,7 +360,7 @@ const ScreeningForm = ({ id, screening }) => {
                                 <Row className="mb-2">
                                     <Col md={4}>
                                         <label htmlFor="">คืนข้อมูลแก่หน่วยงาน/คณะทำงาน</label>
-                                        <label htmlFor="" className="form-control" style={{ display: 'flex' }}>
+                                        <label className={`form-control ${(formik.errors.is_returned_data && formik.touched.summary_file) ? 'is-invalid' : ''}`}>
                                             <Field
                                                 type="radio"
                                                 name="is_returned_data"
