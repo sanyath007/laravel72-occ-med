@@ -104,7 +104,7 @@ const GuidelineList = () => {
                                                 </td>
                                                 <td style={{ textAlign: 'center' }}>
                                                     {guideline.file_attachment && (
-                                                        <a href={`${process.env.MIX_APP_URL}/uploads/guideline/${guideline.file_attachment}`} target="_blank" className="text-danger">
+                                                        <a href={`${process.env.MIX_APP_URL}/storage/${guideline.file_attachment}`} target="_blank" className="text-danger">
                                                             <FaFilePdf size={"20px"} />
                                                         </a>
                                                     )}

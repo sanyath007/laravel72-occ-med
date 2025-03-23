@@ -110,7 +110,7 @@ const ScreeningList = () => {
                                                 </td>
                                                 <td style={{ textAlign: 'center' }}>
                                                     {screening.summary_file && (
-                                                        <a href={`${process.env.MIX_APP_URL}/uploads/screening/file/${screening.summary_file}`} target="_blank" className="text-danger">
+                                                        <a href={`${process.env.MIX_APP_URL}/storage/${screening.summary_file}`} target="_blank" className="text-danger">
                                                             <FaFilePdf size={"20px"} />
                                                         </a>
                                                     )}
