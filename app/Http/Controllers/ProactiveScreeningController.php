@@ -3,11 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\ProactiveScreening;
 use App\Models\Company;
+use App\Services\FileService;
 
 class ProactiveScreeningController extends Controller
 {
+    protected $fileService;
+
+    protected $uploadDestPath = 'uploads/screening/';
+
+    public function __construct(FileService $fileService)
+    {
+        $this->fileService = $fileService;
+    }
+
     public function search(Request $request)
     {
         $date = $request->get('date');
@@ -96,25 +107,16 @@ class ProactiveScreeningController extends Controller
             $screening->is_returned_data = $request['is_returned_data'];
             // $screening->remark           = $request['remark'];
 
-            if ($request->file('plan_file')) {
-                $file = $request->file('plan_file');
-                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-                $destinationPath = 'uploads/screening/file/';
+            /** Upload file */
+            $screening->plan_file = $this->fileService->uploadFile(
+                $request->file('plan_file'),
+                $this->uploadDestPath . 'file'
+            );
 
-                if ($file->move($destinationPath, $fileName)) {
-                    $screening->plan_file = $fileName;
-                }
-            }
-
-            if ($request->file('summary_file')) {
-                $file = $request->file('summary_file');
-                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-                $destinationPath = 'uploads/screening/file/';
-
-                if ($file->move($destinationPath, $fileName)) {
-                    $screening->summary_file = $fileName;
-                }
-            }
+            $screening->summary_file = $this->fileService->uploadFile(
+                $request->file('summary_file'),
+                $this->uploadDestPath . 'file'
+            );
 
             if ($screening->save()) {
                 return [
@@ -189,37 +191,38 @@ class ProactiveScreeningController extends Controller
             $screening->is_returned_data = $request['is_returned_data'];
             // $screening->remark           = $request['remark'];
 
-            /** Upload files */
-            if ($request->file('plan_file')) {
-                $file = $request->file('plan_file');
-                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-                $destinationPath = 'uploads/screening/file/';
-
-                /** Check and remove uploaded file */
-                $existedFile = $destinationPath . $screening->plan_file;
-                if (\File::exists($existedFile)) {
-                    \File::delete($existedFile);
+            /** Check and remove uploaded plan file */
+            if ($request['is_plan_file_updated'] == 'true') {
+                if (Storage::disk('public')->exists($screening->plan_file)) {
+                    Storage::disk('public')->delete($screening->plan_file);
                 }
 
-                if ($file->move($destinationPath, $fileName)) {
-                    $screening->plan_file = $fileName;
-                }
+                $screening->plan_file = '';
             }
 
+            /** Upload plan file */
+            if ($request->file('plan_file')) {
+                $screening->plan_file = $this->fileService->uploadFile(
+                    $request->file('plan_file'),
+                    $this->uploadDestPath . 'file'
+                );
+            }
+
+            /** Check and remove uploaded summary file */
+            if ($request['is_summary_file_updated'] == 'true') {
+                if (Storage::disk('public')->exists($screening->summary_file)) {
+                    Storage::disk('public')->delete($screening->summary_file);
+                }
+
+                $screening->summary_file = '';
+            }
+
+            /** Upload summary file */
             if ($request->file('summary_file')) {
-                $file = $request->file('summary_file');
-                $fileName = date('mdYHis') . uniqid(). '.' .$file->getClientOriginalExtension();
-                $destinationPath = 'uploads/screening/file/';
-
-                /** Check and remove uploaded file */
-                $existedFile = $destinationPath . $screening->summary_file;
-                if (\File::exists($existedFile)) {
-                    \File::delete($existedFile);
-                }
-
-                if ($file->move($destinationPath, $fileName)) {
-                    $screening->summary_file = $fileName;
-                }
+                $screening->summary_file = $this->fileService->uploadFile(
+                    $request->file('summary_file'),
+                    $this->uploadDestPath . 'file'
+                );
             }
 
             if ($screening->save()) {
@@ -248,15 +251,13 @@ class ProactiveScreeningController extends Controller
             $screening = ProactiveScreening::find($id);
 
             /** Remove uploaded file */
-            $destinationPath = 'uploads/screening/';
-            $existedPlanFile = $destinationPath .'file/'. $screening->plan_file;
-            if (\File::exists($existedPlanFile)) {
-                \File::delete($existedPlanFile);
+            if (Storage::disk('public')->exists($screening->plan_file)) {
+                Storage::disk('public')->delete($screening->plan_file);
             }
 
-            $existedSumFile = $destinationPath .'file/'. $screening->summary_file;
-            if (\File::exists($existedSumFile)) {
-                \File::delete($existedSumFile);
+            /** Remove uploaded file */
+            if (Storage::disk('public')->exists($screening->summary_file)) {
+                Storage::disk('public')->delete($screening->summary_file);
             }
 
             if ($screening->delete()) {
