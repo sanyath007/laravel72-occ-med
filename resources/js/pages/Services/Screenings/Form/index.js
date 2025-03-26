@@ -9,7 +9,7 @@ import moment from 'moment'
 import { getFilenameFormUrl } from '../../../../utils'
 import { store, update } from '../../../../store/slices/screening'
 
-const screeningSchema = Yup.object().shape({
+const screeningSchema = (conditions) => Yup.object().shape({
     screen_date: Yup.string().required('กรุณาเลือกวันที่คัดกรองก่อน'),
     screen_type_id: Yup.string().required('กรุณาเลือกประเภทการคัดกรองก่อน'),
     division_id: Yup.string().required('กรุณาเลือกผู้ดำเนินการก่อน'),
@@ -23,12 +23,12 @@ const screeningSchema = Yup.object().shape({
     surveillance: Yup.string().required('กรุณาระบุจำนวนเฝ้าระวังต่อเนื่องก่อน'),
     have_plan: Yup.string().required('กรุณาระบุสถานะการจัดทำแผน/การดำเนินการ'),
     plan_file: Yup.string().when(['have_plan','is_plan_file_updated'], {
-        is: (have_plan, is_plan_file_updated) => have_plan === '1' || is_plan_file_updated,
+        is: (have_plan, is_plan_file_updated) => (parseInt(have_plan, 10) === 1 && !conditions.plan_file) || (parseInt(have_plan, 10) === 1 && is_plan_file_updated),
         then: Yup.string().required('กรุณาแนบไฟล์การจัดทำแผน/การดำเนินการก่อน')
     }),
     have_summary: Yup.string().required('กรุณาระบุสถานะการสรุปผลและจัดทำรายงาน'),
     summary_file: Yup.string().when(['have_summary','is_summary_file_updated'], {
-        is: (have_summary, is_summary_file_updated) => have_summary === '1' || is_summary_file_updated,
+        is: (have_summary, is_summary_file_updated) => (parseInt(have_summary, 10) === 1 && !conditions.sum_file) || (parseInt(have_summary, 10) === 1 && is_summary_file_updated),
         then: Yup.string().required('กรุณาแนบไฟล์สรุปผลและจัดทำรายงานก่อน')
     }),
     is_returned_data: Yup.string().required('กรุณาระบุสถานะคืนข้อมูลแก่หน่วยงาน'),
@@ -123,7 +123,7 @@ const ScreeningForm = ({ id, screening }) => {
                 is_summary_file_updated: false,
                 is_returned_data: (screening && screening.is_returned_data) ? screening.is_returned_data : '',
             }}
-            validationSchema={screeningSchema}
+            validationSchema={screeningSchema({ plan_file: selectedPlanFile, sum_file: selectedSumFile })}
             onSubmit={handleSubmit}
         >
             {(formik) => {
