@@ -9,7 +9,7 @@ import GuidelineForm from './Form'
 const AddGuideline = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { success } = useSelector(state => state.guideline);
+    const { isSuccess } = useSelector(state => state.guideline);
     const { setGlobal } = useContext(GlobalContext);
 
     /** Initial global states */
@@ -27,14 +27,14 @@ const AddGuideline = () => {
     }, []);
 
     useEffect(() => {
-        if (success) {
+        if (isSuccess) {
             toast.success('บันทึกข้อมูลเรียบร้อยแล้ว!!');
 
             dispatch(resetSuccess());
 
             navigate('/services/guidelines');
         }
-    }, [success]);
+    }, [isSuccess]);
 
     return (
         <section className="section">

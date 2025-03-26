@@ -12,7 +12,7 @@ const EditGuideline = () => {
     const navigate = useNavigate()
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { guideline, loading, success } = useSelector(state => state.guideline);
+    const { guideline, isLoading, isSuccess } = useSelector(state => state.guideline);
 
     /** Initial global states */
     useEffect(() => {
@@ -35,14 +35,14 @@ const EditGuideline = () => {
     }, [id]);
 
     useEffect(() => {
-        if (success) {
+        if (isSuccess) {
             toast.success('บันทึกการแก้ไขข้อมูลเรียบร้อยแล้ว!!');
 
             dispatch(resetSuccess());
 
             navigate('/services/guidelines');
         }
-    }, [success]);
+    }, [isSuccess]);
 
     return (
         <section className="section">
@@ -52,9 +52,9 @@ const EditGuideline = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขจัดทำแนวทาง/แบบฟอร์ม/ขั้นตอนการทำงาน</h5>
 
-                            {loading && <div className="text-center"><Loading /></div>}
+                            {isLoading && <div className="text-center"><Loading /></div>}
 
-                            {(!loading && guideline) && (
+                            {(!isLoading && guideline) && (
                                 <GuidelineForm id={id} guideline={guideline} />
                             )}
                         </div>

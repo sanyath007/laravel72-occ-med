@@ -5,8 +5,9 @@ const initialState = {
     guidelines: [],
     guideline: null,
     pager: null,
-    loading: false,
-    success: false,
+    isLoading: false,
+    isSuccess: false,
+    isDeleted: false,
     error: null
 }
 
@@ -76,7 +77,10 @@ export const guidelineSlice = createSlice({
     initialState,
     reducers: {
         resetSuccess(state) {
-            state.success = false
+            state.isSuccess = false
+        },
+        resetDeleted(state) {
+            state.isDeleted = false
         },
         updateGuidelines(state, { payload }) {
             const updated = state.guidelines.filter(g => g.id !== payload);
@@ -87,87 +91,81 @@ export const guidelineSlice = createSlice({
     extraReducers: {
         [getGuidelines.pending]: (state) => {
             state.guidelines = []
-            state.loading = true
+            state.isLoading = true
         },
         [getGuidelines.fulfilled]: (state, { payload }) => {
             const { data, ...pager } = payload
 
             state.guidelines = data
             state.pager = pager
-            state.loading = false
+            state.isLoading = false
         },
         [getGuidelines.rejected]: (state) => {
-            state.loading = false
+            state.isLoading = false
         },
         [getGuideline.pending]: (state) => {
             state.guideline = null
-            state.loading = true
+            state.isLoading = true
         },
         [getGuideline.fulfilled]: (state, { payload }) => {
             state.guideline = payload
-            state.loading = false
+            state.isLoading = false
         },
         [getGuideline.rejected]: (state, { payload }) => {
-            state.loading = false
+            state.isLoading = false
             state.error = payload
         },
         [store.pending]: (state) => {
-            state.success = false
+            state.isSuccess = false
             state.error = null
         },
         [store.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isSuccess = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [store.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         },
         [update.pending]: (state) => {
-            state.success = false
+            state.isSuccess = false
             state.error = null
         },
         [update.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isSuccess = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [update.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         },
         [destroy.pending]: (state) => {
-            state.success = false
+            state.isDeleted = false
             state.error = null
         },
         [destroy.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isDeleted = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [destroy.rejected]: (state, { payload }) => {
-            state.success = false
             state.error = payload
         }
     }
 })
 
-export const { resetSuccess, updateGuidelines } = guidelineSlice.actions
+export const { resetDeleted, resetSuccess, updateGuidelines } = guidelineSlice.actions
 
 export default guidelineSlice.reducer

@@ -5,7 +5,7 @@ import { FaFilePdf } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import moment from 'moment'
 import { GlobalContext } from '../../../context/globalContext'
-import { getGuidelines, resetSuccess, destroy } from '../../../store/slices/guideline'
+import { getGuidelines, resetDeleted, destroy } from '../../../store/slices/guideline'
 import { toShortTHDate } from '../../../utils/formatter'
 import Pagination from '../../../components/Pagination'
 import Loading from '../../../components/Loading'
@@ -13,7 +13,7 @@ import Loading from '../../../components/Loading'
 const GuidelineList = () => {
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { guidelines, pager, loading, success } = useSelector(state => state.guideline);
+    const { guidelines, pager, isLoading, isDeleted } = useSelector(state => state.guideline);
     const [endpoint, setEndpoint] = useState('');
     const [params, setParams] = useState('');
 
@@ -32,12 +32,12 @@ const GuidelineList = () => {
     
         /** If delete giudeline is succeed */
         useEffect(() => {
-            if (success) {
+            if (isDeleted) {
                 toast.success('ลบข้อมูลเรียบร้อยแล้ว');
         
-                dispatch(resetSuccess());
+                dispatch(resetDeleted());
             }
-        }, [success]);
+        }, [isDeleted]);
 
     useEffect(() => {
         if (endpoint === '') {
@@ -88,12 +88,12 @@ const GuidelineList = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {loading && (
+                                        {isLoading && (
                                             <tr>
                                                 <td colSpan={6} className="text-center"><Loading /></td>
                                             </tr>
                                         )}
-                                        {!loading && guidelines?.map((guideline, index) => (
+                                        {!isLoading && guidelines?.map((guideline, index) => (
                                             <tr key={guideline.id}>
                                                 <td style={{ textAlign: 'center' }}>{pager && pager.from+index}</td>
                                                 <td style={{ textAlign: 'center' }}>
