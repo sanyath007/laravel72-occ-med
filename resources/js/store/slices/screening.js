@@ -5,8 +5,9 @@ const initialState = {
     screenings: [],
     screening: null,
     pager: null,
-    loading: false,
-    success: false,
+    isLoading: false,
+    isSuccess: false,
+    isDeleted: false,
     error: null
 }
 
@@ -76,7 +77,10 @@ export const screeningSlice = createSlice({
     initialState,
     reducers: {
         resetSuccess(state) {
-            state.success = false
+            state.isSuccess = false
+        },
+        resetDeleted(state) {
+            state.isDeleted = false
         },
         updateScreenings(state, { payload }) {
             const updated = state.screenings.filter(s => s.id !== payload);
@@ -87,88 +91,82 @@ export const screeningSlice = createSlice({
     extraReducers: {
         [getScreenings.pending]: (state) => {
             state.screenings = []
-            state.loading = true
+            state.isLoading = true
         },
         [getScreenings.fulfilled]: (state, { payload }) => {
             const { data, ...pager } = payload
 
             state.screenings = data
             state.pager = pager
-            state.loading = false
+            state.isLoading = false
         },
         [getScreenings.rejected]: (state) => {
-            state.loading = false
+            state.isLoading = false
         },
         [getScreening.pending]: (state) => {
-            state.loading = true
+            state.isLoading = true
             state.screening = null
             state.error = null
         },
         [getScreening.fulfilled]: (state, { payload }) => {
-            state.loading = false
+            state.isLoading = false
             state.screening = payload
         },
         [getScreening.rejected]: (state, { payload }) => {
-            state.loading = false
+            state.isLoading = false
             state.error = payload
         },
         [store.pending]: (state) => {
-            state.success = false
+            state.isSuccess = false
             state.error = null
         },
         [store.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isSuccess = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [store.rejected]: (state, { payload }) => {
-            state.loading = false
             state.error = payload
         },
         [update.pending]: (state) => {
-            state.success = false
+            state.isSuccess = false
             state.error = null
         },
         [update.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isSuccess = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [update.rejected]: (state, { payload }) => {
-            state.loading = false
             state.error = payload
         },
         [destroy.pending]: (state) => {
-            state.success = false
+            state.isDeleted = false
             state.error = null
         },
         [destroy.fulfilled]: (state, { payload }) => {
             const { status, message } = payload
 
             if (status == 1) {
-                state.success = true
+                state.isDeleted = true
             } else {
-                state.success = false
                 state.error = { message }
             }
         },
         [destroy.rejected]: (state, { payload }) => {
-            state.loading = false
             state.error = payload
         },
     }
 })
 
-export const { resetSuccess, updateScreenings } = screeningSlice.actions
+export const { resetDeleted, resetSuccess, updateScreenings } = screeningSlice.actions
 
 export default screeningSlice.reducer

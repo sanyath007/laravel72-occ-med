@@ -9,7 +9,7 @@ import ScreeningForm from './Form'
 const AddScreening = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { success } = useSelector(state => state.screening);
+    const { isSuccess } = useSelector(state => state.screening);
     const { setGlobal } = useContext(GlobalContext);
 
     /** Initial global states */
@@ -27,14 +27,14 @@ const AddScreening = () => {
     }, []);
 
     useEffect(() => {
-        if (success) {
+        if (isSuccess) {
             toast.success('บันทึกข้อมูลเรียบร้อยแล้ว!!');
 
             dispatch(resetSuccess());
 
             navigate('/services/screenings');
         }
-    }, [success]);
+    }, [isSuccess]);
 
     return (
         <section className="section">

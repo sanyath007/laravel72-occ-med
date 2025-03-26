@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { useDispatch, useSelector } from 'react-redux'
 import { FaFilePdf } from 'react-icons/fa'
 import { GlobalContext } from '../../../context/globalContext'
-import { getScreenings, resetSuccess, destroy } from '../../../store/slices/screening'
+import { getScreenings, resetDeleted, destroy } from '../../../store/slices/screening'
 import { toShortTHDate } from '../../../utils/formatter'
 import Loading from '../../../components/Loading'
 import Pagination from '../../../components/Pagination'
@@ -14,7 +14,7 @@ const SCREEN_TYPES =['คัดกรองโรคจากงาน','คั�
 const ScreeningList = () => {
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { screenings, pager, loading, success } = useSelector(state => state.screening);
+    const { screenings, pager, isLoading, isDeleted } = useSelector(state => state.screening);
     const [endpoint, setEndpoint] = useState('');
     const [params, setParams] = useState('');
 
@@ -33,12 +33,12 @@ const ScreeningList = () => {
 
     /** If delete giudeline is succeed */
     useEffect(() => {
-        if (success) {
+        if (isDeleted) {
             toast.success('ลบข้อมูลเรียบร้อยแล้ว');
     
-            dispatch(resetSuccess());
+            dispatch(resetDeleted());
         }
-    }, [success]);
+    }, [isDeleted]);
 
     useEffect(() => {
         if (endpoint === '') {
@@ -89,12 +89,12 @@ const ScreeningList = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {loading && (
+                                        {isLoading && (
                                             <tr>
                                                 <td colSpan={6} className="text-center"><Loading /></td>
                                             </tr>
                                         )}
-                                        {!loading && screenings?.map((screening, index) => (
+                                        {!isLoading && screenings?.map((screening, index) => (
                                             <tr key={screening.id}>
                                                 <td className="text-center">{pager?.from+index}</td>
                                                 <td className="text-center">{toShortTHDate(screening.screen_date)}</td>

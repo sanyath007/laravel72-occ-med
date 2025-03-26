@@ -12,7 +12,7 @@ const EditScreening = () => {
     const navigate = useNavigate()
     const { setGlobal } = useContext(GlobalContext)
     const dispatch = useDispatch();
-    const { screening, loading, success } = useSelector(state => state.screening);
+    const { screening, isLoading, isSuccess } = useSelector(state => state.screening);
 
     /** Initial global states */
     useEffect(() => {
@@ -35,14 +35,14 @@ const EditScreening = () => {
     }, [id]);
 
     useEffect(() => {
-        if (success) {
+        if (isSuccess) {
             toast.success('บันทึกการแก้ไขข้อมูลเรียบร้อยแล้ว!!');
 
             dispatch(resetSuccess());
 
             navigate('/services/screenings');
         }
-    }, [success]);
+    }, [isSuccess]);
 
     return (
         <section className="section">
@@ -52,9 +52,9 @@ const EditScreening = () => {
                         <div className="card-body">
                             <h5 className="card-title">แก้ไขตรวจคัดกรองสุขภาพพนักงานเชิงรุก</h5>
 
-                            {loading && <div className="text-center"><Loading /></div>}
+                            {isLoading && <div className="text-center"><Loading /></div>}
 
-                            {(!loading && screening) && (
+                            {(!isLoading && screening) && (
                                 <ScreeningForm id={id} screening={screening} />
                             )}
                         </div>
